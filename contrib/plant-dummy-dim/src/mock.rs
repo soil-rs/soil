@@ -9,24 +9,24 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
-use topsoil_support::derive_impl;
-use topsoil_system::{offchain::CreateTransactionBase, pallet_prelude::ExtrinsicFor, EnsureRoot};
+use topsoil_core::derive_impl;
+use topsoil_core::system::{offchain::CreateTransactionBase, pallet_prelude::ExtrinsicFor, EnsureRoot};
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		People: plant_people,
 		DummyDim: crate
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -48,7 +48,7 @@ impl topsoil_system::Config for Test {
 	type SystemWeightInfo = ();
 	type SS58Prefix = ConstU16<42>;
 	type OnSetCode = ();
-	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_core::traits::ConstU32<16>;
 }
 
 impl plant_people::Config for Test {
@@ -102,6 +102,6 @@ impl TestExt {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let c = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let c = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	subsoil::io::TestExternalities::from(c)
 }

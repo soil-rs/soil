@@ -11,7 +11,7 @@
 use super::{mock::*, *};
 use subsoil::runtime::MultiAddress::Id;
 use plant_balances::Error as BalancesError;
-use topsoil_support::{assert_noop, assert_ok, pallet_prelude::Pays};
+use topsoil_core::{assert_noop, assert_ok, pallet_prelude::Pays};
 
 #[test]
 fn claiming_should_work() {

@@ -56,7 +56,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_recovery` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `Recovery::Proxy` (r:1 w:0)
 	/// Proof: `Recovery::Proxy` (`max_values`: None, `max_size`: Some(80), added: 2555, mode: `MaxEncodedLen`)
 	/// Storage: `SafeMode::EnteredUntil` (r:1 w:0)

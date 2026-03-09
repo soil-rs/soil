@@ -73,7 +73,7 @@ use subsoil::runtime::{
 	},
 	DispatchError, Saturating, TokenError, TransactionOutcome,
 };
-use topsoil_support::{
+use topsoil_core::{
 	traits::{
 		fungibles::{Balanced, Create, Credit, Inspect, Mutate},
 		tokens::{
@@ -87,22 +87,22 @@ use topsoil_support::{
 	PalletId,
 };
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use subsoil::arithmetic::{traits::Unsigned, Permill};
-	use topsoil_support::{pallet_prelude::*, traits::fungibles::Refund};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{pallet_prelude::*, traits::fungibles::Refund};
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The type in which the assets for swapping are measured.
 		type Balance: Balance;
@@ -1355,7 +1355,7 @@ subsoil::api::decl_runtime_apis! {
 	/// and quote prices for swaps.
 	pub trait AssetConversionApi<Balance, AssetId>
 	where
-		Balance: topsoil_support::traits::tokens::Balance + MaybeDisplay,
+		Balance: topsoil_core::traits::tokens::Balance + MaybeDisplay,
 		AssetId: Codec,
 	{
 		/// Provides a quote for [`Pallet::swap_tokens_for_exact_tokens`].

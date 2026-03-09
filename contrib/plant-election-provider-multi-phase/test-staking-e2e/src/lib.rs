@@ -15,7 +15,7 @@ pub(crate) const LOG_TARGET: &str = "tests::e2e-epm";
 use mock::*;
 use subsoil::core::Get;
 use subsoil::runtime::Perbill;
-use topsoil_support::{assert_err, assert_ok};
+use topsoil_core::{assert_err, assert_ok};
 use plant_timestamp::Now;
 
 use crate::mock::RuntimeOrigin;

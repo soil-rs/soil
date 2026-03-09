@@ -11,18 +11,18 @@ use super::*;
 use crate as scheduler;
 use subsoil::runtime::{BuildStorage, Perbill};
 use subsoil::weights::constants::WEIGHT_REF_TIME_PER_SECOND;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, Contains, EitherOfDiverse, EqualPrivilegeOnly},
 };
-use topsoil_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_core::system::{EnsureRoot, EnsureSignedBy};
 
 // Logger module to track execution.
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod logger {
 	use super::{OriginCaller, OriginTrait};
-	use topsoil_support::{pallet_prelude::*, parameter_types};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{pallet_prelude::*, parameter_types};
+	use topsoil_core::system::pallet_prelude::*;
 
 	parameter_types! {
 		static Log: Vec<(OriginCaller, u32)> = Vec::new();
@@ -49,10 +49,10 @@ pub mod logger {
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {}
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::event]
@@ -64,7 +64,7 @@ pub mod logger {
 	#[pallet::call]
 	impl<T: Config> Pallet<T>
 	where
-		<T as topsoil_system::Config>::RuntimeOrigin: OriginTrait<PalletsOrigin = OriginCaller>,
+		<T as topsoil_core::system::Config>::RuntimeOrigin: OriginTrait<PalletsOrigin = OriginCaller>,
 	{
 		#[pallet::call_index(0)]
 		#[pallet::weight(*weight)]
@@ -89,7 +89,7 @@ pub mod logger {
 		#[pallet::call_index(2)]
 		#[pallet::weight(*weight)]
 		pub fn timed_log(origin: OriginFor<T>, i: u32, weight: Weight) -> DispatchResult {
-			let now = topsoil_system::Pallet::<T>::block_number();
+			let now = topsoil_core::system::Pallet::<T>::block_number();
 			let (start, end) = Threshold::<T>::get().unwrap_or((0u32.into(), u32::MAX.into()));
 			ensure!(now >= start, Error::<T>::TooEarly);
 			ensure!(now <= end, Error::<T>::TooLate);
@@ -102,12 +102,12 @@ pub mod logger {
 	}
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Logger: logger,
 		Scheduler: scheduler,
 		Preimage: plant_preimage,
@@ -123,13 +123,13 @@ impl Contains<RuntimeCall> for BaseFilter {
 }
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(
 			Weight::from_parts(WEIGHT_REF_TIME_PER_SECOND * 2, u64::MAX),
 		);
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
 impl system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
@@ -220,7 +220,7 @@ impl Config for Test {
 	type MaxScheduledPerBlock = ConstU32<10>;
 	type WeightInfo = TestWeightInfo;
 	type Preimages = Preimage;
-	type BlockNumberProvider = topsoil_system::Pallet<Self>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Self>;
 }
 
 pub type LoggerCall = logger::Call<Test>;

@@ -12,8 +12,8 @@ use super::*;
 use crate as plant_tx_pause;
 use topsoil::testing_prelude::*;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type BaseCallFilter = InsideBoth<Everything, TxPause>;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
@@ -89,7 +89,7 @@ impl plant_proxy::Config for Test {
 	type MaxPending = ConstU32<2>;
 	type AnnouncementDepositBase = ConstU64<1>;
 	type AnnouncementDepositFactor = ConstU64<1>;
-	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Test>;
 }
 
 parameter_types! {
@@ -122,12 +122,12 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Utility: plant_utility,
 		Proxy: plant_proxy,
@@ -136,7 +136,7 @@ construct_runtime!(
 );
 
 pub fn new_test_ext() -> TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	plant_balances::GenesisConfig::<Test> {
 		// The 0 account is NOT a special origin. The rest may be:

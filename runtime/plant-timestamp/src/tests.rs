@@ -7,7 +7,7 @@
 //! Tests for the Timestamp module.
 
 use crate::mock::*;
-use topsoil_support::assert_ok;
+use topsoil_core::assert_ok;
 
 #[test]
 fn timestamp_works() {

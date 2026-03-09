@@ -17,7 +17,7 @@ pub mod v1 {
 		Pallet<T>,
 		Identity,
 		[u8; 32],
-		(OpaqueCall<T>, <T as topsoil_system::Config>::AccountId, BalanceOf<T>),
+		(OpaqueCall<T>, <T as topsoil_core::system::Config>::AccountId, BalanceOf<T>),
 	>;
 
 	pub struct MigrateToV1<T>(core::marker::PhantomData<T>);

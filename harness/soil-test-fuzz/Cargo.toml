@@ -52,7 +52,7 @@ plant-election-compact-fuzz = [
 	"dep:codec",
 	"dep:plant-election-provider",
 	"dep:plant-election-provider-macros",
-	"dep:topsoil-support",
+	"dep:topsoil-core",
 ]
 
 [dependencies]
@@ -65,4 +65,4 @@ plant-election-provider-macros = { workspace = true, default-features = true, op
 rand = { features = ["small_rng", "std"], workspace = true, default-features = true }
 regex = { workspace = true }
 subsoil = { workspace = true, default-features = true }
-topsoil-support = { workspace = true, default-features = true, optional = true }
+topsoil-core = { workspace = true, default-features = true, optional = true }

@@ -6,10 +6,10 @@
 
 //! Migrations for the AURA pallet.
 
-use topsoil_support::{pallet_prelude::*, traits::Get, weights::Weight};
+use topsoil_core::{pallet_prelude::*, traits::Get, weights::Weight};
 
 struct __LastTimestamp<T>(core::marker::PhantomData<T>);
-impl<T: RemoveLastTimestamp> topsoil_support::traits::StorageInstance for __LastTimestamp<T> {
+impl<T: RemoveLastTimestamp> topsoil_core::traits::StorageInstance for __LastTimestamp<T> {
 	fn pallet_prefix() -> &'static str {
 		T::PalletPrefix::get()
 	}

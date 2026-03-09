@@ -13,8 +13,8 @@ use scale_info::TypeInfo;
 use subsoil::arithmetic::Perbill;
 use subsoil::core::ConstU32;
 use subsoil::runtime::BoundedVec;
-use topsoil_support::traits::fungible::Inspect;
-use topsoil_system::Config as SConfig;
+use topsoil_core::traits::fungible::Inspect;
+use topsoil_core::system::Config as SConfig;
 
 pub type BalanceOf<T> = <<T as Config>::Currency as Inspect<<T as SConfig>::AccountId>>::Balance;
 pub type RelayBalanceOf<T> = <<T as Config>::Coretime as CoretimeInterface>::Balance;

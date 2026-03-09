@@ -40,8 +40,8 @@ use subsoil::runtime::{
 	},
 	DispatchError, KeyTypeId, Perbill,
 };
-use topsoil_support::traits::{Get, KeyOwnerProofSystem};
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::traits::{Get, KeyOwnerProofSystem};
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 use super::{Call, Config, Error, Pallet, LOG_TARGET};
 
@@ -111,7 +111,7 @@ impl<T, R, P, L>
 		(EquivocationProof<T::Hash, BlockNumberFor<T>>, T::KeyOwnerProof),
 	> for EquivocationReportSystem<T, R, P, L>
 where
-	T: Config + plant_authorship::Config + topsoil_system::offchain::CreateBare<Call<T>>,
+	T: Config + plant_authorship::Config + topsoil_core::system::offchain::CreateBare<Call<T>>,
 	R: ReportOffence<
 		T::AccountId,
 		P::IdentificationTuple,
@@ -126,7 +126,7 @@ where
 	fn publish_evidence(
 		evidence: (EquivocationProof<T::Hash, BlockNumberFor<T>>, T::KeyOwnerProof),
 	) -> Result<(), ()> {
-		use topsoil_system::offchain::SubmitTransaction;
+		use topsoil_core::system::offchain::SubmitTransaction;
 		let (equivocation_proof, key_owner_proof) = evidence;
 
 		let call = Call::report_equivocation_unsigned {

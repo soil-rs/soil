@@ -32,7 +32,7 @@
 //! 	// ^^ using the prelude!
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: topsoil_system::Config {}
+//! 	pub trait Config: topsoil_core::system::Config {}
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
@@ -81,7 +81,7 @@
 //! ## Naming
 //!
 //! Please note that this crate can only be imported as `topsoil`. This is due
-//! to compatibility matters with `topsoil-support`.
+//! to compatibility matters with `topsoil-core`.
 //!
 //! A typical pallet's `Cargo.toml` using this crate looks like:
 //!
@@ -109,16 +109,16 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 #[doc(no_inline)]
-pub use topsoil_support::pallet;
+pub use topsoil_core::pallet;
 
 #[doc(no_inline)]
-pub use topsoil_support::pallet_macros::{import_section, pallet_section};
+pub use topsoil_core::pallet_macros::{import_section, pallet_section};
 
 /// The logging library of the runtime. Can normally be the classic `log` crate.
 pub use log;
 
 #[doc(inline)]
-pub use topsoil_support::storage_alias;
+pub use topsoil_core::storage_alias;
 
 /// Macros used within the main [`pallet`] macro.
 ///
@@ -129,7 +129,7 @@ pub use topsoil_support::storage_alias;
 /// section below:
 pub mod pallet_macros {
 	#[doc(no_inline)]
-	pub use topsoil_support::{derive_impl, pallet, pallet_macros::*};
+	pub use topsoil_core::{derive_impl, pallet, pallet_macros::*};
 }
 
 /// The main prelude of FRAME.
@@ -148,18 +148,18 @@ pub mod prelude {
 	/// Conveniently, the keyword `topsoil_system` is in scope as one uses `use
 	/// topsoil::prelude::*`.
 	#[doc(inline)]
-	pub use topsoil_system;
+	pub use topsoil_core::system;
 
-	/// Pallet prelude of `topsoil-support`.
+	/// Pallet prelude of `topsoil-core`.
 	///
-	/// Note: this needs to revised once `topsoil-support` evolves.
+	/// Note: this needs to revised once `topsoil-core` evolves.
 	#[doc(no_inline)]
-	pub use topsoil_support::pallet_prelude::*;
+	pub use topsoil_core::pallet_prelude::*;
 
-	/// Dispatch types from `topsoil-support`, other fundamental traits.
+	/// Dispatch types from `topsoil-core`, other fundamental traits.
 	#[doc(no_inline)]
-	pub use topsoil_support::dispatch::{GetDispatchInfo, PostDispatchInfo};
-	pub use topsoil_support::{
+	pub use topsoil_core::dispatch::{GetDispatchInfo, PostDispatchInfo};
+	pub use topsoil_core::{
 		defensive, defensive_assert,
 		traits::{
 			Contains, Defensive, DefensiveSaturating, EitherOf, EstimateNextSessionRotation,
@@ -172,11 +172,11 @@ pub mod prelude {
 
 	/// Pallet prelude of `topsoil-system`.
 	#[doc(no_inline)]
-	pub use topsoil_system::pallet_prelude::*;
+	pub use topsoil_core::system::pallet_prelude::*;
 
 	/// Transaction related helpers to submit transactions.
 	#[doc(no_inline)]
-	pub use topsoil_system::offchain::*;
+	pub use topsoil_core::system::offchain::*;
 
 	/// All FRAME-relevant derive macros.
 	#[doc(no_inline)]
@@ -238,7 +238,7 @@ pub mod benchmarking {
 		pub use topsoil_benchmarking::benchmarking::*;
 		// The system origin, which is very often needed in benchmarking code. Might be tricky only
 		// if the pallet defines its own `#[pallet::origin]` and call it `RawOrigin`.
-		pub use topsoil_system::{Pallet as System, RawOrigin};
+		pub use topsoil_core::system::{Pallet as System, RawOrigin};
 	}
 
 	#[deprecated(
@@ -255,8 +255,8 @@ pub mod benchmarking {
 			add_benchmark, benchmarking::add_to_whitelist, v1::account, v2::*, whitelist,
 			whitelisted_caller,
 		};
-		pub use topsoil_support::traits::UnfilteredDispatchable;
-		pub use topsoil_system::{Pallet as System, RawOrigin};
+		pub use topsoil_core::traits::UnfilteredDispatchable;
+		pub use topsoil_core::system::{Pallet as System, RawOrigin};
 	}
 }
 
@@ -267,14 +267,14 @@ pub mod benchmarking {
 /// ```
 pub mod weights_prelude {
 	pub use core::marker::PhantomData;
-	pub use topsoil_support::{
+	pub use topsoil_core::{
 		traits::Get,
 		weights::{
 			constants::{ParityDbWeight, RocksDbWeight},
 			Weight,
 		},
 	};
-	pub use topsoil_system;
+	pub use topsoil_core::system;
 }
 
 /// The main testing prelude of FRAME.
@@ -296,15 +296,15 @@ pub mod testing_prelude {
 	/// well.
 	pub use super::runtime::testing_prelude::*;
 
-	/// Other helper macros from `topsoil_support` that help with asserting in tests.
-	pub use topsoil_support::{
+	/// Other helper macros from `topsoil_core` that help with asserting in tests.
+	pub use topsoil_core::{
 		assert_err, assert_err_ignore_postinfo, assert_error_encoded_size, assert_noop, assert_ok,
 		assert_storage_noop, defensive, ensure, hypothetically, hypothetically_ok, storage_alias,
 		StorageNoopGuard,
 	};
 
-	pub use topsoil_support::traits::Everything;
-	pub use topsoil_system::{self, mocking::*, RunToBlockHooks};
+	pub use topsoil_core::traits::Everything;
+	pub use topsoil_core::system::{self, mocking::*, RunToBlockHooks};
 
 	#[deprecated(note = "Use `topsoil::testing_prelude::TestState` instead.")]
 	pub use subsoil::io::TestExternalities;
@@ -336,34 +336,34 @@ pub mod runtime {
 		/// Macro to amalgamate the runtime into `struct Runtime`.
 		///
 		/// Consider using the new version of this [`frame_construct_runtime`].
-		pub use topsoil_support::construct_runtime;
+		pub use topsoil_core::construct_runtime;
 
 		/// Macro to amalgamate the runtime into `struct Runtime`.
 		///
 		/// This is the newer version of [`construct_runtime`].
-		pub use topsoil_support::runtime as frame_construct_runtime;
+		pub use topsoil_core::runtime as frame_construct_runtime;
 
 		/// Macro to easily derive the `Config` trait of various pallet for `Runtime`.
-		pub use topsoil_support::derive_impl;
+		pub use topsoil_core::derive_impl;
 
 		/// Macros to easily impl traits such as `Get` for types.
 		// TODO: using linking in the Get in the line above triggers an ICE :/
-		pub use topsoil_support::{ord_parameter_types, parameter_types};
+		pub use topsoil_core::{ord_parameter_types, parameter_types};
 
 		/// For building genesis config.
-		pub use topsoil_support::genesis_builder_helper::{build_state, get_preset};
+		pub use topsoil_core::genesis_builder_helper::{build_state, get_preset};
 
 		/// Const types that can easily be used in conjuncture with `Get`.
-		pub use topsoil_support::traits::{
+		pub use topsoil_core::traits::{
 			ConstBool, ConstI128, ConstI16, ConstI32, ConstI64, ConstI8, ConstU128, ConstU16,
 			ConstU32, ConstU64, ConstU8,
 		};
 
 		/// Used for simple fee calculation.
-		pub use topsoil_support::weights::{self, FixedFee, NoFee};
+		pub use topsoil_core::weights::{self, FixedFee, NoFee};
 
 		/// Primary types used to parameterize `EnsureOrigin` and `EnsureRootWithArg`.
-		pub use topsoil_system::{
+		pub use topsoil_core::system::{
 			EnsureNever, EnsureNone, EnsureRoot, EnsureRootWithSuccess, EnsureSigned,
 			EnsureSignedBy,
 		};
@@ -413,7 +413,7 @@ pub mod runtime {
 		pub use subsoil::block_builder::*;
 		pub use subsoil::consensus::aura::*;
 		pub use subsoil::consensus::grandpa::*;
-		pub use topsoil_system_rpc_runtime_api::*;
+		pub use topsoil_core_rpc_runtime_api::*;
 	}
 
 	/// A set of opinionated types aliases commonly used in runtimes.
@@ -427,10 +427,10 @@ pub mod runtime {
 	/// - [`subsoil::runtime::MultiAddress`] and [`subsoil::runtime::MultiSignature`] are used as the account id
 	///   and signature types. This implies that this prelude can possibly used with an
 	///   "account-index" system (eg `topsoil-indices`). And, in any case, it should be paired with
-	///   `AccountIdLookup` in [`topsoil_system::Config::Lookup`].
+	///   `AccountIdLookup` in [`topsoil_core::system::Config::Lookup`].
 	pub mod types_common {
 		use subsoil::runtime::{generic, traits, OpaqueExtrinsic};
-		use topsoil_system::Config as SysConfig;
+		use topsoil_core::system::Config as SysConfig;
 
 		/// A signature type compatible capably of handling multiple crypto-schemes.
 		pub type Signature = subsoil::runtime::MultiSignature;
@@ -439,7 +439,7 @@ pub mod runtime {
 		pub type AccountId =
 			<<Signature as traits::Verify>::Signer as traits::IdentifyAccount>::AccountId;
 
-		/// The block-number type, which should be fed into [`topsoil_system::Config`].
+		/// The block-number type, which should be fed into [`topsoil_core::system::Config`].
 		pub type BlockNumber = u32;
 
 		/// TODO: Ideally we want the hashing type to be equal to SysConfig::Hashing?
@@ -454,9 +454,9 @@ pub mod runtime {
 			Extra,
 		>;
 
-		/// The block type, which should be fed into [`topsoil_system::Config`].
+		/// The block type, which should be fed into [`topsoil_core::system::Config`].
 		///
-		/// Should be parameterized with `T: topsoil_system::Config` and a tuple of
+		/// Should be parameterized with `T: topsoil_core::system::Config` and a tuple of
 		/// `TransactionExtension`. When in doubt, use [`SystemTransactionExtensionsOf`].
 		// Note that this cannot be dependent on `T` for block-number because it would lead to a
 		// circular dependency (self-referential generics).
@@ -472,15 +472,15 @@ pub mod runtime {
 		///
 		/// crucially, this does NOT contain any tx-payment extension.
 		pub type SystemTransactionExtensionsOf<T> = (
-			topsoil_system::AuthorizeCall<T>,
-			topsoil_system::CheckNonZeroSender<T>,
-			topsoil_system::CheckSpecVersion<T>,
-			topsoil_system::CheckTxVersion<T>,
-			topsoil_system::CheckGenesis<T>,
-			topsoil_system::CheckEra<T>,
-			topsoil_system::CheckNonce<T>,
-			topsoil_system::CheckWeight<T>,
-			topsoil_system::WeightReclaim<T>,
+			topsoil_core::system::AuthorizeCall<T>,
+			topsoil_core::system::CheckNonZeroSender<T>,
+			topsoil_core::system::CheckSpecVersion<T>,
+			topsoil_core::system::CheckTxVersion<T>,
+			topsoil_core::system::CheckGenesis<T>,
+			topsoil_core::system::CheckEra<T>,
+			topsoil_core::system::CheckNonce<T>,
+			topsoil_core::system::CheckWeight<T>,
+			topsoil_core::system::WeightReclaim<T>,
 		);
 	}
 
@@ -502,7 +502,7 @@ pub mod runtime {
 #[allow(ambiguous_glob_reexports)]
 pub mod traits {
 	pub use subsoil::runtime::traits::*;
-	pub use topsoil_support::traits::*;
+	pub use topsoil_core::traits::*;
 }
 
 /// The arithmetic types used for safe math.
@@ -514,7 +514,7 @@ pub mod arithmetic {
 
 /// All token related types and traits.
 pub mod token {
-	pub use topsoil_support::traits::{
+	pub use topsoil_core::traits::{
 		tokens,
 		tokens::{
 			currency, fungible, fungibles, imbalance, nonfungible, nonfungible_v2, nonfungibles,
@@ -540,7 +540,7 @@ pub mod derive {
 	/// or specify the `#[serde(crate = "PATH_TO_THIS_CRATE::serde")]` attribute that points
 	/// to the path where serde can be found.
 	pub use serde::{Deserialize, Serialize};
-	pub use topsoil_support::{
+	pub use topsoil_core::{
 		CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound, OrdNoBound, PartialEqNoBound,
 		PartialOrdNoBound,
 	};
@@ -566,7 +566,7 @@ pub mod transaction {
 		},
 		transaction_validity::{InvalidTransaction, ValidTransaction},
 	};
-	pub use topsoil_support::traits::{CallMetadata, GetCallMetadata};
+	pub use topsoil_core::traits::{CallMetadata, GetCallMetadata};
 }
 
 /// All account management related traits.
@@ -574,7 +574,7 @@ pub mod transaction {
 /// This is already part of the [`prelude`].
 pub mod account {
 	pub use subsoil::runtime::traits::{IdentifyAccount, IdentityLookup};
-	pub use topsoil_support::traits::{
+	pub use topsoil_core::traits::{
 		AsEnsureOriginWithArg, ChangeMembers, EitherOfDiverse, InitializeMembers,
 	};
 }
@@ -590,8 +590,8 @@ pub mod deps {
 	// moment to think about whether this item could have been placed in any of the other modules
 	// and preludes in this crate. In most cases, hopefully the answer is yes.
 
-	pub use topsoil_support;
-	pub use topsoil_system;
+	pub use topsoil_core;
+	pub use topsoil_core::system;
 
 	pub use subsoil;
 	pub use subsoil::arithmetic;
@@ -626,7 +626,7 @@ pub mod deps {
 	#[cfg(feature = "runtime-benchmarks")]
 	pub use topsoil_benchmarking;
 	#[cfg(feature = "runtime-benchmarks")]
-	pub use topsoil_system_benchmarking;
+	pub use topsoil_core_system_benchmarking;
 
 	#[cfg(feature = "topsoil-try-runtime")]
 	pub use topsoil_try_runtime;

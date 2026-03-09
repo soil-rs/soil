@@ -15,7 +15,7 @@ use subsoil::runtime::{
 	BuildStorage,
 };
 use subsoil::state_machine::BasicExternalities;
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
@@ -33,12 +33,12 @@ subsoil::impl_opaque_keys! {
 	}
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Session: plant_session,
 		Balances: plant_balances,
 		Mmr: plant_mmr,
@@ -46,8 +46,8 @@ construct_runtime!(
 		BeefyMmr: plant_beefy_mmr,
 	}
 );
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountData = plant_balances::AccountData<u64>;
 	type Block = Block;
 }
@@ -73,8 +73,8 @@ impl plant_session::Config for Test {
 }
 
 pub type MmrLeaf = subsoil::consensus::beefy::mmr::MmrLeaf<
-	topsoil_system::pallet_prelude::BlockNumberFor<Test>,
-	<Test as topsoil_system::Config>::Hash,
+	topsoil_core::system::pallet_prelude::BlockNumberFor<Test>,
+	<Test as topsoil_core::system::Config>::Hash,
 	crate::MerkleRootOf<Test>,
 	Vec<u8>,
 >;
@@ -172,7 +172,7 @@ pub fn new_test_ext(ids: Vec<u8>) -> TestExternalities {
 }
 
 pub fn new_test_ext_raw_authorities(authorities: Vec<(u64, BeefyId)>) -> TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let session_keys: Vec<_> = authorities
 		.iter()
@@ -182,7 +182,7 @@ pub fn new_test_ext_raw_authorities(authorities: Vec<(u64, BeefyId)>) -> TestExt
 
 	BasicExternalities::execute_with_storage(&mut t, || {
 		for (ref id, ..) in &session_keys {
-			topsoil_system::Pallet::<Test>::inc_providers(id);
+			topsoil_core::system::Pallet::<Test>::inc_providers(id);
 		}
 	});
 

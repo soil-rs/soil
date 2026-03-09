@@ -10,19 +10,19 @@ use super::*;
 use crate as plant_atomic_swap;
 use topsoil::testing_prelude::*;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		AtomicSwap: plant_atomic_swap,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -42,7 +42,7 @@ const A: u64 = 1;
 const B: u64 = 2;
 
 pub fn new_test_ext() -> TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let genesis = plant_balances::GenesisConfig::<Test> {
 		balances: vec![(A, 100), (B, 200)],
 		..Default::default()

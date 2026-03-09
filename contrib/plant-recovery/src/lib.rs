@@ -160,13 +160,13 @@ mod mock;
 mod tests;
 pub mod weights;
 
-pub type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+pub type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 pub type BlockNumberFromProviderOf<T> =
 	<<T as Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 pub type FriendsOf<T> =
-	BoundedVec<<T as topsoil_system::Config>::AccountId, <T as Config>::MaxFriends>;
+	BoundedVec<<T as topsoil_core::system::Config>::AccountId, <T as Config>::MaxFriends>;
 
 /// An active recovery process.
 #[derive(Clone, Eq, PartialEq, Encode, Decode, Default, Debug, TypeInfo, MaxEncodedLen)]
@@ -211,7 +211,7 @@ pub enum DepositKind<T: Config> {
 	/// Recovery configuration deposit
 	RecoveryConfig,
 	/// Active recovery deposit for an account
-	ActiveRecoveryFor(<T as topsoil_system::Config>::AccountId),
+	ActiveRecoveryFor(<T as topsoil_core::system::Config>::AccountId),
 }
 
 #[topsoil::pallet]
@@ -223,11 +223,11 @@ pub mod pallet {
 
 	/// Configuration trait.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
@@ -236,13 +236,13 @@ pub mod pallet {
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin, PostInfo = PostDispatchInfo>
 			+ GetDispatchInfo
-			+ From<topsoil_system::Call<Self>>;
+			+ From<topsoil_core::system::Call<Self>>;
 
 		/// Query the current block number.
 		///
 		/// Must return monotonically increasing values when called from consecutive blocks.
 		/// Can be configured to return either:
-		/// - the local block number of the runtime via `topsoil_system::Pallet`
+		/// - the local block number of the runtime via `topsoil_core::system::Pallet`
 		/// - a remote block number, eg from the relay chain through `RelaychainDataProvider`
 		/// - an arbitrary value through a custom implementation of the trait
 		///
@@ -251,12 +251,12 @@ pub mod pallet {
 		/// this to their local block number provider if they have the pallet already deployed.
 		///
 		/// Suggested values:
-		/// - Solo- and Relay-chains: `topsoil_system::Pallet`
+		/// - Solo- and Relay-chains: `topsoil_core::system::Pallet`
 		/// - Parachains that may produce blocks sparingly or only when needed (on-demand):
-		///   - already have the pallet deployed: `topsoil_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_core::system::Pallet`
 		///   - are freshly deploying this pallet: `RelaychainDataProvider`
 		/// - Parachains with a reliably block production rate (PLO or bulk-coretime):
-		///   - already have the pallet deployed: `topsoil_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_core::system::Pallet`
 		///   - are freshly deploying this pallet: no strong recommendation. Both local and remote
 		///     providers can be used. Relay provider can be a bit better in cases where the
 		///     parachain is lagging its block production to avoid clock skew.
@@ -424,7 +424,7 @@ pub mod pallet {
 			// Check `who` is allowed to make a call on behalf of `account`
 			let target = Self::proxy(&who).ok_or(Error::<T>::NotAllowed)?;
 			ensure!(target == account, Error::<T>::NotAllowed);
-			call.dispatch(topsoil_system::RawOrigin::Signed(account).into())
+			call.dispatch(topsoil_core::system::RawOrigin::Signed(account).into())
 				.map(|_| ())
 				.map_err(|e| e.error)
 		}
@@ -635,7 +635,7 @@ pub mod pallet {
 				recovery_config.threshold as usize <= active_recovery.friends.len(),
 				Error::<T>::Threshold
 			);
-			topsoil_system::Pallet::<T>::inc_consumers(&who).map_err(|_| Error::<T>::BadState)?;
+			topsoil_core::system::Pallet::<T>::inc_consumers(&who).map_err(|_| Error::<T>::BadState)?;
 			// Create the recovery storage item
 			Proxy::<T>::insert(&who, &account);
 			Self::deposit_event(Event::<T>::AccountRecovered {
@@ -729,7 +729,7 @@ pub mod pallet {
 			ensure!(Self::proxy(&who) == Some(account), Error::<T>::NotAllowed);
 			Proxy::<T>::remove(&who);
 
-			topsoil_system::Pallet::<T>::dec_consumers(&who);
+			topsoil_core::system::Pallet::<T>::dec_consumers(&who);
 			Ok(())
 		}
 

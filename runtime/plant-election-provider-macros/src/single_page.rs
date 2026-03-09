@@ -205,7 +205,7 @@ pub(crate) fn generate(def: crate::SolutionDef) -> Result<TokenStream2> {
 
 		impl _fepsp::codec::MaxEncodedLen for #ident {
 			fn max_encoded_len() -> usize {
-				use topsoil_support::traits::Get;
+				use topsoil_core::traits::Get;
 				use _fepsp::codec::Encode;
 				let s: u32 = <#max_voters as _feps::Get<u32>>::get();
 				let max_element_size =

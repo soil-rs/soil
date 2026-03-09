@@ -15,20 +15,20 @@ use topsoil::testing_prelude::*;
 pub type AccountId = u64;
 pub type Balance = u64;
 pub type AssetId = u32;
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Assets: plant_assets,
 		AssetsFreezer: plant_assets_freezer,
 		Balances: plant_balances,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type BaseCallFilter = Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
@@ -81,8 +81,8 @@ impl plant_assets::Config for Test {
 	type MetadataDepositBase = ();
 	type MetadataDepositPerByte = ();
 	type ApprovalDeposit = ();
-	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_core::system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<u64>;
 	type StringLimit = ConstU32<32>;
 	type Extra = ();
 	type RemoveItemsLimit = ConstU32<10>;

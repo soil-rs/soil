@@ -13,27 +13,27 @@ use core::fmt::Debug;
 use scale_info::{Type, TypeInfo};
 use subsoil::arithmetic::{Rounding::*, SignedRounding::*};
 use subsoil::runtime::{FixedI64, PerThing};
-use topsoil_support::{
+use topsoil_core::{
 	traits::{schedule::v3::Anon, Bounded},
 	Parameter,
 };
 
 pub type BalanceOf<T, I = ()> =
-	<<T as Config<I>>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config<I>>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 pub type BlockNumberFor<T, I> =
 	<<T as Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
 pub type NegativeImbalanceOf<T, I> = <<T as Config<I>>::Currency as Currency<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 >>::NegativeImbalance;
 pub type CallOf<T, I> = <T as Config<I>>::RuntimeCall;
 pub type BoundedCallOf<T, I> =
-	Bounded<<T as Config<I>>::RuntimeCall, <T as topsoil_system::Config>::Hashing>;
+	Bounded<<T as Config<I>>::RuntimeCall, <T as topsoil_core::system::Config>::Hashing>;
 pub type VotesOf<T, I> = <T as Config<I>>::Votes;
 pub type TallyOf<T, I> = <T as Config<I>>::Tally;
 pub type PalletsOriginOf<T> =
-	<<T as topsoil_system::Config>::RuntimeOrigin as OriginTrait>::PalletsOrigin;
+	<<T as topsoil_core::system::Config>::RuntimeOrigin as OriginTrait>::PalletsOrigin;
 pub type ReferendumInfoOf<T, I> = ReferendumInfo<
 	TrackIdOf<T, I>,
 	PalletsOriginOf<T>,
@@ -41,7 +41,7 @@ pub type ReferendumInfoOf<T, I> = ReferendumInfo<
 	BoundedCallOf<T, I>,
 	BalanceOf<T, I>,
 	TallyOf<T, I>,
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 	ScheduleAddressOf<T, I>,
 >;
 pub type ReferendumStatusOf<T, I> = ReferendumStatus<
@@ -51,7 +51,7 @@ pub type ReferendumStatusOf<T, I> = ReferendumStatus<
 	BoundedCallOf<T, I>,
 	BalanceOf<T, I>,
 	TallyOf<T, I>,
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 	ScheduleAddressOf<T, I>,
 >;
 pub type DecidingStatusOf<T, I> = DecidingStatus<BlockNumberFor<T, I>>;
@@ -634,7 +634,7 @@ impl Debug for Curve {
 mod tests {
 	use super::*;
 	use subsoil::runtime::{str_array as s, PerThing};
-	use topsoil_support::traits::ConstU32;
+	use topsoil_core::traits::ConstU32;
 
 	const fn percent(x: u128) -> FixedI64 {
 		FixedI64::from_rational(x, 100)

@@ -10,18 +10,18 @@ use super::*;
 use crate as plant_multisig;
 use topsoil::{prelude::*, runtime::prelude::*, testing_prelude::*};
 
-type Block = topsoil_system::mocking::MockBlockU32<Test>;
+type Block = topsoil_core::system::mocking::MockBlockU32<Test>;
 
 construct_runtime!(
 	pub struct Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Multisig: plant_multisig,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 	// This pallet wishes to overwrite this.
@@ -40,7 +40,7 @@ impl Contains<RuntimeCall> for TestBaseCallFilter {
 		match *c {
 			RuntimeCall::Balances(_) => true,
 			// Needed for benchmarking
-			RuntimeCall::System(topsoil_system::Call::remark { .. }) => true,
+			RuntimeCall::System(topsoil_core::system::Call::remark { .. }) => true,
 			_ => false,
 		}
 	}
@@ -59,13 +59,13 @@ impl Config for Test {
 	type DepositFactor = MultisigDepositFactor;
 	type MaxSignatories = ConstU32<3>;
 	type WeightInfo = ();
-	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Test>;
 }
 
 use plant_balances::{Call as BalancesCall, Error as BalancesError};
 
 pub fn new_test_ext() -> TestState {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 5), (5, 2)],
 		..Default::default()
@@ -1010,10 +1010,10 @@ fn multisig_1_of_3_works() {
 #[test]
 fn multisig_filters() {
 	new_test_ext().execute_with(|| {
-		let call = Box::new(RuntimeCall::System(topsoil_system::Call::set_code { code: vec![] }));
+		let call = Box::new(RuntimeCall::System(topsoil_core::system::Call::set_code { code: vec![] }));
 		assert_noop!(
 			Multisig::as_multi_threshold_1(RuntimeOrigin::signed(1), vec![2], call.clone()),
-			DispatchError::from(topsoil_system::Error::<Test>::CallFiltered),
+			DispatchError::from(topsoil_core::system::Error::<Test>::CallFiltered),
 		);
 	});
 }

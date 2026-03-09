@@ -7,7 +7,7 @@
 //! The for various partial storage decoders
 
 use super::*;
-use topsoil_support::{
+use topsoil_core::{
 	storage::{migration, unhashed},
 	BoundedVec,
 };

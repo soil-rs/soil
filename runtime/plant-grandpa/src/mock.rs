@@ -26,17 +26,17 @@ use plant_election_provider::{
 	onchain, SequentialPhragmen,
 };
 use plant_session::historical as pallet_session_historical;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::{ConstU128, ConstU32, ConstU64, OnFinalize, OnInitialize},
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Authorship: plant_authorship,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
@@ -54,13 +54,13 @@ subsoil::impl_opaque_keys! {
 	}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<Balance>;
 }
 
-impl<C> topsoil_system::offchain::CreateTransactionBase<C> for Test
+impl<C> topsoil_core::system::offchain::CreateTransactionBase<C> for Test
 where
 	RuntimeCall: From<C>,
 {
@@ -68,7 +68,7 @@ where
 	type Extrinsic = TestXt<RuntimeCall, ()>;
 }
 
-impl<C> topsoil_system::offchain::CreateBare<C> for Test
+impl<C> topsoil_core::system::offchain::CreateBare<C> for Test
 where
 	RuntimeCall: From<C>,
 {
@@ -161,7 +161,7 @@ impl plant_staking::Config for Test {
 	type CurrencyBalance = <Self as plant_balances::Config>::Balance;
 	type SessionsPerEra = SessionsPerEra;
 	type BondingDuration = BondingDuration;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
 	type UnixTime = plant_timestamp::Pallet<Test>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
@@ -218,7 +218,7 @@ pub fn new_test_ext(vec: Vec<(u64, u64)>) -> subsoil::io::TestExternalities {
 
 pub fn new_test_ext_raw_authorities(authorities: AuthorityList) -> subsoil::io::TestExternalities {
 	subsoil::tracing::try_init_simple();
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let balances: Vec<_> = (0..authorities.len()).map(|i| (i as u64, 10_000_000)).collect();
 

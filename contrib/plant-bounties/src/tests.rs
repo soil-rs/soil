@@ -17,7 +17,7 @@ use subsoil::runtime::{
 	traits::{BadOrigin, IdentityLookup},
 	BuildStorage, Perbill, Permill, Storage,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, derive_impl, hypothetically, hypothetically_ok,
 	pallet_prelude::*,
 	parameter_types,
@@ -29,11 +29,11 @@ use topsoil_support::{
 	},
 	PalletId,
 };
-use topsoil_system::{pallet_prelude::*, EnsureSigned};
+use topsoil_core::system::{pallet_prelude::*, EnsureSigned};
 
 use super::Event as BountiesEvent;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // This function directly jumps to a block number, and calls `on_initialize`.
 fn go_to_block(n: u64) {
@@ -41,10 +41,10 @@ fn go_to_block(n: u64) {
 	<Treasury as OnInitialize<u64>>::on_initialize(n);
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Assets: plant_assets,
 		Bounties: plant_bounties,
@@ -61,8 +61,8 @@ parameter_types! {
 type Balance = u64;
 type AccountId = u128;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = AccountId; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -86,7 +86,7 @@ parameter_types! {
 impl plant_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
 	type Currency = plant_balances::Pallet<Test>;
-	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
+	type RejectOrigin = topsoil_core::system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -94,7 +94,7 @@ impl plant_treasury::Config for Test {
 	type WeightInfo = ();
 	type SpendFunds = Bounties;
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = topsoil_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
+	type SpendOrigin = topsoil_core::system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -109,7 +109,7 @@ impl plant_treasury::Config for Test {
 impl plant_treasury::Config<Instance1> for Test {
 	type PalletId = TreasuryPalletId2;
 	type Currency = plant_balances::Pallet<Test>;
-	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
+	type RejectOrigin = topsoil_core::system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -117,7 +117,7 @@ impl plant_treasury::Config<Instance1> for Test {
 	type WeightInfo = ();
 	type SpendFunds = Bounties1;
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = topsoil_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit1>;
+	type SpendOrigin = topsoil_core::system::EnsureRootWithSuccess<Self::AccountId, SpendLimit1>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -134,7 +134,7 @@ impl plant_assets::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU64<1>;
 	type AssetAccountDeposit = ConstU64<10>;
 	type MetadataDepositBase = ConstU64<1>;
@@ -204,7 +204,7 @@ impl Default for ExtBuilder {
 impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
-			system: topsoil_system::GenesisConfig::default(),
+			system: topsoil_core::system::GenesisConfig::default(),
 			balances: plant_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],
 				..Default::default()
@@ -369,7 +369,7 @@ fn treasury_account_doesnt_get_deleted() {
 #[test]
 #[allow(deprecated)]
 fn inexistent_account_works() {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(0, 100), (1, 99), (2, 1)],
 		..Default::default()
@@ -522,7 +522,7 @@ fn close_bounty_with_additional_assets_works() {
 			// Now we can close the bounty, but the account is not gone
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
 			// Bounty account must exist
-			assert!(topsoil_system::Account::<Test>::contains_key(pot));
+			assert!(topsoil_core::system::Account::<Test>::contains_key(pot));
 
 			assert_eq!(Balances::total_balance(&pot), ed, "ED is preserved");
 			// This ^ was fixed by #10728. Otherwise, instead of just ED, everything would remain.
@@ -531,7 +531,7 @@ fn close_bounty_with_additional_assets_works() {
 		// Case 2: Bounty acc is not blocked and transfers our all balances
 		hypothetically!({
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(!topsoil_system::Account::<Test>::contains_key(pot));
+			assert!(!topsoil_core::system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 		});
 
@@ -540,7 +540,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 1, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(!topsoil_system::Account::<Test>::contains_key(pot));
+			assert!(!topsoil_core::system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 		});
 
@@ -549,7 +549,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 2, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(!topsoil_system::Account::<Test>::contains_key(pot));
+			assert!(!topsoil_core::system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 		});
 
@@ -558,7 +558,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 4, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(topsoil_system::Account::<Test>::contains_key(pot));
+			assert!(topsoil_core::system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), 0, "All balances are transferred");
 			assert_eq!(Assets::balance(4, &pot), 10);
 		});
@@ -568,7 +568,7 @@ fn close_bounty_with_additional_assets_works() {
 			assert_ok!(Assets::transfer(RuntimeOrigin::signed(0), 3, pot, 10));
 
 			assert_ok!(Bounties::close_bounty(RuntimeOrigin::root(), 0));
-			assert!(topsoil_system::Account::<Test>::contains_key(pot));
+			assert!(topsoil_core::system::Account::<Test>::contains_key(pot));
 			assert_eq!(Balances::total_balance(&pot), ed, "ED is preserved");
 			assert_eq!(Assets::balance(3, &pot), 10);
 		});
@@ -604,7 +604,7 @@ fn close_bounty_with_random_references_works() {
 		for ((s, c), p) in (0..10).zip(0..10).zip(0..10) {
 			hypothetically!({
 				// Completely mess up the account's references and check that closing still works
-				topsoil_system::Account::<Test>::mutate(&pot, |a| {
+				topsoil_core::system::Account::<Test>::mutate(&pot, |a| {
 					a.sufficients = s;
 					a.consumers = c;
 					a.providers = p;
@@ -1135,8 +1135,8 @@ fn test_migration_v4() {
 	s.top = data.into_iter().collect();
 
 	subsoil::io::TestExternalities::new(s).execute_with(|| {
-		use topsoil_support::traits::PalletInfo;
-		let old_pallet_name = <Test as topsoil_system::Config>::PalletInfo::name::<Bounties>()
+		use topsoil_core::traits::PalletInfo;
+		let old_pallet_name = <Test as topsoil_core::system::Config>::PalletInfo::name::<Bounties>()
 			.expect("Bounties is part of runtime, so it has a name; qed");
 		let new_pallet_name = "NewBounties";
 
@@ -1151,7 +1151,7 @@ fn test_migration_v4() {
 
 #[test]
 fn genesis_funding_works() {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let initial_funding = 100;
 	plant_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized with 100.

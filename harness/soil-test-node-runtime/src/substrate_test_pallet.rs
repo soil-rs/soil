@@ -18,13 +18,13 @@ use subsoil::runtime::{
 		InvalidTransaction, TransactionSource, TransactionValidity, ValidTransaction,
 	},
 };
-use topsoil_support::{pallet_prelude::*, storage};
+use topsoil_core::{pallet_prelude::*, storage};
 
 pub use self::pallet::*;
 
 const LOG_TARGET: &str = "substrate_test_pallet";
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
 	use crate::TransferData;
@@ -32,21 +32,21 @@ pub mod pallet {
 	use subsoil::runtime::{
 		traits::BlakeTwo256, transaction_validity::TransactionPriority, Perbill,
 	};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	#[pallet::without_storage_info]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::storage]
 	#[pallet::getter(fn authorities)]
 	pub type Authorities<T> = StorageValue<_, Vec<Public>, ValueQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub authorities: Vec<Public>,
 		#[serde(skip)]
@@ -73,7 +73,7 @@ pub mod pallet {
 		#[pallet::call_index(1)]
 		#[pallet::weight(100)]
 		pub fn include_data(origin: OriginFor<T>, _data: Vec<u8>) -> DispatchResult {
-			topsoil_system::ensure_signed(origin)?;
+			topsoil_core::system::ensure_signed(origin)?;
 			Ok(())
 		}
 
@@ -100,7 +100,7 @@ pub mod pallet {
 			key: Vec<u8>,
 			value: Vec<u8>,
 		) -> DispatchResult {
-			topsoil_system::ensure_signed(origin)?;
+			topsoil_core::system::ensure_signed(origin)?;
 			subsoil::io::offchain_index::set(&key, &value);
 			Ok(())
 		}
@@ -109,7 +109,7 @@ pub mod pallet {
 		#[pallet::call_index(4)]
 		#[pallet::weight(100)]
 		pub fn offchain_index_clear(origin: OriginFor<T>, key: Vec<u8>) -> DispatchResult {
-			topsoil_system::ensure_signed(origin)?;
+			topsoil_core::system::ensure_signed(origin)?;
 			subsoil::io::offchain_index::clear(&key);
 			Ok(())
 		}
@@ -118,7 +118,7 @@ pub mod pallet {
 		#[pallet::call_index(5)]
 		#[pallet::weight(100)]
 		pub fn indexed_call(origin: OriginFor<T>, data: Vec<u8>) -> DispatchResult {
-			topsoil_system::ensure_signed(origin)?;
+			topsoil_core::system::ensure_signed(origin)?;
 			let content_hash = subsoil::io::hashing::blake2_256(&data);
 			let extrinsic_index: u32 =
 				storage::unhashed::get(well_known_keys::EXTRINSIC_INDEX).unwrap();
@@ -134,7 +134,7 @@ pub mod pallet {
 			_origin: OriginFor<T>,
 			log: subsoil::runtime::generic::DigestItem,
 		) -> DispatchResult {
-			<topsoil_system::Pallet<T>>::deposit_log(log);
+			<topsoil_core::system::Pallet<T>>::deposit_log(log);
 			Ok(())
 		}
 

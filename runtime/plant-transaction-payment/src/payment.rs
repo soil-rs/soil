@@ -14,7 +14,7 @@ use subsoil::runtime::{
 	traits::{CheckedSub, DispatchInfoOf, PostDispatchInfoOf, Saturating, Zero},
 	transaction_validity::InvalidTransaction,
 };
-use topsoil_support::{
+use topsoil_core::{
 	traits::{
 		fungible::{Balanced, Credit, Inspect},
 		tokens::{Precision, WithdrawConsequence},
@@ -25,12 +25,12 @@ use topsoil_support::{
 };
 
 type NegativeImbalanceOf<C, T> =
-	<C as Currency<<T as topsoil_system::Config>::AccountId>>::NegativeImbalance;
+	<C as Currency<<T as topsoil_core::system::Config>::AccountId>>::NegativeImbalance;
 
 /// Handle withdrawing, refunding and depositing of transaction fees.
 pub trait OnChargeTransaction<T: Config>: TxCreditHold<T> {
 	/// The underlying integer type in which fees are calculated.
-	type Balance: topsoil_support::traits::tokens::Balance;
+	type Balance: topsoil_core::traits::tokens::Balance;
 
 	type LiquidityInfo: Default;
 
@@ -93,7 +93,7 @@ pub trait TxCreditHold<T: Config> {
 	type Credit: FullCodec + DecodeWithMemTracking + MaxEncodedLen + TypeInfo + SuppressedDrop;
 }
 
-/// Implements transaction payment for a pallet implementing the [`topsoil_support::traits::fungible`]
+/// Implements transaction payment for a pallet implementing the [`topsoil_core::traits::fungible`]
 /// trait (eg. plant_balances) using an unbalance handler (implementing
 /// [`OnUnbalanced`]).
 ///
@@ -109,7 +109,7 @@ where
 	OU: OnUnbalanced<<Self::Credit as SuppressedDrop>::Inner>,
 {
 	type LiquidityInfo = Option<<Self::Credit as SuppressedDrop>::Inner>;
-	type Balance = <F as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+	type Balance = <F as Inspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 	fn withdraw_fee(
 		who: &<T>::AccountId,
@@ -126,8 +126,8 @@ where
 			who,
 			fee_with_tip,
 			Precision::Exact,
-			topsoil_support::traits::tokens::Preservation::Preserve,
-			topsoil_support::traits::tokens::Fortitude::Polite,
+			topsoil_core::traits::tokens::Preservation::Preserve,
+			topsoil_core::traits::tokens::Fortitude::Polite,
 		)
 		.map_err(|_| InvalidTransaction::Payment)?;
 
@@ -177,7 +177,7 @@ where
 		}
 
 		// skip refund if account was killed by the tx
-		let fee_credit = if topsoil_system::Pallet::<T>::account_exists(who) {
+		let fee_credit = if topsoil_core::system::Pallet::<T>::account_exists(who) {
 			let (mut fee_credit, refund_credit) = remaining_credit.split(corrected_fee);
 			// resolve might fail if refund is below the ed and account
 			// is kept alive by other providers
@@ -212,7 +212,7 @@ where
 	T: Config,
 	F: Balanced<T::AccountId> + 'static,
 {
-	type Credit = NoDrop<Credit<<T as topsoil_system::Config>::AccountId, F>>;
+	type Credit = NoDrop<Credit<<T as topsoil_core::system::Config>::AccountId, F>>;
 }
 
 /// Implements the transaction payment for a pallet implementing the [`Currency`]
@@ -234,19 +234,19 @@ pub struct CurrencyAdapter<C, OU>(PhantomData<(C, OU)>);
 impl<T, C, OU> OnChargeTransaction<T> for CurrencyAdapter<C, OU>
 where
 	T: Config,
-	C: Currency<<T as topsoil_system::Config>::AccountId>,
+	C: Currency<<T as topsoil_core::system::Config>::AccountId>,
 	C::PositiveImbalance: Imbalance<
-		<C as Currency<<T as topsoil_system::Config>::AccountId>>::Balance,
+		<C as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance,
 		Opposite = C::NegativeImbalance,
 	>,
 	C::NegativeImbalance: Imbalance<
-		<C as Currency<<T as topsoil_system::Config>::AccountId>>::Balance,
+		<C as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance,
 		Opposite = C::PositiveImbalance,
 	>,
 	OU: OnUnbalanced<NegativeImbalanceOf<C, T>>,
 {
 	type LiquidityInfo = Option<NegativeImbalanceOf<C, T>>;
-	type Balance = <C as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	type Balance = <C as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 	/// Withdraw the predicted fee from the transaction origin.
 	///

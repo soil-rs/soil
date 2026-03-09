@@ -7,7 +7,7 @@
 //! Default weights for the BEEFY Pallet
 //! This file was not auto-generated.
 
-use topsoil_support::weights::{
+use topsoil_core::weights::{
 	constants::{RocksDbWeight as DbWeight, WEIGHT_REF_TIME_PER_MICROS, WEIGHT_REF_TIME_PER_NANOS},
 	Weight,
 };

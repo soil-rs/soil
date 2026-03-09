@@ -6,7 +6,7 @@
 
 //! Storage migrations for the core-fellowship pallet.
 use super::*;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	storage_alias,
 	traits::{DefensiveTruncateFrom, UncheckedOnRuntimeUpgrade},
@@ -19,7 +19,7 @@ use alloc::vec::Vec;
 use subsoil::runtime::TryRuntimeError;
 
 mod v0 {
-	use topsoil_system::pallet_prelude::BlockNumberFor;
+	use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 	use super::*;
 
@@ -68,7 +68,7 @@ impl<T: Config<I>, I: 'static> UncheckedOnRuntimeUpgrade for MigrateToV1<T, I> {
 		Ok(Default::default())
 	}
 
-	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 		// Read the old value from storage
 		let old_value = v0::Params::<T, I>::take();
 		// Write the new value to storage
@@ -89,14 +89,14 @@ impl<T: Config<I>, I: 'static> UncheckedOnRuntimeUpgrade for MigrateToV1<T, I> {
 }
 
 /// [`UncheckedOnRuntimeUpgrade`] implementation [`MigrateToV1`] wrapped in a
-/// [`VersionedMigration`](topsoil_support::migrations::VersionedMigration), which ensures that:
+/// [`VersionedMigration`](topsoil_core::migrations::VersionedMigration), which ensures that:
 /// - The migration only runs once when the on-chain storage version is 0
 /// - The on-chain storage version is updated to `1` after the migration executes
 /// - Reads/Writes from checking/settings the on-chain storage version are accounted for
-pub type MigrateV0ToV1<T, I> = topsoil_support::migrations::VersionedMigration<
+pub type MigrateV0ToV1<T, I> = topsoil_core::migrations::VersionedMigration<
 	0, // The migration will only execute when the on-chain storage version is 0
 	1, // The on-chain storage version will be set to 1 after the migration is complete
 	MigrateToV1<T, I>,
 	crate::pallet::Pallet<T, I>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;

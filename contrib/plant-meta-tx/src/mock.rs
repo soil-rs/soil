@@ -16,7 +16,7 @@ use subsoil::runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},
 	MultiSignature,
 };
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl,
 	weights::{FixedFee, NoFee},
 };
@@ -50,13 +50,13 @@ mod tx_ext {
 	///
 	/// Helper type used to decode the part of the extension which should be signed.
 	pub type TxBareExtension = (
-		topsoil_system::CheckNonZeroSender<Runtime>,
-		topsoil_system::CheckSpecVersion<Runtime>,
-		topsoil_system::CheckTxVersion<Runtime>,
-		topsoil_system::CheckGenesis<Runtime>,
-		topsoil_system::CheckMortality<Runtime>,
-		topsoil_system::CheckNonce<Runtime>,
-		topsoil_system::CheckWeight<Runtime>,
+		topsoil_core::system::CheckNonZeroSender<Runtime>,
+		topsoil_core::system::CheckSpecVersion<Runtime>,
+		topsoil_core::system::CheckTxVersion<Runtime>,
+		topsoil_core::system::CheckGenesis<Runtime>,
+		topsoil_core::system::CheckMortality<Runtime>,
+		topsoil_core::system::CheckNonce<Runtime>,
+		topsoil_core::system::CheckWeight<Runtime>,
 		plant_transaction_payment::ChargeTransactionPayment<Runtime>,
 	);
 
@@ -71,12 +71,12 @@ mod tx_ext {
 	/// Helper type used to decode the part of the extension which should be signed.
 	pub type MetaTxBareExtension = (
 		MetaTxMarker<Runtime>,
-		topsoil_system::CheckNonZeroSender<Runtime>,
-		topsoil_system::CheckSpecVersion<Runtime>,
-		topsoil_system::CheckTxVersion<Runtime>,
-		topsoil_system::CheckGenesis<Runtime>,
-		topsoil_system::CheckMortality<Runtime>,
-		topsoil_system::CheckNonce<Runtime>,
+		topsoil_core::system::CheckNonZeroSender<Runtime>,
+		topsoil_core::system::CheckSpecVersion<Runtime>,
+		topsoil_core::system::CheckTxVersion<Runtime>,
+		topsoil_core::system::CheckGenesis<Runtime>,
+		topsoil_core::system::CheckMortality<Runtime>,
+		topsoil_core::system::CheckNonce<Runtime>,
 	);
 }
 
@@ -94,11 +94,11 @@ impl plant_verify_signature::Config for Runtime {
 	type BenchmarkHelper = ();
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
-	type Block = topsoil_system::mocking::MockBlock<Runtime>;
+	type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 	type AccountData = plant_balances::AccountData<<Self as plant_balances::Config>::Balance>;
 }
 
@@ -122,7 +122,7 @@ impl plant_transaction_payment::Config for Runtime {
 
 construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		MetaTx: plant_meta_tx,
 		TxPayment: plant_transaction_payment,
@@ -133,7 +133,7 @@ construct_runtime!(
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 	let mut ext = subsoil::io::TestExternalities::new(Default::default());
 	ext.execute_with(|| {
-		topsoil_system::GenesisConfig::<Runtime>::default().build();
+		topsoil_core::system::GenesisConfig::<Runtime>::default().build();
 		System::set_block_number(1);
 	});
 	ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));

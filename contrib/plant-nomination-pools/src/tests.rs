@@ -13,7 +13,7 @@ use subsoil::runtime::{
 	FixedU128,
 };
 use plant_balances::Event as BEvent;
-use topsoil_support::{assert_err, assert_noop, assert_ok, hypothetically};
+use topsoil_core::{assert_err, assert_noop, assert_ok, hypothetically};
 
 macro_rules! unbonding_pools_with_era {
 	($($k:expr => $v:expr),* $(,)?) => {{
@@ -3433,7 +3433,7 @@ mod unbond {
 
 			// when: unbonding more than our active: error
 			assert_noop!(
-				topsoil_support::storage::with_storage_layer(|| Pools::unbond(
+				topsoil_core::storage::with_storage_layer(|| Pools::unbond(
 					RuntimeOrigin::signed(10),
 					10,
 					5
@@ -3485,7 +3485,7 @@ mod unbond {
 			// when
 			CurrentEra::set(2);
 			assert_noop!(
-				topsoil_support::storage::with_storage_layer(|| Pools::unbond(
+				topsoil_core::storage::with_storage_layer(|| Pools::unbond(
 					RuntimeOrigin::signed(20),
 					20,
 					4
@@ -4706,7 +4706,7 @@ mod withdraw_unbonded {
 			// pool is destroyed.
 			assert!(!Metadata::<T>::contains_key(1));
 			// ensure the pool account is reaped.
-			assert!(!topsoil_system::Account::<T>::contains_key(&Pools::generate_bonded_account(
+			assert!(!topsoil_core::system::Account::<T>::contains_key(&Pools::generate_bonded_account(
 				1
 			)));
 		})
@@ -4751,14 +4751,14 @@ mod withdraw_unbonded {
 			// pool is destroyed.
 			assert!(!Metadata::<T>::contains_key(1));
 			// ensure the pool account is reaped.
-			assert!(!topsoil_system::Account::<T>::contains_key(&pool_one));
+			assert!(!topsoil_core::system::Account::<T>::contains_key(&pool_one));
 		})
 	}
 }
 
 mod create {
 	use super::*;
-	use topsoil_support::traits::fungible::InspectFreeze;
+	use topsoil_core::traits::fungible::InspectFreeze;
 
 	#[test]
 	fn create_works() {

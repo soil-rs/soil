@@ -7,7 +7,7 @@
 use super::{Config, Kind, OffenceDetails, Pallet, Perbill, SessionIndex, LOG_TARGET};
 use alloc::vec::Vec;
 use subsoil::staking::offence::OnOffenceHandler;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
 	traits::{Get, GetStorageVersion, OnRuntimeUpgrade},
@@ -18,7 +18,7 @@ use topsoil_support::{
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
+use topsoil_core::ensure;
 
 mod v0 {
 	use super::*;
@@ -34,7 +34,7 @@ mod v0 {
 }
 
 pub mod v1 {
-	use topsoil_support::traits::StorageVersion;
+	use topsoil_core::traits::StorageVersion;
 
 	use super::*;
 
@@ -81,7 +81,7 @@ pub mod v1 {
 type DeferredOffenceOf<T> = (
 	Vec<
 		OffenceDetails<
-			<T as topsoil_system::Config>::AccountId,
+			<T as topsoil_core::system::Config>::AccountId,
 			<T as Config>::IdentificationTuple,
 		>,
 	>,
@@ -129,7 +129,7 @@ mod test {
 		ext.execute_with(|| {
 			assert_eq!(
 				v1::MigrateToV1::<T>::on_runtime_upgrade(),
-				<T as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2),
+				<T as topsoil_core::system::Config>::DbWeight::get().reads_writes(2, 2),
 			);
 
 			assert!(<v0::ReportsByKindIndex<T>>::iter_values().count() == 0);
@@ -146,7 +146,7 @@ mod test {
 			});
 
 			let offence_details = OffenceDetails::<
-				<T as topsoil_system::Config>::AccountId,
+				<T as topsoil_core::system::Config>::AccountId,
 				<T as Config>::IdentificationTuple,
 			> {
 				offender: 5,
@@ -163,7 +163,7 @@ mod test {
 			// when
 			assert_eq!(
 				remove_deferred_storage::<T>(),
-				<T as topsoil_system::Config>::DbWeight::get().reads_writes(1, 1),
+				<T as topsoil_core::system::Config>::DbWeight::get().reads_writes(1, 1),
 			);
 
 			// then

@@ -17,6 +17,5 @@ plant-transaction-payment = { workspace = true, default-features = true }
 paste = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-topsoil-support = { features = ["experimental"], workspace = true, default-features = true }
-topsoil-system = { workspace = true, default-features = true }
+topsoil-core = { features = ["experimental"], workspace = true, default-features = true }
 serde_json = { workspace = true, default-features = true }

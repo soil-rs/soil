@@ -7,7 +7,7 @@
 //! Implementations for fungibles trait.
 
 use alloc::vec::Vec;
-use topsoil_support::{
+use topsoil_core::{
 	defensive,
 	traits::tokens::{
 		Fortitude,

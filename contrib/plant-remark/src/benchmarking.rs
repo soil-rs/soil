@@ -11,14 +11,14 @@
 use super::*;
 use alloc::vec;
 use topsoil_benchmarking::v2::*;
-use topsoil_system::{EventRecord, Pallet as System, RawOrigin};
+use topsoil_core::system::{EventRecord, Pallet as System, RawOrigin};
 
 #[cfg(test)]
 use crate::Pallet as Remark;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 	let events = System::<T>::events();
-	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let system_event: <T as topsoil_core::system::Config>::RuntimeEvent = generic_event.into();
 	let EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
 }

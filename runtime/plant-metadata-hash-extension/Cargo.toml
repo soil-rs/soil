@@ -13,8 +13,7 @@ array-bytes = { workspace = true, default-features = true }
 codec = { features = ["derive"], workspace = true }
 const-hex = { workspace = true }
 docify = { workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive", "serde"], workspace = true }
 subsoil = { workspace = true }
@@ -31,8 +30,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"const-hex/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"scale-info/std",
 	"subsoil/std"]

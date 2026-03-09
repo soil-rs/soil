@@ -38,7 +38,7 @@ pub mod weights;
 
 pub use pallet::*;
 use topsoil::prelude::*;
-use topsoil_system::Config as SystemConfig;
+use topsoil_core::system::Config as SystemConfig;
 pub use types::*;
 pub use weights::WeightInfo;
 
@@ -66,11 +66,11 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The currency mechanism, used for paying for deposits.
 		type Currency: InspectFungible<Self::AccountId>

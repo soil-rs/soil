@@ -35,7 +35,7 @@ use subsoil::runtime::{
 	},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchInfo, DispatchResult, PostDispatchInfo},
 	pallet_prelude::{TransactionSource, Weight},
 	traits::{
@@ -75,10 +75,10 @@ pub(crate) type LiquidityInfoOf<T> =
 /// Type alias used for interaction with fungibles (assets).
 /// Balance type alias.
 pub(crate) type AssetBalanceOf<T> =
-	<<T as Config>::Fungibles as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Fungibles as Inspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 /// Asset id type alias.
 pub(crate) type AssetIdOf<T> =
-	<<T as Config>::Fungibles as Inspect<<T as topsoil_system::Config>::AccountId>>::AssetId;
+	<<T as Config>::Fungibles as Inspect<<T as topsoil_core::system::Config>::AccountId>>::AssetId;
 
 // Type aliases used for interaction with `OnChargeAssetTransaction`.
 /// Balance type alias.
@@ -105,16 +105,16 @@ pub enum InitialPayment<T: Config> {
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config + plant_transaction_payment::Config {
+	pub trait Config: topsoil_core::system::Config + plant_transaction_payment::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// The fungibles instance used to pay for transactions in assets.
 		type Fungibles: Balanced<Self::AccountId>;
 		/// The actual transaction charging logic that charges the fees.

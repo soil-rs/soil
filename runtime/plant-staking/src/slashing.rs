@@ -50,7 +50,7 @@ use subsoil::runtime::{
 	traits::{Saturating, Zero},
 	Debug, DispatchResult,
 };
-use topsoil_support::{
+use topsoil_core::{
 	ensure,
 	pallet_prelude::DecodeWithMemTracking,
 	traits::{Defensive, DefensiveSaturating, Imbalance, OnUnbalanced},

@@ -6,7 +6,7 @@
 
 //! Implementation of `fungible` traits for Balances pallet.
 use super::*;
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	tokens::{
 		Fortitude,
 		Preservation::{self, Preserve, Protect},
@@ -49,10 +49,10 @@ impl<T: Config<I>, I: 'static> fungible::Inspect<T::AccountId> for Pallet<T, I> 
 		if preservation == Preserve
 			// ..or we don't want the account to die and our provider ref is needed for it to live..
 			|| preservation == Protect && !a.free.is_zero() &&
-				topsoil_system::Pallet::<T>::providers(who) == 1
+				topsoil_core::system::Pallet::<T>::providers(who) == 1
 			// ..or we don't care about the account dying but our provider ref is required..
 			|| preservation == Expendable && !a.free.is_zero() &&
-				!topsoil_system::Pallet::<T>::can_dec_provider(who)
+				!topsoil_core::system::Pallet::<T>::can_dec_provider(who)
 		{
 			// ..then the ED needed..
 			untouchable = untouchable.max(T::ExistentialDeposit::get());
@@ -119,7 +119,7 @@ impl<T: Config<I>, I: 'static> fungible::Inspect<T::AccountId> for Pallet<T, I> 
 		// then this will need to adapt accordingly.
 		let ed = T::ExistentialDeposit::get();
 		let success = if new_free_balance < ed {
-			if topsoil_system::Pallet::<T>::can_dec_provider(who) {
+			if topsoil_core::system::Pallet::<T>::can_dec_provider(who) {
 				WithdrawConsequence::ReducedToZero(new_free_balance)
 			} else {
 				return WithdrawConsequence::WouldDie;
@@ -267,7 +267,7 @@ impl<T: Config<I>, I: 'static> fungible::InspectHold<T::AccountId> for Pallet<T,
 			.map_or_else(Zero::zero, |x| x.amount)
 	}
 	fn hold_available(reason: &Self::Reason, who: &T::AccountId) -> bool {
-		if topsoil_system::Pallet::<T>::providers(who) == 0 {
+		if topsoil_core::system::Pallet::<T>::providers(who) == 0 {
 			return false;
 		}
 		let holds = Holds::<T, I>::get(who);

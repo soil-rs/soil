@@ -72,7 +72,7 @@ use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::Weight;
 use subsoil::std::{fmt::Debug, prelude::*};
 use plant_election_provider::PageIndex;
-use topsoil_support::weights::WeightMeter;
+use topsoil_core::weights::WeightMeter;
 
 /// Errors that can happen in the feasibility check.
 #[derive(

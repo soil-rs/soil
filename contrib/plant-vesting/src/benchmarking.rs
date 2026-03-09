@@ -10,15 +10,15 @@
 
 use subsoil::runtime::traits::{Bounded, CheckedDiv, CheckedMul};
 use topsoil_benchmarking::{v2::*, BenchmarkError};
-use topsoil_support::assert_ok;
-use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
+use topsoil_core::assert_ok;
+use topsoil_core::system::{pallet_prelude::BlockNumberFor, RawOrigin};
 
 use crate::*;
 
 const SEED: u32 = 0;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 fn add_locks<T: Config>(who: &T::AccountId, n: u8) {
 	for id in 0..n {
@@ -74,7 +74,7 @@ mod benchmarks {
 		let expected_balance = add_vesting_schedules::<T>(&caller, s)?;
 
 		// At block zero, everything is vested.
-		assert_eq!(topsoil_system::Pallet::<T>::block_number(), BlockNumberFor::<T>::zero());
+		assert_eq!(topsoil_core::system::Pallet::<T>::block_number(), BlockNumberFor::<T>::zero());
 		assert_eq!(
 			Pallet::<T>::vesting_balance(&caller),
 			Some(expected_balance),
@@ -135,7 +135,7 @@ mod benchmarks {
 		let expected_balance = add_vesting_schedules::<T>(&other, s)?;
 
 		// At block zero, everything is vested.
-		assert_eq!(topsoil_system::Pallet::<T>::block_number(), BlockNumberFor::<T>::zero());
+		assert_eq!(topsoil_core::system::Pallet::<T>::block_number(), BlockNumberFor::<T>::zero());
 		assert_eq!(
 			Pallet::<T>::vesting_balance(&other),
 			Some(expected_balance),
@@ -282,7 +282,7 @@ mod benchmarks {
 		let expected_balance = add_vesting_schedules::<T>(&caller, s)?;
 
 		// Schedules are not vesting at block 0.
-		assert_eq!(topsoil_system::Pallet::<T>::block_number(), BlockNumberFor::<T>::zero());
+		assert_eq!(topsoil_core::system::Pallet::<T>::block_number(), BlockNumberFor::<T>::zero());
 		assert_eq!(
 			Pallet::<T>::vesting_balance(&caller),
 			Some(expected_balance),

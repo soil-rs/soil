@@ -9,8 +9,8 @@ use subsoil::runtime::{
 	traits::{BadOrigin, Identity},
 	TokenError,
 };
-use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
-use topsoil_system::RawOrigin;
+use topsoil_core::{assert_noop, assert_ok, assert_storage_noop};
+use topsoil_core::system::RawOrigin;
 
 use super::{Vesting as VestingStorage, *};
 use crate::mock::{vesting_events_since_last_call, Balances, ExtBuilder, System, Test, Vesting};
@@ -22,7 +22,7 @@ const ED: u64 = 256;
 /// in the `Vesting` storage item.
 fn vest_and_assert_no_vesting<T>(account: u64)
 where
-	u64: EncodeLike<<T as topsoil_system::Config>::AccountId>,
+	u64: EncodeLike<<T as topsoil_core::system::Config>::AccountId>,
 	T: pallet::Config,
 {
 	// Its ok for this to fail because the user may already have no schedules.

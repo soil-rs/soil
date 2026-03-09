@@ -19,18 +19,18 @@ type Block = MockBlock<Test>;
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Salary: plant_salary,
 	}
 );
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 
@@ -140,7 +140,7 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> TestState {
-	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext = TestState::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext

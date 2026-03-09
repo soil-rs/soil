@@ -16,7 +16,7 @@ use subsoil::runtime::{
 		ValidTransaction,
 	},
 };
-use topsoil_support::{dispatch::DispatchInfo, ensure, pallet_prelude::TransactionSource};
+use topsoil_core::{dispatch::DispatchInfo, ensure, pallet_prelude::TransactionSource};
 
 /// Ensure that signed transactions are only valid if they are signed by sudo account.
 ///
@@ -55,11 +55,11 @@ impl<T: Config + Send + Sync> CheckOnlySudoAccount<T> {
 	}
 }
 
-impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>::RuntimeCall>
+impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_core::system::Config>::RuntimeCall>
 	for CheckOnlySudoAccount<T>
 where
-	<T as topsoil_system::Config>::RuntimeCall: Dispatchable<Info = DispatchInfo>,
-	<<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin:
+	<T as topsoil_core::system::Config>::RuntimeCall: Dispatchable<Info = DispatchInfo>,
+	<<T as topsoil_core::system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin:
 		AsSystemOriginSigner<T::AccountId> + Clone,
 {
 	const IDENTIFIER: &'static str = "CheckOnlySudoAccount";
@@ -69,17 +69,17 @@ where
 
 	fn weight(
 		&self,
-		_: &<T as topsoil_system::Config>::RuntimeCall,
-	) -> topsoil_support::weights::Weight {
+		_: &<T as topsoil_core::system::Config>::RuntimeCall,
+	) -> topsoil_core::weights::Weight {
 		use crate::weights::WeightInfo;
 		T::WeightInfo::check_only_sudo_account()
 	}
 
 	fn validate(
 		&self,
-		origin: <<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
-		call: &<T as topsoil_system::Config>::RuntimeCall,
-		info: &DispatchInfoOf<<T as topsoil_system::Config>::RuntimeCall>,
+		origin: <<T as topsoil_core::system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
+		call: &<T as topsoil_core::system::Config>::RuntimeCall,
+		info: &DispatchInfoOf<<T as topsoil_core::system::Config>::RuntimeCall>,
 		_len: usize,
 		_self_implicit: Self::Implicit,
 		_inherited_implication: &impl Encode,
@@ -88,7 +88,7 @@ where
 		(
 			ValidTransaction,
 			Self::Val,
-			<<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
+			<<T as topsoil_core::system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin,
 		),
 		TransactionValidityError,
 	> {
@@ -107,5 +107,5 @@ where
 		))
 	}
 
-	subsoil::impl_tx_ext_default!(<T as topsoil_system::Config>::RuntimeCall; prepare);
+	subsoil::impl_tx_ext_default!(<T as topsoil_core::system::Config>::RuntimeCall; prepare);
 }

@@ -149,20 +149,20 @@
 //!
 //! ```
 //! use plant_staking::{self as staking};
-//! use topsoil_support::traits::RewardsReporter;
+//! use topsoil_core::traits::RewardsReporter;
 //!
-//! #[topsoil_support::pallet(dev_mode)]
+//! #[topsoil_core::pallet(dev_mode)]
 //! pub mod pallet {
 //!   use super::*;
-//!   use topsoil_support::pallet_prelude::*;
-//!   use topsoil_system::pallet_prelude::*;
-//!   # use topsoil_support::traits::RewardsReporter;
+//!   use topsoil_core::pallet_prelude::*;
+//!   use topsoil_core::system::pallet_prelude::*;
+//!   # use topsoil_core::traits::RewardsReporter;
 //!
 //!   #[pallet::pallet]
 //!   pub struct Pallet<T>(_);
 //!
 //!   #[pallet::config]
-//!   pub trait Config: topsoil_system::Config + staking::Config {}
+//!   pub trait Config: topsoil_core::system::Config + staking::Config {}
 //!
 //!   #[pallet::call]
 //!   impl<T: Config> Pallet<T> {
@@ -211,7 +211,7 @@
 //!
 //! Total reward is split among validators and their nominators depending on the number of points
 //! they received during the era. Points are added to a validator using the method
-//! [`topsoil_support::traits::RewardsReporter::reward_by_ids`] implemented by the [`Pallet`].
+//! [`topsoil_core::traits::RewardsReporter::reward_by_ids`] implemented by the [`Pallet`].
 //!
 //! [`Pallet`] implements [`plant_authorship::EventHandler`] to add reward points to block producer
 //! and block producer of referenced uncles.
@@ -314,7 +314,7 @@ use subsoil::runtime::{
 	Debug, Perbill, Perquintill, Rounding, Saturating,
 };
 use plant_election_provider::ElectionProvider;
-use topsoil_support::{
+use topsoil_core::{
 	defensive, defensive_assert,
 	traits::{
 		tokens::fungible::{Credit, Debt},
@@ -336,7 +336,7 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: crate::LOG_TARGET,
-			concat!("[{:?}] 💸 ", $patter), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[{:?}] 💸 ", $patter), <topsoil_core::system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
@@ -359,11 +359,11 @@ pub type RewardPoint = u32;
 pub type BalanceOf<T> = <T as Config>::CurrencyBalance;
 
 type PositiveImbalanceOf<T> =
-	Debt<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
+	Debt<<T as topsoil_core::system::Config>::AccountId, <T as Config>::Currency>;
 pub type NegativeImbalanceOf<T> =
-	Credit<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
+	Credit<<T as topsoil_core::system::Config>::AccountId, <T as Config>::Currency>;
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
 /// Information regarding the active era (era in used in session).
 #[derive(
@@ -930,25 +930,25 @@ pub trait SessionInterface<AccountId> {
 	fn prune_historical_up_to(up_to: SessionIndex);
 }
 
-impl<T: Config> SessionInterface<<T as topsoil_system::Config>::AccountId> for T
+impl<T: Config> SessionInterface<<T as topsoil_core::system::Config>::AccountId> for T
 where
-	T: plant_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
+	T: plant_session::Config<ValidatorId = <T as topsoil_core::system::Config>::AccountId>,
 	T: plant_session::historical::Config,
-	T::SessionHandler: plant_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
-	T::SessionManager: plant_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
+	T::SessionHandler: plant_session::SessionHandler<<T as topsoil_core::system::Config>::AccountId>,
+	T::SessionManager: plant_session::SessionManager<<T as topsoil_core::system::Config>::AccountId>,
 	T::ValidatorIdOf: Convert<
-		<T as topsoil_system::Config>::AccountId,
-		Option<<T as topsoil_system::Config>::AccountId>,
+		<T as topsoil_core::system::Config>::AccountId,
+		Option<<T as topsoil_core::system::Config>::AccountId>,
 	>,
 {
 	fn report_offence(
-		validator: <T as topsoil_system::Config>::AccountId,
+		validator: <T as topsoil_core::system::Config>::AccountId,
 		severity: OffenceSeverity,
 	) {
 		<plant_session::Pallet<T>>::report_offence(validator, severity)
 	}
 
-	fn validators() -> Vec<<T as topsoil_system::Config>::AccountId> {
+	fn validators() -> Vec<<T as topsoil_core::system::Config>::AccountId> {
 		<plant_session::Pallet<T>>::validators()
 	}
 
@@ -1402,6 +1402,6 @@ pub struct TestBenchmarkingConfig;
 
 #[cfg(feature = "std")]
 impl BenchmarkingConfig for TestBenchmarkingConfig {
-	type MaxValidators = topsoil_support::traits::ConstU32<100>;
-	type MaxNominators = topsoil_support::traits::ConstU32<100>;
+	type MaxValidators = topsoil_core::traits::ConstU32<100>;
+	type MaxNominators = topsoil_core::traits::ConstU32<100>;
 }

@@ -118,7 +118,7 @@ pub mod weights;
 #[cfg(doc)]
 pub use subsoil::staking::StakingInterface;
 #[cfg(doc)]
-pub use topsoil_support::traits::Hooks;
+pub use topsoil_core::traits::Hooks;
 
 /// The logging target of this pallet.
 pub const LOG_TARGET: &'static str = "runtime::fast-unstake";
@@ -128,23 +128,23 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: crate::LOG_TARGET,
-			concat!("[{:?}] 💨 ", $patter), topsoil_system::Pallet::<T>::block_number() $(, $values)*
+			concat!("[{:?}] 💨 ", $patter), topsoil_core::system::Pallet::<T>::block_number() $(, $values)*
 		)
 	};
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use crate::types::*;
 	use alloc::vec::Vec;
 	use subsoil::staking::{EraIndex, StakingInterface};
 	use subsoil::runtime::{traits::Zero, DispatchResult};
-	use topsoil_support::{
+	use topsoil_core::{
 		pallet_prelude::*,
 		traits::{Defensive, ReservableCurrency, StorageVersion},
 	};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 	pub use weights::WeightInfo;
 
 	#[cfg(feature = "try-runtime")]
@@ -157,11 +157,11 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>
 			+ TryInto<Event<Self>>;
 
 		/// The currency used for deposits.
@@ -173,7 +173,7 @@ pub mod pallet {
 		type Deposit: Get<BalanceOf<Self>>;
 
 		/// The origin that can control this pallet, in other words invoke [`Pallet::control`].
-		type ControlOrigin: topsoil_support::traits::EnsureOrigin<Self::RuntimeOrigin>;
+		type ControlOrigin: topsoil_core::traits::EnsureOrigin<Self::RuntimeOrigin>;
 
 		/// Batch size.
 		///
@@ -411,7 +411,7 @@ pub mod pallet {
 
 		/// Halt the operations of this pallet.
 		pub(crate) fn halt(reason: &'static str) {
-			topsoil_support::defensive!(reason);
+			topsoil_core::defensive!(reason);
 			ErasToCheckPerBlock::<T>::put(0);
 			Self::deposit_event(Event::<T>::InternalError)
 		}

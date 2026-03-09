@@ -52,7 +52,7 @@ use codec::{Decode, Encode};
 use subsoil::core::TypeId;
 use subsoil::io::hashing::blake2_256;
 use subsoil::runtime::traits::{BadOrigin, Dispatchable, TrailingZeroInput};
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{
 		extract_actual_weight,
 		DispatchClass::{Normal, Operational},
@@ -64,35 +64,35 @@ pub use weights::WeightInfo;
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::{dispatch::DispatchClass, pallet_prelude::*};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{dispatch::DispatchClass, pallet_prelude::*};
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	/// Configuration trait.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin, PostInfo = PostDispatchInfo>
 			+ GetDispatchInfo
-			+ From<topsoil_system::Call<Self>>
+			+ From<topsoil_core::system::Call<Self>>
 			+ UnfilteredDispatchable<RuntimeOrigin = Self::RuntimeOrigin>
 			+ IsSubType<Call<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeCall>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeCall>;
 
 		/// The caller origin, overarching type of all pallets origins.
 		type PalletsOrigin: Parameter +
-			Into<<Self as topsoil_system::Config>::RuntimeOrigin> +
-			IsType<<<Self as topsoil_system::Config>::RuntimeOrigin as topsoil_support::traits::OriginTrait>::PalletsOrigin>;
+			Into<<Self as topsoil_core::system::Config>::RuntimeOrigin> +
+			IsType<<<Self as topsoil_core::system::Config>::RuntimeOrigin as topsoil_core::traits::OriginTrait>::PalletsOrigin>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
@@ -169,7 +169,7 @@ pub mod pallet {
 		///   exceed the constant: `batched_calls_limit` (available in constant metadata).
 		///
 		/// If origin is root then the calls are dispatched without checking origin filter. (This
-		/// includes bypassing `topsoil_system::Config::BaseCallFilter`).
+		/// includes bypassing `topsoil_core::system::Config::BaseCallFilter`).
 		///
 		/// ## Complexity
 		/// - O(C) where C is the number of calls to be batched.
@@ -259,7 +259,7 @@ pub mod pallet {
 			let mut origin = origin;
 			let who = ensure_signed(origin.clone())?;
 			let pseudonym = derivative_account_id(who, index);
-			origin.set_caller_from(topsoil_system::RawOrigin::Signed(pseudonym));
+			origin.set_caller_from(topsoil_core::system::RawOrigin::Signed(pseudonym));
 			let info = call.get_dispatch_info();
 			let result = call.dispatch(origin);
 			// Always take into account the base weight of this call.
@@ -284,7 +284,7 @@ pub mod pallet {
 		///   exceed the constant: `batched_calls_limit` (available in constant metadata).
 		///
 		/// If origin is root then the calls are dispatched without checking origin filter. (This
-		/// includes bypassing `topsoil_system::Config::BaseCallFilter`).
+		/// includes bypassing `topsoil_core::system::Config::BaseCallFilter`).
 		///
 		/// ## Complexity
 		/// - O(C) where C is the number of calls to be batched.
@@ -318,7 +318,7 @@ pub mod pallet {
 					let mut filtered_origin = origin.clone();
 					// Don't allow users to nest `batch_all` calls.
 					filtered_origin.add_filter(
-						move |c: &<T as topsoil_system::Config>::RuntimeCall| {
+						move |c: &<T as topsoil_core::system::Config>::RuntimeCall| {
 							let c = <T as Config>::RuntimeCall::from_ref(c);
 							!matches!(c.is_sub_type(), Some(Call::batch_all { .. }))
 						},
@@ -380,7 +380,7 @@ pub mod pallet {
 		///   exceed the constant: `batched_calls_limit` (available in constant metadata).
 		///
 		/// If origin is root then the calls are dispatch without checking origin filter. (This
-		/// includes bypassing `topsoil_system::Config::BaseCallFilter`).
+		/// includes bypassing `topsoil_core::system::Config::BaseCallFilter`).
 		///
 		/// ## Complexity
 		/// - O(C) where C is the number of calls to be batched.
@@ -449,7 +449,7 @@ pub mod pallet {
 			ensure_root(origin)?;
 			let _ = weight; // Explicitly don't check the the weight witness.
 
-			let res = call.dispatch_bypass_filter(topsoil_system::RawOrigin::Root.into());
+			let res = call.dispatch_bypass_filter(topsoil_core::system::RawOrigin::Root.into());
 			res.map(|_| ()).map_err(|e| e.error)
 		}
 

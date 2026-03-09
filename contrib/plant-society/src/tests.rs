@@ -12,7 +12,7 @@ use mock::*;
 
 use subsoil::runtime::traits::BadOrigin;
 use subsoil_crypto_hashing::blake2_256;
-use topsoil_support::{assert_noop, assert_ok};
+use topsoil_core::{assert_noop, assert_ok};
 use BidKind::*;
 use VouchingStatus::*;
 

@@ -139,12 +139,12 @@ mod tests {
 	use subsoil::runtime::{testing::UintAuthorityId, BuildStorage};
 	use subsoil::state_machine::BasicExternalities;
 
-	use topsoil_support::traits::{KeyOwnerProofSystem, OnInitialize};
+	use topsoil_core::traits::{KeyOwnerProofSystem, OnInitialize};
 
 	type Historical = Pallet<Test>;
 
 	pub fn new_test_ext() -> subsoil::io::TestExternalities {
-		let mut t = topsoil_system::GenesisConfig::<Test>::default()
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default()
 			.build_storage()
 			.expect("Failed to create test externalities.");
 
@@ -156,7 +156,7 @@ mod tests {
 
 		BasicExternalities::execute_with_storage(&mut t, || {
 			for (ref k, ..) in &keys {
-				topsoil_system::Pallet::<Test>::inc_providers(k);
+				topsoil_core::system::Pallet::<Test>::inc_providers(k);
 			}
 		});
 

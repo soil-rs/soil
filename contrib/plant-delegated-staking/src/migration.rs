@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
 use super::*;
-use topsoil_support::traits::OnRuntimeUpgrade;
+use topsoil_core::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;

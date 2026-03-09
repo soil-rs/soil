@@ -16,8 +16,8 @@ use topsoil::{
 	traits::{InsideBoth, InstanceFilter, IsInVec},
 };
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type BaseCallFilter = InsideBoth<Everything, SafeMode>;
 	type BlockWeights = ();
 	type BlockLength = ();
@@ -122,7 +122,7 @@ impl plant_proxy::Config for Test {
 	type MaxPending = ConstU32<2>;
 	type AnnouncementDepositBase = ConstU64<1>;
 	type AnnouncementDepositFactor = ConstU64<1>;
-	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Test>;
 }
 
 /// The calls that can always bypass safe-mode.
@@ -161,13 +161,13 @@ pub struct MockedNotify;
 impl SafeModeNotify for MockedNotify {
 	fn entered() {
 		let mut ns = Notifications::get();
-		ns.push((<topsoil_system::Pallet<Test>>::block_number(), true));
+		ns.push((<topsoil_core::system::Pallet<Test>>::block_number(), true));
 		Notifications::set(&ns);
 	}
 
 	fn exited() {
 		let mut ns = Notifications::get();
-		ns.push((<topsoil_system::Pallet<Test>>::block_number(), false));
+		ns.push((<topsoil_core::system::Pallet<Test>>::block_number(), false));
 		Notifications::set(&ns);
 	}
 }
@@ -195,12 +195,12 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Utility: plant_utility,
 		Proxy: plant_proxy,
@@ -212,7 +212,7 @@ pub const BAL_ACC0: u64 = 1234;
 pub const BAL_ACC1: u64 = 5678;
 
 pub fn new_test_ext() -> TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	plant_balances::GenesisConfig::<Test> {
 		// The 0 account is NOT a special origin, the rest may be.

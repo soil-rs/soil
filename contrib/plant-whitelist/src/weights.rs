@@ -52,7 +52,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_whitelist` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `Whitelist::WhitelistedCall` (r:1 w:1)
 	/// Proof: `Whitelist::WhitelistedCall` (`max_values`: None, `max_size`: Some(40), added: 2515, mode: `MaxEncodedLen`)
 	/// Storage: `Preimage::StatusFor` (r:1 w:0)

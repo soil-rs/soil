@@ -8,9 +8,9 @@
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	// The struct on which we build all of our Pallet logic.
 	#[pallet::pallet]
@@ -18,7 +18,7 @@ pub mod pallet {
 
 	// Your Pallet's configuration trait, representing custom external types and interfaces.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::storage]
 	type MyStorage<T: Config> = StorageValue<_, Vec<u8>>;

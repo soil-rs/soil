@@ -32,7 +32,7 @@
 //! Configuration of call filters:
 //!
 //! ```ignore
-//! impl topsoil_system::Config for Runtime {
+//! impl topsoil_core::system::Config for Runtime {
 //!   // …
 //!   type BaseCallFilter = InsideBoth<DefaultFilter, SafeMode>;
 //!   // …
@@ -73,7 +73,7 @@ pub use pallet::*;
 pub use weights::*;
 
 type BalanceOf<T> = <<T as Config>::Currency as fungible::Inspect<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 >>::Balance;
 
 #[topsoil::pallet]
@@ -84,11 +84,11 @@ pub mod pallet {
 	pub struct Pallet<T>(PhantomData<T>);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Currency type for this pallet, used for Deposits.
 		type Currency: Inspect<Self::AccountId>
@@ -465,7 +465,7 @@ impl<T: Config> Pallet<T> {
 			Self::hold(who, amount)?;
 		}
 
-		let until = <topsoil_system::Pallet<T>>::block_number().saturating_add(duration);
+		let until = <topsoil_core::system::Pallet<T>>::block_number().saturating_add(duration);
 		EnteredUntil::<T>::put(until);
 		Self::deposit_event(Event::Entered { until });
 		T::Notify::entered();
@@ -513,7 +513,7 @@ impl<T: Config> Pallet<T> {
 			ensure!(!Self::is_entered(), Error::<T>::Entered);
 
 			let delay = T::ReleaseDelay::get().ok_or(Error::<T>::NotConfigured)?;
-			let now = <topsoil_system::Pallet<T>>::block_number();
+			let now = <topsoil_core::system::Pallet<T>>::block_number();
 			ensure!(now > block.saturating_add(delay), Error::<T>::CannotReleaseYet);
 		}
 
@@ -552,7 +552,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// Errors if the account already has a hold for the same reason.
 	fn hold(who: T::AccountId, amount: BalanceOf<T>) -> Result<(), Error<T>> {
-		let block = <topsoil_system::Pallet<T>>::block_number();
+		let block = <topsoil_core::system::Pallet<T>>::block_number();
 		if !T::Currency::balance_on_hold(&HoldReason::EnterOrExtend.into(), &who).is_zero() {
 			return Err(Error::<T>::AlreadyDeposited.into());
 		}
@@ -608,7 +608,7 @@ impl<T: Config> topsoil::traits::SafeMode for Pallet<T> {
 
 	fn remaining() -> Option<BlockNumberFor<T>> {
 		EnteredUntil::<T>::get().map(|until| {
-			let now = <topsoil_system::Pallet<T>>::block_number();
+			let now = <topsoil_core::system::Pallet<T>>::block_number();
 			until.saturating_sub(now)
 		})
 	}

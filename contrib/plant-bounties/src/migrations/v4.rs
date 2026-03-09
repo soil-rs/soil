@@ -7,7 +7,7 @@
 use core::str;
 use subsoil::core::hexdisplay::HexDisplay;
 use subsoil::io::{hashing::twox_128, storage};
-use topsoil_support::{
+use topsoil_core::{
 	storage::{generator::StorageValue, StoragePrefixedMap},
 	traits::{
 		Get, GetStorageVersion, PalletInfoAccess, StorageVersion,
@@ -22,7 +22,7 @@ use crate as plant_bounties;
 ///
 /// This new prefix must be the same as the one set in construct_runtime. For safety, use
 /// `PalletInfo` to get it, as:
-/// `<Runtime as topsoil_system::Config>::PalletInfo::name::<BountiesPallet>`.
+/// `<Runtime as topsoil_core::system::Config>::PalletInfo::name::<BountiesPallet>`.
 ///
 /// The migration will look into the storage version in order not to trigger a migration on an up
 /// to date storage. Thus the on chain storage version must be less than 4 in order to trigger the
@@ -55,7 +55,7 @@ pub fn migrate<
 
 	if on_chain_storage_version < 4 {
 		let storage_prefix = plant_bounties::BountyCount::<T>::storage_prefix();
-		topsoil_support::storage::migration::move_storage_from_pallet(
+		topsoil_core::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
@@ -63,7 +63,7 @@ pub fn migrate<
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
 		let storage_prefix = plant_bounties::Bounties::<T>::storage_prefix();
-		topsoil_support::storage::migration::move_storage_from_pallet(
+		topsoil_core::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
@@ -71,7 +71,7 @@ pub fn migrate<
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
 		let storage_prefix = plant_bounties::BountyDescriptions::<T>::storage_prefix();
-		topsoil_support::storage::migration::move_storage_from_pallet(
+		topsoil_core::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
@@ -79,7 +79,7 @@ pub fn migrate<
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
 		let storage_prefix = plant_bounties::BountyApprovals::<T>::storage_prefix();
-		topsoil_support::storage::migration::move_storage_from_pallet(
+		topsoil_core::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			old_pallet_name.as_bytes(),
 			new_pallet_name.as_bytes(),
@@ -87,7 +87,7 @@ pub fn migrate<
 		log_migration("migration", storage_prefix, old_pallet_name, new_pallet_name);
 
 		StorageVersion::new(4).put::<P>();
-		<T as topsoil_system::Config>::BlockWeights::get().max_block
+		<T as topsoil_core::system::Config>::BlockWeights::get().max_block
 	} else {
 		log::warn!(
 			target: "runtime::bounties",
@@ -99,7 +99,7 @@ pub fn migrate<
 }
 
 /// Some checks prior to migration. This can be linked to
-/// `topsoil_support::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
+/// `topsoil_core::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn pre_migration<T: plant_bounties::Config, P: GetStorageVersion + 'static, N: AsRef<str>>(
@@ -154,7 +154,7 @@ pub fn pre_migration<T: plant_bounties::Config, P: GetStorageVersion + 'static, 
 }
 
 /// Some checks for after migration. This can be linked to
-/// `topsoil_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
+/// `topsoil_core::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn post_migration<T: plant_bounties::Config, P: GetStorageVersion, N: AsRef<str>>(

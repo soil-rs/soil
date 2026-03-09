@@ -11,7 +11,7 @@
 use crate::*;
 use topsoil::{
 	benchmarking::prelude::v1::benchmarks_instance_pallet,
-	deps::topsoil_support::traits::OnInitialize,
+	deps::topsoil_core::traits::OnInitialize,
 };
 
 benchmarks_instance_pallet! {

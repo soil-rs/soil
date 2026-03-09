@@ -53,20 +53,20 @@ mod tests;
 
 extern crate alloc;
 
-use topsoil_support::pallet_prelude::*;
-use topsoil_system::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
+use topsoil_core::system::pallet_prelude::*;
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet_coownership {
 	use super::*;
-	use topsoil_support::traits::OriginTrait;
+	use topsoil_core::traits::OriginTrait;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The aggregated origin which the dispatch will take.
 		type RuntimeOrigin: OriginTrait<PalletsOrigin = Self::PalletsOrigin>
 			+ From<Self::PalletsOrigin>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeOrigin>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeOrigin>;
 
 		/// The caller origin, overarching type of all pallets origins.
 		type PalletsOrigin: From<Origin<Self>> + TryInto<Origin<Self>, Error = Self::PalletsOrigin>;
@@ -86,7 +86,7 @@ pub mod pallet_coownership {
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod plant_assets {
 	use super::*;
 
@@ -100,7 +100,7 @@ pub mod plant_assets {
 	}
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Type that can authorize an account pair coowner origin.
 		type CoownerOrigin: EnsureOrigin<
 			Self::RuntimeOrigin,
@@ -111,7 +111,7 @@ pub mod plant_assets {
 	/// Map that holds the owner information for each asset it manages.
 	#[pallet::storage]
 	pub type AssetOwners<T> =
-		StorageMap<_, Blake2_128Concat, AssetId, Owner<<T as topsoil_system::Config>::AccountId>>;
+		StorageMap<_, Blake2_128Concat, AssetId, Owner<<T as topsoil_core::system::Config>::AccountId>>;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);

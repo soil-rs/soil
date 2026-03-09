@@ -72,7 +72,7 @@ pub struct StoragePagedList<Prefix, Value, ValuesPerNewPage> {
 
 /// The state of a [`StoragePagedList`].
 ///
-/// This struct doubles as [`topsoil::deps::topsoil_support::storage::StorageList::Appender`].
+/// This struct doubles as [`topsoil::deps::topsoil_core::storage::StorageList::Appender`].
 #[derive(
 	Encode, Decode, CloneNoBound, PartialEqNoBound, EqNoBound, DebugNoBound, DefaultNoBound,
 )]

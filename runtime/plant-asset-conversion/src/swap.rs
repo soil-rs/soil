@@ -7,7 +7,7 @@
 //! Traits and implementations for swap between the various asset classes.
 
 use super::*;
-use topsoil_support::{storage::with_transaction, transactional};
+use topsoil_core::{storage::with_transaction, transactional};
 
 /// Trait for providing methods to swap between the various asset classes.
 pub trait Swap<AccountId> {

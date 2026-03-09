@@ -8,7 +8,7 @@
 
 use super::*;
 use fungible::Balanced;
-use topsoil_support::traits::tokens::{
+use topsoil_core::traits::tokens::{
 	Fortitude::Force,
 	Precision::BestEffort,
 	Preservation::{Expendable, Protect},

@@ -76,7 +76,7 @@
 //! ```rust
 //! # use plant_election_provider::{*, data_provider};
 //! # use subsoil::npos_elections::{Support, Assignment};
-//! # use topsoil_support::traits::ConstU32;
+//! # use topsoil_core::traits::ConstU32;
 //! # use subsoil::runtime::bounded_vec;
 //!
 //! type AccountId = u64;
@@ -122,7 +122,7 @@
 //! mod generic_election_provider {
 //!     use super::*;
 //!     use subsoil::runtime::traits::Zero;
-//! 	use topsoil_support::pallet_prelude::Weight;
+//! 	use topsoil_core::pallet_prelude::Weight;
 //!
 //!     pub struct GenericElectionProvider<T: Config>(std::marker::PhantomData<T>);
 //!
@@ -158,7 +158,7 @@
 //! }
 //!
 //! mod runtime {
-//!     use topsoil_support::parameter_types;
+//!     use topsoil_core::parameter_types;
 //!     use super::generic_election_provider;
 //!     use super::data_provider_mod;
 //!     use super::AccountId;
@@ -198,7 +198,7 @@ use alloc::{boxed::Box, vec::Vec};
 use core::fmt::Debug;
 use subsoil::core::ConstU32;
 use subsoil::runtime::traits::{Bounded, Saturating, Zero};
-use topsoil_support::traits::{Defensive, DefensiveResult};
+use topsoil_core::traits::{Defensive, DefensiveResult};
 
 pub use bounds::DataProviderBounds;
 pub use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
@@ -211,7 +211,7 @@ pub use subsoil::npos_elections::{
 };
 /// Re-export the solution generation macro.
 pub use plant_election_provider_macros::generate_solution_type;
-pub use topsoil_support::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
+pub use topsoil_core::{traits::Get, weights::Weight, BoundedVec, DefaultNoBound};
 pub use traits::NposSolution;
 
 #[cfg(feature = "try-runtime")]

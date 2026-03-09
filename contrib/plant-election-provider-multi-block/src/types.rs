@@ -36,11 +36,11 @@ use subsoil::runtime::{
 use subsoil::std::{collections::btree_set::BTreeSet, fmt::Debug, prelude::*};
 use plant_election_provider::ElectionProvider;
 pub use plant_election_provider::{NposSolution, PageIndex};
-use topsoil_support::{
+use topsoil_core::{
 	traits::DefensiveSaturating, BoundedVec, CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound,
 	PartialEqNoBound,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 /// The solution type used by this crate.
 pub type SolutionOf<T> = <T as MinerConfig>::Solution;
@@ -170,7 +170,7 @@ impl<T: Default + Clone + Debug> PadSolutionPages for Vec<T> {
 	}
 }
 
-impl<T: Default + Clone + Debug, Bound: topsoil_support::traits::Get<u32>> PadSolutionPages
+impl<T: Default + Clone + Debug, Bound: topsoil_core::traits::Get<u32>> PadSolutionPages
 	for BoundedVec<T, Bound>
 {
 	fn pad_solution_pages(self, desired_pages: PageIndex) -> Self {

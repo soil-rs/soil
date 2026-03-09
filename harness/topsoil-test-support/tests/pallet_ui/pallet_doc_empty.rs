@@ -4,14 +4,14 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 // Expected one argument for the doc path.
 #[pallet_doc]
 mod pallet {
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config
+	pub trait Config: topsoil_core::system::Config
 	where
-		<Self as topsoil_system::Config>::Nonce: From<u128>,
+		<Self as topsoil_core::system::Config>::Nonce: From<u128>,
 	{
 	}
 

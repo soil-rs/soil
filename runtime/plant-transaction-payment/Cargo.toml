@@ -21,8 +21,7 @@ jsonrpsee = { features = ["client-core", "macros", "server-core"], optional = tr
 soil-client = { optional = true, workspace = true, default-features = true }
 soil-rpc = { optional = true, workspace = true, default-features = true }
 topsoil-benchmarking = { optional = true, workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 serde = { optional = true, workspace = true, default-features = true }
@@ -37,8 +36,7 @@ client = ["std", "dep:jsonrpsee", "dep:soil-client", "dep:soil-rpc"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"scale-info/std",
 	"serde",
@@ -46,12 +44,10 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"subsoil/try-runtime",
 ]

@@ -15,9 +15,9 @@ use subsoil::runtime::{
 	generic,
 	traits::{BlakeTwo256, Verify},
 };
-use topsoil_support::{derive_impl, traits::VariantCount};
+use topsoil_core::{derive_impl, traits::VariantCount};
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod module_single_instance {
 
 	#[pallet::composite_enum]
@@ -36,13 +36,13 @@ mod module_single_instance {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		type RuntimeHoldReason: From<HoldReason>;
 		type RuntimeFreezeReason: From<FreezeReason>;
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod module_multi_instance {
 
 	#[pallet::composite_enum]
@@ -61,13 +61,13 @@ mod module_multi_instance {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		type RuntimeHoldReason: From<HoldReason<I>>;
 		type RuntimeFreezeReason: From<FreezeReason<I>>;
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod module_composite_enum_consumer {
 	use super::*;
 
@@ -75,7 +75,7 @@ mod module_composite_enum_consumer {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		// consume `HoldReason` `composite_enum`
 		type RuntimeHoldReason: VariantCount;
 		// consume `FreezeReason` `composite_enum`
@@ -90,10 +90,10 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		ModuleSingleInstance: module_single_instance,
 		ModuleMultiInstance0: module_multi_instance,
 		ModuleMultiInstance1: module_multi_instance::<Instance1>,
@@ -103,8 +103,8 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Block = Block;
 }
 

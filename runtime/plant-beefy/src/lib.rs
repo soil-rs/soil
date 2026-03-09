@@ -31,14 +31,14 @@ use subsoil::runtime::{
 	traits::{IsMember, Member, One},
 	RuntimeAppPublic,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	pallet_prelude::*,
 	traits::{Get, OneSessionHandler},
 	weights::{constants::RocksDbWeight as DbWeight, Weight},
 	BoundedSlice, BoundedVec, Parameter,
 };
-use topsoil_system::{
+use topsoil_core::system::{
 	ensure_none, ensure_signed,
 	pallet_prelude::{BlockNumberFor, HeaderFor, OriginFor},
 };
@@ -49,13 +49,13 @@ pub use pallet::*;
 
 const LOG_TARGET: &str = "runtime::beefy";
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_system::{ensure_root, pallet_prelude::BlockNumberFor};
+	use topsoil_core::system::{ensure_root, pallet_prelude::BlockNumberFor};
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Authority identifier type
 		type BeefyId: Member
 			+ Parameter
@@ -275,7 +275,7 @@ pub mod pallet {
 		) -> DispatchResult {
 			ensure_root(origin)?;
 			ensure!(delay_in_blocks >= One::one(), Error::<T>::InvalidConfiguration);
-			let genesis_block = topsoil_system::Pallet::<T>::block_number() + delay_in_blocks;
+			let genesis_block = topsoil_core::system::Pallet::<T>::block_number() + delay_in_blocks;
 			GenesisBlock::<T>::put(Some(genesis_block));
 			Ok(())
 		}
@@ -598,7 +598,7 @@ impl<T: Config> Pallet<T> {
 				BEEFY_ENGINE_ID,
 				ConsensusLog::AuthoritiesChange(validator_set.clone()).encode(),
 			);
-			topsoil_system::Pallet::<T>::deposit_log(log);
+			topsoil_core::system::Pallet::<T>::deposit_log(log);
 
 			let next_id = new_id + 1;
 			if let Some(next_validator_set) = ValidatorSet::<T::BeefyId>::new(queued, next_id) {
@@ -719,7 +719,7 @@ where
 			ConsensusLog::<T::BeefyId>::OnDisabled(i as AuthorityIndex).encode(),
 		);
 
-		topsoil_system::Pallet::<T>::deposit_log(log);
+		topsoil_core::system::Pallet::<T>::deposit_log(log);
 	}
 }
 

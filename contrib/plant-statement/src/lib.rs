@@ -18,31 +18,31 @@
 #![cfg_attr(not(feature = "std"), no_std)]
 
 use soil_statement_store::{Proof, Statement};
-use topsoil_support::{pallet_prelude::*, traits::fungible::Inspect};
-use topsoil_system::pallet_prelude::*;
+use topsoil_core::{pallet_prelude::*, traits::fungible::Inspect};
+use topsoil_core::system::pallet_prelude::*;
 
 pub use pallet::*;
 
 const LOG_TARGET: &str = "runtime::statement";
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
 	pub type BalanceOf<T> =
-		<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+		<<T as Config>::Currency as Inspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
-	pub type AccountIdOf<T> = <T as topsoil_system::Config>::AccountId;
+	pub type AccountIdOf<T> = <T as topsoil_core::system::Config>::AccountId;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config
+	pub trait Config: topsoil_core::system::Config
 	where
-		<Self as topsoil_system::Config>::AccountId: From<soil_statement_store::AccountId>,
+		<Self as topsoil_core::system::Config>::AccountId: From<soil_statement_store::AccountId>,
 	{
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// The currency which is used to calculate account limits.
 		type Currency: Inspect<Self::AccountId>;
 		/// Min balance for priority statements.
@@ -72,7 +72,7 @@ pub mod pallet {
 	#[pallet::generate_deposit(pub(super) fn deposit_event)]
 	pub enum Event<T: Config>
 	where
-		<T as topsoil_system::Config>::AccountId: From<soil_statement_store::AccountId>,
+		<T as topsoil_core::system::Config>::AccountId: From<soil_statement_store::AccountId>,
 	{
 		/// A new statement is submitted
 		NewStatement { account: T::AccountId, statement: Statement },
@@ -81,11 +81,11 @@ pub mod pallet {
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T>
 	where
-		<T as topsoil_system::Config>::AccountId: From<soil_statement_store::AccountId>,
-		soil_statement_store::AccountId: From<<T as topsoil_system::Config>::AccountId>,
-		<T as topsoil_system::Config>::RuntimeEvent: From<pallet::Event<T>>,
-		<T as topsoil_system::Config>::RuntimeEvent: TryInto<pallet::Event<T>>,
-		soil_statement_store::BlockHash: From<<T as topsoil_system::Config>::Hash>,
+		<T as topsoil_core::system::Config>::AccountId: From<soil_statement_store::AccountId>,
+		soil_statement_store::AccountId: From<<T as topsoil_core::system::Config>::AccountId>,
+		<T as topsoil_core::system::Config>::RuntimeEvent: From<pallet::Event<T>>,
+		<T as topsoil_core::system::Config>::RuntimeEvent: TryInto<pallet::Event<T>>,
+		soil_statement_store::BlockHash: From<<T as topsoil_core::system::Config>::Hash>,
 	{
 		fn offchain_worker(now: BlockNumberFor<T>) {
 			log::trace!(target: LOG_TARGET, "Collecting statements at #{:?}", now);
@@ -96,11 +96,11 @@ pub mod pallet {
 
 impl<T: Config> Pallet<T>
 where
-	<T as topsoil_system::Config>::AccountId: From<soil_statement_store::AccountId>,
-	soil_statement_store::AccountId: From<<T as topsoil_system::Config>::AccountId>,
-	<T as topsoil_system::Config>::RuntimeEvent: From<pallet::Event<T>>,
-	<T as topsoil_system::Config>::RuntimeEvent: TryInto<pallet::Event<T>>,
-	soil_statement_store::BlockHash: From<<T as topsoil_system::Config>::Hash>,
+	<T as topsoil_core::system::Config>::AccountId: From<soil_statement_store::AccountId>,
+	soil_statement_store::AccountId: From<<T as topsoil_core::system::Config>::AccountId>,
+	<T as topsoil_core::system::Config>::RuntimeEvent: From<pallet::Event<T>>,
+	<T as topsoil_core::system::Config>::RuntimeEvent: TryInto<pallet::Event<T>>,
+	soil_statement_store::BlockHash: From<<T as topsoil_core::system::Config>::Hash>,
 {
 	/// Submit a statement event. The statement will be picked up by the offchain worker and
 	/// broadcast to the network.
@@ -110,13 +110,13 @@ where
 
 	fn collect_statements() {
 		// Find `NewStatement` events and submit them to the store
-		for (index, event) in topsoil_system::Pallet::<T>::read_events_no_consensus().enumerate() {
+		for (index, event) in topsoil_core::system::Pallet::<T>::read_events_no_consensus().enumerate() {
 			if let Ok(Event::<T>::NewStatement { account, mut statement }) = event.event.try_into()
 			{
 				if statement.proof().is_none() {
 					let proof = Proof::OnChain {
 						who: account.into(),
-						block_hash: topsoil_system::Pallet::<T>::parent_hash().into(),
+						block_hash: topsoil_core::system::Pallet::<T>::parent_hash().into(),
 						event_index: index as u64,
 					};
 					statement.set_proof(proof);

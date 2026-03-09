@@ -6,14 +6,14 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use topsoil_support::{derive_impl, traits::ConstU32};
+use topsoil_core::{derive_impl, traits::ConstU32};
 
 pub use pallet::*;
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	// The struct on which we build all of our Pallet logic.
 	#[pallet::pallet]
@@ -21,7 +21,7 @@ pub mod pallet {
 
 	// Your Pallet's configuration trait, representing custom external types and interfaces.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	// The MEL requirement for bounded pallets is skipped by `dev_mode`.
 	#[pallet::storage]
@@ -59,9 +59,9 @@ pub mod pallet {
 	impl<T: Config> Pallet<T> {}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -89,11 +89,11 @@ pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::trait
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub struct Runtime
 	{
 		// Exclude part `Storage` in order not to check its metadata in tests.
-		System: topsoil_system exclude_parts { Pallet, Storage },
+		System: topsoil_core::system exclude_parts { Pallet, Storage },
 		Example: pallet,
 	}
 );
@@ -101,7 +101,7 @@ topsoil_support::construct_runtime!(
 impl pallet::Config for Runtime {}
 
 fn main() {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 	use subsoil::io::{
 		hashing::{blake2_128, twox_128},
 		TestExternalities,

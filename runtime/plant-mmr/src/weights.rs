@@ -48,7 +48,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_mmr` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `Mmr::NumberOfLeaves` (r:1 w:1)
 	/// Proof: `Mmr::NumberOfLeaves` (`max_values`: Some(1), `max_size`: Some(8), added: 503, mode: `MaxEncodedLen`)
 	/// Storage: `System::ParentHash` (r:1 w:0)

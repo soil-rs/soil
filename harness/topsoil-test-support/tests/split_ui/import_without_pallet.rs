@@ -6,7 +6,7 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use topsoil_support::pallet_macros::*;
+use topsoil_core::pallet_macros::*;
 
 #[pallet_section]
 mod storages {

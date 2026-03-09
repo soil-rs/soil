@@ -17,12 +17,12 @@ use plant_election_provider::{
 	onchain, SequentialPhragmen,
 };
 use plant_staking::{BalanceOf, StakerStatus};
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::{ConstBool, ConstU32, ConstU64, OneSessionHandler},
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 type AccountId = u64;
 type Balance = u64;
 type BlockNumber = u64;
@@ -30,10 +30,10 @@ type BlockNumber = u64;
 pub const INIT_TIMESTAMP: u64 = 30_000;
 pub const BLOCK_TIME: u64 = 1000;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
 		Staking: plant_staking,
@@ -69,8 +69,8 @@ impl subsoil::runtime::BoundToRuntimeAppPublic for OtherSessionHandler {
 	type Public = UintAuthorityId;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -125,7 +125,7 @@ impl plant_staking::Config for Test {
 	type UnixTime = Timestamp;
 	type SessionsPerEra = SessionsPerEra;
 	type SlashDeferDuration = SlashDeferDuration;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type BondingDuration = BondingDuration;
 	type SessionInterface = Self;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
@@ -196,7 +196,7 @@ impl Default for ExtBuilder {
 
 impl ExtBuilder {
 	fn build(self) -> subsoil::io::TestExternalities {
-		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut storage = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 		plant_balances::GenesisConfig::<Test> {
 			balances: vec![
@@ -286,7 +286,7 @@ pub(crate) fn start_session(session_index: SessionIndex) {
 pub(crate) fn run_to_block(n: BlockNumber) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		topsoil_system::RunToBlockHooks::default().after_initialize(|bn| {
+		topsoil_core::system::RunToBlockHooks::default().after_initialize(|bn| {
 			Timestamp::set_timestamp(bn * BLOCK_TIME + INIT_TIMESTAMP);
 		}),
 	);

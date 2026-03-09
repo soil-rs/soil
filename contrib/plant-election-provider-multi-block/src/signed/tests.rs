@@ -14,7 +14,7 @@ use crate::{
 use subsoil::core::bounded_vec;
 use subsoil::npos_elections::ElectionScore;
 use plant_election_provider::{ElectionProvider, NposSolution};
-use topsoil_support::storage::unhashed;
+use topsoil_core::storage::unhashed;
 
 pub type T = Runtime;
 
@@ -1099,7 +1099,7 @@ mod e2e {
 }
 
 mod invulnerables {
-	use topsoil_support::hypothetically;
+	use topsoil_core::hypothetically;
 
 	use super::*;
 

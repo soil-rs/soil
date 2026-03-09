@@ -6,7 +6,7 @@
 
 use crate::{mock::*, *};
 use subsoil::runtime::{traits::BadOrigin, ArithmeticError, TokenError};
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok, hypothetically,
 	traits::{
 		fungible,

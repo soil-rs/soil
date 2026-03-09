@@ -34,7 +34,7 @@
 #![allow(unused_imports)]
 #![allow(missing_docs)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for pallet_template.
@@ -46,7 +46,7 @@ pub trait WeightInfo {
 
 /// Weight functions for `plant_example_kitchensink`.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: Kitchensink OtherFoo (r:0 w:1)
 	/// Proof Skipped: Kitchensink OtherFoo (max_values: Some(1), max_size: None, mode: Measured)
 	fn set_foo_benchmark() -> Weight {

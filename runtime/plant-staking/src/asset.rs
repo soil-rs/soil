@@ -9,7 +9,7 @@
 
 use crate::{BalanceOf, Config, HoldReason, NegativeImbalanceOf, PositiveImbalanceOf};
 use subsoil::runtime::{DispatchResult, Saturating};
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	fungible::{
 		hold::{Balanced as FunHoldBalanced, Inspect as FunHoldInspect, Mutate as FunHoldMutate},
 		Balanced, Inspect as FunInspect,
@@ -61,7 +61,7 @@ pub fn free_to_stake<T: Config>(who: &T::AccountId) -> BalanceOf<T> {
 /// Should only be used with test.
 #[cfg(any(test, feature = "runtime-benchmarks"))]
 pub fn set_stakeable_balance<T: Config>(who: &T::AccountId, value: BalanceOf<T>) {
-	use topsoil_support::traits::fungible::Mutate;
+	use topsoil_core::traits::fungible::Mutate;
 
 	// minimum free balance (non-staked) required to keep the account alive.
 	let ed = existential_deposit::<T>();

@@ -12,7 +12,7 @@ use assert_matches::assert_matches;
 use codec::Decode;
 use subsoil::runtime::DispatchError::BadOrigin;
 use plant_balances::Error as BalancesError;
-use topsoil_support::{assert_noop, assert_ok, dispatch::RawOrigin, traits::Contains};
+use topsoil_core::{assert_noop, assert_ok, dispatch::RawOrigin, traits::Contains};
 
 #[test]
 fn params_should_work() {
@@ -567,7 +567,7 @@ fn kill_errors_works() {
 fn set_balance_proposal_is_correctly_filtered_out() {
 	for i in 0..10 {
 		let call = crate::mock::RuntimeCall::decode(&mut &set_balance_proposal(i)[..]).unwrap();
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 	}
 }
 
@@ -590,7 +590,7 @@ fn curve_handles_all_inputs() {
 fn set_metadata_works() {
 	ExtBuilder::default().build_and_execute(|| {
 		// invalid preimage hash.
-		let invalid_hash: <Test as topsoil_system::Config>::Hash = [1u8; 32].into();
+		let invalid_hash: <Test as topsoil_core::system::Config>::Hash = [1u8; 32].into();
 		// fails to set metadata for a finished referendum.
 		assert_ok!(Referenda::submit(
 			RuntimeOrigin::signed(1),
@@ -665,7 +665,7 @@ fn detects_incorrect_len() {
 			Referenda::submit(
 				RuntimeOrigin::signed(1),
 				Box::new(RawOrigin::Root.into()),
-				topsoil_support::traits::Bounded::Lookup { hash, len: 3 },
+				topsoil_core::traits::Bounded::Lookup { hash, len: 3 },
 				DispatchTime::At(1),
 			),
 			Error::<Test>::PreimageStoredWithDifferentLength

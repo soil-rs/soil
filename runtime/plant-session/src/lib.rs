@@ -121,7 +121,7 @@ use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Convert, Member, One, OpaqueKeys, Zero},
 	ConsensusEngineId, DispatchError, KeyTypeId, Permill, RuntimeAppPublic,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResult,
 	ensure,
 	traits::{
@@ -132,7 +132,7 @@ use topsoil_support::{
 	weights::Weight,
 	Parameter,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 pub use pallet::*;
 pub use weights::WeightInfo;
@@ -148,7 +148,7 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: crate::LOG_TARGET,
-			concat!("[{:?}] 💸 ", $patter), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[{:?}] 💸 ", $patter), <topsoil_core::system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
@@ -429,11 +429,11 @@ pub trait SessionInterface {
 	fn purge_keys_weight() -> Weight;
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -444,11 +444,11 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// A stable ID for a validator.
 		type ValidatorId: Member
@@ -496,12 +496,12 @@ pub mod pallet {
 		/// The amount to be held when setting keys.
 		#[pallet::constant]
 		type KeyDeposit: Get<
-			<<Self as Config>::Currency as Inspect<<Self as topsoil_system::Config>::AccountId>>::Balance,
+			<<Self as Config>::Currency as Inspect<<Self as topsoil_core::system::Config>::AccountId>>::Balance,
 		>;
 	}
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		/// Initial list of validator at genesis representing by their `(AccountId, ValidatorId,
 		/// Keys)`. These keys will be considered authorities for the first two sessions and they
@@ -538,18 +538,18 @@ pub mod pallet {
 			{
 				Pallet::<T>::inner_set_keys(&val, keys)
 					.expect("genesis config must not contain duplicates; qed");
-				if topsoil_system::Pallet::<T>::inc_consumers_without_limit(&account).is_err() {
+				if topsoil_core::system::Pallet::<T>::inc_consumers_without_limit(&account).is_err() {
 					// This will leak a provider reference, however it only happens once (at
 					// genesis) so it's really not a big deal and we assume that the user wants to
 					// do this since it's the only way a non-endowed account can contain a session
 					// key.
-					topsoil_system::Pallet::<T>::inc_providers(&account);
+					topsoil_core::system::Pallet::<T>::inc_providers(&account);
 				}
 			}
 
 			let initial_validators_0 =
 				T::SessionManager::new_session_genesis(0).unwrap_or_else(|| {
-					topsoil_support::print(
+					topsoil_core::print(
 						"No initial validator provided by `SessionManager`, use \
 						session config keys to generate initial validator set.",
 					);
@@ -728,7 +728,7 @@ pub mod pallet {
 		/// Meant to be used if any pallet's benchmarking code wishes to set session keys, and wants
 		/// to make sure it will succeed.
 		pub fn ensure_can_pay_key_deposit(who: &T::AccountId) -> Result<(), DispatchError> {
-			use topsoil_support::traits::tokens::{Fortitude, Preservation};
+			use topsoil_core::traits::tokens::{Fortitude, Preservation};
 			let deposit = T::KeyDeposit::get();
 			let has = T::Currency::reducible_balance(who, Preservation::Protect, Fortitude::Force);
 			if let Some(deficit) = deposit.checked_sub(&has) {
@@ -916,7 +916,7 @@ impl<T: Config> Pallet<T> {
 		let who = T::ValidatorIdOf::convert(account.clone())
 			.ok_or(Error::<T>::NoAssociatedValidatorId)?;
 
-		ensure!(topsoil_system::Pallet::<T>::can_inc_consumer(account), Error::<T>::NoAccount);
+		ensure!(topsoil_core::system::Pallet::<T>::can_inc_consumer(account), Error::<T>::NoAccount);
 
 		let old_keys = Self::inner_set_keys(&who, keys)?;
 
@@ -931,7 +931,7 @@ impl<T: Config> Pallet<T> {
 				T::Currency::hold(&HoldReason::Keys.into(), account, deposit)?;
 			}
 
-			let assertion = topsoil_system::Pallet::<T>::inc_consumers(account).is_ok();
+			let assertion = topsoil_core::system::Pallet::<T>::inc_consumers(account).is_ok();
 			debug_assert!(assertion, "can_inc_consumer() returned true; no change since; qed");
 		}
 
@@ -996,12 +996,12 @@ impl<T: Config> Pallet<T> {
 		let _ = T::Currency::release_all(
 			&HoldReason::Keys.into(),
 			account,
-			topsoil_support::traits::tokens::Precision::BestEffort,
+			topsoil_core::traits::tokens::Precision::BestEffort,
 		);
 
 		if ExternallySetKeys::<T>::take(account).is_none() {
 			// Consumer was incremented locally via `do_set_keys`, so decrement it.
-			topsoil_system::Pallet::<T>::dec_consumers(account);
+			topsoil_core::system::Pallet::<T>::dec_consumers(account);
 		}
 
 		Ok(())
@@ -1171,7 +1171,7 @@ impl<T: Config> EstimateNextNewSession<BlockNumberFor<T>> for Pallet<T> {
 	}
 }
 
-impl<T: Config> topsoil_support::traits::DisabledValidators for Pallet<T> {
+impl<T: Config> topsoil_core::traits::DisabledValidators for Pallet<T> {
 	fn is_disabled(index: u32) -> bool {
 		DisabledValidators::<T>::get().binary_search_by_key(&index, |(i, _)| *i).is_ok()
 	}
@@ -1208,9 +1208,9 @@ impl<T: Config + historical::Config> SessionInterface for Pallet<T> {
 			let _ = T::Currency::release_all(
 				&HoldReason::Keys.into(),
 				account,
-				topsoil_support::traits::tokens::Precision::BestEffort,
+				topsoil_core::traits::tokens::Precision::BestEffort,
 			);
-			topsoil_system::Pallet::<T>::dec_consumers(account);
+			topsoil_core::system::Pallet::<T>::dec_consumers(account);
 		}
 		ExternallySetKeys::<T>::insert(account, ());
 		Ok(())
@@ -1228,10 +1228,10 @@ impl<T: Config + historical::Config> SessionInterface for Pallet<T> {
 		let _ = T::Currency::release_all(
 			&HoldReason::Keys.into(),
 			account,
-			topsoil_support::traits::tokens::Precision::BestEffort,
+			topsoil_core::traits::tokens::Precision::BestEffort,
 		);
 		if ExternallySetKeys::<T>::take(account).is_none() {
-			topsoil_system::Pallet::<T>::dec_consumers(account);
+			topsoil_core::system::Pallet::<T>::dec_consumers(account);
 		}
 		Ok(())
 	}

@@ -6,7 +6,7 @@
 
 use crate::{mock::*, *};
 use subsoil::runtime::{testing::UintAuthorityId, transaction_validity::InvalidTransaction};
-use topsoil_support::{assert_noop, assert_ok};
+use topsoil_core::{assert_noop, assert_ok};
 
 /// Test that a non-restricted origin (`NON_RESTRICTED_ORIGIN`) is never tracked, i.e., no usage.
 #[test]
@@ -166,7 +166,7 @@ fn clean_usage_works() {
 		// 1) Attempt to clean usage with no recorded usage => should fail with NoUsage.
 		assert_noop!(
 			OriginsRestriction::clean_usage(
-				topsoil_system::RawOrigin::Root.into(),
+				topsoil_core::system::RawOrigin::Root.into(),
 				RuntimeRestrictedEntity::A
 			),
 			Error::<Test>::NoUsage
@@ -180,7 +180,7 @@ fn clean_usage_works() {
 		// 2) Try cleaning while usage is non-zero => should fail with NotZero.
 		assert_noop!(
 			OriginsRestriction::clean_usage(
-				topsoil_system::RawOrigin::Root.into(),
+				topsoil_core::system::RawOrigin::Root.into(),
 				RuntimeRestrictedEntity::A
 			),
 			Error::<Test>::NotZero
@@ -197,7 +197,7 @@ fn clean_usage_works() {
 		// 3) Now that enough blocks have passed, usage should be zero => clean_usage should
 		//    succeed.
 		assert_ok!(OriginsRestriction::clean_usage(
-			topsoil_system::RawOrigin::Root.into(),
+			topsoil_core::system::RawOrigin::Root.into(),
 			RuntimeRestrictedEntity::A
 		));
 
@@ -210,7 +210,7 @@ fn clean_usage_works() {
 		// 4) Calling again when there is no usage => fail with NoUsage.
 		assert_noop!(
 			OriginsRestriction::clean_usage(
-				topsoil_system::RawOrigin::Root.into(),
+				topsoil_core::system::RawOrigin::Root.into(),
 				RuntimeRestrictedEntity::A
 			),
 			Error::<Test>::NoUsage

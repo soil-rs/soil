@@ -8,7 +8,7 @@ use crate as plant_oracle;
 
 use crate::{Config, DefaultCombineData};
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, SortedMembers, Time},
 	PalletId,
@@ -18,8 +18,8 @@ pub type AccountId = u128;
 type Key = u32;
 type Value = u32;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig as topsoil_system::DefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig as topsoil_core::system::DefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -80,11 +80,11 @@ impl Config for Test {
 	type BenchmarkHelper = ();
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		ModuleOracle: plant_oracle,
 	}
 );
@@ -96,7 +96,7 @@ pub fn set_members(members: Vec<AccountId>) {
 // This function basically just builds a genesis storage key/value store
 // according to our desired mockup.
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let storage = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut t: subsoil::io::TestExternalities = storage.into();
 

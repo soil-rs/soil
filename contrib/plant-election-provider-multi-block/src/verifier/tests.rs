@@ -17,7 +17,7 @@ use subsoil::core::bounded_vec;
 use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::{traits::Bounded, PerU16};
 use plant_election_provider::Support;
-use topsoil_support::{assert_noop, assert_ok};
+use topsoil_core::{assert_noop, assert_ok};
 
 mod feasibility_check {
 	use super::*;
@@ -943,7 +943,7 @@ mod async_verification {
 
 mod multi_page_sync_verification {
 	use super::*;
-	use topsoil_support::hypothetically;
+	use topsoil_core::hypothetically;
 
 	#[test]
 	fn basic_sync_verification_works() {

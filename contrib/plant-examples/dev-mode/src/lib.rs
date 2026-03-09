@@ -20,8 +20,8 @@
 extern crate alloc;
 
 use alloc::{vec, vec::Vec};
-use topsoil_support::dispatch::DispatchResult;
-use topsoil_system::ensure_signed;
+use topsoil_core::dispatch::DispatchResult;
+use topsoil_core::system::ensure_signed;
 
 // Re-export pallet items so that they can be accessed from the crate namespace.
 pub use pallet::*;
@@ -33,14 +33,14 @@ mod tests;
 type BalanceOf<T> = <T as plant_balances::Config>::Balance;
 
 /// Enable `dev_mode` for this pallet.
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: plant_balances::Config + topsoil_system::Config {}
+	pub trait Config: plant_balances::Config + topsoil_core::system::Config {}
 
 	// Simple declaration of the `Pallet` type. It is placeholder we use to implement traits and
 	// method.

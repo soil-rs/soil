@@ -22,7 +22,7 @@ use subsoil::runtime::{
 	testing::{Digest, DigestItem, Header},
 	BuildStorage,
 };
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	traits::{ConstU32, OnFinalize, OnInitialize},
 };
@@ -32,25 +32,25 @@ const LOG_TARGET: &str = "sassafras::tests";
 const EPOCH_LENGTH: u32 = 10;
 const MAX_AUTHORITIES: u32 = 100;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
-	type Block = topsoil_system::mocking::MockBlock<Test>;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
+	type Block = topsoil_core::system::mocking::MockBlock<Test>;
 }
 
-impl<C> topsoil_system::offchain::CreateTransactionBase<C> for Test
+impl<C> topsoil_core::system::offchain::CreateTransactionBase<C> for Test
 where
 	RuntimeCall: From<C>,
 {
 	type RuntimeCall = RuntimeCall;
-	type Extrinsic = topsoil_system::mocking::MockUncheckedExtrinsic<Test>;
+	type Extrinsic = topsoil_core::system::mocking::MockUncheckedExtrinsic<Test>;
 }
 
-impl<C> topsoil_system::offchain::CreateBare<C> for Test
+impl<C> topsoil_core::system::offchain::CreateBare<C> for Test
 where
 	RuntimeCall: From<C>,
 {
 	fn create_bare(call: Self::RuntimeCall) -> Self::Extrinsic {
-		topsoil_system::mocking::MockUncheckedExtrinsic::<Test>::new_bare(call)
+		topsoil_core::system::mocking::MockUncheckedExtrinsic::<Test>::new_bare(call)
 	}
 }
 
@@ -61,9 +61,9 @@ impl plant_sassafras::Config for Test {
 	type WeightInfo = ();
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Sassafras: plant_sassafras,
 	}
 );
@@ -92,7 +92,7 @@ pub fn new_test_ext_with_pairs(
 
 	let authorities: Vec<_> = pairs.iter().map(|p| p.public()).collect();
 
-	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut storage = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	plant_sassafras::GenesisConfig::<Test> {
 		authorities: authorities.clone(),

@@ -12,7 +12,7 @@ use subsoil::core::{
 	sr25519::Signature,
 	H256,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
@@ -26,7 +26,7 @@ use subsoil::runtime::{
 
 // Use AuthorizeCall as the transaction extension to properly test the #[pallet::authorize]
 // validation
-type TxExtension = topsoil_system::AuthorizeCall<Test>;
+type TxExtension = topsoil_core::system::AuthorizeCall<Test>;
 type Extrinsic = TestXt<RuntimeCall, TxExtension>;
 
 // Define a custom Block that uses our Extrinsic with AuthorizeCall extension
@@ -36,17 +36,17 @@ type Block = subsoil::runtime::generic::Block<
 >;
 
 // For testing the module, we construct a mock runtime.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Example: example_offchain_worker,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -72,12 +72,12 @@ impl topsoil_system::Config for Test {
 
 type AccountId = <<Signature as Verify>::Signer as IdentifyAccount>::AccountId;
 
-impl topsoil_system::offchain::SigningTypes for Test {
+impl topsoil_core::system::offchain::SigningTypes for Test {
 	type Public = <Signature as Verify>::Signer;
 	type Signature = Signature;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Test
+impl<LocalCall> topsoil_core::system::offchain::CreateTransactionBase<LocalCall> for Test
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -85,7 +85,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateTransaction<LocalCall> for Test
+impl<LocalCall> topsoil_core::system::offchain::CreateTransaction<LocalCall> for Test
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -96,12 +96,12 @@ where
 	}
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateSignedTransaction<LocalCall> for Test
+impl<LocalCall> topsoil_core::system::offchain::CreateSignedTransaction<LocalCall> for Test
 where
 	RuntimeCall: From<LocalCall>,
 {
 	fn create_signed_transaction<
-		C: topsoil_system::offchain::AppCrypto<Self::Public, Self::Signature>,
+		C: topsoil_core::system::offchain::AppCrypto<Self::Public, Self::Signature>,
 	>(
 		call: RuntimeCall,
 		_public: <Signature as Verify>::Signer,
@@ -114,7 +114,7 @@ where
 	}
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateAuthorizedTransaction<LocalCall> for Test
+impl<LocalCall> topsoil_core::system::offchain::CreateAuthorizedTransaction<LocalCall> for Test
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -287,7 +287,7 @@ fn should_submit_authorized_transaction_on_chain_for_any_account() {
 
 		// Actually validate the transaction through the authorize logic
 		use subsoil::runtime::transaction_validity::TransactionSource;
-		use topsoil_support::traits::Authorize;
+		use topsoil_core::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
 		assert!(
@@ -308,7 +308,7 @@ fn should_submit_authorized_transaction_on_chain_for_any_account() {
 
 			let signature_valid = <PricePayload<
 				<Test as SigningTypes>::Public,
-				topsoil_system::pallet_prelude::BlockNumberFor<Test>,
+				topsoil_core::system::pallet_prelude::BlockNumberFor<Test>,
 			> as SignedPayload<Test>>::verify::<crypto::TestAuthId>(
 				&price_payload, signature
 			);
@@ -360,7 +360,7 @@ fn should_submit_authorized_transaction_on_chain_for_all_accounts() {
 
 		// Actually validate the transaction through the authorize logic
 		use subsoil::runtime::transaction_validity::TransactionSource;
-		use topsoil_support::traits::Authorize;
+		use topsoil_core::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
 		assert!(
@@ -381,7 +381,7 @@ fn should_submit_authorized_transaction_on_chain_for_all_accounts() {
 
 			let signature_valid = <PricePayload<
 				<Test as SigningTypes>::Public,
-				topsoil_system::pallet_prelude::BlockNumberFor<Test>,
+				topsoil_core::system::pallet_prelude::BlockNumberFor<Test>,
 			> as SignedPayload<Test>>::verify::<crypto::TestAuthId>(
 				&price_payload, signature
 			);
@@ -420,7 +420,7 @@ fn should_submit_raw_authorized_transaction_on_chain() {
 
 		// Actually validate the transaction through the authorize logic
 		use subsoil::runtime::transaction_validity::TransactionSource;
-		use topsoil_support::traits::Authorize;
+		use topsoil_core::traits::Authorize;
 
 		let authorize_result = tx.function.authorize(TransactionSource::External);
 		assert!(
@@ -459,7 +459,7 @@ fn should_reject_invalid_authorized_transaction() {
 		// Try to validate the call's authorization - this should FAIL because the block number is
 		// too old
 		use subsoil::runtime::transaction_validity::TransactionSource;
-		use topsoil_support::traits::Authorize;
+		use topsoil_core::traits::Authorize;
 
 		let authorize_result = call.authorize(TransactionSource::External);
 		assert!(

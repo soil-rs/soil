@@ -22,11 +22,9 @@ serde = { optional = true, features = ["derive"], workspace = true, default-feat
 subsoil = { workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true, features = ["experimental"] }
 
 [dev-dependencies]
-topsoil-support = { workspace = true, features = ["experimental"] }
 rand = { workspace = true, default-features = true }
 rand_distr = { workspace = true }
 subsoil-crypto-hashing = { workspace = true, default-features = true }
@@ -37,20 +35,17 @@ std = [
 	"codec/std",
 	"environmental/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"scale-info/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"subsoil/try-runtime",
 ]

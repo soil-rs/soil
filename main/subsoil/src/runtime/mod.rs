@@ -531,7 +531,7 @@ impl From<DispatchError> for DispatchOutcome {
 
 /// This is the legacy return type of `Dispatchable`. It is still exposed for compatibility reasons.
 /// The new return type is `DispatchResultWithInfo`. FRAME runtimes should use
-/// `topsoil_support::dispatch::DispatchResult`.
+/// `topsoil_core::dispatch::DispatchResult`.
 pub type DispatchResult = ::core::result::Result<(), DispatchError>;
 
 /// Return type of a `Dispatchable` which contains the `DispatchResult` and additional information

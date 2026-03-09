@@ -34,7 +34,7 @@ pub mod __private {
 	pub use subsoil::io::storage::root as storage_root;
 	pub use subsoil::runtime::{traits::Zero, StateVersion};
 	pub use subsoil::storage::{well_known_keys, TrackedStorageKey};
-	pub use topsoil_support::{storage, traits};
+	pub use topsoil_core::{storage, traits};
 }
 
 #[cfg(feature = "std")]
@@ -379,7 +379,7 @@ pub use v1::*;
 /// ```
 pub mod v2 {
 	pub use super::*;
-	pub use topsoil_support_procedural::{
+	pub use topsoil_core_procedural::{
 		benchmark, benchmarks, block, extrinsic_call, instance_benchmarks,
 	};
 

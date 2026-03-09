@@ -58,7 +58,7 @@ use subsoil::runtime::{
 
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
-use topsoil_support::{
+use topsoil_core::{
 	ensure,
 	traits::{
 		ContainsLengthBound, Currency, EnsureOrigin, ExistenceRequirement::KeepAlive, Get,
@@ -66,7 +66,7 @@ use topsoil_support::{
 	},
 	Parameter,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 #[cfg(any(feature = "try-runtime", test))]
 use subsoil::runtime::TryRuntimeError;
@@ -78,7 +78,7 @@ const LOG_TARGET: &str = "runtime::tips";
 
 pub type BalanceOf<T, I = ()> = plant_treasury::BalanceOf<T, I>;
 pub type NegativeImbalanceOf<T, I = ()> = plant_treasury::NegativeImbalanceOf<T, I>;
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
 /// An open tipping "motion". Retains all details of a tip including information on the finder
 /// and the members who have voted.
@@ -107,11 +107,11 @@ pub struct OpenTip<
 	finders_fee: bool,
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
@@ -123,12 +123,12 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config<I: 'static = ()>:
-		topsoil_system::Config + plant_treasury::Config<I>
+		topsoil_core::system::Config + plant_treasury::Config<I>
 	{
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Maximum acceptable reason length.
 		///
@@ -426,7 +426,7 @@ pub mod pallet {
 
 			let tip = Tips::<T, I>::get(hash).ok_or(Error::<T, I>::UnknownTip)?;
 			let n = tip.closes.as_ref().ok_or(Error::<T, I>::StillOpen)?;
-			ensure!(topsoil_system::Pallet::<T>::block_number() >= *n, Error::<T, I>::Premature);
+			ensure!(topsoil_core::system::Pallet::<T>::block_number() >= *n, Error::<T, I>::Premature);
 			// closed.
 			Reasons::<T, I>::remove(&tip.reason);
 			Tips::<T, I>::remove(hash);
@@ -520,7 +520,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		Self::retain_active_tips(&mut tip.tips);
 		let threshold = T::Tippers::count().div_ceil(2);
 		if tip.tips.len() >= threshold && tip.closes.is_none() {
-			tip.closes = Some(topsoil_system::Pallet::<T>::block_number() + T::TipCountdown::get());
+			tip.closes = Some(topsoil_core::system::Pallet::<T>::block_number() + T::TipCountdown::get());
 			true
 		} else {
 			false
@@ -609,7 +609,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 			tips: Vec<(AccountId, Balance)>,
 		}
 
-		use topsoil_support::{migration::storage_key_iter, Twox64Concat};
+		use topsoil_core::{migration::storage_key_iter, Twox64Concat};
 
 		let zero_account = T::AccountId::decode(&mut TrailingZeroInput::new(&[][..]))
 			.expect("infinite input; qed");

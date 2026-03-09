@@ -13,7 +13,7 @@ use soil_test_staging_node_runtime::{
 use soil_test_staging_node_primitives::Balance;
 use soil_test_staging_node_testing::keyring::*;
 use subsoil::runtime::{traits::One, Perbill};
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::GetDispatchInfo,
 	traits::Currency,
 	weights::{constants::ExtrinsicBaseWeight, IdentityFee, WeightToFee},
@@ -71,7 +71,7 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 			},
 			CheckedExtrinsic {
 				format: subsoil::runtime::generic::ExtrinsicFormat::Signed(charlie(), tx_ext(1, 0)),
-				function: RuntimeCall::System(topsoil_system::Call::remark { remark: vec![0; 1] }),
+				function: RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![0; 1] }),
 			},
 		],
 		(time2 / SLOT_DURATION).into(),
@@ -106,7 +106,7 @@ fn fee_multiplier_increases_and_decreases_on_big_weight() {
 }
 
 fn new_account_info(free_dollars: u128) -> Vec<u8> {
-	topsoil_system::AccountInfo {
+	topsoil_core::system::AccountInfo {
 		nonce: 0u32,
 		consumers: 0,
 		providers: 1,
@@ -126,13 +126,13 @@ fn transaction_fee_is_correct() {
 	//   - 1 milli-dot based on current polkadot runtime.
 	// (this based on assigning 0.1 CENT to the cheapest tx with `weight = 100`)
 	let mut t = new_test_ext(compact_code_unwrap());
-	t.insert(<topsoil_system::Account<Runtime>>::hashed_key_for(alice()), new_account_info(100));
-	t.insert(<topsoil_system::Account<Runtime>>::hashed_key_for(bob()), new_account_info(10));
+	t.insert(<topsoil_core::system::Account<Runtime>>::hashed_key_for(alice()), new_account_info(100));
+	t.insert(<topsoil_core::system::Account<Runtime>>::hashed_key_for(bob()), new_account_info(10));
 	t.insert(
 		<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(110 * DOLLARS).encode(),
 	);
-	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_core::system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let tip = 1_000_000;
 	let xt = sign(CheckedExtrinsic {

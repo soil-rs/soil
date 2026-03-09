@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_support::{*, pallet_prelude::inject_runtime_type};
+use topsoil_core::{*, pallet_prelude::inject_runtime_type};
 use static_assertions::assert_type_eq_all;
 
 pub trait Config {

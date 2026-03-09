@@ -18,8 +18,8 @@ use core::marker::PhantomData;
 use subsoil::npos_elections::{
 	assignment_ratio_to_staked_normalized, to_supports, ElectionResult, VoteWeight,
 };
-use topsoil_support::{dispatch::DispatchClass, traits::Get};
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::{dispatch::DispatchClass, traits::Get};
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 /// Errors of the on-chain election.
 #[derive(Eq, PartialEq, Debug, Clone)]
@@ -58,11 +58,11 @@ pub trait Config {
 	type Sort: Get<bool>;
 
 	/// Needed for weight registration.
-	type System: topsoil_system::Config;
+	type System: topsoil_core::system::Config;
 
 	/// `NposSolver` that should be used, an example would be `PhragMMS`.
 	type Solver: NposSolver<
-		AccountId = <Self::System as topsoil_system::Config>::AccountId,
+		AccountId = <Self::System as topsoil_core::system::Config>::AccountId,
 		Error = subsoil::npos_elections::Error,
 	>;
 
@@ -80,8 +80,8 @@ pub trait Config {
 
 	/// Something that provides the data for election.
 	type DataProvider: ElectionDataProvider<
-		AccountId = <Self::System as topsoil_system::Config>::AccountId,
-		BlockNumber = topsoil_system::pallet_prelude::BlockNumberFor<Self::System>,
+		AccountId = <Self::System as topsoil_core::system::Config>::AccountId,
+		BlockNumber = topsoil_core::system::pallet_prelude::BlockNumberFor<Self::System>,
 	>;
 
 	/// Weight information for extrinsics in this pallet.
@@ -95,7 +95,7 @@ pub trait Config {
 impl<T: Config> OnChainExecution<T> {
 	fn elect_with_snapshot(
 		voters: Vec<VoterOf<T::DataProvider>>,
-		targets: Vec<<T::System as topsoil_system::Config>::AccountId>,
+		targets: Vec<<T::System as topsoil_core::system::Config>::AccountId>,
 		desired_targets: u32,
 	) -> Result<BoundedSupportsOf<Self>, Error> {
 		if (desired_targets > T::MaxWinnersPerPage::get()) && !T::Sort::get() {
@@ -111,7 +111,7 @@ impl<T: Config> OnChainExecution<T> {
 			.map(|(validator, vote_weight, _)| (validator.clone(), *vote_weight))
 			.collect();
 
-		let stake_of = |w: &<T::System as topsoil_system::Config>::AccountId| -> VoteWeight {
+		let stake_of = |w: &<T::System as topsoil_core::system::Config>::AccountId| -> VoteWeight {
 			stake_map.get(w).cloned().unwrap_or_default()
 		};
 
@@ -125,7 +125,7 @@ impl<T: Config> OnChainExecution<T> {
 			targets_len,
 			<T::DataProvider as ElectionDataProvider>::MaxVotesPerVoter::get(),
 		);
-		topsoil_system::Pallet::<T::System>::register_extra_weight_unchecked(
+		topsoil_core::system::Pallet::<T::System>::register_extra_weight_unchecked(
 			weight,
 			DispatchClass::Mandatory,
 		);
@@ -158,7 +158,7 @@ impl<T: Config> OnChainExecution<T> {
 impl<T: Config> InstantElectionProvider for OnChainExecution<T> {
 	fn instant_elect(
 		voters: Vec<VoterOf<T::DataProvider>>,
-		targets: Vec<<T::System as topsoil_system::Config>::AccountId>,
+		targets: Vec<<T::System as topsoil_core::system::Config>::AccountId>,
 		desired_targets: u32,
 	) -> Result<BoundedSupportsOf<Self>, Self::Error> {
 		Self::elect_with_snapshot(voters, targets, desired_targets)
@@ -170,7 +170,7 @@ impl<T: Config> InstantElectionProvider for OnChainExecution<T> {
 }
 
 impl<T: Config> ElectionProvider for OnChainExecution<T> {
-	type AccountId = <T::System as topsoil_system::Config>::AccountId;
+	type AccountId = <T::System as topsoil_core::system::Config>::AccountId;
 	type BlockNumber = BlockNumberFor<T::System>;
 	type Error = Error;
 	type MaxWinnersPerPage = T::MaxWinnersPerPage;
@@ -207,7 +207,7 @@ mod tests {
 	use subsoil::io::TestExternalities;
 	use subsoil::npos_elections::Support;
 	use subsoil::runtime::Perbill;
-	use topsoil_support::{assert_noop, derive_impl, parameter_types};
+	use topsoil_core::{assert_noop, derive_impl, parameter_types};
 	type AccountId = u64;
 	type Nonce = u64;
 	type BlockNumber = u64;
@@ -218,16 +218,16 @@ mod tests {
 		subsoil::runtime::generic::UncheckedExtrinsic<AccountId, (), (), ()>;
 	pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Runtime {
-			System: topsoil_system,
+			System: topsoil_core::system,
 		}
 	);
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Runtime {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Runtime {
 		type SS58Prefix = ();
-		type BaseCallFilter = topsoil_support::traits::Everything;
+		type BaseCallFilter = topsoil_core::traits::Everything;
 		type RuntimeOrigin = RuntimeOrigin;
 		type Nonce = Nonce;
 		type RuntimeCall = RuntimeCall;
@@ -248,7 +248,7 @@ mod tests {
 		type OnKilledAccount = ();
 		type SystemWeightInfo = ();
 		type OnSetCode = ();
-		type MaxConsumers = topsoil_support::traits::ConstU32<16>;
+		type MaxConsumers = topsoil_core::traits::ConstU32<16>;
 	}
 
 	struct PhragmenParams;
@@ -288,7 +288,7 @@ mod tests {
 		use super::*;
 		use crate::{data_provider, DataProviderBounds, PageIndex, VoterOf};
 		use subsoil::runtime::bounded_vec;
-		use topsoil_support::traits::ConstU32;
+		use topsoil_core::traits::ConstU32;
 
 		pub struct DataProvider;
 		impl ElectionDataProvider for DataProvider {

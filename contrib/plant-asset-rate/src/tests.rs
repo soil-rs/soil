@@ -10,7 +10,7 @@ use super::*;
 use crate::pallet as plant_asset_rate;
 use mock::{new_test_ext, AssetRate, RuntimeOrigin, Test};
 use subsoil::runtime::FixedU128;
-use topsoil_support::{assert_noop, assert_ok};
+use topsoil_core::{assert_noop, assert_ok};
 
 const ASSET_ID: u32 = 42;
 

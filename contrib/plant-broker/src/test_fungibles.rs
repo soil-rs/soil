@@ -10,7 +10,7 @@ use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::Zero;
 use subsoil::core::{Get, TypedGet};
 use subsoil::runtime::{DispatchError, DispatchResult};
-use topsoil_support::{
+use topsoil_core::{
 	parameter_types,
 	traits::{
 		fungibles::{self, Dust},

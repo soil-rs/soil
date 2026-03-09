@@ -12,11 +12,11 @@ use subsoil::core::Get;
 use subsoil::runtime::traits::One;
 use plant_asset_conversion::{BenchmarkHelper, Pallet as AssetConversion};
 use topsoil_benchmarking::{v2::*, whitelisted_caller};
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::fungibles::{Create, Inspect, Mutate},
 };
-use topsoil_system::RawOrigin as SystemOrigin;
+use topsoil_core::system::RawOrigin as SystemOrigin;
 
 /// Provides a pair of amounts expected to serve as sufficient initial liquidity for a pool.
 fn valid_liquidity_amount<T: Config>(ed1: T::Balance, ed2: T::Balance) -> (T::Balance, T::Balance)
@@ -111,10 +111,10 @@ where
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	let events = topsoil_system::Pallet::<T>::events();
-	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let events = topsoil_core::system::Pallet::<T>::events();
+	let system_event: <T as topsoil_core::system::Config>::RuntimeEvent = generic_event.into();
 	// compare to the last event record
-	let topsoil_system::EventRecord { event, .. } = &events[events.len() - 1];
+	let topsoil_core::system::EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
 }
 

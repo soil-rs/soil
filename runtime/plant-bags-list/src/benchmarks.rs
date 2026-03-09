@@ -14,8 +14,8 @@ use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller,
 };
 use plant_election_provider::ScoreProvider;
-use topsoil_support::{assert_ok, traits::Get};
-use topsoil_system::RawOrigin as SystemOrigin;
+use topsoil_core::{assert_ok, traits::Get};
+use topsoil_core::system::RawOrigin as SystemOrigin;
 
 benchmarks_instance_pallet! {
 	// iteration of any number of items should only touch that many nodes and bags.
@@ -419,7 +419,7 @@ benchmarks_instance_pallet! {
 		assert!(List::<T, _>::get_bags().len() >= 2);
 	}
 	: {
-		use topsoil_support::traits::Hooks;
+		use topsoil_core::traits::Hooks;
 		<Pallet<T, I> as Hooks<_>>::on_idle(Default::default(), Weight::MAX);
 	}
 	verify {

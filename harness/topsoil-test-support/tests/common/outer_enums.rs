@@ -4,15 +4,15 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::event]
@@ -49,15 +49,15 @@ pub mod pallet {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet2 {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::event]
@@ -94,15 +94,15 @@ pub mod pallet2 {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet3 {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::event]

@@ -12,7 +12,7 @@ use crate::{mock::*, *};
 
 use rand::{rngs::StdRng, Rng, SeedableRng};
 use subsoil_crypto_hashing::blake2_256;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, assert_storage_noop, traits::BatchFootprint, StorageNoopGuard,
 };
 
@@ -1240,7 +1240,7 @@ fn permanently_overweight_limit_is_valid_basic() {
 			MessageQueue::service_queues(w.into());
 
 			let last_event =
-				topsoil_system::Pallet::<Test>::events().into_iter().last().expect("No event");
+				topsoil_core::system::Pallet::<Test>::events().into_iter().last().expect("No event");
 
 			// The weight overhead for a single message is set to 50. The message itself needs 200.
 			// Every weight in range `[50, 249]` should result in a permanently overweight message:
@@ -1300,7 +1300,7 @@ fn permanently_overweight_limit_is_valid_fuzzy() {
 				MessageQueue::service_queues(w.into());
 
 				let last_event =
-					topsoil_system::Pallet::<Test>::events().into_iter().last().expect("No event");
+					topsoil_core::system::Pallet::<Test>::events().into_iter().last().expect("No event");
 
 				if w < o + 200 {
 					assert_eq!(
@@ -2075,7 +2075,7 @@ fn force_set_head_can_starve_other_queues() {
 		MessageQueue::enqueue_message(msg("A"), Here);
 
 		// Hypothetically, it would proceed with `Everywhere(0)`, not our favorite queue:
-		topsoil_support::hypothetically! {{
+		topsoil_core::hypothetically! {{
 			MessageQueue::service_queues(1.into_weight());
 			assert_eq!(MessagesProcessed::take(), vec![(b"C".to_vec(), Everywhere(0))]);
 		}};

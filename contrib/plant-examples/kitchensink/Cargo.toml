@@ -20,8 +20,7 @@ codec = { workspace = true }
 log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
-topsoil-support = { features = ["experimental"], workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { features = ["experimental"], workspace = true }
 
 
 topsoil-benchmarking = { optional = true, workspace = true }
@@ -36,8 +35,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"plant-balances/std",
 	"scale-info/std",
@@ -45,14 +43,12 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-balances/try-runtime",
 	"subsoil/try-runtime",
 ]

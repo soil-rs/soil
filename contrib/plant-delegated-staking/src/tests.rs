@@ -11,7 +11,7 @@ use crate::mock::*;
 use subsoil::staking::{Agent, DelegationInterface, Delegator, StakerStatus};
 use plant_nomination_pools::{Error as PoolsError, Event as PoolsEvent};
 use plant_staking::{Error as StakingError, RewardDestination};
-use topsoil_support::{assert_noop, assert_ok, traits::fungible::InspectHold};
+use topsoil_core::{assert_noop, assert_ok, traits::fungible::InspectHold};
 
 #[test]
 fn create_an_agent_with_first_delegator() {

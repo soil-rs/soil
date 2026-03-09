@@ -50,7 +50,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_nft_fractionalization` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `Nfts::Item` (r:1 w:0)
 	/// Proof: `Nfts::Item` (`max_values`: None, `max_size`: Some(861), added: 3336, mode: `MaxEncodedLen`)
 	/// Storage: `Balances::Holds` (r:1 w:1)

@@ -35,7 +35,7 @@
 #![allow(unused_imports)]
 #![allow(missing_docs)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for `plant_transaction_storage`.
@@ -47,7 +47,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_transaction_storage` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `TransactionStorage::ByteFee` (r:1 w:0)
 	/// Proof: `TransactionStorage::ByteFee` (`max_values`: Some(1), `max_size`: Some(16), added: 511, mode: `MaxEncodedLen`)
 	/// Storage: `TransactionStorage::EntryFee` (r:1 w:0)

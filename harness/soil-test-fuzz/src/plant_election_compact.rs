@@ -15,7 +15,7 @@ fn main() {
 		VoterIndex = u32,
 		TargetIndex = u32,
 		Accuracy = Percent,
-		MaxVoters = topsoil_support::traits::ConstU32::<100_000>,
+		MaxVoters = topsoil_core::traits::ConstU32::<100_000>,
 	>(16));
 	loop {
 		fuzz!(|fuzzer_data: &[u8]| {

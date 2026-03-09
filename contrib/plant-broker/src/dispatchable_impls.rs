@@ -9,7 +9,7 @@ use core::cmp;
 use super::*;
 use subsoil::arithmetic::traits::{CheckedDiv, Saturating, Zero};
 use subsoil::runtime::traits::{BlockNumberProvider, Convert};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{fungible::Mutate, tokens::Preservation::Expendable, DefensiveResult},
 };

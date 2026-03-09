@@ -15,7 +15,7 @@ use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, SequentialPhragmen,
 };
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, Get, KeyOwnerProofSystem, OnInitialize},
 };
@@ -25,12 +25,12 @@ use crate::{historical::Pallet as Historical, Pallet as Session, Validators};
 type AccountId = u64;
 type Nonce = u32;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Staking: plant_staking,
 		Session: plant_session,
@@ -38,8 +38,8 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Nonce = Nonce;
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
@@ -140,7 +140,7 @@ impl plant_staking::Config for Test {
 	type Currency = Balances;
 	type CurrencyBalance = <Self as plant_balances::Config>::Balance;
 	type UnixTime = plant_timestamp::Pallet<Self>;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type NextNewSession = Session;
@@ -185,7 +185,7 @@ impl super::Config for Test {
 			}
 
 			Session::<Self>::set_keys(
-				topsoil_system::RawOrigin::Signed(controller).into(),
+				topsoil_core::system::RawOrigin::Signed(controller).into(),
 				keys,
 				proof,
 			)
@@ -206,6 +206,6 @@ impl super::Config for Test {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	subsoil::io::TestExternalities::new(t)
 }

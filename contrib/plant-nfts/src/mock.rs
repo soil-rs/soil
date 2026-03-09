@@ -14,17 +14,17 @@ use subsoil::runtime::{
 	traits::{IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature,
 };
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Nfts: plant_nfts,
 	}
@@ -34,8 +34,8 @@ pub type Signature = MultiSignature;
 pub type AccountPublic = <Signature as Verify>::Signer;
 pub type AccountId = <AccountPublic as IdentifyAccount>::AccountId;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -56,8 +56,8 @@ impl Config for Test {
 	type CollectionId = u32;
 	type ItemId = u32;
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_core::system::EnsureSigned<Self::AccountId>>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type Locker = ();
 	type CollectionDeposit = ConstU64<2>;
 	type ItemDeposit = ConstU64<1>;
@@ -81,11 +81,11 @@ impl Config for Test {
 	type WeightInfo = ();
 	#[cfg(feature = "runtime-benchmarks")]
 	type Helper = ();
-	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Test>;
 }
 
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.register_extension(KeystoreExt::new(MemoryKeystore::new()));

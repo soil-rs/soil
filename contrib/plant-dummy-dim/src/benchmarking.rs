@@ -14,14 +14,14 @@ use super::*;
 use crate::Pallet as DummyDim;
 
 use topsoil_benchmarking::v2::{benchmarks, *};
-use topsoil_support::{assert_ok, traits::Get};
-use topsoil_system::RawOrigin;
+use topsoil_core::{assert_ok, traits::Get};
+use topsoil_core::system::RawOrigin;
 
 type SecretOf<T> = <<T as Config>::People as AddOnlyPeopleTrait>::Secret;
 type MemberOf<T> = <<T as Config>::People as AddOnlyPeopleTrait>::Member;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn new_member_from<T: Config>(id: PersonalId) -> (MemberOf<T>, SecretOf<T>) {

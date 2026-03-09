@@ -16,7 +16,7 @@ use crate::mock::{
 use codec::Encode;
 use subsoil::consensus::aura::{Slot, AURA_ENGINE_ID};
 use subsoil::runtime::{Digest, DigestItem, TryRuntimeError};
-use topsoil_support::traits::Hooks;
+use topsoil_core::traits::Hooks;
 
 #[test]
 fn initial_values() {
@@ -139,10 +139,10 @@ fn try_state_validates_timestamp_slot_consistency() {
 
 #[test]
 fn integrity_test_passes_with_valid_config() {
-	use topsoil_support::traits::Hooks;
+	use topsoil_core::traits::Hooks;
 	build_ext(vec![0, 1, 2, 3]).execute_with(|| {
 		// This should not panic with valid configuration
-		<Aura as Hooks<topsoil_system::pallet_prelude::BlockNumberFor<Test>>>::integrity_test();
+		<Aura as Hooks<topsoil_core::system::pallet_prelude::BlockNumberFor<Test>>>::integrity_test();
 	});
 }
 

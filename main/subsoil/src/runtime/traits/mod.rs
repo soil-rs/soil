@@ -2559,11 +2559,11 @@ pub trait BlockNumberProvider {
 	///
 	/// In case of using crate `soil_runtime` with the crate `topsoil-system`,
 	/// it is already implemented for
-	/// `topsoil_system::Pallet<T: Config>` as:
+	/// `topsoil_core::system::Pallet<T: Config>` as:
 	///
 	/// ```ignore
 	/// fn current_block_number() -> Self {
-	///     topsoil_system::Pallet<Config>::block_number()
+	///     topsoil_core::system::Pallet<Config>::block_number()
 	/// }
 	/// ```
 	/// .

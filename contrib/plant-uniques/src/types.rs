@@ -8,7 +8,7 @@
 
 use super::*;
 use scale_info::TypeInfo;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::{BoundedVec, MaxEncodedLen},
 	traits::Get,
 };
@@ -133,7 +133,7 @@ pub struct ItemMetadata<DepositBalance, StringLimit: Get<u32>> {
 
 pub mod asset_strategies {
 	use super::*;
-	use topsoil_support::traits::tokens::asset_ops::common_strategies::{
+	use topsoil_core::traits::tokens::asset_ops::common_strategies::{
 		Admin, ConfigValue, Owner, PredefinedId, WithConfig,
 	};
 
@@ -143,12 +143,12 @@ pub mod asset_strategies {
 		(ConfigValue<Owner<AccountId>>, ConfigValue<Admin<AccountId>>);
 
 	pub type WithCollectionConfig<T, I = ()> = WithConfig<
-		CollectionManagers<<T as topsoil_system::Config>::AccountId>,
+		CollectionManagers<<T as topsoil_core::system::Config>::AccountId>,
 		PredefinedId<<T as Config<I>>::CollectionId>,
 	>;
 
 	pub type WithItemConfig<T, I = ()> = WithConfig<
-		ConfigValue<Owner<<T as topsoil_system::Config>::AccountId>>,
+		ConfigValue<Owner<<T as topsoil_core::system::Config>::AccountId>>,
 		PredefinedId<(<T as Config<I>>::CollectionId, <T as Config<I>>::ItemId)>,
 	>;
 }

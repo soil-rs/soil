@@ -15,7 +15,7 @@ use crate::*;
 const SEED: u32 = 0;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as FunInspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as FunInspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 fn fill_queues<T: Config>() -> Result<(), DispatchError> {
 	// filling queues involves filling the first queue entirely and placing a single item in all
@@ -192,7 +192,7 @@ mod benchmarks {
 		Pallet::<T>::place_bid(RawOrigin::Signed(caller.clone()).into(), bid, 1)?;
 		Pallet::<T>::place_bid(RawOrigin::Signed(caller.clone()).into(), bid, 1)?;
 		Pallet::<T>::process_queues(Perquintill::one(), 1, 2, &mut WeightCounter::unlimited());
-		topsoil_system::Pallet::<T>::set_block_number(Receipts::<T>::get(0).unwrap().expiry);
+		topsoil_core::system::Pallet::<T>::set_block_number(Receipts::<T>::get(0).unwrap().expiry);
 
 		#[extrinsic_call]
 		_(RawOrigin::Signed(caller.clone()), 0, None);
@@ -220,7 +220,7 @@ mod benchmarks {
 		Pallet::<T>::place_bid(RawOrigin::Signed(caller.clone()).into(), bid, 1)?;
 		Pallet::<T>::place_bid(RawOrigin::Signed(caller.clone()).into(), bid, 1)?;
 		Pallet::<T>::process_queues(Perquintill::one(), 1, 2, &mut WeightCounter::unlimited());
-		topsoil_system::Pallet::<T>::set_block_number(Receipts::<T>::get(0).unwrap().expiry);
+		topsoil_core::system::Pallet::<T>::set_block_number(Receipts::<T>::get(0).unwrap().expiry);
 		Pallet::<T>::communify(RawOrigin::Signed(caller.clone()).into(), 0)?;
 
 		#[extrinsic_call]

@@ -23,7 +23,7 @@ use core::{iter, marker::PhantomData};
 use scale_info::TypeInfo;
 use subsoil::runtime::traits::{Bounded, Zero};
 use plant_election_provider::ScoreProvider;
-use topsoil_support::{
+use topsoil_core::{
 	defensive, ensure,
 	traits::{Defensive, DefensiveOption, Get},
 	CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound, PalletError, PartialEqNoBound,
@@ -427,7 +427,7 @@ impl<T: Config<I>, I: 'static> List<T, I> {
 				bag.remove_node_unchecked(&node);
 				bag.put();
 			} else {
-				topsoil_support::defensive!(
+				topsoil_core::defensive!(
 					"Node did not have a bag; BagsList is in an inconsistent state"
 				);
 			}
@@ -582,7 +582,7 @@ impl<T: Config<I>, I: 'static> List<T, I> {
 			let expected_bag = bags_map
 				.get(&node.bag_upper)
 				.ok_or("bag not found for the node in active bags")?;
-			topsoil_support::ensure!(expected_bag.contains(node.id()), "node not found in the bag");
+			topsoil_core::ensure!(expected_bag.contains(node.id()), "node not found in the bag");
 
 			// verify node state
 			node.do_try_state()?
@@ -595,7 +595,7 @@ impl<T: Config<I>, I: 'static> List<T, I> {
 	#[cfg(any(feature = "std", feature = "runtime-benchmarks"))]
 	#[allow(dead_code)]
 	pub(crate) fn get_bags() -> Vec<(T::Score, Vec<T::AccountId>)> {
-		use topsoil_support::traits::Get as _;
+		use topsoil_core::traits::Get as _;
 
 		let thresholds = T::BagThresholds::get();
 		let iter = thresholds.iter().copied();
@@ -793,7 +793,7 @@ impl<T: Config<I>, I: 'static> Bag<T, I> {
 	/// * Ensures there are no loops, traversal from head to tail is correct.
 	#[cfg(any(test, feature = "try-runtime", feature = "fuzz"))]
 	fn do_try_state(&self) -> Result<(), TryRuntimeError> {
-		topsoil_support::ensure!(
+		topsoil_core::ensure!(
 			self.head()
 				.map(|head| head.prev().is_none())
 				// if there is no head, then there must not be a tail, meaning that the bag is
@@ -802,7 +802,7 @@ impl<T: Config<I>, I: 'static> Bag<T, I> {
 			"head has a prev"
 		);
 
-		topsoil_support::ensure!(
+		topsoil_core::ensure!(
 			self.tail()
 				.map(|tail| tail.next().is_none())
 				// if there is no tail, then there must not be a head, meaning that the bag is
@@ -812,7 +812,7 @@ impl<T: Config<I>, I: 'static> Bag<T, I> {
 		);
 
 		let mut seen_in_bag = BTreeSet::new();
-		topsoil_support::ensure!(
+		topsoil_core::ensure!(
 			self.iter()
 				.map(|node| node.id)
 				// each voter is only seen once, thus there is no cycle within a bag
@@ -941,7 +941,7 @@ impl<T: Config<I>, I: 'static> Node<T, I> {
 			&& expected_bag.tail.as_ref() != Some(id);
 		let terminal_check =
 			expected_bag.head.as_ref() == Some(id) || expected_bag.tail.as_ref() == Some(id);
-		topsoil_support::ensure!(
+		topsoil_core::ensure!(
 			non_terminal_check || terminal_check,
 			"a terminal node is neither its bag head or tail"
 		);

@@ -9,8 +9,8 @@
 use crate::*;
 use subsoil::runtime::traits::Bounded;
 use topsoil_benchmarking::v2::*;
-use topsoil_support::traits::Get;
-use topsoil_system::RawOrigin;
+use topsoil_core::traits::Get;
+use topsoil_core::system::RawOrigin;
 
 const SEED: u32 = 0;
 

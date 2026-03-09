@@ -37,9 +37,9 @@ impl<T: Config<I>, I: 'static> FrozenBalance<T::AssetId, T::AccountId, T::Balanc
 	}
 }
 
-// Implement [`fungibles::Inspect`](topsoil_support::traits::fungibles::Inspect) as it is bound by
-// [`fungibles::InspectFreeze`](topsoil_support::traits::fungibles::InspectFreeze) and
-// [`fungibles::MutateFreeze`](topsoil_support::traits::fungibles::MutateFreeze). To do so, we'll
+// Implement [`fungibles::Inspect`](topsoil_core::traits::fungibles::Inspect) as it is bound by
+// [`fungibles::InspectFreeze`](topsoil_core::traits::fungibles::InspectFreeze) and
+// [`fungibles::MutateFreeze`](topsoil_core::traits::fungibles::MutateFreeze). To do so, we'll
 // re-export all of `topsoil-assets` implementation of the same trait.
 impl<T: Config<I>, I: 'static> Inspect<T::AccountId> for Pallet<T, I> {
 	type AssetId = T::AssetId;

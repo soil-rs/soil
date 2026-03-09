@@ -8,7 +8,7 @@ trait Config {
 	type C;
 }
 
-#[derive(topsoil_support::CloneNoBound)]
+#[derive(topsoil_core::CloneNoBound)]
 struct Foo<T: Config> {
 	c: T::C,
 }

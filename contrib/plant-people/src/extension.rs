@@ -16,11 +16,11 @@ use subsoil::runtime::{
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 	Saturating,
 };
-use topsoil_support::{
+use topsoil_core::{
 	ensure, pallet_prelude::TransactionSource, traits::reality::Context, weights::Weight,
 	CloneNoBound, DefaultNoBound, EqNoBound, PartialEqNoBound,
 };
-use topsoil_system::{CheckNonce, ValidNonceInfo};
+use topsoil_core::system::{CheckNonce, ValidNonceInfo};
 
 /// Information required to transform an origin into a personal alias or personal identity.
 #[derive(
@@ -93,7 +93,7 @@ pub enum Val<T: Config + Send + Sync> {
 	UsingAccount(T::AccountId, T::Nonce),
 }
 
-impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>::RuntimeCall>
+impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_core::system::Config>::RuntimeCall>
 	for AsPerson<T>
 {
 	const IDENTIFIER: &'static str = "AsPerson";
@@ -102,7 +102,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 	type Val = Val<T>;
 	type Pre = ();
 
-	fn weight(&self, _call: &<T as topsoil_system::Config>::RuntimeCall) -> Weight {
+	fn weight(&self, _call: &<T as topsoil_core::system::Config>::RuntimeCall) -> Weight {
 		match self.0 {
 			// Extension is passthrough
 			None => Weight::zero(),
@@ -127,17 +127,17 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 
 	fn validate(
 		&self,
-		origin: <T as topsoil_system::Config>::RuntimeOrigin,
-		call: &<T as topsoil_system::Config>::RuntimeCall,
-		_info: &DispatchInfoOf<<T as topsoil_system::Config>::RuntimeCall>,
+		origin: <T as topsoil_core::system::Config>::RuntimeOrigin,
+		call: &<T as topsoil_core::system::Config>::RuntimeCall,
+		_info: &DispatchInfoOf<<T as topsoil_core::system::Config>::RuntimeCall>,
 		_len: usize,
 		_self_implicit: Self::Implicit,
 		inherited_implication: &impl Encode,
 		_source: TransactionSource,
-	) -> ValidateResult<Self::Val, <T as topsoil_system::Config>::RuntimeCall> {
+	) -> ValidateResult<Self::Val, <T as topsoil_core::system::Config>::RuntimeCall> {
 		match &self.0 {
 			Some(AsPersonInfo::AsPersonalAliasWithAccount(nonce)) => {
-				let Some(topsoil_system::Origin::<T>::Signed(who)) = origin.as_system_ref() else {
+				let Some(topsoil_core::system::Origin::<T>::Signed(who)) = origin.as_system_ref() else {
 					return Err(InvalidTransaction::BadSigner.into());
 				};
 				let who = who.clone();
@@ -160,7 +160,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 				Ok((validity, Val::UsingAccount(who, *nonce), origin))
 			},
 			Some(AsPersonInfo::AsPersonalIdentityWithAccount(nonce)) => {
-				let Some(topsoil_system::Origin::<T>::Signed(who)) = origin.as_system_ref() else {
+				let Some(topsoil_core::system::Origin::<T>::Signed(who)) = origin.as_system_ref() else {
 					return Err(InvalidTransaction::BadSigner.into());
 				};
 				let who = who.clone();
@@ -179,7 +179,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 			},
 			Some(AsPersonInfo::AsPersonalAliasWithProof(proof, ring_index, context)) => {
 				ensure!(
-					matches!(origin.as_system_ref(), Some(topsoil_system::RawOrigin::None)),
+					matches!(origin.as_system_ref(), Some(topsoil_core::system::RawOrigin::None)),
 					InvalidTransaction::BadSigner
 				);
 
@@ -190,7 +190,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 				};
 
 				let ring = Root::<T>::get(ring_index).ok_or(InvalidTransaction::Call)?;
-				let now = topsoil_system::Pallet::<T>::block_number();
+				let now = topsoil_core::system::Pallet::<T>::block_number();
 				if now < *call_valid_at {
 					return Err(InvalidTransaction::Future.into());
 				}
@@ -231,7 +231,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 			},
 			Some(AsPersonInfo::AsPersonalIdentityWithProof(signature, index)) => {
 				ensure!(
-					matches!(origin.as_system_ref(), Some(topsoil_system::RawOrigin::None)),
+					matches!(origin.as_system_ref(), Some(topsoil_core::system::RawOrigin::None)),
 					InvalidTransaction::BadSigner
 				);
 
@@ -241,7 +241,7 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 					return Err(InvalidTransaction::Call.into());
 				};
 
-				let now = topsoil_system::Pallet::<T>::block_number();
+				let now = topsoil_core::system::Pallet::<T>::block_number();
 				if now < *call_valid_at {
 					return Err(InvalidTransaction::Future.into());
 				}
@@ -286,9 +286,9 @@ impl<T: Config + Send + Sync> TransactionExtension<<T as topsoil_system::Config>
 	fn prepare(
 		self,
 		val: Self::Val,
-		_origin: &<T as topsoil_system::Config>::RuntimeOrigin,
-		_call: &<T as topsoil_system::Config>::RuntimeCall,
-		_info: &DispatchInfoOf<<T as topsoil_system::Config>::RuntimeCall>,
+		_origin: &<T as topsoil_core::system::Config>::RuntimeOrigin,
+		_call: &<T as topsoil_core::system::Config>::RuntimeCall,
+		_info: &DispatchInfoOf<<T as topsoil_core::system::Config>::RuntimeCall>,
 		_len: usize,
 	) -> Result<Self::Pre, TransactionValidityError> {
 		match val {

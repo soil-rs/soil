@@ -11,7 +11,7 @@
 
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
-use topsoil_support::traits::reality::{AddOnlyPeopleTrait, PeopleTrait, PersonalId};
+use topsoil_core::traits::reality::{AddOnlyPeopleTrait, PeopleTrait, PersonalId};
 
 #[cfg(test)]
 mod mock;
@@ -27,25 +27,25 @@ pub use weights::WeightInfo;
 
 type MemberOf<T> = <<T as Config>::People as AddOnlyPeopleTrait>::Member;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::{pallet_prelude::*, Twox64Concat};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{pallet_prelude::*, Twox64Concat};
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	/// The configuration of the pallet dummy DIM.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 
 		/// The runtime event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The origin which may command personhood updates through this pallet. Root can always do
 		/// this.

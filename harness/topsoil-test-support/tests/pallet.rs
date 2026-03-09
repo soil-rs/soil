@@ -16,7 +16,7 @@ use subsoil::runtime::{
 	traits::{Block as BlockT, Dispatchable},
 	DispatchError, ModuleError,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, Parameter, Pays},
 	dispatch_context::with_context,
@@ -31,7 +31,7 @@ use topsoil_support::{
 	weights::{RuntimeDbWeight, Weight},
 	OrdNoBound, PartialOrdNoBound,
 };
-use topsoil_system::offchain::{CreateSignedTransaction, CreateTransactionBase, SigningTypes};
+use topsoil_core::system::offchain::{CreateSignedTransaction, CreateTransactionBase, SigningTypes};
 
 parameter_types! {
 	/// Used to control if the storage version should be updated.
@@ -101,7 +101,7 @@ impl SomeAssociation2 for u64 {
 	type _2 = u64;
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 /// Pallet documentation
 // Comments should not be included in the pallet documentation
 #[pallet_doc("../example-pallet-doc.md")]
@@ -109,17 +109,17 @@ impl SomeAssociation2 for u64 {
 pub mod pallet {
 	use super::*;
 	use subsoil::runtime::DispatchResult;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	type BalanceOf<T> = <T as Config>::Balance;
 
 	pub(crate) const STORAGE_VERSION: StorageVersion = StorageVersion::new(10);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config
+	pub trait Config: topsoil_core::system::Config
 	where
-		<Self as topsoil_system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
+		<Self as topsoil_core::system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
 	{
 		/// Some comment
 		/// Some comment
@@ -139,7 +139,7 @@ pub mod pallet {
 
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::extra_constants]
@@ -284,7 +284,7 @@ pub mod pallet {
 		T::AccountId: SomeAssociation1 + From<SomeType1>,
 	{
 		/// event doc comment put in metadata
-		Proposed(<T as topsoil_system::Config>::AccountId),
+		Proposed(<T as topsoil_core::system::Config>::AccountId),
 		#[deprecated = "test"]
 		Spending(BalanceOf<T>),
 		Something(u32),
@@ -441,7 +441,7 @@ pub mod pallet {
 	pub type Unbounded<T> = StorageValue<Value = Vec<u8>>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config>
 	where
 		T::AccountId: From<SomeType1> + SomeAssociation1 + From<SomeType4>,
@@ -559,7 +559,7 @@ pub mod pallet {
 		Fatal,
 	}
 
-	impl topsoil_support::inherent::IsFatalError for InherentError {
+	impl topsoil_core::inherent::IsFatalError for InherentError {
 		fn is_fatal_error(&self) -> bool {
 			matches!(self, InherentError::Fatal)
 		}
@@ -570,21 +570,21 @@ pub mod pallet {
 
 // Test that a pallet with non generic event and generic genesis_config is correctly handled
 // and that a pallet with the attribute without_storage_info is correctly handled.
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet2 {
 	use super::{SomeAssociation1, SomeType1, UpdateStorageVersion};
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	pub(crate) const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config
+	pub trait Config: topsoil_core::system::Config
 	where
-		<Self as topsoil_system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
+		<Self as topsoil_core::system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
 	{
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -668,12 +668,12 @@ pub mod pallet2 {
 	}
 }
 
-/// Test that the supertrait check works when we pass some parameter to the `topsoil_system::Config`.
-#[topsoil_support::pallet]
+/// Test that the supertrait check works when we pass some parameter to the `topsoil_core::system::Config`.
+#[topsoil_core::pallet]
 pub mod pallet3 {
 	#[pallet::config]
 	pub trait Config:
-		topsoil_system::Config<RuntimeOrigin = <Self as Config>::RuntimeOrigin>
+		topsoil_core::system::Config<RuntimeOrigin = <Self as Config>::RuntimeOrigin>
 	{
 		type RuntimeOrigin;
 	}
@@ -682,10 +682,10 @@ pub mod pallet3 {
 	pub struct Pallet<T>(_);
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet4 {
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -694,12 +694,12 @@ pub mod pallet4 {
 	impl<T: Config> Pallet<T> {}
 }
 
-/// Test that the supertrait check works when we pass some parameter to the `topsoil_system::Config`.
-#[topsoil_support::pallet]
+/// Test that the supertrait check works when we pass some parameter to the `topsoil_core::system::Config`.
+#[topsoil_core::pallet]
 pub mod pallet5 {
 	#[pallet::config]
 	pub trait Config:
-		topsoil_system::Config<RuntimeOrigin = <Self as Config>::RuntimeOrigin>
+		topsoil_core::system::Config<RuntimeOrigin = <Self as Config>::RuntimeOrigin>
 	{
 		type RuntimeOrigin;
 	}
@@ -708,13 +708,13 @@ pub mod pallet5 {
 	pub struct Pallet<T>(_);
 }
 
-topsoil_support::parameter_types!(
+topsoil_core::parameter_types!(
 	pub const MyGetParam3: u32 = 12;
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -767,12 +767,12 @@ pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
 	UintAuthorityId,
-	topsoil_system::CheckNonZeroSender<Runtime>,
+	topsoil_core::system::CheckNonZeroSender<Runtime>,
 >;
 pub type UncheckedSignaturePayload = subsoil::runtime::generic::UncheckedSignaturePayload<
 	u64,
 	UintAuthorityId,
-	topsoil_system::CheckNonZeroSender<Runtime>,
+	topsoil_core::system::CheckNonZeroSender<Runtime>,
 >;
 
 impl SigningTypes for Runtime {
@@ -793,7 +793,7 @@ where
 	RuntimeCall: From<LocalCall>,
 {
 	fn create_signed_transaction<
-		C: topsoil_system::offchain::AppCrypto<Self::Public, Self::Signature>,
+		C: topsoil_core::system::offchain::AppCrypto<Self::Public, Self::Signature>,
 	>(
 		call: RuntimeCall,
 		_public: UintAuthorityId,
@@ -804,12 +804,12 @@ where
 			call,
 			nonce,
 			account.into(),
-			topsoil_system::CheckNonZeroSender::new(),
+			topsoil_core::system::CheckNonZeroSender::new(),
 		))
 	}
 }
 
-#[topsoil_support::runtime]
+#[topsoil_core::runtime]
 mod runtime {
 	#[runtime::runtime]
 	#[runtime::derive(
@@ -827,7 +827,7 @@ mod runtime {
 	pub struct Runtime;
 
 	#[runtime::pallet_index(0)]
-	pub type System = topsoil_system + Call + Event<T>;
+	pub type System = topsoil_core::system + Call + Event<T>;
 
 	#[runtime::pallet_index(1)]
 	pub type Example = pallet;
@@ -867,19 +867,19 @@ fn maybe_docs(doc: Vec<&'static str>) -> Vec<&'static str> {
 #[allow(deprecated)]
 fn transactional_works() {
 	TestExternalities::default().execute_with(|| {
-		topsoil_system::Pallet::<Runtime>::set_block_number(1);
+		topsoil_core::system::Pallet::<Runtime>::set_block_number(1);
 
 		pallet::Call::<Runtime>::foo_storage_layer { foo: 0 }
 			.dispatch_bypass_filter(None.into())
 			.err()
 			.unwrap();
-		assert!(topsoil_system::Pallet::<Runtime>::events().is_empty());
+		assert!(topsoil_core::system::Pallet::<Runtime>::events().is_empty());
 
 		pallet::Call::<Runtime>::foo_storage_layer { foo: 1 }
 			.dispatch_bypass_filter(None.into())
 			.unwrap();
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()
+			topsoil_core::system::Pallet::<Runtime>::events()
 				.iter()
 				.map(|e| &e.event)
 				.collect::<Vec<_>>(),
@@ -894,7 +894,7 @@ fn call_expand() {
 	assert_eq!(
 		call_foo.get_dispatch_info(),
 		DispatchInfo {
-			call_weight: topsoil_support::weights::Weight::from_parts(3, 0),
+			call_weight: topsoil_core::weights::Weight::from_parts(3, 0),
 			extension_weight: Default::default(),
 			class: DispatchClass::Normal,
 			pays_fee: Pays::Yes
@@ -979,7 +979,7 @@ fn inherent_expand() {
 		traits::{BlakeTwo256, Block as _, Header},
 		Digest,
 	};
-	use topsoil_support::inherent::InherentData;
+	use topsoil_core::inherent::InherentData;
 
 	let inherents = InherentData::new().create_extrinsics();
 
@@ -1065,7 +1065,7 @@ fn inherent_expand() {
 
 #[test]
 fn validate_unsigned_expand() {
-	use topsoil_support::pallet_prelude::{
+	use topsoil_core::pallet_prelude::{
 		InvalidTransaction, TransactionSource, TransactionValidityError, ValidTransaction,
 		ValidateUnsigned,
 	};
@@ -1101,12 +1101,12 @@ fn composite_expand() {
 #[allow(deprecated)]
 fn pallet_expand_deposit_event() {
 	TestExternalities::default().execute_with(|| {
-		topsoil_system::Pallet::<Runtime>::set_block_number(1);
+		topsoil_core::system::Pallet::<Runtime>::set_block_number(1);
 		pallet::Call::<Runtime>::foo { foo: 3, bar: 0 }
 			.dispatch_bypass_filter(None.into())
 			.unwrap();
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()[0].event,
+			topsoil_core::system::Pallet::<Runtime>::events()[0].event,
 			RuntimeEvent::Example(pallet::Event::Something(3)),
 		);
 	})
@@ -1120,7 +1120,7 @@ fn pallet_new_call_variant() {
 #[test]
 #[allow(deprecated)]
 fn storage_expand() {
-	use topsoil_support::{pallet_prelude::*, storage::StoragePrefixedMap};
+	use topsoil_core::{pallet_prelude::*, storage::StoragePrefixedMap};
 
 	fn twox_64_concat(d: &[u8]) -> Vec<u8> {
 		let mut v = twox_64(d).to_vec();
@@ -1285,7 +1285,7 @@ fn storage_expand() {
 #[allow(deprecated)]
 fn pallet_hooks_expand() {
 	TestExternalities::default().execute_with(|| {
-		topsoil_system::Pallet::<Runtime>::set_block_number(1);
+		topsoil_core::system::Pallet::<Runtime>::set_block_number(1);
 
 		assert_eq!(AllPalletsWithoutSystem::on_initialize(1), Weight::from_parts(10, 0));
 		AllPalletsWithoutSystem::on_finalize(1);
@@ -1293,27 +1293,27 @@ fn pallet_hooks_expand() {
 		assert_eq!(AllPalletsWithoutSystem::on_runtime_upgrade(), Weight::from_parts(30, 0));
 
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()[0].event,
+			topsoil_core::system::Pallet::<Runtime>::events()[0].event,
 			RuntimeEvent::Example(pallet::Event::Something(10)),
 		);
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()[1].event,
+			topsoil_core::system::Pallet::<Runtime>::events()[1].event,
 			RuntimeEvent::Example2(pallet2::Event::Something(11)),
 		);
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()[2].event,
+			topsoil_core::system::Pallet::<Runtime>::events()[2].event,
 			RuntimeEvent::Example(pallet::Event::Something(20)),
 		);
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()[3].event,
+			topsoil_core::system::Pallet::<Runtime>::events()[3].event,
 			RuntimeEvent::Example2(pallet2::Event::Something(21)),
 		);
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()[4].event,
+			topsoil_core::system::Pallet::<Runtime>::events()[4].event,
 			RuntimeEvent::Example(pallet::Event::Something(30)),
 		);
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::events()[5].event,
+			topsoil_core::system::Pallet::<Runtime>::events()[5].event,
 			RuntimeEvent::Example2(pallet2::Event::Something(31)),
 		);
 	})
@@ -1336,7 +1336,7 @@ fn migrate_from_pallet_version_to_storage_version() {
 	const PALLET_VERSION_STORAGE_KEY_POSTFIX: &[u8] = b":__PALLET_VERSION__:";
 
 	fn pallet_version_key(name: &str) -> [u8; 32] {
-		topsoil_support::storage::storage_prefix(
+		topsoil_core::storage::storage_prefix(
 			name.as_bytes(),
 			PALLET_VERSION_STORAGE_KEY_POSTFIX,
 		)
@@ -1354,7 +1354,7 @@ fn migrate_from_pallet_version_to_storage_version() {
 		assert_eq!(System::on_chain_storage_version(), StorageVersion::new(0));
 
 		let db_weight = RuntimeDbWeight { read: 0, write: 5 };
-		let weight = topsoil_support::migrations::migrate_from_pallet_version_to_storage_version::<
+		let weight = topsoil_core::migrations::migrate_from_pallet_version_to_storage_version::<
 			AllPalletsWithSystem,
 		>(&db_weight);
 
@@ -1820,7 +1820,7 @@ fn metadata_v15() {
 			event: None,
 			constants: vec![],
 			error: None,
-			docs: vec![" Test that the supertrait check works when we pass some parameter to the `topsoil_system::Config`."],
+			docs: vec![" Test that the supertrait check works when we pass some parameter to the `topsoil_core::system::Config`."],
 		},
 		PalletMetadata {
 			index: 4,
@@ -1841,7 +1841,7 @@ fn metadata_v15() {
 			event: None,
 			constants: vec![],
 			error: None,
-			docs: vec![" Test that the supertrait check works when we pass some parameter to the `topsoil_system::Config`."],
+			docs: vec![" Test that the supertrait check works when we pass some parameter to the `topsoil_core::system::Config`."],
 		},
 	];
 
@@ -1863,14 +1863,14 @@ fn metadata_v15() {
 			additional_signed: meta_type::<()>(),
 		}],
 		address_ty: meta_type::<
-			<<<Runtime as topsoil_system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Address
+			<<<Runtime as topsoil_core::system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Address
 		>(),
 		call_ty: meta_type::<<Runtime as CreateTransactionBase<RuntimeCall>>::RuntimeCall>(),
 		signature_ty: meta_type::<
-			<<<Runtime as topsoil_system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Signature
+			<<<Runtime as topsoil_core::system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Signature
 		>(),
 		extra_ty: meta_type::<
-			<<<Runtime as topsoil_system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Extension
+			<<<Runtime as topsoil_core::system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Extension
 		>(),
 	};
 
@@ -1951,7 +1951,7 @@ fn extrinsic_metadata_ir_types() {
 	let ir = Runtime::metadata_ir().extrinsic;
 
 	assert_eq!(
-		meta_type::<<<<Runtime as topsoil_system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Address>(),
+		meta_type::<<<<Runtime as topsoil_core::system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Address>(),
 		ir.address_ty
 	);
 	assert_eq!(meta_type::<u64>(), ir.address_ty);
@@ -1963,16 +1963,16 @@ fn extrinsic_metadata_ir_types() {
 	assert_eq!(meta_type::<RuntimeCall>(), ir.call_ty);
 
 	assert_eq!(
-		meta_type::<<<<Runtime as topsoil_system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Signature>(),
+		meta_type::<<<<Runtime as topsoil_core::system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Signature>(),
 		ir.signature_ty
 	);
 	assert_eq!(meta_type::<UintAuthorityId>(), ir.signature_ty);
 
 	assert_eq!(
-		meta_type::<<<<Runtime as topsoil_system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Extension>(),
+		meta_type::<<<<Runtime as topsoil_core::system::Config>::Block as BlockT>::Extrinsic as SignedTransactionBuilder>::Extension>(),
 		ir.extra_ty
 	);
-	assert_eq!(meta_type::<topsoil_system::CheckNonZeroSender<Runtime>>(), ir.extra_ty);
+	assert_eq!(meta_type::<topsoil_core::system::CheckNonZeroSender<Runtime>>(), ir.extra_ty);
 }
 
 #[test]
@@ -1986,17 +1986,17 @@ fn test_pallet_runtime_docs() {
 
 #[test]
 fn test_pallet_info_access() {
-	assert_eq!(<System as topsoil_support::traits::PalletInfoAccess>::name(), "System");
-	assert_eq!(<Example as topsoil_support::traits::PalletInfoAccess>::name(), "Example");
-	assert_eq!(<Example2 as topsoil_support::traits::PalletInfoAccess>::name(), "Example2");
-	assert_eq!(<System as topsoil_support::traits::PalletInfoAccess>::index(), 0);
-	assert_eq!(<Example as topsoil_support::traits::PalletInfoAccess>::index(), 1);
-	assert_eq!(<Example2 as topsoil_support::traits::PalletInfoAccess>::index(), 2);
+	assert_eq!(<System as topsoil_core::traits::PalletInfoAccess>::name(), "System");
+	assert_eq!(<Example as topsoil_core::traits::PalletInfoAccess>::name(), "Example");
+	assert_eq!(<Example2 as topsoil_core::traits::PalletInfoAccess>::name(), "Example2");
+	assert_eq!(<System as topsoil_core::traits::PalletInfoAccess>::index(), 0);
+	assert_eq!(<Example as topsoil_core::traits::PalletInfoAccess>::index(), 1);
+	assert_eq!(<Example2 as topsoil_core::traits::PalletInfoAccess>::index(), 2);
 }
 
 #[test]
 fn test_storage_info() {
-	use topsoil_support::{
+	use topsoil_core::{
 		storage::storage_prefix as prefix,
 		traits::{StorageInfo, StorageInfoTrait},
 	};
@@ -2290,18 +2290,18 @@ fn assert_type_all_pallets_without_system_is_correct() {
 
 #[test]
 fn test_storage_alias() {
-	use topsoil_support::Twox64Concat;
+	use topsoil_core::Twox64Concat;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	type Value<T: pallet::Config>
 	where
-		<T as topsoil_system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
+		<T as topsoil_core::system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
 	= StorageValue<pallet::Pallet<T>, u32, ValueQuery>;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	type SomeCountedStorageMap<T: pallet2::Config>
 	where
-		<T as topsoil_system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
+		<T as topsoil_core::system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
 	= CountedStorageMap<pallet2::Pallet<T>, Twox64Concat, u8, u32>;
 
 	TestExternalities::default().execute_with(|| {
@@ -2323,7 +2323,7 @@ fn pallet_on_chain_storage_version_initializes_correctly() {
 	type Executive = topsoil_executive::Executive<
 		Runtime,
 		Block,
-		topsoil_system::ChainContext<Runtime>,
+		topsoil_core::system::ChainContext<Runtime>,
 		Runtime,
 		AllPalletsWithSystem,
 	>;
@@ -2338,7 +2338,7 @@ fn pallet_on_chain_storage_version_initializes_correctly() {
 		let exists = contains_prefixed_key(&pallet_hashed_prefix);
 		assert_eq!(exists, false);
 
-		// [`topsoil_support::traits::BeforeAllRuntimeMigrations`] hook should initialize the storage
+		// [`topsoil_core::traits::BeforeAllRuntimeMigrations`] hook should initialize the storage
 		// version.
 		Executive::execute_on_runtime_upgrade();
 
@@ -2360,7 +2360,7 @@ fn pallet_on_chain_storage_version_initializes_correctly() {
 		let on_chain_version_before = StorageVersion::get::<Example4>();
 		assert_eq!(on_chain_version_before, StorageVersion::new(0));
 
-		// [`topsoil_support::traits::BeforeAllRuntimeMigrations`] initializes the storage version.
+		// [`topsoil_core::traits::BeforeAllRuntimeMigrations`] initializes the storage version.
 		Executive::execute_on_runtime_upgrade();
 
 		// Check that the storage version now exists and was initialized to 0.
@@ -2373,7 +2373,7 @@ fn pallet_on_chain_storage_version_initializes_correctly() {
 #[cfg(feature = "try-runtime")]
 #[test]
 fn post_runtime_upgrade_detects_storage_version_issues() {
-	use topsoil_support::traits::UpgradeCheckSelect;
+	use topsoil_core::traits::UpgradeCheckSelect;
 
 	struct CustomUpgrade;
 
@@ -2398,7 +2398,7 @@ fn post_runtime_upgrade_detects_storage_version_issues() {
 	type Executive = topsoil_executive::Executive<
 		Runtime,
 		Block,
-		topsoil_system::ChainContext<Runtime>,
+		topsoil_core::system::ChainContext<Runtime>,
 		Runtime,
 		AllPalletsWithSystem,
 	>;
@@ -2410,7 +2410,7 @@ fn post_runtime_upgrade_detects_storage_version_issues() {
 	type ExecutiveWithUpgrade = topsoil_executive::Executive<
 		Runtime,
 		Block,
-		topsoil_system::ChainContext<Runtime>,
+		topsoil_core::system::ChainContext<Runtime>,
 		Runtime,
 		AllPalletsWithSystem,
 		CustomUpgrade,
@@ -2423,7 +2423,7 @@ fn post_runtime_upgrade_detects_storage_version_issues() {
 	type ExecutiveWithUpgradePallet4 = topsoil_executive::Executive<
 		Runtime,
 		Block,
-		topsoil_system::ChainContext<Runtime>,
+		topsoil_core::system::ChainContext<Runtime>,
 		Runtime,
 		AllPalletsWithSystem,
 		CustomUpgradePallet4,

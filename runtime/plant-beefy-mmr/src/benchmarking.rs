@@ -15,8 +15,8 @@ use subsoil::consensus::beefy::Payload;
 use subsoil::runtime::traits::One;
 use topsoil_benchmarking::v2::*;
 use plant_mmr::{Nodes, Pallet as Mmr};
-use topsoil_support::traits::Hooks;
-use topsoil_system::{Config as SystemConfig, Pallet as System};
+use topsoil_core::traits::Hooks;
+use topsoil_core::system::{Config as SystemConfig, Pallet as System};
 
 pub trait Config:
 	plant_mmr::Config<Hashing = subsoil::consensus::beefy::MmrHashing> + crate::Config
@@ -62,7 +62,7 @@ mod benchmarks {
 
 		init_block::<T>(1);
 		let header = System::<T>::finalize();
-		topsoil_system::BlockHash::<T>::insert(BlockNumberFor::<T>::one(), header.hash());
+		topsoil_core::system::BlockHash::<T>::insert(BlockNumberFor::<T>::one(), header.hash());
 
 		let validation_context;
 		#[block]

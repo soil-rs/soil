@@ -13,7 +13,7 @@ use super::*;
 #[allow(unused)]
 use crate::Pallet as Template;
 use topsoil_benchmarking::v2::*;
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 #[benchmarks]
 mod benchmarks {

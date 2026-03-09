@@ -11,7 +11,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::ops::BitOr;
 use scale_info::TypeInfo;
 use subsoil::runtime::Saturating;
-use topsoil_support::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
+use topsoil_core::traits::{Imbalance, LockIdentifier, OnUnbalanced, WithdrawReasons};
 
 /// Simplified reasons for withdrawing balance.
 #[derive(

@@ -168,7 +168,7 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config + CreateBare<Call<Self>> {
+	pub trait Config: topsoil_core::system::Config + CreateBare<Call<Self>> {
 		/// The maximum number of authorities per session.
 		#[pallet::constant]
 		type MaxAuthorities: Get<AuthorityIndex>;
@@ -354,7 +354,7 @@ pub mod pallet {
 impl<T: Config> Pallet<T> {
 	/// Returns the phase of the current session.
 	fn session_phase() -> SessionPhase {
-		let block_in_phase = topsoil_system::Pallet::<T>::block_number()
+		let block_in_phase = topsoil_core::system::Pallet::<T>::block_number()
 			.saturating_sub(CurrentSessionStartBlock::<T>::get());
 		let Some(block_in_phase) = block_in_phase.checked_sub(&T::NumCoverToCurrentBlocks::get())
 		else {
@@ -489,7 +489,7 @@ impl<T: Config> Pallet<T> {
 			return false;
 		}
 
-		let block_number = topsoil_system::Pallet::<T>::block_number();
+		let block_number = topsoil_core::system::Pallet::<T>::block_number();
 		if !Self::should_register_by_session_progress(block_number, &mixnode) {
 			log::trace!(
 				target: LOG_TARGET,
@@ -563,7 +563,7 @@ impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T> {
 			*index += 1;
 			*index
 		});
-		CurrentSessionStartBlock::<T>::put(topsoil_system::Pallet::<T>::block_number());
+		CurrentSessionStartBlock::<T>::put(topsoil_core::system::Pallet::<T>::block_number());
 
 		// Discard the previous previous mixnode set, which we don't need any more
 		if let Some(prev_prev_session_index) = session_index.checked_sub(2) {

@@ -11,8 +11,8 @@ use super::{
 	AuthorVrfRandomness, Config, EpochStart, NextRandomness, Randomness, RANDOMNESS_LENGTH,
 };
 use subsoil::runtime::traits::{Hash, One, Saturating};
-use topsoil_support::traits::Randomness as RandomnessT;
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::traits::Randomness as RandomnessT;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 /// Randomness usable by consensus protocols that **depend** upon finality and take action
 /// based upon on-chain commitments made during the epoch before the previous epoch.
@@ -149,7 +149,7 @@ impl<T: Config> RandomnessT<Option<T::Hash>, BlockNumberFor<T>> for ParentBlockR
 			T::Hashing::hash(&subject[..])
 		});
 
-		(random, <topsoil_system::Pallet<T>>::block_number().saturating_sub(One::one()))
+		(random, <topsoil_core::system::Pallet<T>>::block_number().saturating_sub(One::one()))
 	}
 }
 
@@ -157,6 +157,6 @@ impl<T: Config> RandomnessT<Option<T::Hash>, BlockNumberFor<T>> for ParentBlockR
 impl<T: Config> RandomnessT<Option<T::Hash>, BlockNumberFor<T>> for CurrentBlockRandomness<T> {
 	fn random(subject: &[u8]) -> (Option<T::Hash>, BlockNumberFor<T>) {
 		let (random, _) = ParentBlockRandomness::<T>::random(subject);
-		(random, <topsoil_system::Pallet<T>>::block_number())
+		(random, <topsoil_core::system::Pallet<T>>::block_number())
 	}
 }

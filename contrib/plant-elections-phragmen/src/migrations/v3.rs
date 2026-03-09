@@ -10,7 +10,7 @@ use super::super::LOG_TARGET;
 use crate::{Config, Pallet};
 use alloc::vec::Vec;
 use codec::{Decode, Encode, FullCodec};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::ValueQuery, traits::StorageVersion, weights::Weight, Twox64Concat,
 };
 use Debug;
@@ -38,25 +38,25 @@ pub trait V2ToV3 {
 	type Balance: 'static + FullCodec + Copy;
 }
 
-#[topsoil_support::storage_alias]
+#[topsoil_core::storage_alias]
 type Candidates<V, T: Config> =
 	StorageValue<Pallet<T>, Vec<(<V as V2ToV3>::AccountId, <V as V2ToV3>::Balance)>, ValueQuery>;
 
-#[topsoil_support::storage_alias]
+#[topsoil_core::storage_alias]
 type Members<V, T: Config> = StorageValue<
 	Pallet<T>,
 	Vec<SeatHolder<<V as V2ToV3>::AccountId, <V as V2ToV3>::Balance>>,
 	ValueQuery,
 >;
 
-#[topsoil_support::storage_alias]
+#[topsoil_core::storage_alias]
 type RunnersUp<V, T: Config> = StorageValue<
 	Pallet<T>,
 	Vec<SeatHolder<<V as V2ToV3>::AccountId, <V as V2ToV3>::Balance>>,
 	ValueQuery,
 >;
 
-#[topsoil_support::storage_alias]
+#[topsoil_core::storage_alias]
 type Voting<V, T: Config> = StorageMap<
 	Pallet<T>,
 	Twox64Concat,

@@ -11,7 +11,7 @@ use crate::{
 	*,
 };
 use subsoil::runtime::{traits::BadOrigin, TokenError};
-use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
+use topsoil_core::{assert_noop, assert_ok, assert_storage_noop};
 
 #[test]
 fn initial_state() {

@@ -29,8 +29,8 @@
 //! book. Each book keeps track of its pages by indexing `Pages`. The `ReadyRing` contains all
 //! queues which hold at least one unprocessed message and are thereby *ready* to be serviced. The
 //! `ServiceHead` indicates which *ready* queue is the next to be serviced.
-//! The pallet implements [`topsoil_support::traits::EnqueueMessage`],
-//! [`topsoil_support::traits::ServiceQueues`] and has [`topsoil_support::traits::ProcessMessage`] and
+//! The pallet implements [`topsoil_core::traits::EnqueueMessage`],
+//! [`topsoil_core::traits::ServiceQueues`] and has [`topsoil_core::traits::ProcessMessage`] and
 //! [`OnQueueChanged`] hooks to communicate with the outside world.
 //!
 //! NOTE: The storage items are not linked since they are not public.
@@ -88,7 +88,7 @@
 //! # Scenario: Message enqueuing
 //!
 //! A message `m` is enqueued for origin `o` into queue `Q[o]` through
-//! [`topsoil_support::traits::EnqueueMessage::enqueue_message`]`(m, o)`.
+//! [`topsoil_core::traits::EnqueueMessage::enqueue_message`]`(m, o)`.
 //!
 //! First the queue is either loaded if it exists or otherwise created with empty default values.
 //! The message is then inserted to the queue by appended it into its last `Page` or by creating a
@@ -100,7 +100,7 @@
 //! # Scenario: Message processing
 //!
 //! The pallet runs each block in `on_initialize` or when being manually called through
-//! [`topsoil_support::traits::ServiceQueues::service_queues`].
+//! [`topsoil_core::traits::ServiceQueues::service_queues`].
 //!
 //! First it tries to "rotate" the `ReadyRing` by one through advancing the `ServiceHead` to the
 //! next *ready* queue. It then starts to service this queue by servicing as many pages of it as
@@ -117,10 +117,10 @@
 //!
 //! A permanently over-weight message which was skipped by the message processing will never be
 //! executed automatically through `on_initialize` nor by calling
-//! [`topsoil_support::traits::ServiceQueues::service_queues`].
+//! [`topsoil_core::traits::ServiceQueues::service_queues`].
 //!
 //! Manual intervention in the form of
-//! [`topsoil_support::traits::ServiceQueues::execute_overweight`] is necessary. Overweight messages
+//! [`topsoil_core::traits::ServiceQueues::execute_overweight`] is necessary. Overweight messages
 //! emit an [`Event::OverweightEnqueued`] event which can be used to extract the arguments for
 //! manual execution. This only works on permanently overweight messages. There is no guarantee that
 //! this will work since the message could be part of a stale page and be reaped before execution
@@ -133,7 +133,7 @@
 //! which is calculated from [`Config::HeapSize`] and [`ItemHeader::max_encoded_len()`].
 //! - `MessageOrigin`: A generic *origin* of a message, defined as [`MessageOriginOf`]. The
 //! requirements for it are kept minimal to remain as generic as possible. The type is defined in
-//! [`topsoil_support::traits::ProcessMessage::Origin`].
+//! [`topsoil_core::traits::ProcessMessage::Origin`].
 //! - `Page`: An array of `Message`s, see [`Page`]. Can never be empty.
 //! - `Book`: A list of `Page`s, see [`BookState`]. Can be empty.
 //! - `Queue`: A `Book` together with an `MessageOrigin` which can be part of the `ReadyRing`. Can
@@ -206,7 +206,7 @@ use subsoil::runtime::{
 	SaturatedConversion, Saturating, TransactionOutcome,
 };
 use subsoil::weights::WeightMeter;
-use topsoil_support::{
+use topsoil_core::{
 	defensive,
 	pallet_prelude::*,
 	traits::{
@@ -216,7 +216,7 @@ use topsoil_support::{
 	},
 	BoundedSlice, CloneNoBound, DefaultNoBound,
 };
-use topsoil_system::pallet_prelude::*;
+use topsoil_core::system::pallet_prelude::*;
 pub use weights::WeightInfo;
 
 /// Type for identifying a page.
@@ -481,7 +481,7 @@ pub trait ForceSetHead<O> {
 	fn force_set_head(weight: &mut WeightMeter, origin: &O) -> Result<bool, ()>;
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -490,11 +490,11 @@ pub mod pallet {
 
 	/// The module configuration trait.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;

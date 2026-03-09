@@ -14,28 +14,28 @@ use subsoil::runtime::{
 	BuildStorage, DispatchError, TokenError,
 };
 use plant_collective::{EnsureProportionAtLeast, Instance1};
-use topsoil_support::{
+use topsoil_core::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok, derive_impl,
 	dispatch::{DispatchErrorWithPostInfo, Pays},
 	parameter_types, storage,
 	traits::{ConstU64, Contains},
 	weights::Weight,
 };
-use topsoil_system::EnsureRoot;
+use topsoil_core::system::EnsureRoot;
 
 type BlockNumber = u64;
 
 // example module to test behaviors.
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod example {
-	use topsoil_support::{dispatch::WithPostDispatchInfo, pallet_prelude::*};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{dispatch::WithPostDispatchInfo, pallet_prelude::*};
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -76,19 +76,19 @@ pub mod example {
 
 mod mock_democracy {
 	pub use pallet::*;
-	#[topsoil_support::pallet(dev_mode)]
+	#[topsoil_core::pallet(dev_mode)]
 	pub mod pallet {
-		use topsoil_support::pallet_prelude::*;
-		use topsoil_system::pallet_prelude::*;
+		use topsoil_core::pallet_prelude::*;
+		use topsoil_core::system::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
 		#[pallet::config]
-		pub trait Config: topsoil_system::Config + Sized {
+		pub trait Config: topsoil_core::system::Config + Sized {
 			#[allow(deprecated)]
 			type RuntimeEvent: From<Event<Self>>
-				+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+				+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 			type ExternalMajorityOrigin: EnsureOrigin<Self::RuntimeOrigin>;
 		}
 
@@ -111,12 +111,12 @@ mod mock_democracy {
 	}
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
 		RootTesting: plant_test_root,
@@ -128,11 +128,11 @@ topsoil_support::construct_runtime!(
 );
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(Weight::MAX);
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(Weight::MAX);
 }
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type BaseCallFilter = TestBaseCallFilter;
 	type BlockWeights = BlockWeights;
 	type Block = Block;
@@ -176,7 +176,7 @@ impl plant_collective::Config<CouncilCollective> for Test {
 	type MaxMembers = MaxMembers;
 	type DefaultVote = plant_collective::PrimeDefaultVote;
 	type WeightInfo = ();
-	type SetMembersOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type SetMembersOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type MaxProposalWeight = MaxProposalWeight;
 	type DisapproveOrigin = EnsureRoot<Self::AccountId>;
 	type KillOrigin = EnsureRoot<Self::AccountId>;
@@ -193,7 +193,7 @@ impl Contains<RuntimeCall> for TestBaseCallFilter {
 			RuntimeCall::Balances(plant_balances::Call::transfer_allow_death { .. }) => true,
 			RuntimeCall::Utility(_) => true,
 			// For benchmarking, this acts as a noop call
-			RuntimeCall::System(topsoil_system::Call::remark { .. }) => true,
+			RuntimeCall::System(topsoil_core::system::Call::remark { .. }) => true,
 			// For tests
 			RuntimeCall::Example(_) => true,
 			// For council origin tests.
@@ -218,11 +218,11 @@ type UtilityCall = crate::Call<Test>;
 
 use plant_balances::Call as BalancesCall;
 use plant_test_root::Call as RootTestingCall;
-use topsoil_system::Call as SystemCall;
+use topsoil_core::system::Call as SystemCall;
 use plant_timestamp::Call as TimestampCall;
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 10), (5, 2)],
 		..Default::default()
@@ -361,7 +361,7 @@ fn as_derivative_filters() {
 					value: 1
 				})),
 			),
-			DispatchError::from(topsoil_system::Error::<Test>::CallFiltered),
+			DispatchError::from(topsoil_core::system::Error::<Test>::CallFiltered),
 		);
 	});
 }
@@ -370,7 +370,7 @@ fn as_derivative_filters() {
 fn batch_with_root_works() {
 	new_test_ext().execute_with(|| {
 		let k = b"a".to_vec();
-		let call = RuntimeCall::System(topsoil_system::Call::set_storage {
+		let call = RuntimeCall::System(topsoil_core::system::Call::set_storage {
 			items: vec![(k.clone(), k.clone())],
 		});
 		assert!(!TestBaseCallFilter::contains(&call));
@@ -425,7 +425,7 @@ fn batch_with_signed_filters() {
 		System::assert_last_event(
 			utility::Event::BatchInterrupted {
 				index: 0,
-				error: topsoil_system::Error::<Test>::CallFiltered.into(),
+				error: topsoil_core::system::Error::<Test>::CallFiltered.into(),
 			}
 			.into(),
 		);
@@ -666,7 +666,7 @@ fn batch_all_does_not_nest() {
 					),
 					pays_fee: Pays::Yes
 				},
-				error: topsoil_system::Error::<Test>::CallFiltered.into(),
+				error: topsoil_core::system::Error::<Test>::CallFiltered.into(),
 			}
 		);
 
@@ -680,7 +680,7 @@ fn batch_all_does_not_nest() {
 		System::assert_has_event(
 			utility::Event::BatchInterrupted {
 				index: 0,
-				error: topsoil_system::Error::<Test>::CallFiltered.into(),
+				error: topsoil_core::system::Error::<Test>::CallFiltered.into(),
 			}
 			.into(),
 		);
@@ -756,7 +756,7 @@ fn batch_doesnt_work_with_inherents() {
 		System::assert_last_event(
 			utility::Event::BatchInterrupted {
 				index: 0,
-				error: topsoil_system::Error::<Test>::CallFiltered.into(),
+				error: topsoil_core::system::Error::<Test>::CallFiltered.into(),
 			}
 			.into(),
 		);
@@ -791,7 +791,7 @@ fn batch_all_doesnt_work_with_inherents() {
 					actual_weight: Some(info.call_weight),
 					pays_fee: Pays::Yes
 				},
-				error: topsoil_system::Error::<Test>::CallFiltered.into(),
+				error: topsoil_core::system::Error::<Test>::CallFiltered.into(),
 			}
 		);
 	})
@@ -884,19 +884,19 @@ fn batch_all_works_with_council_origin() {
 #[test]
 fn with_weight_works() {
 	new_test_ext().execute_with(|| {
-		use topsoil_system::WeightInfo;
+		use topsoil_core::system::WeightInfo;
 		let upgrade_code_call =
-			Box::new(RuntimeCall::System(topsoil_system::Call::set_code_without_checks {
+			Box::new(RuntimeCall::System(topsoil_core::system::Call::set_code_without_checks {
 				code: vec![],
 			}));
 		// Weight before is max.
 		assert_eq!(
 			upgrade_code_call.get_dispatch_info().call_weight,
-			<Test as topsoil_system::Config>::SystemWeightInfo::set_code()
+			<Test as topsoil_core::system::Config>::SystemWeightInfo::set_code()
 		);
 		assert_eq!(
 			upgrade_code_call.get_dispatch_info().class,
-			topsoil_support::dispatch::DispatchClass::Operational
+			topsoil_core::dispatch::DispatchClass::Operational
 		);
 
 		let with_weight_call = Call::<Test>::with_weight {
@@ -907,7 +907,7 @@ fn with_weight_works() {
 		assert_eq!(with_weight_call.get_dispatch_info().call_weight, Weight::from_parts(123, 456));
 		assert_eq!(
 			with_weight_call.get_dispatch_info().class,
-			topsoil_support::dispatch::DispatchClass::Operational
+			topsoil_core::dispatch::DispatchClass::Operational
 		);
 	})
 }
@@ -920,7 +920,7 @@ fn dispatch_as_works() {
 		assert_eq!(Balances::free_balance(777), 0);
 		assert_ok!(Utility::dispatch_as(
 			RuntimeOrigin::root(),
-			Box::new(OriginCaller::system(topsoil_system::RawOrigin::Signed(666))),
+			Box::new(OriginCaller::system(topsoil_core::system::RawOrigin::Signed(666))),
 			Box::new(call_transfer(777, 100))
 		));
 		assert_eq!(Balances::free_balance(666), 0);
@@ -929,7 +929,7 @@ fn dispatch_as_works() {
 		System::reset_events();
 		assert_ok!(Utility::dispatch_as(
 			RuntimeOrigin::root(),
-			Box::new(OriginCaller::system(topsoil_system::RawOrigin::Signed(777))),
+			Box::new(OriginCaller::system(topsoil_core::system::RawOrigin::Signed(777))),
 			Box::new(RuntimeCall::Timestamp(TimestampCall::set { now: 0 }))
 		));
 		assert_eq!(
@@ -943,7 +943,7 @@ fn dispatch_as_works() {
 fn if_else_with_root_works() {
 	new_test_ext().execute_with(|| {
 		let k = b"a".to_vec();
-		let call = RuntimeCall::System(topsoil_system::Call::set_storage {
+		let call = RuntimeCall::System(topsoil_core::system::Call::set_storage {
 			items: vec![(k.clone(), k.clone())],
 		});
 		assert!(!TestBaseCallFilter::contains(&call));
@@ -1014,7 +1014,7 @@ fn dispatch_as_fallible_works() {
 		assert_eq!(Balances::free_balance(777), 0);
 		assert_ok!(Utility::dispatch_as_fallible(
 			RuntimeOrigin::root(),
-			Box::new(OriginCaller::system(topsoil_system::RawOrigin::Signed(666))),
+			Box::new(OriginCaller::system(topsoil_core::system::RawOrigin::Signed(666))),
 			Box::new(call_transfer(777, 100))
 		));
 		assert_eq!(Balances::free_balance(666), 0);
@@ -1023,7 +1023,7 @@ fn dispatch_as_fallible_works() {
 		assert_noop!(
 			Utility::dispatch_as_fallible(
 				RuntimeOrigin::root(),
-				Box::new(OriginCaller::system(topsoil_system::RawOrigin::Signed(777))),
+				Box::new(OriginCaller::system(topsoil_core::system::RawOrigin::Signed(777))),
 				Box::new(RuntimeCall::Timestamp(TimestampCall::set { now: 0 }))
 			),
 			DispatchError::BadOrigin,

@@ -9,7 +9,7 @@
 use super::*;
 use crate::{Event, NegativeImbalance};
 use subsoil::runtime::traits::DispatchTransaction;
-use topsoil_support::{
+use topsoil_core::{
 	traits::{
 		BalanceStatus::{Free, Reserved},
 		Currency,
@@ -19,12 +19,12 @@ use topsoil_support::{
 	},
 	StorageNoopGuard,
 };
-use topsoil_system::Event as SysEvent;
+use topsoil_core::system::Event as SysEvent;
 
 const ID_1: LockIdentifier = *b"1       ";
 const ID_2: LockIdentifier = *b"2       ";
 
-pub const CALL: &<Test as topsoil_system::Config>::RuntimeCall =
+pub const CALL: &<Test as topsoil_core::system::Config>::RuntimeCall =
 	&RuntimeCall::Balances(crate::Call::transfer_allow_death { dest: 0, value: 0 });
 
 #[test]
@@ -107,7 +107,7 @@ fn account_should_be_reaped() {
 			assert_eq!(System::providers(&1), 0);
 			assert_eq!(System::consumers(&1), 0);
 			// Check that the account is dead.
-			assert!(!topsoil_system::Account::<Test>::contains_key(&1));
+			assert!(!topsoil_core::system::Account::<Test>::contains_key(&1));
 		});
 }
 
@@ -128,7 +128,7 @@ fn reap_failed_due_to_provider_and_consumer() {
 			assert_eq!(Balances::free_balance(1), 10);
 
 			// SCENARIO: more than one provider, but will not kill account due to other provider.
-			assert_eq!(System::inc_providers(&1), topsoil_system::IncRefStatus::Existed);
+			assert_eq!(System::inc_providers(&1), topsoil_core::system::IncRefStatus::Existed);
 			assert_eq!(System::providers(&1), 2);
 			assert!(System::can_dec_provider(&1));
 			assert_ok!(<Balances as Currency<_>>::transfer(&1, &2, 10, AllowDeath));
@@ -754,7 +754,7 @@ fn burn_must_work() {
 #[should_panic = "the balance of any account should always be at least the existential deposit."]
 fn cannot_set_genesis_value_below_ed() {
 	EXISTENTIAL_DEPOSIT.with(|v| *v.borrow_mut() = 11);
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let _ = crate::GenesisConfig::<Test> { balances: vec![(1, 10)], ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
@@ -763,7 +763,7 @@ fn cannot_set_genesis_value_below_ed() {
 #[test]
 #[should_panic = "duplicate balances in genesis."]
 fn cannot_set_genesis_value_twice() {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let _ = crate::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (1, 15)],
 		..Default::default()
@@ -1151,7 +1151,7 @@ fn operations_on_dead_account_should_not_change_state() {
 	// These functions all use `mutate_account` which may introduce a storage change when
 	// the account never existed to begin with, and shouldn't exist in the end.
 	ExtBuilder::default().existential_deposit(1).build_and_execute_with(|| {
-		assert!(!topsoil_system::Account::<Test>::contains_key(&1337));
+		assert!(!topsoil_core::system::Account::<Test>::contains_key(&1337));
 
 		// Unreserve
 		assert_storage_noop!(assert_eq!(Balances::unreserve(&1337, 42), 42));
@@ -1173,7 +1173,7 @@ fn operations_on_dead_account_should_not_change_state() {
 #[should_panic = "The existential deposit must be greater than zero!"]
 #[cfg(not(feature = "insecure_zero_ed"))]
 fn zero_ed_is_prohibited() {
-	use topsoil_support::traits::Hooks;
+	use topsoil_core::traits::Hooks;
 	// These functions all use `mutate_account` which may introduce a storage change when
 	// the account never existed to begin with, and shouldn't exist in the end.
 	ExtBuilder::default().existential_deposit(0).build_and_execute_with(|| {

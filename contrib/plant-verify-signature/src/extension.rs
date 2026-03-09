@@ -19,7 +19,7 @@ use subsoil::runtime::{
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
 use subsoil::weights::Weight;
-use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait};
+use topsoil_core::{pallet_prelude::TransactionSource, traits::OriginTrait};
 
 /// Extension that, if enabled, validates a signature type against the payload constructed from the
 /// call and the rest of the transaction extension pipeline. This extension provides the

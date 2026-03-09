@@ -46,19 +46,19 @@ pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
-		type RuntimeCall: IsType<<Self as topsoil_system::Config>::RuntimeCall>
+		type RuntimeCall: IsType<<Self as topsoil_core::system::Config>::RuntimeCall>
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin, PostInfo = PostDispatchInfo>
 			+ GetDispatchInfo
 			+ FullCodec
 			+ TypeInfo
-			+ From<topsoil_system::Call<Self>>
+			+ From<topsoil_core::system::Call<Self>>
 			+ Parameter;
 
 		/// Required origin for whitelisting a call.
@@ -158,7 +158,7 @@ pub mod pallet {
 				.map_err(|_| Error::<T>::UnavailablePreImage)?;
 
 			let call = <T as Config>::RuntimeCall::decode_all_with_depth_limit(
-				topsoil::deps::topsoil_support::MAX_EXTRINSIC_DEPTH,
+				topsoil::deps::topsoil_core::MAX_EXTRINSIC_DEPTH,
 				&mut &call[..],
 			)
 			.map_err(|_| Error::<T>::UndecodableCall)?;
@@ -215,7 +215,7 @@ impl<T: Config> Pallet<T> {
 
 		T::Preimages::unrequest(&call_hash);
 
-		let result = call.dispatch(topsoil_system::Origin::<T>::Root.into());
+		let result = call.dispatch(topsoil_core::system::Origin::<T>::Root.into());
 
 		let call_actual_weight = match result {
 			Ok(call_post_info) => call_post_info.actual_weight,

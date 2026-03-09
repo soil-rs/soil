@@ -14,11 +14,11 @@ use subsoil::runtime::traits::Bounded;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, whitelisted_caller, BenchmarkError,
 };
-use topsoil_support::{
+use topsoil_core::{
 	traits::{EnsureOrigin, Get, UnfilteredDispatchable},
 	BoundedVec,
 };
-use topsoil_system::RawOrigin as SystemOrigin;
+use topsoil_core::system::RawOrigin as SystemOrigin;
 
 use crate::Pallet as Uniques;
 
@@ -115,10 +115,10 @@ fn add_item_attribute<T: Config<I>, I: 'static>(
 }
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	let events = topsoil_system::Pallet::<T>::events();
-	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let events = topsoil_core::system::Pallet::<T>::events();
+	let system_event: <T as topsoil_core::system::Config>::RuntimeEvent = generic_event.into();
 	// compare to the last event record
-	let topsoil_system::EventRecord { event, .. } = &events[events.len() - 1];
+	let topsoil_core::system::EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
 }
 

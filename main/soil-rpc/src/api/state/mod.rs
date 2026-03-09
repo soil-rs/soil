@@ -252,7 +252,7 @@ pub trait StateApi<Hash> {
 	/// You can specify any length of a storage key prefix (i.e. if a specified storage
 	/// key is in the beginning of an events storage key it is considered a match).
 	/// Example: for balance tracking on Polkadot & Kusama you would likely want
-	/// to track changes to account balances with the topsoil_system::Account storage item,
+	/// to track changes to account balances with the topsoil_core::system::Account storage item,
 	/// which is a map from `AccountId` to `AccountInfo`. The key filter for this would be
 	/// the storage prefix for the map:
 	/// `26aa394eea5630e07c48ae0c9558cef7b99d880ec681799c0cf30e8886371da9`

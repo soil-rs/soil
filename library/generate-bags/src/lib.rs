@@ -7,7 +7,7 @@
 //! Support code to ease the process of generating bag thresholds.
 //!
 //! NOTE: this assume the runtime implements [`plant_staking::Config`], as it requires an
-//! implementation of the traits [`topsoil_support::traits::Currency`] and `CurrencyToVote`.
+//! implementation of the traits [`topsoil_core::traits::Currency`] and `CurrencyToVote`.
 //!
 //! The process of adding bags to a runtime requires only four steps.
 //!
@@ -47,7 +47,7 @@ use std::{
 	path::{Path, PathBuf},
 };
 use plant_election_provider::VoteWeight;
-use topsoil_support::traits::Get;
+use topsoil_core::traits::Get;
 
 /// Compute the existential weight for the specified configuration.
 ///
@@ -205,7 +205,7 @@ pub fn generate_thresholds<T: plant_staking::Config>(
 	writeln!(
 		buf,
 		"//! for the {} runtime.",
-		<T as topsoil_system::Config>::Version::get().spec_name,
+		<T as topsoil_core::system::Config>::Version::get().spec_name,
 	)?;
 
 	let existential_weight = existential_weight::<T>(total_issuance, minimum_balance);

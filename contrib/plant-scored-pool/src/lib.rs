@@ -45,17 +45,17 @@
 //! ```
 //! use plant_scored_pool::{self as scored_pool};
 //!
-//! #[topsoil_support::pallet]
+//! #[topsoil_core::pallet]
 //! pub mod pallet {
 //! 	use super::*;
-//! 	use topsoil_support::pallet_prelude::*;
-//! 	use topsoil_system::pallet_prelude::*;
+//! 	use topsoil_core::pallet_prelude::*;
+//! 	use topsoil_core::system::pallet_prelude::*;
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: topsoil_system::Config + scored_pool::Config {}
+//! 	pub trait Config: topsoil_core::system::Config + scored_pool::Config {}
 //!
 //! 	#[pallet::call]
 //! 	impl<T: Config> Pallet<T> {
@@ -96,21 +96,21 @@ use codec::{FullCodec, MaxEncodedLen};
 use core::{cmp::Reverse, fmt::Debug};
 pub use pallet::*;
 use subsoil::runtime::traits::{AtLeast32Bit, StaticLookup, Zero};
-use topsoil_support::{
+use topsoil_core::{
 	ensure,
 	traits::{ChangeMembers, Currency, Get, InitializeMembers, ReservableCurrency},
 	BoundedVec,
 };
 
 type BalanceOf<T, I> =
-	<<T as Config<I>>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config<I>>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 type PoolT<T, I> = BoundedVec<
-	(<T as topsoil_system::Config>::AccountId, Option<<T as Config<I>>::Score>),
+	(<T as topsoil_core::system::Config>::AccountId, Option<<T as Config<I>>::Score>),
 	<T as Config<I>>::MaximumMembers,
 >;
 type MembersT<T, I> =
-	BoundedVec<<T as topsoil_system::Config>::AccountId, <T as Config<I>>::MaximumMembers>;
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+	BoundedVec<<T as topsoil_core::system::Config>::AccountId, <T as Config<I>>::MaximumMembers>;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
 /// The enum is supplied when refreshing the members set.
 /// Depending on the enum variant the corresponding associated
@@ -122,17 +122,17 @@ enum ChangeReceiver {
 	MembershipChanged,
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// The currency used for deposits.
 		type Currency: Currency<Self::AccountId> + ReservableCurrency<Self::AccountId>;
 
@@ -154,7 +154,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		// The deposit which is reserved from candidates if they want to
 		// start a candidacy. The deposit gets returned when the candidacy is
@@ -244,7 +244,7 @@ pub mod pallet {
 	pub(crate) type MemberCount<T, I = ()> = StorageValue<_, u32, ValueQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		pub pool: PoolT<T, I>,
 		pub member_count: u32,
@@ -277,7 +277,7 @@ pub mod pallet {
 	impl<T: Config<I>, I: 'static> Hooks<BlockNumberFor<T>> for Pallet<T, I> {
 		/// Every `Period` blocks the `Members` set is refreshed from the
 		/// highest scoring members in the pool.
-		fn on_initialize(n: topsoil_system::pallet_prelude::BlockNumberFor<T>) -> Weight {
+		fn on_initialize(n: topsoil_core::system::pallet_prelude::BlockNumberFor<T>) -> Weight {
 			if n % T::Period::get() == Zero::zero() {
 				let pool = <Pool<T, I>>::get();
 				<Pallet<T, I>>::refresh_members(pool, ChangeReceiver::MembershipChanged);

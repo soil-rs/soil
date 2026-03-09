@@ -26,7 +26,7 @@ use plant_election_provider::{
 	ElectionProvider, SortedListProvider, Support,
 };
 use plant_session::{disabling::UpToLimitWithReEnablingDisablingStrategy, Event as SessionEvent};
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, assert_storage_noop,
 	dispatch::{extract_actual_weight, GetDispatchInfo, WithPostDispatchInfo},
 	hypothetically,
@@ -4341,7 +4341,7 @@ fn offences_weight_calculated_correctly() {
 	ExtBuilder::default().nominate(true).build_and_execute(|| {
 		// On offence with zero offenders: 4 Reads, 1 Write
 		let zero_offence_weight =
-			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(4, 1);
+			<Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(4, 1);
 		assert_eq!(
 			<Staking as OnOffenceHandler<_, _, _>>::on_offence(&[], &[Perbill::from_percent(50)], 0),
 			zero_offence_weight
@@ -4349,14 +4349,14 @@ fn offences_weight_calculated_correctly() {
 
 		// On Offence with N offenders, Unapplied: 4 Reads, 1 Write + 4 Reads, 5 Writes, 2 Reads + 2
 		// Writes for `SessionInterface::report_offence` call.
-		let n_offence_unapplied_weight = <Test as topsoil_system::Config>::DbWeight::get()
+		let n_offence_unapplied_weight = <Test as topsoil_core::system::Config>::DbWeight::get()
 			.reads_writes(4, 1) +
-			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(4, 5) +
-			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2);
+			<Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(4, 5) +
+			<Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(2, 2);
 
 		let offenders: Vec<
 			OffenceDetails<
-				<Test as topsoil_system::Config>::AccountId,
+				<Test as topsoil_core::system::Config>::AccountId,
 				plant_session::historical::IdentificationTuple<Test>,
 			>,
 		> = (1..10)
@@ -4380,17 +4380,17 @@ fn offences_weight_calculated_correctly() {
 		let n = 1; // Number of offenders
 		let rw = 3 + 3 * n; // rw reads and writes
 		let one_offence_unapplied_weight =
-			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(4, 1)
+			<Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(4, 1)
 		 +
-			<Test as topsoil_system::Config>::DbWeight::get().reads_writes(rw, rw)
+			<Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(rw, rw)
 			// One `slash_cost`
-			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(6, 5)
+			+ <Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(6, 5)
 			// `slash_cost` * nominators (1)
-			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(6, 5)
+			+ <Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(6, 5)
 			// `reward_cost` * reporters (1)
-			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2)
+			+ <Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(2, 2)
 			// `SessionInterface::report_offence`
-			+ <Test as topsoil_system::Config>::DbWeight::get().reads_writes(2, 2);
+			+ <Test as topsoil_core::system::Config>::DbWeight::get().reads_writes(2, 2);
 
 		assert_eq!(
 			<Staking as OnOffenceHandler<_, _, _>>::on_offence(
@@ -4654,7 +4654,7 @@ fn do_not_die_when_active_is_ed() {
 #[test]
 fn on_finalize_weight_is_nonzero() {
 	ExtBuilder::default().build_and_execute(|| {
-		let on_finalize_weight = <Test as topsoil_system::Config>::DbWeight::get().reads(1);
+		let on_finalize_weight = <Test as topsoil_core::system::Config>::DbWeight::get().reads(1);
 		assert!(<Staking as Hooks<u64>>::on_initialize(1).all_gte(on_finalize_weight));
 	})
 }
@@ -4726,7 +4726,7 @@ mod election_data_provider {
 	fn targets_2sec_block() {
 		let mut validators = 1000;
 		while <Test as Config>::WeightInfo::get_npos_targets(validators).all_lt(Weight::from_parts(
-			2u64 * topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
+			2u64 * topsoil_core::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
 			u64::MAX,
 		)) {
 			validators += 1;
@@ -4744,7 +4744,7 @@ mod election_data_provider {
 
 		while <Test as Config>::WeightInfo::get_npos_voters(validators, nominators).all_lt(
 			Weight::from_parts(
-				2u64 * topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
+				2u64 * topsoil_core::weights::constants::WEIGHT_REF_TIME_PER_SECOND,
 				u64::MAX,
 			),
 		) {
@@ -6733,7 +6733,7 @@ fn test_runtime_api_pending_rewards() {
 
 mod staking_interface {
 	use subsoil::staking::StakingInterface;
-	use topsoil_support::storage::with_storage_layer;
+	use topsoil_core::storage::with_storage_layer;
 
 	use super::*;
 
@@ -8437,7 +8437,7 @@ mod validator_disabling_integration {
 mod migration_tests {
 	use super::*;
 	use migrations::{v15, v16};
-	use topsoil_support::traits::UncheckedOnRuntimeUpgrade;
+	use topsoil_core::traits::UncheckedOnRuntimeUpgrade;
 
 	#[test]
 	fn migrate_v15_to_v16_with_try_runtime() {
@@ -8800,7 +8800,7 @@ mod getters {
 mod hold_migration {
 	use super::*;
 	use subsoil::staking::{Stake, StakingInterface};
-	use topsoil_support::traits::fungible::Mutate;
+	use topsoil_core::traits::fungible::Mutate;
 
 	#[test]
 	fn ledger_update_creates_hold() {

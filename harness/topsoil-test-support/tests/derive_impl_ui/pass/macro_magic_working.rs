@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-#[topsoil_support::macro_magic::export_tokens]
+#[topsoil_core::macro_magic::export_tokens]
 struct MyCoolStruct {
 	field: u32,
 }

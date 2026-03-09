@@ -56,12 +56,12 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: crate::LOG_TARGET,
-			concat!("[{:?}] 🤖 ", $patter), topsoil_system::Pallet::<T>::block_number() $(, $values)*
+			concat!("[{:?}] 🤖 ", $patter), topsoil_core::system::Pallet::<T>::block_number() $(, $values)*
 		)
 	};
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 
 	pub use crate::weights::WeightInfo;
@@ -75,7 +75,7 @@ pub mod pallet {
 		self,
 		traits::{Saturating, Zero},
 	};
-	use topsoil_support::{
+	use topsoil_core::{
 		dispatch::{DispatchErrorWithPostInfo, PostDispatchInfo},
 		ensure,
 		pallet_prelude::*,
@@ -85,10 +85,10 @@ pub mod pallet {
 			Get,
 		},
 	};
-	use topsoil_system::{self, pallet_prelude::*};
+	use topsoil_core::system::{self, pallet_prelude::*};
 
 	pub(crate) type BalanceOf<T> =
-		<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+		<<T as Config>::Currency as Inspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 	/// The progress of either the top or child keys.
 	#[derive(
@@ -330,7 +330,7 @@ pub mod pallet {
 				},
 				_ => {
 					// defensive: there must be an ongoing top migration.
-					topsoil_support::defensive!("cannot migrate child key.");
+					topsoil_core::defensive!("cannot migrate child key.");
 					return Ok(());
 				},
 			};
@@ -372,7 +372,7 @@ pub mod pallet {
 				Progress::ToStart => Some(Default::default()),
 				Progress::Complete => {
 					// defensive: there must be an ongoing top migration.
-					topsoil_support::defensive!("cannot migrate top key.");
+					topsoil_core::defensive!("cannot migrate top key.");
 					return Ok(());
 				},
 			};
@@ -459,14 +459,14 @@ pub mod pallet {
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use topsoil_support::derive_impl;
+		use topsoil_core::derive_impl;
 
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for TestDefaultConfig {}
 
-		#[topsoil_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_core::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
@@ -485,7 +485,7 @@ pub mod pallet {
 
 	/// Configurations of this pallet.
 	#[pallet::config(with_default)]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Origin that can control the configurations of this pallet.
 		#[pallet::no_default]
 		type ControlOrigin: EnsureOrigin<Self::RuntimeOrigin>;
@@ -498,7 +498,7 @@ pub mod pallet {
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The currency provider type.
 		#[pallet::no_default]
@@ -515,7 +515,7 @@ pub mod pallet {
 		///
 		/// FRAME itself does not limit the key length.
 		/// The concrete value must therefore depend on your storage usage.
-		/// A [`topsoil_support::storage::StorageNMap`] for example can have an arbitrary number of
+		/// A [`topsoil_core::storage::StorageNMap`] for example can have an arbitrary number of
 		/// keys which are then hashed and concatenated, resulting in arbitrarily long keys.
 		///
 		/// Use the *state migration RPC* to retrieve the length of the longest key in your
@@ -526,9 +526,9 @@ pub mod pallet {
 		/// value. The default is 512 byte.
 		///
 		/// Some key lengths for reference:
-		/// - [`topsoil_support::storage::StorageValue`]: 32 byte
-		/// - [`topsoil_support::storage::StorageMap`]: 64 byte
-		/// - [`topsoil_support::storage::StorageDoubleMap`]: 96 byte
+		/// - [`topsoil_core::storage::StorageValue`]: 32 byte
+		/// - [`topsoil_core::storage::StorageMap`]: 64 byte
+		/// - [`topsoil_core::storage::StorageDoubleMap`]: 96 byte
 		///
 		/// For more info see
 		/// <https://www.shawntabrizi.com/blog/substrate/querying-substrate-storage-via-rpc/>
@@ -897,9 +897,9 @@ pub mod pallet {
 
 	impl<T: Config> Pallet<T> {
 		/// The real weight of a migration of the given number of `items` with total `size`.
-		fn dynamic_weight(items: u32, size: u32) -> topsoil_support::pallet_prelude::Weight {
+		fn dynamic_weight(items: u32, size: u32) -> topsoil_core::pallet_prelude::Weight {
 			let items = items as u64;
-			<T as topsoil_system::Config>::DbWeight::get()
+			<T as topsoil_core::system::Config>::DbWeight::get()
 				.reads_writes(1, 1)
 				.saturating_mul(items)
 				// we assume that the read/write per-byte weight is the same for child and top tree.
@@ -970,7 +970,7 @@ mod benchmarks {
 	use super::{pallet::Pallet as StateTrieMigration, *};
 	use alloc::vec;
 	use topsoil_benchmarking::v2::*;
-	use topsoil_support::traits::fungible::{Inspect, Mutate};
+	use topsoil_core::traits::fungible::{Inspect, Mutate};
 
 	// The size of the key seemingly makes no difference in the read/write time, so we make it
 	// constant.
@@ -1000,7 +1000,7 @@ mod benchmarks {
 
 			#[extrinsic_call]
 			_(
-				topsoil_system::RawOrigin::Signed(caller.clone()),
+				topsoil_core::system::RawOrigin::Signed(caller.clone()),
 				null,
 				0,
 				StateTrieMigration::<T>::migration_process(),
@@ -1023,7 +1023,7 @@ mod benchmarks {
 			#[block]
 			{
 				assert!(StateTrieMigration::<T>::continue_migrate(
-					topsoil_system::RawOrigin::Signed(caller).into(),
+					topsoil_core::system::RawOrigin::Signed(caller).into(),
 					null,
 					0,
 					bad_witness,
@@ -1043,7 +1043,7 @@ mod benchmarks {
 			let stash = set_balance_for_deposit::<T>(&caller, null.item);
 			#[extrinsic_call]
 			migrate_custom_top(
-				topsoil_system::RawOrigin::Signed(caller.clone()),
+				topsoil_core::system::RawOrigin::Signed(caller.clone()),
 				Default::default(),
 				0,
 			);
@@ -1064,13 +1064,13 @@ mod benchmarks {
 			#[block]
 			{
 				assert!(StateTrieMigration::<T>::migrate_custom_top(
-					topsoil_system::RawOrigin::Signed(caller.clone()).into(),
+					topsoil_core::system::RawOrigin::Signed(caller.clone()).into(),
 					vec![b"foo".to_vec()],
 					1,
 				)
 				.is_ok());
 
-				topsoil_system::Pallet::<T>::assert_last_event(
+				topsoil_core::system::Pallet::<T>::assert_last_event(
 					<T as Config>::RuntimeEvent::from(crate::Event::Slashed {
 						who: caller.clone(),
 						amount: StateTrieMigration::<T>::calculate_deposit_for(1u32),
@@ -1093,7 +1093,7 @@ mod benchmarks {
 
 			#[extrinsic_call]
 			migrate_custom_child(
-				topsoil_system::RawOrigin::Signed(caller.clone()),
+				topsoil_core::system::RawOrigin::Signed(caller.clone()),
 				StateTrieMigration::<T>::childify(Default::default()),
 				Default::default(),
 				0,
@@ -1116,7 +1116,7 @@ mod benchmarks {
 			#[block]
 			{
 				assert!(StateTrieMigration::<T>::migrate_custom_child(
-					topsoil_system::RawOrigin::Signed(caller.clone()).into(),
+					topsoil_core::system::RawOrigin::Signed(caller.clone()).into(),
 					StateTrieMigration::<T>::childify("top"),
 					vec![b"foo".to_vec()],
 					1,
@@ -1162,16 +1162,16 @@ mod mock {
 		H256,
 	};
 	use subsoil::runtime::{traits::Header as _, BuildStorage, StorageChild};
-	use topsoil_support::{derive_impl, parameter_types, traits::Hooks, weights::Weight};
-	use topsoil_system::{EnsureRoot, EnsureSigned};
+	use topsoil_core::{derive_impl, parameter_types, traits::Hooks, weights::Weight};
+	use topsoil_core::system::{EnsureRoot, EnsureSigned};
 
-	type Block = topsoil_system::mocking::MockBlockU32<Test>;
+	type Block = topsoil_core::system::mocking::MockBlockU32<Test>;
 
 	// Configure a mock runtime to test the pallet.
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Test
 		{
-			System: topsoil_system,
+			System: topsoil_core::system,
 			Balances: plant_balances,
 			StateTrieMigration: plant_state_trie_migration,
 		}
@@ -1181,8 +1181,8 @@ mod mock {
 		pub const SS58Prefix: u8 = 42;
 	}
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Test {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Test {
 		type Block = Block;
 		type AccountData = plant_balances::AccountData<u64>;
 	}
@@ -1306,7 +1306,7 @@ mod mock {
 		};
 
 		if with_pallets {
-			topsoil_system::GenesisConfig::<Test>::default()
+			topsoil_core::system::GenesisConfig::<Test>::default()
 				.assimilate_storage(&mut custom_storage)
 				.unwrap();
 			plant_balances::GenesisConfig::<Test> {
@@ -1329,7 +1329,7 @@ mod mock {
 
 		System::run_to_block_with::<AllPalletsWithSystem>(
 			n,
-			topsoil_system::RunToBlockHooks::default().after_initialize(|bn| {
+			topsoil_core::system::RunToBlockHooks::default().after_initialize(|bn| {
 				weight_sum += StateTrieMigration::on_initialize(bn);
 				root = *System::finalize().state_root();
 			}),
@@ -1343,7 +1343,7 @@ mod mock {
 mod test {
 	use super::{mock::*, *};
 	use subsoil::runtime::{bounded_vec, traits::Bounded, StateVersion};
-	use topsoil_support::assert_ok;
+	use topsoil_core::assert_ok;
 
 	#[test]
 	fn fails_if_no_migration() {
@@ -1370,7 +1370,7 @@ mod test {
 			SignedMigrationMaxLimits::<Test>::put(MigrationLimits { size: 1 << 20, item: 50 });
 
 			// fails if the top key is too long.
-			topsoil_support::assert_ok!(StateTrieMigration::continue_migrate(
+			topsoil_core::assert_ok!(StateTrieMigration::continue_migrate(
 				RuntimeOrigin::signed(1),
 				MigrationLimits { item: 50, size: 1 << 20 },
 				Bounded::max_value(),
@@ -1405,7 +1405,7 @@ mod test {
 			SignedMigrationMaxLimits::<Test>::put(MigrationLimits { size: 1 << 20, item: 50 });
 
 			// fails if the top key is too long.
-			topsoil_support::assert_ok!(StateTrieMigration::continue_migrate(
+			topsoil_core::assert_ok!(StateTrieMigration::continue_migrate(
 				RuntimeOrigin::signed(1),
 				MigrationLimits { item: 50, size: 1 << 20 },
 				Bounded::max_value(),
@@ -1533,7 +1533,7 @@ mod test {
 			SignedMigrationMaxLimits::<Test>::put(MigrationLimits { size: 1024, item: 5 });
 
 			// can't submit if limit is too high.
-			topsoil_support::assert_err!(
+			topsoil_core::assert_err!(
 				StateTrieMigration::continue_migrate(
 					RuntimeOrigin::signed(1),
 					MigrationLimits {
@@ -1547,7 +1547,7 @@ mod test {
 			);
 
 			// can't submit if poor.
-			topsoil_support::assert_err!(
+			topsoil_core::assert_err!(
 				StateTrieMigration::continue_migrate(
 					RuntimeOrigin::signed(2),
 					MigrationLimits { item: 5, size: 100 },
@@ -1558,7 +1558,7 @@ mod test {
 			);
 
 			// can't submit with bad witness.
-			topsoil_support::assert_err_ignore_postinfo!(
+			topsoil_core::assert_err_ignore_postinfo!(
 				StateTrieMigration::continue_migrate(
 					RuntimeOrigin::signed(1),
 					MigrationLimits { item: 5, size: 100 },
@@ -1579,7 +1579,7 @@ mod test {
 					StateTrieMigration::signed_migration_max_limits().unwrap(),
 				));
 
-				topsoil_support::assert_ok!(StateTrieMigration::continue_migrate(
+				topsoil_core::assert_ok!(StateTrieMigration::continue_migrate(
 					RuntimeOrigin::signed(1),
 					StateTrieMigration::signed_migration_max_limits().unwrap(),
 					task.dyn_size,
@@ -1614,7 +1614,7 @@ mod test {
 			));
 
 			// can't submit with `real_size_upper` < `task.dyn_size` expect slashing
-			topsoil_support::assert_ok!(StateTrieMigration::continue_migrate(
+			topsoil_core::assert_ok!(StateTrieMigration::continue_migrate(
 				RuntimeOrigin::signed(1),
 				StateTrieMigration::signed_migration_max_limits().unwrap(),
 				task.dyn_size - 1,
@@ -1634,7 +1634,7 @@ mod test {
 	fn custom_migrate_top_works() {
 		let correct_witness = 3 + subsoil::core::storage::TRIE_VALUE_NODE_THRESHOLD * 3 + 1 + 2 + 3;
 		new_test_ext(StateVersion::V0, true, None, None).execute_with(|| {
-			topsoil_support::assert_ok!(StateTrieMigration::migrate_custom_top(
+			topsoil_core::assert_ok!(StateTrieMigration::migrate_custom_top(
 				RuntimeOrigin::signed(1),
 				vec![b"key1".to_vec(), b"key2".to_vec(), b"key3".to_vec()],
 				correct_witness,
@@ -1647,7 +1647,7 @@ mod test {
 
 		new_test_ext(StateVersion::V0, true, None, None).execute_with(|| {
 			// works if the witness is an overestimate
-			topsoil_support::assert_ok!(StateTrieMigration::migrate_custom_top(
+			topsoil_core::assert_ok!(StateTrieMigration::migrate_custom_top(
 				RuntimeOrigin::signed(1),
 				vec![b"key1".to_vec(), b"key2".to_vec(), b"key3".to_vec()],
 				correct_witness + 99,
@@ -1662,7 +1662,7 @@ mod test {
 			assert_eq!(Balances::free_balance(&1), 1000);
 
 			// note that we don't expect this to be a noop -- we do slash.
-			topsoil_support::assert_ok!(StateTrieMigration::migrate_custom_top(
+			topsoil_core::assert_ok!(StateTrieMigration::migrate_custom_top(
 				RuntimeOrigin::signed(1),
 				vec![b"key1".to_vec(), b"key2".to_vec(), b"key3".to_vec()],
 				correct_witness - 1,
@@ -1680,7 +1680,7 @@ mod test {
 	#[test]
 	fn custom_migrate_child_works() {
 		new_test_ext(StateVersion::V0, true, None, None).execute_with(|| {
-			topsoil_support::assert_ok!(StateTrieMigration::migrate_custom_child(
+			topsoil_core::assert_ok!(StateTrieMigration::migrate_custom_child(
 				RuntimeOrigin::signed(1),
 				StateTrieMigration::childify("chk1"),
 				vec![b"key1".to_vec(), b"key2".to_vec()],
@@ -1696,7 +1696,7 @@ mod test {
 			assert_eq!(Balances::free_balance(&1), 1000);
 
 			// note that we don't expect this to be a noop -- we do slash.
-			topsoil_support::assert_ok!(StateTrieMigration::migrate_custom_child(
+			topsoil_core::assert_ok!(StateTrieMigration::migrate_custom_child(
 				RuntimeOrigin::signed(1),
 				StateTrieMigration::childify("chk1"),
 				vec![b"key1".to_vec(), b"key2".to_vec()],
@@ -1725,11 +1725,11 @@ pub(crate) mod remote_tests {
 		DeserializeOwned,
 	};
 	use thousands::Separable;
-	use topsoil_support::{
+	use topsoil_core::{
 		traits::{Get, Hooks},
 		weights::Weight,
 	};
-	use topsoil_system::{pallet_prelude::BlockNumberFor, Pallet as System};
+	use topsoil_core::system::{pallet_prelude::BlockNumberFor, Pallet as System};
 
 	#[allow(dead_code)]
 	fn run_to_block<Runtime: crate::Config<Hash = H256>>(
@@ -1772,7 +1772,7 @@ pub(crate) mod remote_tests {
 		let mut now = ext.execute_with(|| {
 			AutoLimits::<Runtime>::put(Some(limits));
 			// requires the block number type in our tests to be same as with mainnet, u32.
-			topsoil_system::Pallet::<Runtime>::block_number()
+			topsoil_core::system::Pallet::<Runtime>::block_number()
 		});
 
 		let mut duration: BlockNumberFor<Runtime> = Zero::zero();
@@ -1813,7 +1813,7 @@ pub(crate) mod remote_tests {
 				"proceeded to #{}, weight: [{} / {}], proof: [{} / {} / {}]",
 				now,
 				weight.separate_with_commas(),
-				<Runtime as topsoil_system::Config>::BlockWeights::get()
+				<Runtime as topsoil_core::system::Config>::BlockWeights::get()
 					.max_block
 					.separate_with_commas(),
 				proof.encoded_size().separate_with_commas(),

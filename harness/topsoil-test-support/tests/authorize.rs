@@ -13,17 +13,17 @@ use subsoil::runtime::{
 	},
 	BuildStorage, DispatchError,
 };
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	dispatch::GetDispatchInfo,
 	pallet_prelude::{TransactionSource, Weight},
 };
 
 // test for instance
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet1 {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	pub const CALL_1_AUTH_WEIGHT: Weight = Weight::from_all(1);
 	pub const CALL_1_WEIGHT: Weight = Weight::from_all(2);
@@ -66,7 +66,7 @@ pub mod pallet1 {
 	}
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		type SomeGeneric: Parameter;
 		type WeightInfo: WeightInfo;
 	}
@@ -159,10 +159,10 @@ pub mod pallet1 {
 }
 
 // test for dev mode.
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet2 {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -170,7 +170,7 @@ pub mod pallet2 {
 	pub trait SomeTrait {}
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -183,10 +183,10 @@ pub mod pallet2 {
 }
 
 // test for no pallet info.
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet3 {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	pub const CALL_1_AUTH_WEIGHT: Weight = Weight::from_all(1);
 	pub const CALL_1_WEIGHT: Weight = Weight::from_all(1);
@@ -195,7 +195,7 @@ pub mod pallet3 {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: crate::pallet1::Config + topsoil_system::Config {}
+	pub trait Config: crate::pallet1::Config + topsoil_core::system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -211,16 +211,16 @@ pub mod pallet3 {
 }
 
 // test for pallet with no authorized call
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet4 {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -232,8 +232,8 @@ pub mod pallet4 {
 	}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Block = Block;
 }
 
@@ -244,13 +244,13 @@ impl pallet1::Config for Runtime {
 	type WeightInfo = ();
 }
 
-impl pallet1::Config<topsoil_support::instances::Instance2> for Runtime {
+impl pallet1::Config<topsoil_core::instances::Instance2> for Runtime {
 	type SomeGeneric = u32;
 	type WeightInfo = ();
 }
 
 #[cfg(feature = "frame-feature-testing")]
-impl pallet1::Config<topsoil_support::instances::Instance3> for Runtime {
+impl pallet1::Config<topsoil_core::instances::Instance3> for Runtime {
 	type SomeGeneric = u32;
 	type WeightInfo = ();
 }
@@ -261,7 +261,7 @@ impl pallet3::Config for Runtime {}
 
 impl pallet4::Config for Runtime {}
 
-pub type TransactionExtension = topsoil_system::AuthorizeCall<Runtime>;
+pub type TransactionExtension = topsoil_core::system::AuthorizeCall<Runtime>;
 
 pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
@@ -272,9 +272,9 @@ pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	TransactionExtension,
 >;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Pallet1: pallet1,
 		Pallet1Instance2: pallet1::<Instance2>,
 		Pallet2: pallet2,
@@ -394,14 +394,14 @@ fn valid_call_weight_test() {
 		println!("Running test {}", index);
 
 		new_test_ext().execute_with(|| {
-			let tx_ext = topsoil_system::AuthorizeCall::<Runtime>::new();
+			let tx_ext = topsoil_core::system::AuthorizeCall::<Runtime>::new();
 
 			let tx = UncheckedExtrinsic::new_transaction(call, tx_ext);
 
 			let info = tx.get_dispatch_info();
 			let len = tx.using_encoded(|e| e.len());
 
-			let checked = Checkable::check(tx, &topsoil_system::ChainContext::<Runtime>::default())
+			let checked = Checkable::check(tx, &topsoil_core::system::ChainContext::<Runtime>::default())
 				.expect("Transaction is general so signature is good");
 
 			checked
@@ -480,14 +480,14 @@ fn call_validity() {
 		println!("Running test {}", index);
 
 		new_test_ext().execute_with(|| {
-			let tx_ext = topsoil_system::AuthorizeCall::<Runtime>::new();
+			let tx_ext = topsoil_core::system::AuthorizeCall::<Runtime>::new();
 
 			let tx = UncheckedExtrinsic::new_transaction(call, tx_ext);
 
 			let info = tx.get_dispatch_info();
 			let len = tx.using_encoded(|e| e.len());
 
-			let checked = Checkable::check(tx, &topsoil_system::ChainContext::<Runtime>::default())
+			let checked = Checkable::check(tx, &topsoil_core::system::ChainContext::<Runtime>::default())
 				.expect("Transaction is general so signature is good");
 
 			let res = checked.validate::<Runtime>(TransactionSource::External, &info, len);
@@ -500,14 +500,14 @@ fn call_validity() {
 fn signed_is_valid_but_dispatch_error() {
 	new_test_ext().execute_with(|| {
 		let call = RuntimeCall::Pallet1(pallet1::Call::call1 {});
-		let tx_ext = topsoil_system::AuthorizeCall::<Runtime>::new();
+		let tx_ext = topsoil_core::system::AuthorizeCall::<Runtime>::new();
 
 		let tx = UncheckedExtrinsic::new_signed(call, 1u64, 1.into(), tx_ext);
 
 		let info = tx.get_dispatch_info();
 		let len = tx.using_encoded(|e| e.len());
 
-		let checked = Checkable::check(tx, &topsoil_system::ChainContext::<Runtime>::default())
+		let checked = Checkable::check(tx, &topsoil_core::system::ChainContext::<Runtime>::default())
 			.expect("Signature is good");
 
 		checked
@@ -525,7 +525,7 @@ fn signed_is_valid_but_dispatch_error() {
 
 #[test]
 fn call_without_authorization() {
-	use topsoil_support::traits::Authorize;
+	use topsoil_core::traits::Authorize;
 
 	new_test_ext().execute_with(|| {
 		let call = RuntimeCall::Pallet4(pallet4::Call::call1 {});
@@ -537,14 +537,14 @@ fn call_without_authorization() {
 		assert_eq!(call.authorize(TransactionSource::Local), None);
 
 		// tests for transaction extension implementation
-		let tx_ext = topsoil_system::AuthorizeCall::<Runtime>::new();
+		let tx_ext = topsoil_core::system::AuthorizeCall::<Runtime>::new();
 
 		let tx = UncheckedExtrinsic::new_transaction(call, tx_ext);
 
 		let info = tx.get_dispatch_info();
 		let len = tx.using_encoded(|e| e.len());
 
-		let checked = Checkable::check(tx, &topsoil_system::ChainContext::<Runtime>::default())
+		let checked = Checkable::check(tx, &topsoil_core::system::ChainContext::<Runtime>::default())
 			.expect("Transaction is general so signature is good");
 
 		let err = checked

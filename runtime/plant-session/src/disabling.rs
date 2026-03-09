@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
 use crate::*;
-use topsoil_support::defensive;
+use topsoil_core::defensive;
 /// Controls validator disabling
 pub trait DisablingStrategy<T: Config> {
 	/// Make a disabling decision. Returning a [`DisablingDecision`]

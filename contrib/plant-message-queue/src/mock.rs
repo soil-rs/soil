@@ -14,20 +14,20 @@ use super::*;
 use crate as plant_message_queue;
 use alloc::collections::btree_map::BTreeMap;
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{derive_impl, parameter_types};
+use topsoil_core::{derive_impl, parameter_types};
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		MessageQueue: plant_message_queue,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 parameter_types! {
@@ -297,15 +297,15 @@ impl QueuePausedQuery<MessageOrigin> for MockedQueuePauser {
 /// Is generic since it is used by the unit test, integration tests and benchmarks.
 pub fn new_test_ext<T: Config>() -> subsoil::io::TestExternalities
 where
-	topsoil_system::pallet_prelude::BlockNumberFor<T>: From<u32>,
+	topsoil_core::system::pallet_prelude::BlockNumberFor<T>: From<u32>,
 {
 	subsoil::tracing::try_init_simple();
 	WeightForCall::take();
 	QueueChanges::take();
 	NumMessagesErrored::take();
-	let t = topsoil_system::GenesisConfig::<T>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<T>::default().build_storage().unwrap();
 	let mut ext = subsoil::io::TestExternalities::new(t);
-	ext.execute_with(|| topsoil_system::Pallet::<T>::set_block_number(1.into()));
+	ext.execute_with(|| topsoil_core::system::Pallet::<T>::set_block_number(1.into()));
 	ext
 }
 
@@ -358,7 +358,7 @@ pub fn unknit(queue: &MessageOrigin) {
 }
 
 pub fn num_overweight_enqueued_events() -> u32 {
-	topsoil_system::Pallet::<Test>::events()
+	topsoil_core::system::Pallet::<Test>::events()
 		.into_iter()
 		.filter(|e| {
 			matches!(e.event, RuntimeEvent::MessageQueue(crate::Event::OverweightEnqueued { .. }))

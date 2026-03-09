@@ -8,17 +8,17 @@
 
 use crate::*;
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{assert_ok, derive_impl, parameter_types, traits::VariantCountOf};
+use topsoil_core::{assert_ok, derive_impl, parameter_types, traits::VariantCountOf};
 // Reexport crate as its pallet name for construct_runtime.
 use crate as plant_example_kitchensink;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // For testing the pallet, we construct a mock runtime.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system::{Pallet, Call, Config<T>, Storage, Event<T>},
+		System: topsoil_core::system::{Pallet, Call, Config<T>, Storage, Event<T>},
 		Balances: plant_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
 		Kitchensink: plant_example_kitchensink::{Pallet, Call, Storage, Config<T>, Event<T>},
 	}
@@ -26,8 +26,8 @@ topsoil_support::construct_runtime!(
 
 /// Using a default config for [`topsoil_system`] in tests. See `default-config` example for more
 /// details.
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }

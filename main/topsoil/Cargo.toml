@@ -24,15 +24,14 @@ serde = { workspace = true }
 subsoil = { workspace = true }
 
 # frame deps, for developing FRAME pallets.
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 
 topsoil-executive = { optional = true, workspace = true }
-topsoil-system-rpc-runtime-api = { optional = true, workspace = true }
+topsoil-core-rpc-runtime-api = { optional = true, workspace = true }
 
 # Used for runtime benchmarking
 topsoil-benchmarking = { optional = true, workspace = true }
-topsoil-system-benchmarking = { optional = true, workspace = true }
+topsoil-core-system-benchmarking = { optional = true, workspace = true }
 
 # Used for try-runtime
 topsoil-try-runtime = { optional = true, workspace = true }
@@ -46,10 +45,9 @@ std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
 	"topsoil-executive?/std",
-	"topsoil-support/std",
-	"topsoil-system-benchmarking?/std",
-	"topsoil-system-rpc-runtime-api?/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
+	"topsoil-core-system-benchmarking?/std",
+	"topsoil-core-rpc-runtime-api?/std",
 	"topsoil-try-runtime?/std",
 	"log/std",
 	"scale-info/std",
@@ -57,17 +55,15 @@ std = [
 	"subsoil/std"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system-benchmarking/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
+	"topsoil-core-system-benchmarking/runtime-benchmarks",
 	"subsoil/runtime-benchmarks"]
 try-runtime = [
 	"topsoil-executive/try-runtime",
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"topsoil-try-runtime/try-runtime",
 	"subsoil/try-runtime"]
-experimental = ["topsoil-support/experimental"]
+experimental = ["topsoil-core/experimental"]
 runtime = [
 	"topsoil-executive",
-	"topsoil-system-rpc-runtime-api"]
+	"topsoil-core-rpc-runtime-api"]

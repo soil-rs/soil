@@ -58,7 +58,7 @@ use subsoil::runtime::{
 	},
 	DispatchError,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResult,
 	ensure,
 	storage::bounded_vec::BoundedVec,
@@ -68,18 +68,18 @@ use topsoil_support::{
 	},
 	weights::Weight,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 pub use pallet::*;
 pub use vesting_info::*;
 pub use weights::WeightInfo;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 type MaxLocksOf<T> = <<T as Config>::Currency as LockableCurrency<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 >>::MaxLocks;
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
 const VESTING_ID: LockIdentifier = *b"vesting ";
 
@@ -141,18 +141,18 @@ impl<T: Config> Get<u32> for MaxVestingSchedulesGet<T> {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The currency trait.
 		type Currency: LockableCurrency<Self::AccountId>;
@@ -175,7 +175,7 @@ pub mod pallet {
 		///
 		/// Must return monotonically increasing values when called from consecutive blocks.
 		/// Can be configured to return either:
-		/// - the local block number of the runtime via `topsoil_system::Pallet`
+		/// - the local block number of the runtime via `topsoil_core::system::Pallet`
 		/// - a remote block number, eg from the relay chain through `RelaychainDataProvider`
 		/// - an arbitrary value through a custom implementation of the trait
 		///
@@ -184,12 +184,12 @@ pub mod pallet {
 		/// this to their local block number provider if they have the pallet already deployed.
 		///
 		/// Suggested values:
-		/// - Solo- and Relay-chains: `topsoil_system::Pallet`
+		/// - Solo- and Relay-chains: `topsoil_core::system::Pallet`
 		/// - Parachains that may produce blocks sparingly or only when needed (on-demand):
-		///   - already have the pallet deployed: `topsoil_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_core::system::Pallet`
 		///   - are freshly deploying this pallet: `RelaychainDataProvider`
 		/// - Parachains with a reliably block production rate (PLO or bulk-coretime):
-		///   - already have the pallet deployed: `topsoil_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_core::system::Pallet`
 		///   - are freshly deploying this pallet: no strong recommendation. Both local and remote
 		///     providers can be used. Relay provider can be a bit better in cases where the
 		///     parachain is lagging its block production to avoid clock skew.
@@ -233,7 +233,7 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub vesting: Vec<(T::AccountId, BlockNumberFor<T>, BlockNumberFor<T>, BalanceOf<T>)>,
 	}
@@ -821,7 +821,7 @@ where
 		per_block: BalanceOf<T>,
 		starting_block: BlockNumberFor<T>,
 	) -> DispatchResult {
-		use topsoil_support::storage::{with_transaction, TransactionOutcome};
+		use topsoil_core::storage::{with_transaction, TransactionOutcome};
 		let schedule = VestingInfo::new(locked, per_block, starting_block);
 		with_transaction(|| -> TransactionOutcome<DispatchResult> {
 			let result = Self::do_vested_transfer(source, target, schedule);

@@ -34,14 +34,14 @@ use subsoil::consensus::grandpa::{
 	RUNTIME_LOG_TARGET as LOG_TARGET,
 };
 use subsoil::runtime::{generic::DigestItem, traits::Zero, DispatchResult};
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	pallet_prelude::Get,
 	traits::OneSessionHandler,
 	weights::Weight,
 	WeakBoundedVec,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 mod default_weights;
 mod equivocation;
@@ -53,11 +53,11 @@ pub use equivocation::{EquivocationOffence, EquivocationReportSystem, TimeSlot};
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::{dispatch::DispatchResult, pallet_prelude::*};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{dispatch::DispatchResult, pallet_prelude::*};
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(5);
@@ -67,12 +67,12 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The event type of this module.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event>
-			+ Into<<Self as topsoil_system::Config>::RuntimeEvent>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ Into<<Self as topsoil_core::system::Config>::RuntimeEvent>
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Weights for this pallet.
 		type WeightInfo: WeightInfo;
@@ -327,7 +327,7 @@ pub mod pallet {
 	pub type Authorities<T: Config> =
 		StorageValue<_, BoundedAuthorityList<T::MaxAuthorities>, ValueQuery>;
 
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		pub authorities: AuthorityList,
@@ -458,7 +458,7 @@ impl<T: Config> Pallet<T> {
 	/// Cannot be done when already paused.
 	pub fn schedule_pause(in_blocks: BlockNumberFor<T>) -> DispatchResult {
 		if let StoredState::Live = State::<T>::get() {
-			let scheduled_at = topsoil_system::Pallet::<T>::block_number();
+			let scheduled_at = topsoil_core::system::Pallet::<T>::block_number();
 			State::<T>::put(StoredState::PendingPause { delay: in_blocks, scheduled_at });
 
 			Ok(())
@@ -470,7 +470,7 @@ impl<T: Config> Pallet<T> {
 	/// Schedule a resume of GRANDPA after pausing.
 	pub fn schedule_resume(in_blocks: BlockNumberFor<T>) -> DispatchResult {
 		if let StoredState::Paused = State::<T>::get() {
-			let scheduled_at = topsoil_system::Pallet::<T>::block_number();
+			let scheduled_at = topsoil_core::system::Pallet::<T>::block_number();
 			State::<T>::put(StoredState::PendingResume { delay: in_blocks, scheduled_at });
 
 			Ok(())
@@ -499,7 +499,7 @@ impl<T: Config> Pallet<T> {
 		forced: Option<BlockNumberFor<T>>,
 	) -> DispatchResult {
 		if !PendingChange::<T>::exists() {
-			let scheduled_at = topsoil_system::Pallet::<T>::block_number();
+			let scheduled_at = topsoil_core::system::Pallet::<T>::block_number();
 
 			if forced.is_some() {
 				if NextForced::<T>::get().map_or(false, |next| next > scheduled_at) {
@@ -535,7 +535,7 @@ impl<T: Config> Pallet<T> {
 	/// Deposit one of this module's logs.
 	fn deposit_log(log: ConsensusLog<BlockNumberFor<T>>) {
 		let log = DigestItem::Consensus(GRANDPA_ENGINE_ID, log.encode());
-		topsoil_system::Pallet::<T>::deposit_log(log);
+		topsoil_core::system::Pallet::<T>::deposit_log(log);
 	}
 
 	// Perform module initialization, abstracted so that it can be called either through genesis

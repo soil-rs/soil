@@ -14,8 +14,8 @@ use super::*;
 use crate::Pallet as Kitchensink;
 
 use topsoil_benchmarking::v2::*;
-use topsoil_support::pallet_prelude::TransactionSource;
-use topsoil_system::RawOrigin;
+use topsoil_core::pallet_prelude::TransactionSource;
+use topsoil_core::system::RawOrigin;
 
 // To actually run this benchmark on topsoil-example-kitchensink, we need to put this pallet into the
 //   runtime and compile it with `runtime-benchmarks` feature. The detail procedures are
@@ -73,7 +73,7 @@ mod benchmarks {
 		// We use a block with specific code to benchmark the closure.
 		#[block]
 		{
-			use topsoil_support::traits::Authorize;
+			use topsoil_core::traits::Authorize;
 			call.authorize(source)
 				.expect("Call give some authorization")
 				.expect("Authorization is successful");

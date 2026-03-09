@@ -9,7 +9,7 @@
 use super::*;
 use alloc::vec;
 use subsoil::runtime::traits::ConstU32;
-use topsoil_support::{defensive, traits::Get, BoundedVec};
+use topsoil_core::{defensive, traits::Get, BoundedVec};
 
 #[must_use]
 pub(super) enum DeadConsequence {
@@ -67,16 +67,16 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 				ExistenceReason::DepositFrom(depositor.clone(), deposit)
 			}
 		} else if d.is_sufficient {
-			topsoil_system::Pallet::<T>::inc_sufficients(who);
+			topsoil_core::system::Pallet::<T>::inc_sufficients(who);
 			d.sufficients.saturating_inc();
 			ExistenceReason::Sufficient
 		} else {
-			topsoil_system::Pallet::<T>::inc_consumers(who)
+			topsoil_core::system::Pallet::<T>::inc_consumers(who)
 				.map_err(|_| Error::<T, I>::UnavailableConsumer)?;
 			// We ensure that we can still increment consumers once more because we could otherwise
 			// allow accidental usage of all consumer references which could cause grief.
-			if !topsoil_system::Pallet::<T>::can_inc_consumer(who) {
-				topsoil_system::Pallet::<T>::dec_consumers(who);
+			if !topsoil_core::system::Pallet::<T>::can_inc_consumer(who) {
+				topsoil_core::system::Pallet::<T>::dec_consumers(who);
 				return Err(Error::<T, I>::UnavailableConsumer.into());
 			}
 			ExistenceReason::Consumer
@@ -103,10 +103,10 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		use ExistenceReason::*;
 
 		match *reason {
-			Consumer => topsoil_system::Pallet::<T>::dec_consumers(who),
+			Consumer => topsoil_core::system::Pallet::<T>::dec_consumers(who),
 			Sufficient => {
 				d.sufficients = d.sufficients.saturating_sub(1);
-				topsoil_system::Pallet::<T>::dec_sufficients(who);
+				topsoil_core::system::Pallet::<T>::dec_sufficients(who);
 			},
 			DepositRefunded => {},
 			DepositHeld(_) | DepositFrom(..) if !force => return Keep,
@@ -150,7 +150,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 			if amount < details.min_balance {
 				return DepositConsequence::BelowMinimum;
 			}
-			if !details.is_sufficient && !topsoil_system::Pallet::<T>::can_accrue_consumers(who, 2)
+			if !details.is_sufficient && !topsoil_core::system::Pallet::<T>::can_accrue_consumers(who, 2)
 			{
 				return DepositConsequence::CannotCreate;
 			}
@@ -214,7 +214,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 					let held = maybe_held.unwrap_or_default();
 
 					// The `untouchable` balance of the asset account of `who`. This is described
-					// here: https://paritytech.github.io/polkadot-sdk/master/topsoil_support/traits/tokens/fungible/index.html#visualising-balance-components-together-
+					// here: https://paritytech.github.io/polkadot-sdk/master/topsoil_core/traits/tokens/fungible/index.html#visualising-balance-components-together-
 					let untouchable = frozen.saturating_sub(held).max(details.min_balance);
 					if rest < untouchable {
 						if !frozen.is_zero() {

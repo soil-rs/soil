@@ -17,7 +17,7 @@ use codec::Encode;
 use subsoil::core::crypto::key_types::DUMMY;
 use subsoil::runtime::{testing::UintAuthorityId, Perbill};
 
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok,
 	traits::{ConstU64, OnInitialize},
 };
@@ -397,7 +397,7 @@ fn session_keys_generate_output_works_as_set_keys_input() {
 #[test]
 fn upgrade_keys() {
 	use subsoil::core::crypto::key_types::DUMMY;
-	use topsoil_support::storage;
+	use topsoil_core::storage;
 
 	// This test assumes certain mocks.
 	assert_eq!(mock::NextValidators::get().clone(), vec![1, 2, 3]);
@@ -475,7 +475,7 @@ fn test_migration_v1() {
 		historical::{HistoricalSessions, StoredRange},
 		mock::Historical,
 	};
-	use topsoil_support::traits::{PalletInfoAccess, StorageVersion};
+	use topsoil_core::traits::{PalletInfoAccess, StorageVersion};
 
 	new_test_ext().execute_with(|| {
 		assert!(HistoricalSessions::<Test>::iter_values().count() > 0);
@@ -483,7 +483,7 @@ fn test_migration_v1() {
 
 		let old_pallet = "Session";
 		let new_pallet = <Historical as PalletInfoAccess>::name();
-		topsoil_support::storage::migration::move_pallet(
+		topsoil_core::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -501,7 +501,7 @@ fn set_keys_should_fail_with_insufficient_funds() {
 		// Account 999 is mocked to have KeyDeposit -1
 		let account_id = 999;
 		let keys = MockSessionKeys { dummy: UintAuthorityId(account_id).into() };
-		topsoil_system::Pallet::<Test>::inc_providers(&account_id);
+		topsoil_core::system::Pallet::<Test>::inc_providers(&account_id);
 		// Make sure we have a validator ID
 		ValidatorAccounts::mutate(|m| {
 			m.insert(account_id, account_id);
@@ -560,7 +560,7 @@ fn purge_keys_should_unhold_funds() {
 		});
 
 		// Ensure system providers are properly set for the test account
-		topsoil_system::Pallet::<Test>::inc_providers(&account_id);
+		topsoil_core::system::Pallet::<Test>::inc_providers(&account_id);
 
 		// First set the keys to reserve the deposit
 		let res = Session::set_keys(
@@ -621,7 +621,7 @@ mod externally_set_keys_tracking {
 	const ACCOUNT: u64 = 1000;
 
 	fn setup_account() {
-		topsoil_system::Pallet::<Test>::inc_providers(&ACCOUNT);
+		topsoil_core::system::Pallet::<Test>::inc_providers(&ACCOUNT);
 		ValidatorAccounts::mutate(|m| {
 			m.insert(ACCOUNT, ACCOUNT);
 		});
@@ -758,7 +758,7 @@ mod disabling_byzantine_threshold {
 
 	// Common test data - the stash of the offending validator, the era of the offence and the
 	// active set
-	const OFFENDER_ID: <Test as topsoil_system::Config>::AccountId = 7;
+	const OFFENDER_ID: <Test as topsoil_core::system::Config>::AccountId = 7;
 	const MAX_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(100));
 	const MIN_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(0));
 	const ACTIVE_SET: [<Test as Config>::ValidatorId; 7] = [1, 2, 3, 4, 5, 6, 7];
@@ -839,7 +839,7 @@ mod disabling_with_reenabling {
 
 	// Common test data - the stash of the offending validator, the era of the offence and the
 	// active set
-	const OFFENDER_ID: <Test as topsoil_system::Config>::AccountId = 7;
+	const OFFENDER_ID: <Test as topsoil_core::system::Config>::AccountId = 7;
 	const MAX_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(100));
 	const LOW_OFFENDER_SEVERITY: OffenceSeverity = OffenceSeverity(Perbill::from_percent(0));
 	const ACTIVE_SET: [<Test as Config>::ValidatorId; 7] = [1, 2, 3, 4, 5, 6, 7];

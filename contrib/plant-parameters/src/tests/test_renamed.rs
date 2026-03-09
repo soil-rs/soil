@@ -8,21 +8,21 @@
 
 //! Tests that the runtime params can be renamed.
 
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, construct_runtime, derive_impl,
 	dynamic_params::{dynamic_pallet_params, dynamic_params},
 	traits::AsEnsureOriginWithArg,
 };
-use topsoil_system::EnsureRoot;
+use topsoil_core::system::EnsureRoot;
 
 use crate as plant_parameters;
 use crate::*;
 use dynamic_params::*;
 use RuntimeParametersRenamed::*;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type Block = topsoil_system::mocking::MockBlock<Runtime>;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 	type AccountData = plant_balances::AccountData<<Self as plant_balances::Config>::Balance>;
 }
 
@@ -84,7 +84,7 @@ impl plant_example_basic::Config for Runtime {
 
 construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		PalletParameters: crate,
 		Example: plant_example_basic,
 		Balances: plant_balances,
@@ -98,9 +98,9 @@ pub fn new_test_ext() -> subsoil::io::TestExternalities {
 }
 
 pub(crate) fn assert_last_event(generic_event: RuntimeEvent) {
-	let events = topsoil_system::Pallet::<Runtime>::events();
+	let events = topsoil_core::system::Pallet::<Runtime>::events();
 	// compare to the last event record
-	let topsoil_system::EventRecord { event, .. } = &events.last().expect("Event expected");
+	let topsoil_core::system::EventRecord { event, .. } = &events.last().expect("Event expected");
 	assert_eq!(event, &generic_event);
 }
 

@@ -4,13 +4,13 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_support::construct_runtime;
+use topsoil_core::construct_runtime;
 
 construct_runtime! {
 	pub struct Runtime
 	{
 		#[cfg(test)]
-		System: topsoil_system::{Pallet, Call, Storage, Config<T>, Event<T>},
+		System: topsoil_core::system::{Pallet, Call, Storage, Config<T>, Event<T>},
 	}
 }
 

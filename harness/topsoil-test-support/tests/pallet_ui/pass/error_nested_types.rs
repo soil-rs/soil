@@ -5,13 +5,13 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
 use codec::{Decode, DecodeWithMemTracking, Encode};
-use topsoil_support::PalletError;
+use topsoil_core::PalletError;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 #[allow(unused_imports)]
 pub mod pallet {
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(core::marker::PhantomData<T>);

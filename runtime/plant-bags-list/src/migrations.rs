@@ -9,12 +9,12 @@
 use codec::{Decode, Encode};
 use core::marker::PhantomData;
 use plant_election_provider::ScoreProvider;
-use topsoil_support::traits::OnRuntimeUpgrade;
+use topsoil_core::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
+use topsoil_core::ensure;
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
@@ -22,14 +22,14 @@ use alloc::vec::Vec;
 /// A struct that does not migration, but only checks that the counter prefix exists and is correct.
 pub struct CheckCounterPrefix<T: crate::Config<I>, I: 'static>(core::marker::PhantomData<(T, I)>);
 impl<T: crate::Config<I>, I: 'static> OnRuntimeUpgrade for CheckCounterPrefix<T, I> {
-	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
-		topsoil_support::weights::Weight::zero()
+	fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
+		topsoil_core::weights::Weight::zero()
 	}
 
 	#[cfg(feature = "try-runtime")]
 	fn pre_upgrade() -> Result<Vec<u8>, TryRuntimeError> {
 		// The old explicit storage item.
-		#[topsoil_support::storage_alias]
+		#[topsoil_core::storage_alias]
 		type CounterForListNodes<T: crate::Config<I>, I: 'static> =
 			StorageValue<crate::Pallet<T, I>, u32>;
 
@@ -51,7 +51,7 @@ impl<T: crate::Config<I>, I: 'static> OnRuntimeUpgrade for CheckCounterPrefix<T,
 
 mod old {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	#[derive(Encode, Decode)]
 	pub struct PreScoreNode<T: crate::Config<I>, I: 'static = ()> {
@@ -63,15 +63,15 @@ mod old {
 		pub _phantom: PhantomData<I>,
 	}
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub type ListNodes<T: crate::Config<I>, I: 'static> = StorageMap<
 		crate::Pallet<T, I>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		PreScoreNode<T, I>,
 	>;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub type CounterForListNodes<T: crate::Config<I>, I: 'static> =
 		StorageValue<crate::Pallet<T, I>, u32, ValueQuery>;
 }
@@ -91,7 +91,7 @@ impl<T: crate::Config<I>, I: 'static> OnRuntimeUpgrade for AddScore<T, I> {
 		Ok(iter_node_count.encode())
 	}
 
-	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 		for (_key, node) in old::ListNodes::<T, I>::iter() {
 			let score = T::ScoreProvider::score(&node.id);
 
@@ -107,7 +107,7 @@ impl<T: crate::Config<I>, I: 'static> OnRuntimeUpgrade for AddScore<T, I> {
 			crate::ListNodes::<T, I>::insert(node.id, new_node);
 		}
 
-		return topsoil_support::weights::Weight::MAX;
+		return topsoil_core::weights::Weight::MAX;
 	}
 
 	#[cfg(feature = "try-runtime")]

@@ -25,8 +25,7 @@ honggfuzz = { workspace = true }
 
 plant-nomination-pools = { features = ["fuzzing"], workspace = true, default-features = true }
 
-topsoil-support = { workspace = true, default-features = true }
-topsoil-system = { workspace = true, default-features = true }
+topsoil-core = { workspace = true, default-features = true }
 
 subsoil = { workspace = true, default-features = true }
 

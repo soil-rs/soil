@@ -30,8 +30,8 @@ use subsoil::runtime::{
 };
 use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
 use plant_election_provider::{ExtendedBalance, NposSolver, Support, VoteWeight};
-use topsoil_support::{traits::Get, BoundedVec};
-use topsoil_system::pallet_prelude::*;
+use topsoil_core::{traits::Get, BoundedVec};
+use topsoil_core::system::pallet_prelude::*;
 
 // TODO: we should have a fuzzer for miner that ensures no matter the parameters, it generates a
 // valid solution. Esp. for the trimming.
@@ -55,7 +55,7 @@ pub(crate) type MinerSolverErrorOf<T> = <<T as MinerConfig>::Solver as NposSolve
 
 /// The errors related to the [`BaseMiner`].
 #[derive(
-	topsoil_support::DebugNoBound, topsoil_support::EqNoBound, topsoil_support::PartialEqNoBound,
+	topsoil_core::DebugNoBound, topsoil_core::EqNoBound, topsoil_core::PartialEqNoBound,
 )]
 pub enum MinerError<T: MinerConfig> {
 	/// An internal error in the NPoS elections crate.
@@ -96,7 +96,7 @@ impl<T: MinerConfig> From<CommonError> for MinerError<T> {
 
 /// The errors related to the `OffchainWorkerMiner`.
 #[derive(
-	topsoil_support::DebugNoBound, topsoil_support::EqNoBound, topsoil_support::PartialEqNoBound,
+	topsoil_core::DebugNoBound, topsoil_core::EqNoBound, topsoil_core::PartialEqNoBound,
 )]
 pub enum OffchainMinerError<T: Config> {
 	/// An error in the base miner.
@@ -213,7 +213,7 @@ pub type PageSupportsOfMiner<T> = plant_election_provider::BoundedSupports<
 /// Helper type that computes the maximum total winners across all pages.
 pub struct MaxWinnersFinal<T: MinerConfig>(core::marker::PhantomData<T>);
 
-impl<T: MinerConfig> topsoil_support::traits::Get<u32> for MaxWinnersFinal<T> {
+impl<T: MinerConfig> topsoil_core::traits::Get<u32> for MaxWinnersFinal<T> {
 	fn get() -> u32 {
 		T::Pages::get().saturating_mul(T::MaxWinnersPerPage::get())
 	}
@@ -777,7 +777,7 @@ impl<T: Config> OffchainWorkerMiner<T> {
 
 	fn submit_call(call: Call<T>) -> Result<(), OffchainMinerError<T>> {
 		let xt = T::create_bare(call.into());
-		topsoil_system::offchain::SubmitTransaction::<T, Call<T>>::submit_transaction(xt)
+		topsoil_core::system::offchain::SubmitTransaction::<T, Call<T>>::submit_transaction(xt)
 			.map(|_| {
 				sublog!(
 					debug,
@@ -1846,7 +1846,7 @@ mod base_miner {
 mod offchain_worker_miner {
 	use crate::{verifier::Verifier, CommonError};
 	use subsoil::runtime::offchain::storage_lock::{BlockAndTime, StorageLock};
-	use topsoil_support::traits::Hooks;
+	use topsoil_core::traits::Hooks;
 
 	use super::*;
 	use crate::mock::*;

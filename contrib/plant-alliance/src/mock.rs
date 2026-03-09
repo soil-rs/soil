@@ -17,11 +17,11 @@ use plant_identity::{
 	legacy::{IdentityField, IdentityInfo},
 	Data, IdentityOf, Judgement, SuperOf,
 };
-pub use topsoil_support::{
+pub use topsoil_core::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::EitherOfDiverse, BoundedVec,
 };
-use topsoil_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_core::system::{EnsureRoot, EnsureSignedBy};
 
 pub use crate as plant_alliance;
 
@@ -31,12 +31,12 @@ type BlockNumber = u64;
 type AccountId = u64;
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(Weight::MAX);
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(Weight::MAX);
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -237,12 +237,12 @@ impl Config for Test {
 	type RetirementPeriod = RetirementPeriod;
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Identity: plant_identity,
 		AllianceMotion: plant_collective::<Instance1>,
@@ -271,7 +271,7 @@ pub(super) fn test_identity_info_deposit() -> <Test as plant_balances::Config>::
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![
@@ -392,7 +392,7 @@ pub fn test_cid() -> Cid {
 }
 
 pub fn make_remark_proposal(value: u64) -> (RuntimeCall, u32, H256) {
-	make_proposal(RuntimeCall::System(topsoil_system::Call::remark { remark: value.encode() }))
+	make_proposal(RuntimeCall::System(topsoil_core::system::Call::remark { remark: value.encode() }))
 }
 
 pub fn make_kick_member_proposal(who: AccountId) -> (RuntimeCall, u32, H256) {

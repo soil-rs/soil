@@ -41,13 +41,13 @@ use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	InstantElectionProvider, NposSolution, SequentialPhragmen,
 };
-pub use topsoil_support::{assert_noop, assert_ok};
-use topsoil_support::{
+pub use topsoil_core::{assert_noop, assert_ok};
+use topsoil_core::{
 	derive_impl, ord_parameter_types, parameter_types,
 	traits::{fungible::InspectHold, Hooks},
 	weights::{constants, RuntimeDbWeight, Weight},
 };
-use topsoil_system::EnsureRoot;
+use topsoil_core::system::EnsureRoot;
 
 pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
@@ -57,9 +57,9 @@ pub type BlockNumber = u64;
 pub type VoterIndex = u32;
 pub type TargetIndex = u16;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime  {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		MultiBlock: multi_block,
 		SignedPallet: signed_pallet,
@@ -81,22 +81,22 @@ parameter_types! {
 	pub DbWeight: RuntimeDbWeight = RuntimeDbWeight { read: 1, write: 1};
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Hashing = BlakeTwo256;
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type BlockLength = ();
 	type BlockWeights = BlockWeights;
 	type AccountData = plant_balances::AccountData<Balance>;
-	type Block = topsoil_system::mocking::MockBlock<Self>;
+	type Block = topsoil_core::system::mocking::MockBlock<Self>;
 	type DbWeight = DbWeight;
 }
 
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 parameter_types! {
 	pub const ExistentialDeposit: Balance = 1;
-	pub BlockWeights: topsoil_system::limits::BlockWeights = topsoil_system::limits::BlockWeights
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights = topsoil_core::system::limits::BlockWeights
 		::with_sensible_defaults(
 			Weight::from_parts(2u64 * constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 			NORMAL_DISPATCH_RATIO,
@@ -198,7 +198,7 @@ impl crate::unsigned::Config for Runtime {
 
 impl MinerConfig for Runtime {
 	type AccountId = AccountId;
-	type Hash = <Runtime as topsoil_system::Config>::Hash;
+	type Hash = <Runtime as topsoil_core::system::Config>::Hash;
 	type MaxLength = MinerMaxLength;
 	type Pages = Pages;
 	type MaxVotesPerVoter = MaxVotesPerVoter;
@@ -222,7 +222,7 @@ impl crate::Config for Runtime {
 	type MinerConfig = Self;
 	type Verifier = VerifierPallet;
 	type AdminOrigin = EnsureRoot<AccountId>;
-	type ManagerOrigin = topsoil_system::EnsureSignedBy<Manager, AccountId>;
+	type ManagerOrigin = topsoil_core::system::EnsureSignedBy<Manager, AccountId>;
 	type Pages = Pages;
 	type AreWeDone = AreWeDone;
 	type Signed = SignedPallet;
@@ -303,7 +303,7 @@ impl InstantElectionProvider for MockFallback {
 	}
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateTransactionBase<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -311,7 +311,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -420,7 +420,7 @@ impl ExtBuilder {
 	pub(crate) fn build_unchecked(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
-			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let _ = plant_balances::GenesisConfig::<Runtime> {
 			balances: vec![
@@ -752,7 +752,7 @@ pub fn roll_to_with_ocw(n: BlockNumber, maybe_pool: Option<Arc<RwLock<PoolState>
 				.into_iter()
 				.map(|uxt| <Extrinsic as codec::Decode>::decode(&mut &*uxt).unwrap())
 				.for_each(|xt| {
-					xt.function.dispatch(topsoil_system::RawOrigin::None.into()).unwrap();
+					xt.function.dispatch(topsoil_core::system::RawOrigin::None.into()).unwrap();
 				});
 			pool.try_write().unwrap().transactions.clear();
 		}

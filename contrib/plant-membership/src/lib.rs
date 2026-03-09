@@ -16,7 +16,7 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 use subsoil::runtime::traits::{StaticLookup, UniqueSaturatedInto};
-use topsoil_support::{
+use topsoil_core::{
 	traits::{ChangeMembers, Contains, ContainsLengthBound, Get, InitializeMembers, SortedMembers},
 	BoundedVec,
 };
@@ -38,13 +38,13 @@ pub use weights::WeightInfo;
 
 const LOG_TARGET: &str = "runtime::membership";
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
@@ -54,11 +54,11 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Required origin for adding a member (though can always be Root).
 		type AddOrigin: EnsureOrigin<Self::RuntimeOrigin>;
@@ -104,7 +104,7 @@ pub mod pallet {
 	pub type Prime<T: Config<I>, I: 'static = ()> = StorageValue<_, T::AccountId, OptionQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		pub members: BoundedVec<T::AccountId, T::MaxMembers>,
 		#[serde(skip)]
@@ -392,7 +392,7 @@ impl<T: Config<I>, I: 'static> SortedMembers<T::AccountId> for Pallet<T, I> {
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn add(new_member: &T::AccountId) {
-		use topsoil_support::{assert_ok, traits::EnsureOrigin};
+		use topsoil_core::{assert_ok, traits::EnsureOrigin};
 		let new_member_lookup = T::Lookup::unlookup(new_member.clone());
 
 		if let Ok(origin) = T::AddOrigin::try_successful_origin() {

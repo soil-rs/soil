@@ -17,7 +17,7 @@
 //! - off-chain storage - via Indexing API we push full leaf content (and all internal nodes as
 //! well) to the Off-chain DB, so that the data is available for Off-chain workers.
 //! Hashing used for MMR is configurable independently from the rest of the runtime (i.e. not using
-//! `topsoil_system::Hashing`) so something compatible with external chains can be used (like
+//! `topsoil_core::system::Hashing`) so something compatible with external chains can be used (like
 //! Keccak256 for Ethereum compatibility).
 //!
 //! Depending on the usage context (off-chain vs on-chain) the pallet is able to:
@@ -73,7 +73,7 @@ mod tests;
 /// blocks without using excessive on-chain storage.
 ///
 /// Hence we implement the [LeafDataProvider] for [ParentNumberAndHash] which is a
-/// crate-local wrapper over [topsoil_system::Pallet]. Since the current block hash
+/// crate-local wrapper over [topsoil_core::system::Pallet]. Since the current block hash
 /// is not available (since the block is not finished yet),
 /// we use the `parent_hash` here along with parent block number.
 pub struct ParentNumberAndHash<T: Config> {
@@ -81,12 +81,12 @@ pub struct ParentNumberAndHash<T: Config> {
 }
 
 impl<T: Config> LeafDataProvider for ParentNumberAndHash<T> {
-	type LeafData = (BlockNumberFor<T>, <T as topsoil_system::Config>::Hash);
+	type LeafData = (BlockNumberFor<T>, <T as topsoil_core::system::Config>::Hash);
 
 	fn leaf_data() -> Self::LeafData {
 		(
-			topsoil_system::Pallet::<T>::block_number().saturating_sub(One::one()),
-			topsoil_system::Pallet::<T>::parent_hash(),
+			topsoil_core::system::Pallet::<T>::block_number().saturating_sub(One::one()),
+			topsoil_core::system::Pallet::<T>::parent_hash(),
 		)
 	}
 }
@@ -103,7 +103,7 @@ pub struct DefaultBlockHashProvider<T: Config> {
 
 impl<T: Config> BlockHashProvider<BlockNumberFor<T>, T::Hash> for DefaultBlockHashProvider<T> {
 	fn block_hash(block_number: BlockNumberFor<T>) -> T::Hash {
-		topsoil_system::Pallet::<T>::block_hash(block_number)
+		topsoil_core::system::Pallet::<T>::block_hash(block_number)
 	}
 }
 
@@ -142,7 +142,7 @@ pub mod pallet {
 
 	/// This pallet's configuration trait
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// Prefix for elements stored in the Off-chain DB via Indexing API.
 		///
 		/// Each node of the MMR is inserted both on-chain and off-chain via Indexing API.
@@ -187,14 +187,14 @@ pub mod pallet {
 		///
 		/// For some applications it might be beneficial to make the MMR root available externally
 		/// apart from having it in the storage. For instance you might output it in the header
-		/// digest (see [`topsoil_system::Pallet::deposit_log`]) to make it available for Light
+		/// digest (see [`topsoil_core::system::Pallet::deposit_log`]) to make it available for Light
 		/// Clients. Hook complexity should be `O(1)`.
 		type OnNewRoot: OnNewRoot<HashOf<Self, I>>;
 
 		/// Block hash provider for a given block number.
 		type BlockHashProvider: BlockHashProvider<
 			BlockNumberFor<Self>,
-			<Self as topsoil_system::Config>::Hash,
+			<Self as topsoil_core::system::Config>::Hash,
 		>;
 
 		/// Weights for this pallet.
@@ -303,7 +303,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// This combination makes the offchain (key,value) entry resilient to chain forks.
 	fn node_temp_offchain_key(
 		pos: NodeIndex,
-		parent_hash: <T as topsoil_system::Config>::Hash,
+		parent_hash: <T as topsoil_core::system::Config>::Hash,
 	) -> Vec<u8> {
 		NodesUtils::node_temp_offchain_key::<HeaderFor<T>>(&T::INDEXING_PREFIX, pos, parent_hash)
 	}
@@ -324,7 +324,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 		// `block_num = block_num_when_pallet_activated + leaf_idx + 1`
 		// `block_num = (current_block_num - leaves_count) + leaf_idx + 1`
 		// `parent_block_num = current_block_num - leaves_count + leaf_idx`.
-		<topsoil_system::Pallet<T>>::block_number()
+		<topsoil_core::system::Pallet<T>>::block_number()
 			.saturating_sub(NumberOfLeaves::<T, I>::get().saturated_into())
 			.saturating_add(leaf_index.saturated_into())
 	}
@@ -332,10 +332,10 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Convert a block number into a leaf index.
 	fn block_num_to_leaf_index(block_num: BlockNumberFor<T>) -> Result<LeafIndex, Error>
 	where
-		T: topsoil_system::Config,
+		T: topsoil_core::system::Config,
 	{
 		let first_mmr_block = utils::first_mmr_block_num::<HeaderFor<T>>(
-			<topsoil_system::Pallet<T>>::block_number(),
+			<topsoil_core::system::Pallet<T>>::block_number(),
 			NumberOfLeaves::<T, I>::get(),
 		)?;
 
@@ -345,7 +345,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Convert a block number into a leaf index.
 	pub fn block_num_to_leaf_count(block_num: BlockNumberFor<T>) -> Result<LeafIndex, Error>
 	where
-		T: topsoil_system::Config,
+		T: topsoil_core::system::Config,
 	{
 		let leaf_index = Self::block_num_to_leaf_index(block_num)?;
 		Ok(leaf_index.saturating_add(1))
@@ -366,7 +366,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	) -> Result<(Vec<LeafOf<T, I>>, LeafProof<HashOf<T, I>>), Error> {
 		// check whether best_known_block_number provided, else use current best block
 		let best_known_block_number =
-			best_known_block_number.unwrap_or_else(|| <topsoil_system::Pallet<T>>::block_number());
+			best_known_block_number.unwrap_or_else(|| <topsoil_core::system::Pallet<T>>::block_number());
 
 		let leaf_count = Self::block_num_to_leaf_count(best_known_block_number)?;
 
@@ -416,7 +416,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	) -> Result<AncestryProof<HashOf<T, I>>, Error> {
 		// check whether best_known_block_number provided, else use current best block
 		let best_known_block_number =
-			best_known_block_number.unwrap_or_else(|| <topsoil_system::Pallet<T>>::block_number());
+			best_known_block_number.unwrap_or_else(|| <topsoil_core::system::Pallet<T>>::block_number());
 
 		let leaf_count = Self::block_num_to_leaf_count(best_known_block_number)?;
 		let prev_leaf_count = Self::block_num_to_leaf_count(prev_block_number)?;
@@ -428,7 +428,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	#[cfg(feature = "runtime-benchmarks")]
 	pub fn generate_mock_ancestry_proof() -> Result<AncestryProof<HashOf<T, I>>, Error> {
 		let leaf_count =
-			Self::block_num_to_leaf_count(<topsoil_system::Pallet<T>>::block_number())?;
+			Self::block_num_to_leaf_count(<topsoil_core::system::Pallet<T>>::block_number())?;
 		let mmr: ModuleMmr<mmr::storage::OffchainStorage, T, I> = mmr::Mmr::new(leaf_count);
 		mmr.generate_mock_ancestry_proof()
 	}

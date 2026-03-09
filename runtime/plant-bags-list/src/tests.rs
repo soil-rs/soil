@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_support::{assert_noop, assert_ok, assert_storage_noop, traits::IntegrityTest};
+use topsoil_core::{assert_noop, assert_ok, assert_storage_noop, traits::IntegrityTest};
 
 use super::*;
 use list::Bag;
@@ -763,14 +763,14 @@ mod sorted_list_provider {
 
 mod on_idle {
 	use super::*;
-	use topsoil_support::traits::OnIdle;
+	use topsoil_core::traits::OnIdle;
 
 	fn run_to_block(n: u64, on_idle_weight: Weight) -> Weight {
 		let mut total_weight = Weight::zero();
 
 		System::run_to_block_with::<AllPalletsWithSystem>(
 			n,
-			topsoil_system::RunToBlockHooks::default().after_initialize(|bn| {
+			topsoil_core::system::RunToBlockHooks::default().after_initialize(|bn| {
 				let w = AllPalletsWithSystem::on_idle(bn, on_idle_weight);
 				total_weight = total_weight.saturating_add(w);
 			}),

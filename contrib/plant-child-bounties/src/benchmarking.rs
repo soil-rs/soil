@@ -12,8 +12,8 @@ use alloc::vec;
 use subsoil::runtime::traits::BlockNumberProvider;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 use plant_bounties::Pallet as Bounties;
-use topsoil_support::ensure;
-use topsoil_system::RawOrigin;
+use topsoil_core::ensure;
+use topsoil_core::system::RawOrigin;
 use plant_treasury::Pallet as Treasury;
 
 use crate::*;
@@ -109,7 +109,7 @@ fn activate_bounty<T: Config>(
 		T::SpendOrigin::try_successful_origin().map_err(|_| BenchmarkError::Weightless)?;
 	Bounties::<T>::approve_bounty(approve_origin, child_bounty_setup.bounty_id)?;
 	set_block_number::<T>(T::SpendPeriod::get());
-	Treasury::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
+	Treasury::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
 	Bounties::<T>::propose_curator(
 		RawOrigin::Root.into(),
 		child_bounty_setup.bounty_id,
@@ -164,7 +164,7 @@ fn setup_pot_account<T: Config>() {
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 #[benchmarks]
@@ -262,7 +262,7 @@ mod benchmarks {
 	fn unassign_curator() -> Result<(), BenchmarkError> {
 		setup_pot_account::<T>();
 		let bounty_setup = activate_child_bounty::<T>(0, T::MaximumReasonLength::get())?;
-		Treasury::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
+		Treasury::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
 		let bounty_update_period = T::BountyUpdatePeriod::get();
 		let inactivity_timeout = T::SpendPeriod::get().saturating_add(bounty_update_period);
 		set_block_number::<T>(inactivity_timeout.saturating_add(1u32.into()));
@@ -383,7 +383,7 @@ mod benchmarks {
 	fn close_child_bounty_active() -> Result<(), BenchmarkError> {
 		setup_pot_account::<T>();
 		let bounty_setup = activate_child_bounty::<T>(0, T::MaximumReasonLength::get())?;
-		Treasury::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
+		Treasury::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
 
 		#[extrinsic_call]
 		close_child_bounty(RawOrigin::Root, bounty_setup.bounty_id, bounty_setup.child_bounty_id);

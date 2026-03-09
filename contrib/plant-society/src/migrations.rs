@@ -9,7 +9,7 @@
 use super::*;
 use alloc::{vec, vec::Vec};
 use codec::{Decode, Encode};
-use topsoil_support::traits::{Defensive, DefensiveOption, Instance, UncheckedOnRuntimeUpgrade};
+use topsoil_core::traits::{Defensive, DefensiveOption, Instance, UncheckedOnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
@@ -25,7 +25,7 @@ pub struct VersionUncheckedMigrateToV2<T: Config<I>, I: 'static, PastPayouts>(
 impl<
 		T: Config<I>,
 		I: Instance + 'static,
-		PastPayouts: Get<Vec<(<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>)>>,
+		PastPayouts: Get<Vec<(<T as topsoil_core::system::Config>::AccountId, BalanceOf<T, I>)>>,
 	> UncheckedOnRuntimeUpgrade for VersionUncheckedMigrateToV2<T, I, PastPayouts>
 {
 	#[cfg(feature = "try-runtime")]
@@ -55,8 +55,8 @@ impl<
 	#[cfg(feature = "try-runtime")]
 	fn post_upgrade(data: Vec<u8>) -> Result<(), TryRuntimeError> {
 		let old: (
-			Vec<Bid<<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>>>,
-			Vec<<T as topsoil_system::Config>::AccountId>,
+			Vec<Bid<<T as topsoil_core::system::Config>::AccountId, BalanceOf<T, I>>>,
+			Vec<<T as topsoil_core::system::Config>::AccountId>,
 		) = Decode::decode(&mut &data[..]).expect("Bad data");
 		let mut old_candidates =
 			old.0.into_iter().map(|x| (x.who, x.kind, x.value)).collect::<Vec<_>>();
@@ -83,19 +83,19 @@ impl<
 	}
 }
 
-/// [`VersionUncheckedMigrateToV2`] wrapped in a [`topsoil_support::migrations::VersionedMigration`],
+/// [`VersionUncheckedMigrateToV2`] wrapped in a [`topsoil_core::migrations::VersionedMigration`],
 /// ensuring the migration is only performed when on-chain version is 0.
-pub type MigrateToV2<T, I, PastPayouts> = topsoil_support::migrations::VersionedMigration<
+pub type MigrateToV2<T, I, PastPayouts> = topsoil_core::migrations::VersionedMigration<
 	0,
 	2,
 	VersionUncheckedMigrateToV2<T, I, PastPayouts>,
 	crate::pallet::Pallet<T, I>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;
 
 pub(crate) mod v0 {
 	use super::*;
-	use topsoil_support::storage_alias;
+	use topsoil_core::storage_alias;
 
 	/// A vote by a member on a candidate application.
 	#[derive(Encode, Decode, Copy, Clone, PartialEq, Eq, Debug, TypeInfo)]
@@ -111,46 +111,46 @@ pub(crate) mod v0 {
 	#[storage_alias]
 	pub type Bids<T: Config<I>, I: 'static> = StorageValue<
 		Pallet<T, I>,
-		Vec<Bid<<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>>>,
+		Vec<Bid<<T as topsoil_core::system::Config>::AccountId, BalanceOf<T, I>>>,
 		ValueQuery,
 	>;
 	#[storage_alias]
 	pub type Candidates<T: Config<I>, I: 'static> = StorageValue<
 		Pallet<T, I>,
-		Vec<Bid<<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>>>,
+		Vec<Bid<<T as topsoil_core::system::Config>::AccountId, BalanceOf<T, I>>>,
 		ValueQuery,
 	>;
 	#[storage_alias]
 	pub type Votes<T: Config<I>, I: 'static> = StorageDoubleMap<
 		Pallet<T, I>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		Vote,
 	>;
 	#[storage_alias]
 	pub type SuspendedCandidates<T: Config<I>, I: 'static> = StorageMap<
 		Pallet<T, I>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
-		(BalanceOf<T, I>, BidKind<<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>>),
+		<T as topsoil_core::system::Config>::AccountId,
+		(BalanceOf<T, I>, BidKind<<T as topsoil_core::system::Config>::AccountId, BalanceOf<T, I>>),
 	>;
 	#[storage_alias]
 	pub type Members<T: Config<I>, I: 'static> =
-		StorageValue<Pallet<T, I>, Vec<<T as topsoil_system::Config>::AccountId>, ValueQuery>;
+		StorageValue<Pallet<T, I>, Vec<<T as topsoil_core::system::Config>::AccountId>, ValueQuery>;
 	#[storage_alias]
 	pub type Vouching<T: Config<I>, I: 'static> = StorageMap<
 		Pallet<T, I>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		VouchingStatus,
 	>;
 	#[storage_alias]
 	pub type Strikes<T: Config<I>, I: 'static> = StorageMap<
 		Pallet<T, I>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		StrikeCount,
 		ValueQuery,
 	>;
@@ -158,7 +158,7 @@ pub(crate) mod v0 {
 	pub type Payouts<T: Config<I>, I: 'static> = StorageMap<
 		Pallet<T, I>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		Vec<(BlockNumberFor<T, I>, BalanceOf<T, I>)>,
 		ValueQuery,
 	>;
@@ -166,16 +166,16 @@ pub(crate) mod v0 {
 	pub type SuspendedMembers<T: Config<I>, I: 'static> = StorageMap<
 		Pallet<T, I>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		bool,
 		ValueQuery,
 	>;
 	#[storage_alias]
 	pub type Defender<T: Config<I>, I: 'static> =
-		StorageValue<Pallet<T, I>, <T as topsoil_system::Config>::AccountId>;
+		StorageValue<Pallet<T, I>, <T as topsoil_core::system::Config>::AccountId>;
 	#[storage_alias]
 	pub type DefenderVotes<T: Config<I>, I: 'static> =
-		StorageMap<Pallet<T, I>, Twox64Concat, <T as topsoil_system::Config>::AccountId, Vote>;
+		StorageMap<Pallet<T, I>, Twox64Concat, <T as topsoil_core::system::Config>::AccountId, Vote>;
 }
 
 /// Will panic if there are any inconsistencies in the pallet's state or old keys remaining.
@@ -215,7 +215,7 @@ pub fn assert_internal_consistency<T: Config<I>, I: Instance + 'static>() {
 	// Check all payouts are valid data.
 	for p in Payouts::<T, I>::iter_keys() {
 		let k = Payouts::<T, I>::hashed_key_for(&p);
-		let v = topsoil_support::storage::unhashed::get_raw(&k[..]).expect("value is in map");
+		let v = topsoil_core::storage::unhashed::get_raw(&k[..]).expect("value is in map");
 		assert!(PayoutRecordFor::<T, I>::decode(&mut &v[..]).is_ok());
 	}
 
@@ -228,7 +228,7 @@ pub fn assert_internal_consistency<T: Config<I>, I: Instance + 'static>() {
 }
 
 pub fn from_original<T: Config<I>, I: Instance + 'static>(
-	past_payouts: &mut [(<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>)],
+	past_payouts: &mut [(<T as topsoil_core::system::Config>::AccountId, BalanceOf<T, I>)],
 ) -> Result<Weight, &'static str> {
 	// Migrate Bids from old::Bids (just a truncation).
 	Bids::<T, I>::put(BoundedVec::<_, T::MaxBids>::truncate_from(v0::Bids::<T, I>::take()));
@@ -282,7 +282,7 @@ pub fn from_original<T: Config<I>, I: Instance + 'static>(
 				if let Some(member) = m {
 					member.index = 0;
 				} else {
-					topsoil_support::defensive!(
+					topsoil_core::defensive!(
 						"Member somehow disappeared from storage after it was inserted"
 					);
 				}
@@ -291,7 +291,7 @@ pub fn from_original<T: Config<I>, I: Instance + 'static>(
 				if let Some(member) = m {
 					member.index = member_count;
 				} else {
-					topsoil_support::defensive!(
+					topsoil_core::defensive!(
 						"Member somehow disappeared from storage after it was queried"
 					);
 				}
@@ -338,7 +338,7 @@ pub fn from_original<T: Config<I>, I: Instance + 'static>(
 
 pub fn from_raw_past_payouts<T: Config<I>, I: Instance + 'static>(
 	past_payouts_raw: impl Iterator<Item = ([u8; 32], u128)>,
-) -> Vec<(<T as topsoil_system::Config>::AccountId, BalanceOf<T, I>)> {
+) -> Vec<(<T as topsoil_core::system::Config>::AccountId, BalanceOf<T, I>)> {
 	past_payouts_raw
 		.filter_map(|(x, y)| Some((Decode::decode(&mut &x[..]).ok()?, y.try_into().ok()?)))
 		.collect()

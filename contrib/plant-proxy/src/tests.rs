@@ -11,19 +11,19 @@ use crate as proxy;
 use alloc::{vec, vec::Vec};
 use topsoil::testing_prelude::*;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub struct Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Proxy: proxy,
 		Utility: plant_utility,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type BaseCallFilter = BaseFilter;
 	type AccountData = plant_balances::AccountData<u64>;
@@ -115,18 +115,18 @@ impl Config for Test {
 	type MaxPending = ConstU32<2>;
 	type AnnouncementDepositBase = AnnouncementDepositBase;
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
-	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Test>;
 }
 
 use super::{Call as ProxyCall, Event as ProxyEvent};
 use plant_balances::{Call as BalancesCall, Error as BalancesError, Event as BalancesEvent};
-use topsoil_system::Call as SystemCall;
+use topsoil_core::system::Call as SystemCall;
 use plant_utility::{Call as UtilityCall, Event as UtilityEvent};
 
-type SystemError = topsoil_system::Error<Test>;
+type SystemError = topsoil_core::system::Error<Test>;
 
 pub fn new_test_ext() -> TestState {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 10), (3, 10), (4, 10), (5, 3)],
 		..Default::default()
@@ -139,7 +139,7 @@ pub fn new_test_ext() -> TestState {
 }
 
 fn last_events(n: usize) -> Vec<RuntimeEvent> {
-	topsoil_system::Pallet::<Test>::events()
+	topsoil_core::system::Pallet::<Test>::events()
 		.into_iter()
 		.rev()
 		.take(n)
@@ -276,7 +276,7 @@ fn delayed_requires_pre_announcement() {
 		assert_noop!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 2, 1, None, call.clone()), e);
 		let call_hash = BlakeTwo256::hash_of(&call);
 		assert_ok!(Proxy::announce(RuntimeOrigin::signed(2), 1, call_hash));
-		topsoil_system::Pallet::<Test>::set_block_number(2);
+		topsoil_core::system::Pallet::<Test>::set_block_number(2);
 		assert_ok!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 2, 1, None, call.clone()));
 	});
 }
@@ -294,7 +294,7 @@ fn proxy_announced_removes_announcement_and_returns_deposit() {
 		let e = Error::<Test>::Unannounced;
 		assert_noop!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 3, 1, None, call.clone()), e);
 
-		topsoil_system::Pallet::<Test>::set_block_number(2);
+		topsoil_core::system::Pallet::<Test>::set_block_number(2);
 		assert_ok!(Proxy::proxy_announced(RuntimeOrigin::signed(0), 3, 1, None, call.clone()));
 		let announcements = Announcements::<Test>::get(3);
 		assert_eq!(announcements.0, vec![Announcement { real: 2, call_hash, height: 1 }]);

@@ -8,7 +8,7 @@
 
 use super::*;
 use subsoil::runtime::{traits::Convert, FixedPointNumber, FixedU128};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{fungible, tokens::ConversionToAssetBalance},
 };
@@ -307,7 +307,7 @@ pub enum ConversionError {
 }
 
 // Type alias for `topsoil_system`'s account id.
-type AccountIdOf<T> = <T as topsoil_system::Config>::AccountId;
+type AccountIdOf<T> = <T as topsoil_core::system::Config>::AccountId;
 // This pallet's asset id and balance type.
 type AssetIdOf<T, I> = <T as Config<I>>::AssetId;
 type AssetBalanceOf<T, I> = <T as Config<I>>::Balance;

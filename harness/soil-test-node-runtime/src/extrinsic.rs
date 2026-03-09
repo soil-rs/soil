@@ -18,7 +18,7 @@ use subsoil::runtime::{
 	Perbill,
 };
 use plant_metadata_hash_extension::CheckMetadataHash;
-use topsoil_system::{CheckNonce, CheckWeight};
+use topsoil_core::system::{CheckNonce, CheckWeight};
 
 /// Transfer used in test substrate pallet. Extrinsic is created and signed using this data.
 #[derive(Clone)]
@@ -203,7 +203,7 @@ impl ExtrinsicBuilder {
 				self.metadata_hash
 					.map(CheckMetadataHash::new_with_custom_hash)
 					.unwrap_or_else(|| CheckMetadataHash::new(false)),
-				topsoil_system::WeightReclaim::new(),
+				topsoil_core::system::WeightReclaim::new(),
 			);
 			let raw_payload = SignedPayload::from_raw(
 				self.function.clone(),

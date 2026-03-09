@@ -10,7 +10,7 @@ use super::*;
 use crate as plant_asset_rewards;
 use core::default::Default;
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl,
 	instances::Instance1,
 	parameter_types,
@@ -20,17 +20,17 @@ use topsoil_support::{
 	},
 	PalletId,
 };
-use topsoil_system::EnsureSigned;
+use topsoil_core::system::EnsureSigned;
 
 #[cfg(feature = "runtime-benchmarks")]
 use self::benchmarking::BenchmarkHelper;
 
-type Block = topsoil_system::mocking::MockBlock<MockRuntime>;
+type Block = topsoil_core::system::mocking::MockBlock<MockRuntime>;
 
 construct_runtime!(
 	pub enum MockRuntime
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Assets: plant_assets::<Instance1>,
 		AssetsFreezer: plant_assets_freezer::<Instance1>,
@@ -38,8 +38,8 @@ construct_runtime!(
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for MockRuntime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for MockRuntime {
 	type AccountId = u128;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -72,7 +72,7 @@ impl plant_assets::Config<Instance1> for MockRuntime {
 	type ReserveData = ();
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU128<1>;
 	type AssetAccountDeposit = ConstU128<10>;
 	type MetadataDepositBase = ConstU128<1>;
@@ -98,11 +98,11 @@ parameter_types! {
 /// Give Root Origin permission to create pools.
 pub struct MockPermissionedOrigin;
 impl EnsureOrigin<RuntimeOrigin> for MockPermissionedOrigin {
-	type Success = <MockRuntime as topsoil_system::Config>::AccountId;
+	type Success = <MockRuntime as topsoil_core::system::Config>::AccountId;
 
 	fn try_origin(origin: RuntimeOrigin) -> Result<Self::Success, RuntimeOrigin> {
 		match origin.clone().into() {
-			Ok(topsoil_system::RawOrigin::Root) => Ok(PermissionedAccountId::get()),
+			Ok(topsoil_core::system::RawOrigin::Root) => Ok(PermissionedAccountId::get()),
 			_ => Err(origin),
 		}
 	}
@@ -157,13 +157,13 @@ impl Config for MockRuntime {
 		CreationHoldReason,
 		LinearStoragePrice<ConstU128<100>, ConstU128<0>, u128>,
 	>;
-	type BlockNumberProvider = topsoil_system::Pallet<Self>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Self>;
 	#[cfg(feature = "runtime-benchmarks")]
 	type BenchmarkHelper = AssetRewardsBenchmarkHelper;
 }
 
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<MockRuntime>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<MockRuntime>::default().build_storage().unwrap();
 
 	plant_assets::GenesisConfig::<MockRuntime, Instance1> {
 		// Genesis assets: id, owner, is_sufficient, min_balance

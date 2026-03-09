@@ -8,21 +8,21 @@
 
 use crate as plant_remark;
 use subsoil::runtime::BuildStorage;
-use topsoil_support::derive_impl;
+use topsoil_core::derive_impl;
 
-pub type Block = topsoil_system::mocking::MockBlock<Test>;
+pub type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Remark: plant_remark,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 

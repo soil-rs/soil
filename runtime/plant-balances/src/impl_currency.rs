@@ -12,7 +12,7 @@
 use super::*;
 pub use imbalances::{NegativeImbalance, PositiveImbalance};
 use subsoil::runtime::traits::Bounded;
-use topsoil_support::{
+use topsoil_core::{
 	ensure,
 	pallet_prelude::DispatchResult,
 	traits::{
@@ -23,7 +23,7 @@ use topsoil_support::{
 		NamedReservableCurrency, ReservableCurrency, SignedImbalance, TryDrop, WithdrawReasons,
 	},
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 // wrapping these imbalances in a private module is necessary to ensure absolute privacy
 // of the inner member.
@@ -31,7 +31,7 @@ mod imbalances {
 	use super::*;
 	use alloc::boxed::Box;
 	use core::mem;
-	use topsoil_support::traits::{
+	use topsoil_core::traits::{
 		tokens::imbalance::{
 			ImbalanceAccounting, TryMerge, UnsafeConstructorDestructor, UnsafeManualAccounting,
 		},

@@ -8,21 +8,21 @@
 
 use crate as plant_asset_rate;
 use subsoil::runtime::BuildStorage;
-use topsoil_support::derive_impl;
+use topsoil_core::derive_impl;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		AssetRate: plant_asset_rate,
 		Balances: plant_balances,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -35,9 +35,9 @@ impl plant_balances::Config for Test {
 impl plant_asset_rate::Config for Test {
 	type WeightInfo = ();
 	type RuntimeEvent = RuntimeEvent;
-	type CreateOrigin = topsoil_system::EnsureRoot<u64>;
-	type RemoveOrigin = topsoil_system::EnsureRoot<u64>;
-	type UpdateOrigin = topsoil_system::EnsureRoot<u64>;
+	type CreateOrigin = topsoil_core::system::EnsureRoot<u64>;
+	type RemoveOrigin = topsoil_core::system::EnsureRoot<u64>;
+	type UpdateOrigin = topsoil_core::system::EnsureRoot<u64>;
 	type Currency = Balances;
 	type AssetKind = u32;
 	#[cfg(feature = "runtime-benchmarks")]
@@ -46,5 +46,5 @@ impl plant_asset_rate::Config for Test {
 
 // Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }

@@ -112,11 +112,11 @@ use alloc::{boxed::Box, vec::Vec};
 use codec::FullCodec;
 use subsoil::runtime::traits::{AtLeast32BitUnsigned, Bounded, StaticLookup};
 use plant_election_provider::{ScoreProvider, SortedListProvider};
-use topsoil_support::{
+use topsoil_core::{
 	traits::Get,
 	weights::{Weight, WeightMeter},
 };
-use topsoil_system::ensure_signed;
+use topsoil_core::system::ensure_signed;
 
 #[cfg(any(test, feature = "try-runtime", feature = "fuzz"))]
 use subsoil::runtime::TryRuntimeError;
@@ -145,30 +145,30 @@ macro_rules! log {
 		log::$level!(
 			target: crate::LOG_TARGET,
 			concat!("[{:?}] 👜 [{}]", $patter),
-			<topsoil_system::Pallet<T>>::block_number(),
-			<crate::Pallet::<T, I> as topsoil_support::traits::PalletInfoAccess>::name()
+			<topsoil_core::system::Pallet<T>>::block_number(),
+			<crate::Pallet::<T, I> as topsoil_core::traits::PalletInfoAccess>::name()
 			$(, $values)*
 		)
 	};
 }
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: weights::WeightInfo;
@@ -657,7 +657,7 @@ impl<T: Config<I>, I: 'static> SortedListProvider<T::AccountId> for Pallet<T, I>
 	type Score = T::Score;
 
 	fn range() -> (Self::Score, Self::Score) {
-		use topsoil_support::traits::Get;
+		use topsoil_core::traits::Get;
 		(
 			T::BagThresholds::get().first().cloned().unwrap_or_default(),
 			T::BagThresholds::get().last().cloned().unwrap_or_default(),
@@ -743,7 +743,7 @@ impl<T: Config<I>, I: 'static> SortedListProvider<T::AccountId> for Pallet<T, I>
 
 	plant_election_provider::runtime_benchmarks_enabled! {
 		fn score_update_worst_case(who: &T::AccountId, is_increase: bool) -> Self::Score {
-			use topsoil_support::traits::Get as _;
+			use topsoil_core::traits::Get as _;
 			let thresholds = T::BagThresholds::get();
 			let node = list::Node::<T, I>::get(who).unwrap();
 			let current_bag_idx = thresholds

@@ -8,7 +8,7 @@
 
 use crate::*;
 use subsoil::core::H256;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl,
 	dispatch::{DispatchInfo, GetDispatchInfo},
 	traits::{ConstU64, OnInitialize},
@@ -23,21 +23,21 @@ use subsoil::runtime::{
 // Reexport crate as its pallet name for construct_runtime.
 use crate as plant_example_basic;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // For testing the pallet, we construct a mock runtime.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Example: plant_example_basic,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -58,7 +58,7 @@ impl topsoil_system::Config for Test {
 	type SystemWeightInfo = ();
 	type SS58Prefix = ();
 	type OnSetCode = ();
-	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_core::traits::ConstU32<16>;
 }
 
 #[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]

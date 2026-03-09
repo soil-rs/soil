@@ -11,7 +11,7 @@ use crate::{mock::*, *};
 
 use subsoil::runtime::{bounded_vec, traits::BadOrigin, BuildStorage};
 
-use topsoil_support::{assert_noop, assert_ok, assert_storage_noop, traits::StorageVersion};
+use topsoil_core::{assert_noop, assert_ok, assert_storage_noop, traits::StorageVersion};
 
 #[test]
 fn query_membership_works() {
@@ -187,12 +187,12 @@ fn genesis_build_panics_with_duplicate_members() {
 #[test]
 fn migration_v4() {
 	new_test_ext().execute_with(|| {
-		use topsoil_support::traits::PalletInfo;
+		use topsoil_core::traits::PalletInfo;
 		let old_pallet_name = "OldMembership";
 		let new_pallet_name =
-			<Test as topsoil_system::Config>::PalletInfo::name::<Membership>().unwrap();
+			<Test as topsoil_core::system::Config>::PalletInfo::name::<Membership>().unwrap();
 
-		topsoil_support::storage::migration::move_pallet(
+		topsoil_core::storage::migration::move_pallet(
 			new_pallet_name.as_bytes(),
 			old_pallet_name.as_bytes(),
 		);

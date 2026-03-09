@@ -9,12 +9,12 @@
 use super::*;
 use codec::{Decode, Encode, EncodeLike, MaxEncodedLen};
 use log;
-use topsoil_support::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade};
+use topsoil_core::{pallet_prelude::*, storage_alias, traits::OnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
 
-type SystemBlockNumberFor<T> = topsoil_system::pallet_prelude::BlockNumberFor<T>;
+type SystemBlockNumberFor<T> = topsoil_core::system::pallet_prelude::BlockNumberFor<T>;
 
 /// Initial version of storage types.
 pub mod v0 {
@@ -32,7 +32,7 @@ pub mod v0 {
 		BoundedCallOf<T, I>,
 		BalanceOf<T, I>,
 		TallyOf<T, I>,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		ScheduleAddressOf<T, I>,
 	>;
 
@@ -93,7 +93,7 @@ pub mod v1 {
 		BoundedCallOf<T, I>,
 		BalanceOf<T, I>,
 		TallyOf<T, I>,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		ScheduleAddressOf<T, I>,
 	>;
 
@@ -296,7 +296,7 @@ pub mod test {
 
 	// create referendum status v0.
 	fn create_status_v0() -> v0::ReferendumStatusOf<T, ()> {
-		let origin: OriginCaller = topsoil_system::RawOrigin::Root.into();
+		let origin: OriginCaller = topsoil_core::system::RawOrigin::Root.into();
 		let track = <T as Config<()>>::Tracks::track_for(&origin).unwrap();
 		v0::ReferendumStatusOf::<T, ()> {
 			track,

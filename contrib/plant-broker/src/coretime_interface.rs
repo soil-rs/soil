@@ -12,7 +12,7 @@ use core::fmt::Debug;
 use scale_info::TypeInfo;
 use subsoil::arithmetic::traits::AtLeast32BitUnsigned;
 use subsoil::runtime::traits::BlockNumberProvider;
-use topsoil_support::Parameter;
+use topsoil_core::Parameter;
 
 use crate::Timeslice;
 

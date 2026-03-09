@@ -39,7 +39,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for `plant_broker`.
@@ -84,7 +84,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_broker` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `Broker::Configuration` (r:0 w:1)
 	/// Proof: `Broker::Configuration` (`max_values`: Some(1), `max_size`: Some(31), added: 526, mode: `MaxEncodedLen`)
 	fn configure() -> Weight {

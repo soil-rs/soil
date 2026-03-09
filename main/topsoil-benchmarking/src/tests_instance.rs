@@ -13,12 +13,12 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentityLookup},
 	BuildStorage,
 };
-use topsoil_support::{derive_impl, traits::ConstU32};
+use topsoil_core::{derive_impl, traits::ConstU32};
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod pallet_test {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
@@ -28,10 +28,10 @@ mod pallet_test {
 	}
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config + OtherConfig {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config + OtherConfig {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		type LowerBound: Get<u32>;
 		type UpperBound: Get<u32>;
 	}
@@ -65,12 +65,12 @@ mod pallet_test {
 	}
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		TestPallet: pallet_test,
 		TestPallet2: pallet_test::<Instance2>,
 	}
@@ -81,9 +81,9 @@ crate::define_benchmarks!(
 	[pallet_test, TestPallet2]
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type RuntimeOrigin = RuntimeOrigin;
@@ -132,8 +132,8 @@ mod benchmarks {
 	use super::pallet_test::{self, Value};
 	use crate::account;
 	use subsoil::core::Get;
-	use topsoil_support::ensure;
-	use topsoil_system::RawOrigin;
+	use topsoil_core::ensure;
+	use topsoil_core::system::RawOrigin;
 
 	// Additional used internally by the benchmark macro.
 	use super::pallet_test::{Call, Config, Pallet};

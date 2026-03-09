@@ -12,7 +12,7 @@ use alloc::{vec, vec::Vec};
 use codec::{DecodeWithMemTracking, EncodeLike};
 use enumflags2::{bitflags, BitFlags};
 use scale_info::{build::Fields, meta_type, Path, Type, TypeInfo, TypeParameter};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::{BoundedVec, MaxEncodedLen},
 	traits::Get,
 	BoundedBTreeMap, BoundedBTreeSet,

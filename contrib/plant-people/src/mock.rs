@@ -8,7 +8,7 @@ use crate::{
 	extension::{AsPerson, AsPersonInfo},
 	*,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl, dispatch::DispatchErrorWithPostInfo, match_types, parameter_types,
 	storage::with_transaction, weights::RuntimeDbWeight,
 };
@@ -20,14 +20,14 @@ use subsoil::runtime::{
 	transaction_validity::{InvalidTransaction, TransactionSource, TransactionValidityError},
 	BuildStorage, DispatchError, Weight,
 };
-use topsoil_system::{offchain::CreateTransactionBase, ChainContext};
+use topsoil_core::system::{offchain::CreateTransactionBase, ChainContext};
 use verifiable::demo_impls::Simple;
 
 // First ring, used in testing.
 pub const RI_ZERO: RingIndex = 0;
 
 const EXTENSION_VERSION: u8 = 0;
-pub type TransactionExtension = (AsPerson<Test>, topsoil_system::CheckNonce<Test>);
+pub type TransactionExtension = (AsPerson<Test>, topsoil_core::system::CheckNonce<Test>);
 pub type Header = subsoil::runtime::generic::Header<u64, subsoil::runtime::traits::BlakeTwo256>;
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
@@ -38,10 +38,10 @@ pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 >;
 
 // Configure a mock runtime to test the pallet.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		PeoplePallet: crate,
 	}
 );
@@ -53,9 +53,9 @@ parameter_types! {
 	};
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = MockDbWeight;
@@ -77,7 +77,7 @@ impl topsoil_system::Config for Test {
 	type SystemWeightInfo = ();
 	type SS58Prefix = ConstU16<42>;
 	type OnSetCode = ();
-	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_core::traits::ConstU32<16>;
 }
 
 pub type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
@@ -337,10 +337,10 @@ pub fn exec_as_alias_tx(
 	who: u64,
 	call: impl Into<RuntimeCall>,
 ) -> Result<(), TransactionExecutionError> {
-	let nonce = topsoil_system::Account::<Test>::get(who).nonce;
+	let nonce = topsoil_core::system::Account::<Test>::get(who).nonce;
 	let tx_ext = (
 		AsPerson::new(Some(AsPersonInfo::AsPersonalAliasWithAccount(nonce))),
-		topsoil_system::CheckNonce::from(nonce),
+		topsoil_core::system::CheckNonce::from(nonce),
 	);
 
 	exec_tx(Some(who), tx_ext, call)
@@ -362,9 +362,9 @@ pub fn setup_alias_account(
 	};
 	let call = RuntimeCall::PeoplePallet(crate::Call::set_alias_account {
 		account,
-		call_valid_at: topsoil_system::Pallet::<Test>::block_number(),
+		call_valid_at: topsoil_core::system::Pallet::<Test>::block_number(),
 	});
-	let other_tx_ext = (topsoil_system::CheckNonce::<Test>::from(0),);
+	let other_tx_ext = (topsoil_core::system::CheckNonce::<Test>::from(0),);
 	// Here we simply ignore implicit as they are null.
 	let msg =
 		(&EXTENSION_VERSION, &call, &other_tx_ext).using_encoded(subsoil::io::hashing::blake2_256);

@@ -11,11 +11,11 @@ use subsoil::std::prelude::*;
 use plant_election_provider::{
 	data_provider, DataProviderBounds, ElectionDataProvider, PageIndex, VoteWeight,
 };
-use topsoil_support::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
 
 pub type T = Runtime;
 
-topsoil_support::parameter_types! {
+topsoil_core::parameter_types! {
 	pub static Targets: Vec<AccountId> = vec![10, 20, 30, 40];
 	pub static Voters: Vec<VoterOf<Runtime>> = vec![
 		// page 2:

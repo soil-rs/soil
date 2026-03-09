@@ -22,7 +22,7 @@ use subsoil::core::{ConstU32, H256};
 use subsoil::npos_elections::BalancingConfig;
 use subsoil::runtime::{Perbill, Weight};
 use plant_election_provider::generate_solution_type;
-use topsoil_support::{
+use topsoil_core::{
 	traits::Get,
 	weights::constants::{WEIGHT_PROOF_SIZE_PER_MB, WEIGHT_REF_TIME_PER_SECOND},
 };
@@ -138,7 +138,7 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 			subsoil::core::hashing::twox_128(b"Snapshot"),
 		]
 		.concat();
-		topsoil_support::storage::unhashed::get::<UntypedSnapshotOf<T>>(&key).unwrap()
+		topsoil_core::storage::unhashed::get::<UntypedSnapshotOf<T>>(&key).unwrap()
 	}
 
 	fn desired_targets() -> u32 {
@@ -147,7 +147,7 @@ impl<T: MinerConfig> HackyGetSnapshot<T> {
 			subsoil::core::hashing::twox_128(b"DesiredTargets"),
 		]
 		.concat();
-		topsoil_support::storage::unhashed::get::<u32>(&key).unwrap()
+		topsoil_core::storage::unhashed::get::<u32>(&key).unwrap()
 	}
 }
 

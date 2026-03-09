@@ -16,11 +16,11 @@ use topsoil::benchmarking::prelude::{
 const SEED: u32 = 0;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn add_proxies<T: Config>(n: u32, maybe_who: Option<T::AccountId>) -> Result<(), &'static str> {
@@ -85,7 +85,7 @@ mod benchmarks {
 		let real: T::AccountId = whitelisted_caller();
 		let real_lookup = T::Lookup::unlookup(real);
 		let call: <T as Config>::RuntimeCall =
-			topsoil_system::Call::<T>::remark { remark: vec![] }.into();
+			topsoil_core::system::Call::<T>::remark { remark: vec![] }.into();
 
 		#[extrinsic_call]
 		_(RawOrigin::Signed(caller), real_lookup, Some(T::ProxyType::default()), Box::new(call));
@@ -110,7 +110,7 @@ mod benchmarks {
 		let real: T::AccountId = whitelisted_caller();
 		let real_lookup = T::Lookup::unlookup(real);
 		let call: <T as Config>::RuntimeCall =
-			topsoil_system::Call::<T>::remark { remark: vec![] }.into();
+			topsoil_core::system::Call::<T>::remark { remark: vec![] }.into();
 		Proxy::<T>::announce(
 			RawOrigin::Signed(delegate.clone()).into(),
 			real_lookup.clone(),
@@ -145,7 +145,7 @@ mod benchmarks {
 		let real: T::AccountId = whitelisted_caller();
 		let real_lookup = T::Lookup::unlookup(real);
 		let call: <T as Config>::RuntimeCall =
-			topsoil_system::Call::<T>::remark { remark: vec![] }.into();
+			topsoil_core::system::Call::<T>::remark { remark: vec![] }.into();
 		Proxy::<T>::announce(
 			RawOrigin::Signed(caller.clone()).into(),
 			real_lookup.clone(),
@@ -176,7 +176,7 @@ mod benchmarks {
 		let real: T::AccountId = whitelisted_caller();
 		let real_lookup = T::Lookup::unlookup(real.clone());
 		let call: <T as Config>::RuntimeCall =
-			topsoil_system::Call::<T>::remark { remark: vec![] }.into();
+			topsoil_core::system::Call::<T>::remark { remark: vec![] }.into();
 		Proxy::<T>::announce(
 			RawOrigin::Signed(caller.clone()).into(),
 			real_lookup,
@@ -207,7 +207,7 @@ mod benchmarks {
 		let real_lookup = T::Lookup::unlookup(real.clone());
 		add_announcements::<T>(a, Some(caller.clone()), None)?;
 		let call: <T as Config>::RuntimeCall =
-			topsoil_system::Call::<T>::remark { remark: vec![] }.into();
+			topsoil_core::system::Call::<T>::remark { remark: vec![] }.into();
 		let call_hash = T::CallHasher::hash_of(&call);
 
 		#[extrinsic_call]
@@ -293,7 +293,7 @@ mod benchmarks {
 				proxy_type: T::ProxyType::default(),
 				disambiguation_index: 0,
 				at: <T as Config>::BlockNumberProvider::current_block_number(),
-				extrinsic_index: topsoil_system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
+				extrinsic_index: topsoil_core::system::Pallet::<T>::extrinsic_index().unwrap_or_default(),
 			}
 			.into(),
 		);
@@ -313,7 +313,7 @@ mod benchmarks {
 			0,
 		)?;
 		let height = T::BlockNumberProvider::current_block_number();
-		let ext_index = topsoil_system::Pallet::<T>::extrinsic_index().unwrap_or(0);
+		let ext_index = topsoil_core::system::Pallet::<T>::extrinsic_index().unwrap_or(0);
 		let pure_account = Pallet::<T>::pure_account(&caller, &T::ProxyType::default(), 0, None);
 
 		add_proxies::<T>(p, Some(pure_account.clone()))?;

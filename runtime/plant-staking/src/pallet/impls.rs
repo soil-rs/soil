@@ -25,7 +25,7 @@ use plant_election_provider::{
 	PageIndex, ScoreProvider, SortedListProvider, TryFromOtherBounds, VoteWeight, VoterOf,
 };
 use plant_session::historical;
-use topsoil_support::{
+use topsoil_core::{
 	defensive,
 	dispatch::WithPostDispatchInfo,
 	pallet_prelude::*,
@@ -36,7 +36,7 @@ use topsoil_support::{
 	},
 	weights::Weight,
 };
-use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
+use topsoil_core::system::{pallet_prelude::BlockNumberFor, RawOrigin};
 
 use crate::{
 	asset, election_size_tracker::StaticTracker, log, slashing, weights::WeightInfo, ActiveEraInfo,
@@ -51,7 +51,7 @@ use super::pallet::*;
 #[cfg(any(test, feature = "try-runtime"))]
 use subsoil::runtime::TryRuntimeError;
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
+use topsoil_core::ensure;
 
 /// The maximum number of iterations that we do whilst iterating over `T::VoterList` in
 /// `get_npos_voters`.
@@ -446,7 +446,7 @@ impl<T: Config> Pallet<T> {
 			// Initial era has been set.
 			let current_era_start_session_index = ErasStartSessionIndex::<T>::get(current_era)
 				.unwrap_or_else(|| {
-					topsoil_support::print(
+					topsoil_core::print(
 						"Error: start_session_index must be set for current_era",
 					);
 					0
@@ -498,7 +498,7 @@ impl<T: Config> Pallet<T> {
 			} else if next_active_era_start_session_index < start_session {
 				// This arm should never happen, but better handle it than to stall the staking
 				// pallet.
-				topsoil_support::print("Warning: A session appears to have been skipped.");
+				topsoil_core::print("Warning: A session appears to have been skipped.");
 				Self::start_era(start_session);
 			}
 		}
@@ -1130,7 +1130,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// This is always mandatory weight.
 	fn register_weight(weight: Weight) {
-		<topsoil_system::Pallet<T>>::register_extra_weight_unchecked(
+		<topsoil_core::system::Pallet<T>>::register_extra_weight_unchecked(
 			weight,
 			DispatchClass::Mandatory,
 		);
@@ -1160,7 +1160,7 @@ impl<T: Config> Pallet<T> {
 		T::OldCurrency::remove_lock(STAKING_ID, &stash);
 
 		// Get rid of the extra consumer we used to have with OldCurrency.
-		topsoil_system::Pallet::<T>::dec_consumers(&stash);
+		topsoil_core::system::Pallet::<T>::dec_consumers(&stash);
 
 		let Ok(ledger) = Self::ledger(Stash(stash.clone())) else {
 			// User is no longer bonded. Removing the lock is enough.
@@ -1199,7 +1199,7 @@ impl<T: Config> Pallet<T> {
 	// necessary. However, this is a good opportunity to clean up the extra consumer/providers that
 	// were previously used.
 	fn do_migrate_virtual_staker(stash: &T::AccountId) -> DispatchResult {
-		let consumer_count = topsoil_system::Pallet::<T>::consumers(stash);
+		let consumer_count = topsoil_core::system::Pallet::<T>::consumers(stash);
 		// fail early if no consumers.
 		ensure!(consumer_count > 0, Error::<T>::AlreadyMigrated);
 
@@ -1210,11 +1210,11 @@ impl<T: Config> Pallet<T> {
 
 		// get rid of the consumers
 		for _ in 0..consumer_count {
-			topsoil_system::Pallet::<T>::dec_consumers(&stash);
+			topsoil_core::system::Pallet::<T>::dec_consumers(&stash);
 		}
 
 		// get the current count of providers
-		let actual_providers = topsoil_system::Pallet::<T>::providers(stash);
+		let actual_providers = topsoil_core::system::Pallet::<T>::providers(stash);
 
 		let expected_providers =
 			// We expect these accounts to have only one provider, and hold no balance. However, if
@@ -1232,7 +1232,7 @@ impl<T: Config> Pallet<T> {
 		// if actual provider is less than expected, it is already migrated.
 		ensure!(actual_providers == expected_providers, Error::<T>::AlreadyMigrated);
 
-		topsoil_system::Pallet::<T>::dec_providers(&stash)?;
+		topsoil_core::system::Pallet::<T>::dec_providers(&stash)?;
 
 		Ok(())
 	}
@@ -1732,13 +1732,13 @@ impl<T: Config>
 	OnOffenceHandler<T::AccountId, plant_session::historical::IdentificationTuple<T>, Weight>
 	for Pallet<T>
 where
-	T: plant_session::Config<ValidatorId = <T as topsoil_system::Config>::AccountId>,
+	T: plant_session::Config<ValidatorId = <T as topsoil_core::system::Config>::AccountId>,
 	T: plant_session::historical::Config,
-	T::SessionHandler: plant_session::SessionHandler<<T as topsoil_system::Config>::AccountId>,
-	T::SessionManager: plant_session::SessionManager<<T as topsoil_system::Config>::AccountId>,
+	T::SessionHandler: plant_session::SessionHandler<<T as topsoil_core::system::Config>::AccountId>,
+	T::SessionManager: plant_session::SessionManager<<T as topsoil_core::system::Config>::AccountId>,
 	T::ValidatorIdOf: Convert<
-		<T as topsoil_system::Config>::AccountId,
-		Option<<T as topsoil_system::Config>::AccountId>,
+		<T as topsoil_core::system::Config>::AccountId,
+		Option<<T as topsoil_core::system::Config>::AccountId>,
 	>,
 {
 	fn on_offence(
@@ -2110,7 +2110,7 @@ impl<T: Config> StakingInterface for Pallet<T> {
 	/// There is an assumption that, this account is keyless and managed by another pallet in the
 	/// runtime. Hence, it can never sign its own transactions.
 	fn is_virtual_staker(who: &T::AccountId) -> bool {
-		topsoil_system::Pallet::<T>::account_nonce(who).is_zero()
+		topsoil_core::system::Pallet::<T>::account_nonce(who).is_zero()
 			&& VirtualStakers::<T>::contains_key(who)
 	}
 
@@ -2205,7 +2205,7 @@ impl<T: Config> Pallet<T> {
 			"VoterList contains non-staker"
 		);
 
-		use topsoil_support::traits::fungible::Inspect;
+		use topsoil_core::traits::fungible::Inspect;
 		if T::CurrencyToVote::will_downscale(T::Currency::total_issuance()).map_or(false, |x| x) {
 			log!(warn, "total issuance will cause T::CurrencyToVote to downscale -- report to maintainers.")
 		}
@@ -2350,7 +2350,7 @@ impl<T: Config> Pallet<T> {
 						"ledger corrupted for virtual staker"
 					);
 					ensure!(
-						topsoil_system::Pallet::<T>::account_nonce(&stash).is_zero(),
+						topsoil_core::system::Pallet::<T>::account_nonce(&stash).is_zero(),
 						"virtual stakers are keyless and should not have any nonce"
 					);
 					let reward_destination = <Payee<T>>::get(stash.clone()).unwrap();

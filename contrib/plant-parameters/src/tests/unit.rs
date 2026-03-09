@@ -16,7 +16,7 @@ use crate::tests::mock::{
 use codec::Encode;
 use subsoil::core::Get;
 use subsoil::runtime::DispatchError;
-use topsoil_support::{assert_noop, assert_ok, traits::dynamic_params::AggregatedKeyValue};
+use topsoil_core::{assert_noop, assert_ok, traits::dynamic_params::AggregatedKeyValue};
 
 #[docify::export]
 #[test]
@@ -148,7 +148,7 @@ fn set_parameters_to_default_emits_events_works() {
 			Origin::root(),
 			Pallet1(pallet1::Parameters::Key3(pallet1::Key3, Some(2))),
 		));
-		assert_eq!(topsoil_system::Pallet::<Runtime>::events().len(), 2);
+		assert_eq!(topsoil_core::system::Pallet::<Runtime>::events().len(), 2);
 	});
 }
 

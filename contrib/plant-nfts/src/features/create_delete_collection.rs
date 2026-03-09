@@ -8,7 +8,7 @@
 //! destroying collections for the NFTs pallet.
 
 use crate::*;
-use topsoil_support::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Create a new collection with the given `collection`, `owner`, `admin`, `config`, `deposit`,

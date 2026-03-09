@@ -17,9 +17,9 @@ const TARGETS: [u32; 2] = [500, 1_000];
 const VOTES_PER_VOTER: [u32; 2] = [5, 16];
 const SEED: u32 = 999;
 
-pub trait Config: topsoil_system::Config {}
+pub trait Config: topsoil_core::system::Config {}
 
-pub struct Pallet<T: Config>(topsoil_system::Pallet<T>);
+pub struct Pallet<T: Config>(topsoil_core::system::Pallet<T>);
 
 fn set_up_voters_targets<AccountId: Decode + Clone>(
 	voters_len: u32,

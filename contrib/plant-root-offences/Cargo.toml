@@ -23,8 +23,7 @@ scale-info = { features = ["derive"], workspace = true }
 plant-session = { features = ["historical"], workspace = true }
 plant-staking = { workspace = true }
 
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 subsoil = { workspace = true }
 [dev-dependencies]
 plant-balances = { workspace = true, default-features = true }
@@ -38,8 +37,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"plant-election-provider/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"plant-balances/std",
 	"plant-session/std",
 	"plant-staking/std",
@@ -49,8 +47,7 @@ std = [
 ]
 runtime-benchmarks = [
 	"plant-election-provider/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"plant-session/runtime-benchmarks",
 	"plant-staking/runtime-benchmarks",
@@ -59,8 +56,7 @@ runtime-benchmarks = [
 ]
 try-runtime = [
 	"plant-election-provider/try-runtime",
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-balances/try-runtime",
 	"plant-session/try-runtime",
 	"plant-staking/try-runtime",

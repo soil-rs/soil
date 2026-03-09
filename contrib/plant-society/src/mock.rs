@@ -10,21 +10,21 @@ use super::*;
 use crate as plant_society;
 
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
 use topsoil_test_support::TestRandomness;
-use topsoil_system::EnsureSignedBy;
+use topsoil_core::system::EnsureSignedBy;
 
 use RuntimeOrigin as Origin;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Society: plant_society,
 	}
@@ -44,8 +44,8 @@ ord_parameter_types! {
 	pub const MaxBids: u32 = 10;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = u128;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
@@ -104,7 +104,7 @@ impl EnvBuilder {
 	}
 
 	pub fn execute<R, F: FnOnce() -> R>(mut self, f: F) -> R {
-		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		self.balances.push((Society::account_id(), self.balance.max(self.pot)));
 		plant_balances::GenesisConfig::<Test> { balances: self.balances, ..Default::default() }
 			.assimilate_storage(&mut t)

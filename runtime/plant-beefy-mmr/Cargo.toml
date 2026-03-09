@@ -16,8 +16,7 @@ array-bytes = { optional = true, workspace = true, default-features = true }
 subsoil = { workspace = true }
 codec = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { optional = true, workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 log = { workspace = true }
 plant-beefy = { workspace = true }
 plant-mmr = { workspace = true }
@@ -35,8 +34,7 @@ std = [
 	"subsoil/std",
 	"codec/std",
 	"topsoil-benchmarking/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"plant-balances/std",
 	"plant-beefy/std",
@@ -46,8 +44,7 @@ std = [
 	"serde",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-balances/try-runtime",
 	"plant-beefy/try-runtime",
 	"plant-mmr/try-runtime",
@@ -55,8 +52,7 @@ try-runtime = [
 	"subsoil/try-runtime"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"plant-mmr/runtime-benchmarks",
 	"plant-session/runtime-benchmarks",

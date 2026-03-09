@@ -27,10 +27,10 @@ use subsoil::runtime::{
 	Debug, FixedPointNumber, FixedPointOperand, FixedU128, Percent,
 };
 use plant_election_provider::NposSolution;
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	defensive_prelude::*, Currency, Get, OnUnbalanced, ReservableCurrency,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 /// A raw, unchecked signed submission.
 ///
@@ -77,15 +77,15 @@ where
 }
 
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 pub type PositiveImbalanceOf<T> = <<T as Config>::Currency as Currency<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 >>::PositiveImbalance;
 pub type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 >>::NegativeImbalance;
 pub type SignedSubmissionOf<T> = SignedSubmission<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 	BalanceOf<T>,
 	<<T as crate::Config>::MinerConfig as MinerConfig>::Solution,
 >;
@@ -110,7 +110,7 @@ pub enum InsertResult<T: Config> {
 /// Mask type which pretends to be a set of `SignedSubmissionOf<T>`, while in fact delegating to the
 /// actual implementations in `SignedSubmissionIndices<T>`, `SignedSubmissionsMap<T>`, and
 /// `SignedSubmissionNextIndex<T>`.
-#[cfg_attr(feature = "std", derive(topsoil_support::DebugNoBound))]
+#[cfg_attr(feature = "std", derive(topsoil_core::DebugNoBound))]
 pub struct SignedSubmissions<T: Config> {
 	indices: SubmissionIndicesOf<T>,
 	next_idx: u32,
@@ -290,7 +290,7 @@ impl<T: Config> SignedSubmissions<T> {
 	pub fn insert(&mut self, submission: SignedSubmissionOf<T>) -> InsertResult<T> {
 		// verify the expectation that we never reuse an index
 		debug_assert!(!self.indices.iter().map(|(_, _, x)| x).any(|&idx| idx == self.next_idx));
-		let block_number = topsoil_system::Pallet::<T>::block_number();
+		let block_number = topsoil_core::system::Pallet::<T>::block_number();
 
 		let maybe_weakest = match self.indices.try_push((
 			submission.raw_solution.score,
@@ -559,7 +559,7 @@ mod tests {
 	};
 	use subsoil::runtime::Percent;
 	use plant_election_provider::bounds::ElectionBoundsBuilder;
-	use topsoil_support::{assert_noop, assert_ok, assert_storage_noop};
+	use topsoil_core::{assert_noop, assert_ok, assert_storage_noop};
 
 	#[test]
 	fn cannot_submit_on_different_round() {

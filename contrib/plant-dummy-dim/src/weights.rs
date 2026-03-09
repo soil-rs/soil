@@ -29,7 +29,7 @@
 #![allow(unused_parens)]
 #![allow(unused_imports)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for plant_dummy_dim.
@@ -46,7 +46,7 @@ pub trait WeightInfo {
 
 /// Weights for plant_dummy_dim using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	fn reserve_ids(_c: u32) -> Weight { Weight::zero() }
 	fn renew_id_reservation() -> Weight { Weight::zero() }
 	fn cancel_id_reservation() -> Weight { Weight::zero() }

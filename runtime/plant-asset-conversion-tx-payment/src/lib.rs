@@ -44,7 +44,7 @@ use subsoil::runtime::{
 	},
 	transaction_validity::{InvalidTransaction, TransactionValidityError, ValidTransaction},
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchInfo, DispatchResult, PostDispatchInfo},
 	pallet_prelude::TransactionSource,
 	traits::IsType,
@@ -63,7 +63,7 @@ mod benchmarking;
 
 mod payment;
 pub use payment::*;
-use topsoil_support::{pallet_prelude::Weight, traits::tokens::AssetId};
+use topsoil_core::{pallet_prelude::Weight, traits::tokens::AssetId};
 pub use weights::WeightInfo;
 
 /// Balance type alias for balances of the chain's native asset.
@@ -95,16 +95,16 @@ pub enum InitialPayment<T: Config> {
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config + plant_transaction_payment::Config {
+	pub trait Config: topsoil_core::system::Config + plant_transaction_payment::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// The asset ID type that can be used for transaction payments in addition to a
 		/// native asset.
 		type AssetId: AssetId;

@@ -11,7 +11,7 @@
 use super::*;
 use crate as plant_child_bounties;
 
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, derive_impl, parameter_types,
 	traits::{
 		tokens::{PayFromAccount, UnityAssetBalanceConversion},
@@ -28,7 +28,7 @@ use subsoil::runtime::{
 
 use super::Event as ChildBountiesEvent;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 type BountiesError = plant_bounties::Error<Test>;
 
 // This function directly jumps to a block number, and calls `on_initialize`.
@@ -37,10 +37,10 @@ fn go_to_block(n: u64) {
 	<Treasury as OnInitialize<u64>>::on_initialize(n);
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Bounties: plant_bounties,
 		Treasury: plant_treasury,
@@ -62,8 +62,8 @@ fn account_id(id: u8) -> AccountId {
 	subsoil::core::U256::from(id)
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -84,7 +84,7 @@ parameter_types! {
 impl plant_treasury::Config for Test {
 	type PalletId = TreasuryPalletId;
 	type Currency = plant_balances::Pallet<Test>;
-	type RejectOrigin = topsoil_system::EnsureRoot<AccountId>;
+	type RejectOrigin = topsoil_core::system::EnsureRoot<AccountId>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -92,7 +92,7 @@ impl plant_treasury::Config for Test {
 	type WeightInfo = ();
 	type SpendFunds = Bounties;
 	type MaxApprovals = ConstU32<100>;
-	type SpendOrigin = topsoil_system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
+	type SpendOrigin = topsoil_core::system::EnsureRootWithSuccess<Self::AccountId, SpendLimit>;
 	type AssetKind = ();
 	type Beneficiary = Self::AccountId;
 	type BeneficiaryLookup = IdentityLookup<Self::Beneficiary>;
@@ -134,7 +134,7 @@ impl plant_child_bounties::Config for Test {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized at ED.
 		balances: vec![(account_id(0), 100), (account_id(1), 98), (account_id(2), 1)],

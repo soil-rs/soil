@@ -4,12 +4,12 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
-	use topsoil_support::{ensure, pallet_prelude::DispatchResult};
+	use topsoil_core::{ensure, pallet_prelude::DispatchResult};
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(core::marker::PhantomData<T>);
@@ -28,12 +28,12 @@ pub mod pallet {
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet_with_instance {
-	use topsoil_support::pallet_prelude::{ValueQuery, StorageValue};
+	use topsoil_core::pallet_prelude::{ValueQuery, StorageValue};
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
@@ -47,7 +47,7 @@ pub mod pallet_with_instance {
 		#[pallet::task_condition(|i, j| i == 0u32 && j == 2u64)]
 		#[pallet::task_list(vec![(0u32, 2u64), (2u32, 4u64)].iter())]
 		#[pallet::task_weight(0.into())]
-		fn foo(_i: u32, _j: u64) -> topsoil_support::pallet_prelude::DispatchResult {
+		fn foo(_i: u32, _j: u64) -> topsoil_core::pallet_prelude::DispatchResult {
 			<SomeStorage<T, I>>::get();
 			Ok(())
 		}

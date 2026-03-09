@@ -23,13 +23,13 @@ use subsoil::runtime::{
 	DispatchError, SaturatedConversion,
 };
 use plant_election_provider::{NposSolution, NposSolver, PerThing128, VoteWeight};
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResult,
 	ensure,
 	traits::{DefensiveResult, Get},
 	BoundedVec,
 };
-use topsoil_system::{
+use topsoil_core::system::{
 	offchain::{CreateBare, SubmitTransaction},
 	pallet_prelude::BlockNumberFor,
 };
@@ -54,7 +54,7 @@ pub type MinerVoterOf<T> = plant_election_provider::Voter<
 
 /// The relative distribution of a voter's stake among the winning targets.
 pub type Assignment<T> = subsoil::npos_elections::Assignment<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 	SolutionAccuracyOf<T>,
 >;
 
@@ -65,7 +65,7 @@ pub type IndexAssignmentOf<T> = plant_election_provider::IndexAssignmentOf<Solut
 /// Error type of the pallet's [`crate::Config::Solver`].
 pub type SolverErrorOf<T> = <<T as Config>::Solver as NposSolver>::Error;
 /// Error type for operations related to the OCW npos solution miner.
-#[derive(topsoil_support::DebugNoBound, topsoil_support::PartialEqNoBound)]
+#[derive(topsoil_core::DebugNoBound, topsoil_core::PartialEqNoBound)]
 pub enum MinerError {
 	/// An internal error in the NPoS elections crate.
 	NposElections(subsoil::npos_elections::Error),
@@ -1106,7 +1106,7 @@ mod tests {
 		ModuleError, PerU16,
 	};
 	use plant_election_provider::IndexAssignment;
-	use topsoil_support::{assert_noop, assert_ok, traits::OffchainWorker};
+	use topsoil_core::{assert_noop, assert_ok, traits::OffchainWorker};
 
 	type Assignment = crate::unsigned::Assignment<Runtime>;
 

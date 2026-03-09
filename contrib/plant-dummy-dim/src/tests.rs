@@ -7,7 +7,7 @@
 use std::collections::BTreeSet;
 
 use crate::{mock::*, ReservedIds};
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::reality::{AddOnlyPeopleTrait, PersonalId},
 };

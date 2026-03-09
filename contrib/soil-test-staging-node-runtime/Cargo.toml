@@ -38,12 +38,11 @@ topsoil-benchmarking-pallet-pov = { workspace = true }
 plant-election-provider = { workspace = true }
 topsoil-executive = { workspace = true }
 plant-metadata-hash-extension = { workspace = true }
-topsoil-support = { features = ["tuples-96"], workspace = true }
-topsoil-support-procedural = { workspace = true }
-topsoil-support-procedural-tools-macros = { workspace = true }
-topsoil-system = { workspace = true }
-topsoil-system-benchmarking = { workspace = true }
-topsoil-system-rpc-runtime-api = { workspace = true }
+topsoil-core = { features = ["tuples-96"], workspace = true }
+topsoil-core-procedural = { workspace = true }
+topsoil-core-procedural-tools-macros = { workspace = true }
+topsoil-core-system-benchmarking = { workspace = true }
+topsoil-core-rpc-runtime-api = { workspace = true }
 topsoil-try-runtime = { workspace = true }
 plant-alliance = { workspace = true }
 plant-asset-conversion = { workspace = true }
@@ -161,11 +160,10 @@ std = [
 	"plant-election-provider/std",
 	"topsoil-executive/std",
 	"plant-metadata-hash-extension/std",
-	"topsoil-support/std",
-	"topsoil-support-procedural/std",
-	"topsoil-system/std",
-	"topsoil-system-benchmarking/std",
-	"topsoil-system-rpc-runtime-api/std",
+	"topsoil-core/std",
+	"topsoil-core-procedural/std",
+	"topsoil-core-system-benchmarking/std",
+	"topsoil-core-rpc-runtime-api/std",
 	"topsoil-try-runtime/std",
 	"log/std",
 	"soil-test-staging-node-primitives/std",
@@ -274,9 +272,8 @@ runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"topsoil-benchmarking-pallet-pov/runtime-benchmarks",
 	"plant-election-provider/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
-	"topsoil-system-benchmarking/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
+	"topsoil-core-system-benchmarking/runtime-benchmarks",
 	"plant-alliance/runtime-benchmarks",
 	"plant-asset-conversion/runtime-benchmarks",
 	"plant-asset-conversion-ops/runtime-benchmarks",
@@ -362,8 +359,7 @@ try-runtime = [
 	"topsoil-benchmarking-pallet-pov/try-runtime",
 	"plant-election-provider/try-runtime",
 	"topsoil-executive/try-runtime",
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"topsoil-try-runtime/try-runtime",
 	"plant-alliance/try-runtime",
 	"plant-asset-conversion/try-runtime",

@@ -100,7 +100,7 @@ use subsoil::runtime::{
 	traits::{Saturating, StaticLookup, Zero},
 	Debug, DispatchError, Perbill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	traits::{
 		defensive_prelude::*, ChangeMembers, Contains, ContainsLengthBound, Currency, Get,
 		InitializeMembers, LockIdentifier, LockableCurrency, OnUnbalanced, ReservableCurrency,
@@ -122,9 +122,9 @@ pub mod migrations;
 const LOG_TARGET: &str = "runtime::elections-phragmen";
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 type NegativeImbalanceOf<T> = <<T as Config>::Currency as Currency<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 >>::NegativeImbalance;
 
 /// An indication that the renouncing account currently has which of the below roles.
@@ -172,13 +172,13 @@ pub struct SeatHolder<AccountId, Balance> {
 
 pub use pallet::*;
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
@@ -189,10 +189,10 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Identifier for the elections-phragmen pallet's lock
 		#[pallet::constant]
@@ -301,7 +301,7 @@ pub mod pallet {
 
 			let to_seconds = |w: &Weight| {
 				w.ref_time() as f32
-					/ topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND as f32
+					/ topsoil_core::weights::constants::WEIGHT_REF_TIME_PER_SECOND as f32
 			};
 
 			log::debug!(
@@ -611,7 +611,7 @@ pub mod pallet {
 		/// for this purpose. A `NewTerm(\[\])` indicates that some candidates got their bond
 		/// slashed and none were elected, whilst `EmptyTerm` means that no candidates existed to
 		/// begin with.
-		NewTerm { new_members: Vec<(<T as topsoil_system::Config>::AccountId, BalanceOf<T>)> },
+		NewTerm { new_members: Vec<(<T as topsoil_core::system::Config>::AccountId, BalanceOf<T>)> },
 		/// No (or not enough) candidates existed for this round. This is different from
 		/// `NewTerm(\[\])`. See the description of `NewTerm`.
 		EmptyTerm,
@@ -619,20 +619,20 @@ pub mod pallet {
 		ElectionError,
 		/// A member has been removed. This should always be followed by either `NewTerm` or
 		/// `EmptyTerm`.
-		MemberKicked { member: <T as topsoil_system::Config>::AccountId },
+		MemberKicked { member: <T as topsoil_core::system::Config>::AccountId },
 		/// Someone has renounced their candidacy.
-		Renounced { candidate: <T as topsoil_system::Config>::AccountId },
+		Renounced { candidate: <T as topsoil_core::system::Config>::AccountId },
 		/// A candidate was slashed by amount due to failing to obtain a seat as member or
 		/// runner-up.
 		///
 		/// Note that old members and runners-up are also candidates.
 		CandidateSlashed {
-			candidate: <T as topsoil_system::Config>::AccountId,
+			candidate: <T as topsoil_core::system::Config>::AccountId,
 			amount: BalanceOf<T>,
 		},
 		/// A seat holder was slashed by amount by being forcefully removed from the set.
 		SeatHolderSlashed {
-			seat_holder: <T as topsoil_system::Config>::AccountId,
+			seat_holder: <T as topsoil_core::system::Config>::AccountId,
 			amount: BalanceOf<T>,
 		},
 	}
@@ -711,7 +711,7 @@ pub mod pallet {
 		StorageMap<_, Twox64Concat, T::AccountId, Voter<T::AccountId, BalanceOf<T>>, ValueQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub members: Vec<(T::AccountId, BalanceOf<T>)>,
 	}
@@ -1292,26 +1292,26 @@ mod tests {
 	use crate as elections_phragmen;
 	use subsoil::assert_eq_uvec;
 	use subsoil::runtime::{testing::Header, BuildStorage};
-	use topsoil_support::{
+	use topsoil_core::{
 		assert_noop, assert_ok, derive_impl,
 		dispatch::DispatchResultWithPostInfo,
 		parameter_types,
 		traits::{ConstU32, OnInitialize},
 	};
-	use topsoil_system::ensure_signed;
+	use topsoil_core::system::ensure_signed;
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Test {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Test {
 		type Block = Block;
 		type AccountData = plant_balances::AccountData<u64>;
 	}
 
 	#[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
 	impl plant_balances::Config for Test {
-		type AccountStore = topsoil_system::Pallet<Test>;
+		type AccountStore = topsoil_core::system::Pallet<Test>;
 	}
 
-	topsoil_support::parameter_types! {
+	topsoil_core::parameter_types! {
 		pub static VotingBondBase: u64 = 2;
 		pub static VotingBondFactor: u64 = 0;
 		pub static CandidacyBond: u64 = 3;
@@ -1397,10 +1397,10 @@ mod tests {
 	pub type UncheckedExtrinsic =
 		subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Test
 		{
-			System: topsoil_system,
+			System: topsoil_core::system,
 			Balances: plant_balances,
 			Elections: elections_phragmen,
 		}
@@ -1453,7 +1453,7 @@ mod tests {
 				*m.borrow_mut() = self.genesis_members.iter().map(|(m, _)| *m).collect::<Vec<_>>()
 			});
 			let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
-				system: topsoil_system::GenesisConfig::default(),
+				system: topsoil_core::system::GenesisConfig::default(),
 				balances: plant_balances::GenesisConfig::<Test> {
 					balances: vec![
 						(1, 10 * self.balance_factor),
@@ -1477,7 +1477,7 @@ mod tests {
 
 			#[cfg(feature = "try-runtime")]
 			ext.execute_with(|| {
-				assert_ok!(<Elections as topsoil_support::traits::Hooks<u64>>::try_state(
+				assert_ok!(<Elections as topsoil_core::traits::Hooks<u64>>::try_state(
 					System::block_number()
 				));
 			});

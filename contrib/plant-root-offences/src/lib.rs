@@ -23,12 +23,12 @@ use subsoil::staking::offence::{Kind, Offence, OnOffenceHandler};
 use subsoil::runtime::{traits::Convert, Perbill};
 use plant_session::historical::IdentificationTuple;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use subsoil::staking::{offence::ReportOffence, SessionIndex};
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// Custom offence type for testing spam scenarios.
 	///
@@ -72,14 +72,14 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		topsoil_system::Config
+		topsoil_core::system::Config
 		+ plant_staking::Config
-		+ plant_session::Config<ValidatorId = <Self as topsoil_system::Config>::AccountId>
+		+ plant_session::Config<ValidatorId = <Self as topsoil_core::system::Config>::AccountId>
 		+ plant_session::historical::Config
 	{
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The offence handler provided by the runtime.
 		///
@@ -113,7 +113,7 @@ pub mod pallet {
 	}
 
 	type OffenceDetails<T> = subsoil::staking::offence::OffenceDetails<
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		IdentificationTuple<T>,
 	>;
 
@@ -214,7 +214,7 @@ pub mod pallet {
 			maybe_session_index: Option<SessionIndex>,
 		) {
 			let session_index = maybe_session_index.unwrap_or_else(|| {
-				<plant_session::Pallet<T> as topsoil_support::traits::ValidatorSet<
+				<plant_session::Pallet<T> as topsoil_core::traits::ValidatorSet<
 					T::AccountId,
 				>>::session_index()
 			});

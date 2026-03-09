@@ -18,8 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 # frame
 plant-election-provider = { workspace = true, default-features = true }
-topsoil-support = { workspace = true, default-features = true }
-topsoil-system = { workspace = true, default-features = true }
+topsoil-core = { workspace = true, default-features = true }
 plant-bags-list = { features = ["fuzz"], workspace = true, default-features = true }
 plant-staking = { workspace = true, default-features = true }
 

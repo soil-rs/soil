@@ -43,7 +43,7 @@ use topsoil::{
 	prelude::*,
 	traits::{Currency, ReservableCurrency},
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 pub use weights::WeightInfo;
 
 /// Re-export all pallet items.
@@ -58,13 +58,13 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: crate::LOG_TARGET,
-			concat!("[{:?}] ✍️ ", $patter), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[{:?}] ✍️ ", $patter), <topsoil_core::system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
 
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 pub type BlockNumberFor<T> =
 	<<T as Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
@@ -132,17 +132,17 @@ pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin, PostInfo = PostDispatchInfo>
 			+ GetDispatchInfo
-			+ From<topsoil_system::Call<Self>>;
+			+ From<topsoil_core::system::Call<Self>>;
 
 		/// The currency mechanism.
 		type Currency: ReservableCurrency<Self::AccountId>;
@@ -173,7 +173,7 @@ pub mod pallet {
 		///
 		/// Must return monotonically increasing values when called from consecutive blocks.
 		/// Can be configured to return either:
-		/// - the local block number of the runtime via `topsoil_system::Pallet`
+		/// - the local block number of the runtime via `topsoil_core::system::Pallet`
 		/// - a remote block number, eg from the relay chain through `RelaychainDataProvider`
 		/// - an arbitrary value through a custom implementation of the trait
 		///
@@ -182,12 +182,12 @@ pub mod pallet {
 		/// this to their local block number provider if they have the pallet already deployed.
 		///
 		/// Suggested values:
-		/// - Solo- and Relay-chains: `topsoil_system::Pallet`
+		/// - Solo- and Relay-chains: `topsoil_core::system::Pallet`
 		/// - Parachains that may produce blocks sparingly or only when needed (on-demand):
-		///   - already have the pallet deployed: `topsoil_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_core::system::Pallet`
 		///   - are freshly deploying this pallet: `RelaychainDataProvider`
 		/// - Parachains with a reliably block production rate (PLO or bulk-coretime):
-		///   - already have the pallet deployed: `topsoil_system::Pallet`
+		///   - already have the pallet deployed: `topsoil_core::system::Pallet`
 		///   - are freshly deploying this pallet: no strong recommendation. Both local and remote
 		///     providers can be used. Relay provider can be a bit better in cases where the
 		///     parachain is lagging its block production to avoid clock skew.
@@ -282,7 +282,7 @@ pub mod pallet {
 	}
 
 	#[pallet::hooks]
-	impl<T: Config> Hooks<topsoil_system::pallet_prelude::BlockNumberFor<T>> for Pallet<T> {}
+	impl<T: Config> Hooks<topsoil_core::system::pallet_prelude::BlockNumberFor<T>> for Pallet<T> {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -771,7 +771,7 @@ impl<T: Config> Pallet<T> {
 	pub fn timepoint() -> Timepoint<BlockNumberFor<T>> {
 		Timepoint {
 			height: T::BlockNumberProvider::current_block_number(),
-			index: <topsoil_system::Pallet<T>>::extrinsic_index().unwrap_or_default(),
+			index: <topsoil_core::system::Pallet<T>>::extrinsic_index().unwrap_or_default(),
 		}
 	}
 

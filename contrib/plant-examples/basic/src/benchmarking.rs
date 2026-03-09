@@ -11,7 +11,7 @@
 
 use crate::*;
 use topsoil_benchmarking::v2::*;
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 // To actually run this benchmark on topsoil-example-basic, we need to put this pallet into the
 //   runtime and compile it with `runtime-benchmarks` feature. The detail procedures are

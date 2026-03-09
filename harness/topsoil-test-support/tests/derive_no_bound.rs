@@ -7,7 +7,7 @@
 //! Tests for DebugNoBound, CloneNoBound, EqNoBound, PartialEqNoBound, DefaultNoBound,
 //! DebugNoBound, PartialOrdNoBound and OrdNoBound
 
-use topsoil_support::{
+use topsoil_core::{
 	CloneNoBound, DebugNoBound, DefaultNoBound, EqNoBound, OrdNoBound, PartialEqNoBound,
 	PartialOrdNoBound,
 };

@@ -13,7 +13,7 @@ use crate::{
 };
 use subsoil::runtime::SaturatedConversion;
 use subsoil::std::{collections::btree_map::BTreeMap, convert::TryInto, prelude::*};
-use topsoil_support::{traits::Get, BoundedVec};
+use topsoil_core::{traits::Get, BoundedVec};
 
 /// Emit a log specific to this pallet, setting the target to [`crate::LOG_PREFIX`]
 #[macro_export]
@@ -21,7 +21,7 @@ macro_rules! log {
 	($level:tt, $pattern:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: $crate::LOG_PREFIX,
-			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <topsoil_core::system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
@@ -35,7 +35,7 @@ macro_rules! sublog {
 		#[cfg(feature = "std")]
 		log::$level!(
 			target: format!("{}::{}", $crate::LOG_PREFIX, $sub_pallet).as_ref(),
-			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <topsoil_system::Pallet<T>>::block_number() $(, $values )*
+			concat!("[#{:?}] 🗳🗳🗳  ", $pattern), <topsoil_core::system::Pallet<T>>::block_number() $(, $values )*
 		)
 	};
 }

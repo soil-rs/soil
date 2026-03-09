@@ -22,8 +22,7 @@ scale-info = { features = ["derive"], workspace = true }
 serde = { workspace = true }
 
 topsoil-benchmarking = { workspace = true, optional = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 impl-trait-for-tuples = { workspace = true }
 subsoil = { workspace = true }
 
@@ -32,20 +31,17 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"subsoil/try-runtime",
 ]

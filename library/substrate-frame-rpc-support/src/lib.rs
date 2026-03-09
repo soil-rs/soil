@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-//! Combines [soil_rpc::api::state::StateApiClient] with [topsoil_support::storage::generator] traits
+//! Combines [soil_rpc::api::state::StateApiClient] with [topsoil_core::storage::generator] traits
 //! to provide strongly typed chain state queries over rpc.
 
 #![warn(missing_docs)]
@@ -15,7 +15,7 @@ use jsonrpsee::core::ClientError as RpcError;
 use serde::{de::DeserializeOwned, Serialize};
 use soil_rpc::api::state::StateApiClient;
 use subsoil::storage::{StorageData, StorageKey};
-use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
+use topsoil_core::storage::generator::{StorageDoubleMap, StorageMap, StorageValue};
 
 /// A typed query on chain state usable from an RPC client.
 ///
@@ -23,7 +23,7 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # use jsonrpsee::core::ClientError as RpcError;
 /// # use jsonrpsee::ws_client::WsClientBuilder;
 /// # use codec::Encode;
-/// # use topsoil_support::{construct_runtime, derive_impl, traits::ConstU32};
+/// # use topsoil_core::{construct_runtime, derive_impl, traits::ConstU32};
 /// # use substrate_frame_rpc_support::StorageQuery;
 /// # use soil_rpc::api::state::StateApiClient;
 /// # use subsoil::runtime::{traits::{BlakeTwo256, IdentityLookup}, testing::Header};
@@ -31,15 +31,15 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # construct_runtime!(
 /// # 	pub enum TestRuntime
 /// # 	{
-/// # 		System: topsoil_system,
+/// # 		System: topsoil_core::system,
 /// # 		Test: pallet_test,
 /// # 	}
 /// # );
 /// #
 /// # type Hash = subsoil::core::H256;
 /// #
-/// # #[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-/// # impl topsoil_system::Config for TestRuntime {
+/// # #[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+/// # impl topsoil_core::system::Config for TestRuntime {
 /// # 	type BaseCallFilter = ();
 /// # 	type BlockWeights = ();
 /// # 	type BlockLength = ();
@@ -50,7 +50,7 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// # 	type Hashing = BlakeTwo256;
 /// # 	type AccountId = u64;
 /// # 	type Lookup = IdentityLookup<Self::AccountId>;
-/// # 	type Block = topsoil_system::mocking::MockBlock<TestRuntime>;
+/// # 	type Block = topsoil_core::system::mocking::MockBlock<TestRuntime>;
 /// # 	type RuntimeEvent = RuntimeEvent;
 /// # 	type RuntimeTask = RuntimeTask;
 /// # 	type BlockHashCount = ();
@@ -75,16 +75,16 @@ use topsoil_support::storage::generator::{StorageDoubleMap, StorageMap, StorageV
 /// // Note that all fields are marked pub.
 /// pub use self::pallet_test::*;
 ///
-/// #[topsoil_support::pallet]
+/// #[topsoil_core::pallet]
 /// mod pallet_test {
 /// 	use super::*;
-/// 	use topsoil_support::pallet_prelude::*;
+/// 	use topsoil_core::pallet_prelude::*;
 ///
 /// 	#[pallet::pallet]
 /// 	pub struct Pallet<T>(_);
 ///
 /// 	#[pallet::config]
-/// 	pub trait Config: topsoil_system::Config {}
+/// 	pub trait Config: topsoil_core::system::Config {}
 ///
 /// 	#[pallet::storage]
 /// 	pub type LastActionId<T> = StorageValue<_, u64, ValueQuery>;
@@ -150,7 +150,7 @@ impl<V: FullCodec> StorageQuery<V> {
 
 	/// Send this query over RPC, await the typed result.
 	///
-	/// Hash should be `<YourRuntime as topsoil_system::Config>::Hash`.
+	/// Hash should be `<YourRuntime as topsoil_core::system::Config>::Hash`.
 	///
 	/// # Arguments
 	///

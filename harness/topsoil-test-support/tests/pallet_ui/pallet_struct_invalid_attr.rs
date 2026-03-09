@@ -4,10 +4,10 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod pallet {
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	#[pallet::generate_storage_info] // invalid

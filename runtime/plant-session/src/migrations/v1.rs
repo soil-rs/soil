@@ -6,7 +6,7 @@
 
 use crate::{Config, DisabledValidators as NewDisabledValidators, Pallet, Vec};
 use subsoil::staking::offence::OffenceSeverity;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::{Get, ValueQuery, Weight},
 	traits::UncheckedOnRuntimeUpgrade,
 };
@@ -15,11 +15,11 @@ use topsoil_support::{
 use subsoil::runtime::TryRuntimeError;
 
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
-use topsoil_support::migrations::VersionedMigration;
+use topsoil_core::ensure;
+use topsoil_core::migrations::VersionedMigration;
 
 /// This is the storage getting migrated.
-#[topsoil_support::storage_alias]
+#[topsoil_core::storage_alias]
 type DisabledValidators<T: Config> = StorageValue<Pallet<T>, Vec<u32>, ValueQuery>;
 
 pub trait MigrateDisabledValidators {
@@ -88,5 +88,5 @@ pub type MigrateV0ToV1<T, S> = VersionedMigration<
 	1,
 	VersionUncheckedMigrateV0ToV1<T, S>,
 	Pallet<T>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;

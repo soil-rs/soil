@@ -10,7 +10,7 @@ use crate::{
 };
 use topsoil_benchmarking::v2::*;
 use plant_election_provider::{ElectionDataProvider, ElectionProvider};
-use topsoil_support::{assert_ok, pallet_prelude::*};
+use topsoil_core::{assert_ok, pallet_prelude::*};
 
 const SNAPSHOT_NOT_BIG_ENOUGH: &'static str = "Snapshot page is not full, you should run this \
 benchmark with enough genesis stakers in staking to fill a page of voters/targets \

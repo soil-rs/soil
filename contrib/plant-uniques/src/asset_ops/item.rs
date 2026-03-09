@@ -11,7 +11,7 @@ use crate::{
 	Item as ItemStorage, *,
 };
 use subsoil::runtime::DispatchError;
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResult,
 	ensure,
 	traits::tokens::asset_ops::{
@@ -23,7 +23,7 @@ use topsoil_support::{
 	},
 	BoundedSlice,
 };
-use topsoil_system::ensure_signed;
+use topsoil_core::system::ensure_signed;
 
 pub struct Item<PalletInstance>(PhantomData<PalletInstance>);
 

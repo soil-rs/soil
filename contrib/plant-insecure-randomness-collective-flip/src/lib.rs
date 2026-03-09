@@ -41,7 +41,7 @@
 //!     pub struct Pallet<T>(_);
 //!
 //!     #[pallet::config]
-//!     pub trait Config: topsoil_system::Config + plant_insecure_randomness_collective_flip::Config {}
+//!     pub trait Config: topsoil_core::system::Config + plant_insecure_randomness_collective_flip::Config {}
 //!
 //!     #[pallet::call]
 //!     impl<T: Config> Pallet<T> {
@@ -80,12 +80,12 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
 		fn on_initialize(block_number: BlockNumberFor<T>) -> Weight {
-			let parent_hash = topsoil_system::Pallet::<T>::parent_hash();
+			let parent_hash = topsoil_core::system::Pallet::<T>::parent_hash();
 
 			RandomMaterial::<T>::mutate(|ref mut values| {
 				if values.try_push(parent_hash).is_err() {
@@ -125,7 +125,7 @@ impl<T: Config> Randomness<T::Hash, BlockNumberFor<T>> for Pallet<T> {
 	/// and mean that all bits of the resulting value are entirely manipulatable by the author of
 	/// the parent block, who can determine the value of `parent_hash`.
 	fn random(subject: &[u8]) -> (T::Hash, BlockNumberFor<T>) {
-		let block_number = topsoil_system::Pallet::<T>::block_number();
+		let block_number = topsoil_core::system::Pallet::<T>::block_number();
 		let index = block_number_to_index::<T>(block_number);
 
 		let hash_series = RandomMaterial::<T>::get();
@@ -152,16 +152,16 @@ mod tests {
 	use super::*;
 	use crate as plant_insecure_randomness_collective_flip;
 	use topsoil::{
-		testing_prelude::{topsoil_system::limits, *},
+		testing_prelude::{topsoil_core::system::limits, *},
 		traits::Header as _,
 	};
 
-	type Block = topsoil_system::mocking::MockBlock<Test>;
+	type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 	construct_runtime!(
 		pub enum Test
 		{
-			System: topsoil_system,
+			System: topsoil_core::system,
 			CollectiveFlip: plant_insecure_randomness_collective_flip,
 		}
 	);
@@ -172,15 +172,15 @@ mod tests {
 			.build();
 	}
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Test {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Test {
 		type Block = Block;
 	}
 
 	impl plant_insecure_randomness_collective_flip::Config for Test {}
 
 	fn new_test_ext() -> TestExternalities {
-		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		t.into()
 	}
 

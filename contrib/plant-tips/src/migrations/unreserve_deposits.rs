@@ -10,7 +10,7 @@
 use alloc::collections::btree_map::BTreeMap;
 use core::iter::Sum;
 use subsoil::runtime::{traits::Zero, Saturating};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::OptionQuery,
 	storage_alias,
 	traits::{Currency, LockableCurrency, OnRuntimeUpgrade, ReservableCurrency},
@@ -43,7 +43,7 @@ pub trait UnlockConfig<I>: 'static {
 	/// Should match the currency type previously used for the pallet, if applicable.
 	type DataDepositPerByte: subsoil::core::Get<BalanceOf<Self, I>>;
 	/// The name of the pallet as previously configured in
-	/// [`construct_runtime!`](topsoil_support::construct_runtime).
+	/// [`construct_runtime!`](topsoil_core::construct_runtime).
 	type PalletName: subsoil::core::Get<&'static str>;
 	/// The DB weight as configured in the runtime to calculate the correct weight.
 	type DbWeight: subsoil::core::Get<RuntimeDbWeight>;
@@ -84,8 +84,8 @@ impl<T: UnlockConfig<I>, I: 'static> UnreserveDeposits<T, I> {
 	///
 	/// * `BTreeMap<T::AccountId, T::Balance>`: Map of account IDs to their respective total
 	///   reserved balance by this pallet
-	/// * `topsoil_support::weights::Weight`: The weight of this operation.
-	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, topsoil_support::weights::Weight)
+	/// * `topsoil_core::weights::Weight`: The weight of this operation.
+	fn get_deposits() -> (BTreeMap<T::AccountId, BalanceOf<T, I>>, topsoil_core::weights::Weight)
 	{
 		use subsoil::core::Get;
 
@@ -125,7 +125,7 @@ where
 	#[cfg(feature = "try-runtime")]
 	fn pre_upgrade() -> Result<alloc::vec::Vec<u8>, subsoil::runtime::TryRuntimeError> {
 		use codec::Encode;
-		use topsoil_support::ensure;
+		use topsoil_core::ensure;
 
 		// Get the Tips pallet view of balances it has reserved
 		let (account_deposits, _) = Self::get_deposits();
@@ -157,8 +157,8 @@ where
 	}
 
 	/// Executes the migration, unreserving funds that are locked in Tip deposits.
-	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
-		use topsoil_support::traits::Get;
+	fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
+		use topsoil_core::traits::Get;
 
 		// Get staked and deposited balances as reported by this pallet.
 		let (account_deposits, initial_reads) = Self::get_deposits();
@@ -225,8 +225,8 @@ mod test {
 		tests::{new_test_ext, Balances, RuntimeOrigin, Test, Tips},
 	};
 	use subsoil::core::ConstU64;
-	use topsoil_support::{assert_ok, parameter_types, traits::TypedGet};
-	use topsoil_system::pallet_prelude::BlockNumberFor;
+	use topsoil_core::{assert_ok, parameter_types, traits::TypedGet};
+	use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 	parameter_types! {
 		const PalletName: &'static str = "Tips";

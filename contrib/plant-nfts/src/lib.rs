@@ -11,7 +11,7 @@
 //! ## Related Modules
 //!
 //! * [`System`](../topsoil_system/index.html)
-//! * [`Support`](../topsoil_support/index.html)
+//! * [`Support`](../topsoil_core/index.html)
 
 #![recursion_limit = "256"]
 // Ensure we're `no_std` when compiling for Wasm.
@@ -45,11 +45,11 @@ use subsoil::runtime::{
 	traits::{BlockNumberProvider, IdentifyAccount, Saturating, StaticLookup, Verify, Zero},
 	Debug,
 };
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	tokens::Locker, BalanceStatus::Reserved, Currency, EnsureOriginWithArg, Incrementable,
 	ReservableCurrency,
 };
-use topsoil_system::Config as SystemConfig;
+use topsoil_core::system::Config as SystemConfig;
 
 pub use pallet::*;
 pub use types::*;
@@ -61,11 +61,11 @@ pub const LOG_TARGET: &'static str = "runtime::nfts";
 /// A type alias for the account ID type used in the dispatchable functions of this pallet.
 type AccountIdLookupOf<T> = <<T as SystemConfig>::Lookup as StaticLookup>::Source;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::{pallet_prelude::*, traits::ExistenceRequirement};
-	use topsoil_system::{ensure_signed, pallet_prelude::OriginFor};
+	use topsoil_core::{pallet_prelude::*, traits::ExistenceRequirement};
+	use topsoil_core::system::{ensure_signed, pallet_prelude::OriginFor};
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -122,11 +122,11 @@ pub mod pallet {
 
 	#[pallet::config]
 	/// The module configuration trait.
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Identifier for the collection of item.
 		///

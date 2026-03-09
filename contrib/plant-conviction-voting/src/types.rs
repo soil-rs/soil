@@ -10,7 +10,7 @@ use codec::{Codec, Decode, DecodeWithMemTracking, Encode, MaxEncodedLen};
 use core::{fmt::Debug, marker::PhantomData};
 use scale_info::TypeInfo;
 use subsoil::runtime::traits::{Saturating, Zero};
-use topsoil_support::{traits::VoteTally, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
+use topsoil_core::{traits::VoteTally, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 
 use super::*;
 use crate::{AccountVote, Conviction, Vote};

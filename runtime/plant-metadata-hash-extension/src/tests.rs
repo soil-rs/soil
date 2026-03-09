@@ -19,21 +19,21 @@ use soil_test_node_runtime_client::{
 	runtime::{self, ExtrinsicBuilder},
 	DefaultTestClientBuilderExt, TestClientBuilder,
 };
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	pallet_prelude::{InvalidTransaction, TransactionValidityError},
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime! {
+topsoil_core::construct_runtime! {
 	pub enum Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 	}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 
@@ -115,26 +115,26 @@ mod docs {
 
 	#[docify::export]
 	mod add_metadata_hash_extension {
-		topsoil_support::construct_runtime! {
+		topsoil_core::construct_runtime! {
 			pub enum Runtime {
-				System: topsoil_system,
+				System: topsoil_core::system,
 			}
 		}
 
 		/// The `TransactionExtension` to the basic transaction logic.
 		pub type TxExtension = (
-			topsoil_system::AuthorizeCall<Runtime>,
-			topsoil_system::CheckNonZeroSender<Runtime>,
-			topsoil_system::CheckSpecVersion<Runtime>,
-			topsoil_system::CheckTxVersion<Runtime>,
-			topsoil_system::CheckGenesis<Runtime>,
-			topsoil_system::CheckMortality<Runtime>,
-			topsoil_system::CheckNonce<Runtime>,
-			topsoil_system::CheckWeight<Runtime>,
+			topsoil_core::system::AuthorizeCall<Runtime>,
+			topsoil_core::system::CheckNonZeroSender<Runtime>,
+			topsoil_core::system::CheckSpecVersion<Runtime>,
+			topsoil_core::system::CheckTxVersion<Runtime>,
+			topsoil_core::system::CheckGenesis<Runtime>,
+			topsoil_core::system::CheckMortality<Runtime>,
+			topsoil_core::system::CheckNonce<Runtime>,
+			topsoil_core::system::CheckWeight<Runtime>,
 			// Add the `CheckMetadataHash` extension.
 			// The position in this list is not important, so we could also add it to beginning.
 			plant_metadata_hash_extension::CheckMetadataHash<Runtime>,
-			topsoil_system::WeightReclaim<Runtime>,
+			topsoil_core::system::WeightReclaim<Runtime>,
 		);
 
 		/// In your runtime this will be your real address type.
@@ -152,8 +152,8 @@ mod docs {
 	}
 
 	// Put here to not have it in the docs as well.
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for add_metadata_hash_extension::Runtime {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for add_metadata_hash_extension::Runtime {
 		type Block = Block;
 		type RuntimeEvent = add_metadata_hash_extension::RuntimeEvent;
 		type RuntimeOrigin = add_metadata_hash_extension::RuntimeOrigin;

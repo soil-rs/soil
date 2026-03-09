@@ -64,8 +64,8 @@ use plant_nfts::PalletFeatures;
 use plant_nis::WithMaximumOf;
 use plant_nomination_pools::PoolId;
 use plant_session::historical as pallet_session_historical;
-use topsoil_support::weights::IdentityFee;
-use topsoil_support::{
+use topsoil_core::weights::IdentityFee;
+use topsoil_core::{
 	derive_impl,
 	dispatch::DispatchClass,
 	dynamic_params::{dynamic_pallet_params, dynamic_params},
@@ -98,7 +98,7 @@ use topsoil_support::{
 	},
 	BoundedVec, PalletId,
 };
-use topsoil_system::{
+use topsoil_core::system::{
 	limits::{BlockLength, BlockWeights},
 	EnsureRoot, EnsureRootWithSuccess, EnsureSigned, EnsureSignedBy, EnsureWithSuccess,
 };
@@ -113,7 +113,7 @@ pub use plant_balances::Call as BalancesCall;
 #[cfg(any(feature = "std", test))]
 pub use plant_sudo::Call as SudoCall;
 #[cfg(any(feature = "std", test))]
-pub use topsoil_system::Call as SystemCall;
+pub use topsoil_core::system::Call as SystemCall;
 
 pub use plant_staking::StakerStatus;
 
@@ -338,8 +338,8 @@ impl plant_safe_mode::Config for Runtime {
 	type WeightInfo = plant_safe_mode::weights::SubstrateWeight<Runtime>;
 }
 
-#[derive_impl(topsoil_system::config_preludes::SolochainDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::SolochainDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type BaseCallFilter = InsideBoth<SafeMode, TxPause>;
 	type BlockWeights = RuntimeBlockWeights;
 	type BlockLength = RuntimeBlockLength;
@@ -352,7 +352,7 @@ impl topsoil_system::Config for Runtime {
 	type BlockHashCount = BlockHashCount;
 	type Version = Version;
 	type AccountData = plant_balances::AccountData<Balance>;
-	type SystemWeightInfo = topsoil_system::weights::SubstrateWeight<Runtime>;
+	type SystemWeightInfo = topsoil_core::system::weights::SubstrateWeight<Runtime>;
 	type SS58Prefix = ConstU16<42>;
 	type MaxConsumers = ConstU32<16>;
 	type MultiBlockMigrator = ();
@@ -383,7 +383,7 @@ impl plant_multisig::Config for Runtime {
 	type DepositFactor = DepositFactor;
 	type MaxSignatories = ConstU32<100>;
 	type WeightInfo = plant_multisig::weights::SubstrateWeight<Runtime>;
-	type BlockNumberProvider = topsoil_system::Pallet<Runtime>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Runtime>;
 }
 
 parameter_types! {
@@ -472,7 +472,7 @@ impl plant_proxy::Config for Runtime {
 	type CallHasher = BlakeTwo256;
 	type AnnouncementDepositBase = AnnouncementDepositBase;
 	type AnnouncementDepositFactor = AnnouncementDepositFactor;
-	type BlockNumberProvider = topsoil_system::Pallet<Runtime>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Runtime>;
 }
 
 parameter_types! {
@@ -494,7 +494,7 @@ impl plant_scheduler::Config for Runtime {
 	type WeightInfo = plant_scheduler::weights::SubstrateWeight<Runtime>;
 	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 	type Preimages = Preimage;
-	type BlockNumberProvider = topsoil_system::Pallet<Runtime>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Runtime>;
 }
 
 impl plant_glutton::Config for Runtime {
@@ -577,7 +577,7 @@ impl plant_balances::Config for Runtime {
 	type DustRemoval = ();
 	type RuntimeEvent = RuntimeEvent;
 	type ExistentialDeposit = ExistentialDeposit;
-	type AccountStore = topsoil_system::Pallet<Runtime>;
+	type AccountStore = topsoil_core::system::Pallet<Runtime>;
 	type WeightInfo = plant_balances::weights::SubstrateWeight<Runtime>;
 	type FreezeIdentifier = RuntimeFreezeReason;
 	type MaxFreezes = VariantCountOf<RuntimeFreezeReason>;
@@ -658,7 +658,7 @@ subsoil::impl_opaque_keys! {
 
 impl plant_session::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
-	type ValidatorId = <Self as topsoil_system::Config>::AccountId;
+	type ValidatorId = <Self as topsoil_core::system::Config>::AccountId;
 	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
@@ -749,7 +749,7 @@ impl plant_staking::Config for Runtime {
 
 impl plant_fast_unstake::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
-	type ControlOrigin = topsoil_system::EnsureRoot<AccountId>;
+	type ControlOrigin = topsoil_core::system::EnsureRoot<AccountId>;
 	type BatchSize = ConstU32<64>;
 	type Deposit = ConstU128<{ DOLLARS }>;
 	type Currency = Balances;
@@ -995,7 +995,7 @@ impl plant_conviction_voting::Config for Runtime {
 	type Currency = Balances;
 	type VoteLockingPeriod = VoteLockingPeriod;
 	type MaxVotes = ConstU32<512>;
-	type MaxTurnout = topsoil_support::traits::TotalIssuanceOf<Balances, Self::AccountId>;
+	type MaxTurnout = topsoil_core::traits::TotalIssuanceOf<Balances, Self::AccountId>;
 	type Polls = Referenda;
 	type BlockNumberProvider = System;
 	type VotingHooks = ();
@@ -1010,7 +1010,7 @@ parameter_types! {
 pub struct TracksInfo;
 impl plant_referenda::TracksInfo<Balance, BlockNumber> for TracksInfo {
 	type Id = u16;
-	type RuntimeOrigin = <RuntimeOrigin as topsoil_support::traits::OriginTrait>::PalletsOrigin;
+	type RuntimeOrigin = <RuntimeOrigin as topsoil_core::traits::OriginTrait>::PalletsOrigin;
 
 	fn tracks(
 	) -> impl Iterator<Item = Cow<'static, plant_referenda::Track<Self::Id, Balance, BlockNumber>>>
@@ -1467,7 +1467,7 @@ parameter_types! {
 	pub const MaxPeerInHeartbeats: u32 = 10_000;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateTransaction<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateTransaction<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -1478,12 +1478,12 @@ where
 	}
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateSignedTransaction<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateSignedTransaction<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
 	fn create_signed_transaction<
-		C: topsoil_system::offchain::AppCrypto<Self::Public, Self::Signature>,
+		C: topsoil_core::system::offchain::AppCrypto<Self::Public, Self::Signature>,
 	>(
 		call: RuntimeCall,
 		public: <Signature as traits::Verify>::Signer,
@@ -1501,17 +1501,17 @@ where
 			.saturating_sub(1);
 		let era = Era::mortal(period, current_block);
 		let tx_ext: TxExtension = (
-			topsoil_system::AuthorizeCall::<Runtime>::new(),
-			topsoil_system::CheckNonZeroSender::<Runtime>::new(),
-			topsoil_system::CheckSpecVersion::<Runtime>::new(),
-			topsoil_system::CheckTxVersion::<Runtime>::new(),
-			topsoil_system::CheckGenesis::<Runtime>::new(),
-			topsoil_system::CheckEra::<Runtime>::from(era),
-			topsoil_system::CheckNonce::<Runtime>::from(nonce),
-			topsoil_system::CheckWeight::<Runtime>::new(),
+			topsoil_core::system::AuthorizeCall::<Runtime>::new(),
+			topsoil_core::system::CheckNonZeroSender::<Runtime>::new(),
+			topsoil_core::system::CheckSpecVersion::<Runtime>::new(),
+			topsoil_core::system::CheckTxVersion::<Runtime>::new(),
+			topsoil_core::system::CheckGenesis::<Runtime>::new(),
+			topsoil_core::system::CheckEra::<Runtime>::from(era),
+			topsoil_core::system::CheckNonce::<Runtime>::from(nonce),
+			topsoil_core::system::CheckWeight::<Runtime>::new(),
 			plant_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(tip, None),
 			plant_metadata_hash_extension::CheckMetadataHash::new(false),
-			topsoil_system::WeightReclaim::<Runtime>::new(),
+			topsoil_core::system::WeightReclaim::<Runtime>::new(),
 		);
 
 		let raw_payload = SignedPayload::new(call, tx_ext)
@@ -1526,7 +1526,7 @@ where
 	}
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -1535,12 +1535,12 @@ where
 	}
 }
 
-impl topsoil_system::offchain::SigningTypes for Runtime {
+impl topsoil_core::system::offchain::SigningTypes for Runtime {
 	type Public = <Signature as traits::Verify>::Signer;
 	type Signature = Signature;
 }
 
-impl<C> topsoil_system::offchain::CreateTransactionBase<C> for Runtime
+impl<C> topsoil_core::system::offchain::CreateTransactionBase<C> for Runtime
 where
 	RuntimeCall: From<C>,
 {
@@ -1548,23 +1548,23 @@ where
 	type RuntimeCall = RuntimeCall;
 }
 
-impl<C> topsoil_system::offchain::CreateAuthorizedTransaction<C> for Runtime
+impl<C> topsoil_core::system::offchain::CreateAuthorizedTransaction<C> for Runtime
 where
 	RuntimeCall: From<C>,
 {
 	fn create_extension() -> Self::Extension {
 		(
-			topsoil_system::AuthorizeCall::<Runtime>::new(),
-			topsoil_system::CheckNonZeroSender::<Runtime>::new(),
-			topsoil_system::CheckSpecVersion::<Runtime>::new(),
-			topsoil_system::CheckTxVersion::<Runtime>::new(),
-			topsoil_system::CheckGenesis::<Runtime>::new(),
-			topsoil_system::CheckEra::<Runtime>::from(Era::Immortal),
-			topsoil_system::CheckNonce::<Runtime>::from(0),
-			topsoil_system::CheckWeight::<Runtime>::new(),
+			topsoil_core::system::AuthorizeCall::<Runtime>::new(),
+			topsoil_core::system::CheckNonZeroSender::<Runtime>::new(),
+			topsoil_core::system::CheckSpecVersion::<Runtime>::new(),
+			topsoil_core::system::CheckTxVersion::<Runtime>::new(),
+			topsoil_core::system::CheckGenesis::<Runtime>::new(),
+			topsoil_core::system::CheckEra::<Runtime>::from(Era::Immortal),
+			topsoil_core::system::CheckNonce::<Runtime>::from(0),
+			topsoil_core::system::CheckWeight::<Runtime>::new(),
 			plant_asset_conversion_tx_payment::ChargeAssetTxPayment::<Runtime>::from(0, None),
 			plant_metadata_hash_extension::CheckMetadataHash::new(false),
-			topsoil_system::WeightReclaim::<Runtime>::new(),
+			topsoil_core::system::WeightReclaim::<Runtime>::new(),
 		)
 	}
 }
@@ -1905,7 +1905,7 @@ impl plant_asset_rewards::Config for Runtime {
 		CreationHoldReason,
 		ConstantStoragePrice<StakePoolCreationDeposit, Balance>,
 	>;
-	type BlockNumberProvider = topsoil_system::Pallet<Runtime>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Runtime>;
 	#[cfg(feature = "runtime-benchmarks")]
 	type BenchmarkHelper = AssetRewardsBenchmarkHelper;
 }
@@ -1942,7 +1942,7 @@ impl plant_nis::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
 	type CurrencyBalance = Balance;
-	type FundOrigin = topsoil_system::EnsureSigned<AccountId>;
+	type FundOrigin = topsoil_core::system::EnsureSigned<AccountId>;
 	type Counterpart = ItemOf<Assets, ConstU32<9u32>, AccountId>;
 	type CounterpartAmount = WithMaximumOf<ConstU128<21_000_000_000_000_000_000u128>>;
 	type Deficit = ();
@@ -1994,7 +1994,7 @@ impl plant_uniques::Config for Runtime {
 	type CollectionId = u32;
 	type ItemId = u32;
 	type Currency = Balances;
-	type ForceOrigin = topsoil_system::EnsureRoot<AccountId>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<AccountId>;
 	type CollectionDeposit = CollectionDeposit;
 	type ItemDeposit = ItemDeposit;
 	type MetadataDepositBase = MetadataDepositBase;
@@ -2038,7 +2038,7 @@ impl plant_core_fellowship::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Members = RankedCollective;
 	type Balance = Balance;
-	type ParamsOrigin = topsoil_system::EnsureRoot<AccountId>;
+	type ParamsOrigin = topsoil_core::system::EnsureRoot<AccountId>;
 	type InductOrigin = plant_core_fellowship::EnsureInducted<Runtime, (), 1>;
 	type ApproveOrigin = EnsureRootWithSuccess<AccountId, ConstU16<9>>;
 	type PromoteOrigin = EnsureRootWithSuccess<AccountId, ConstU16<9>>;
@@ -2083,7 +2083,7 @@ impl plant_nfts::Config for Runtime {
 	type CollectionId = u32;
 	type ItemId = u32;
 	type Currency = Balances;
-	type ForceOrigin = topsoil_system::EnsureRoot<AccountId>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<AccountId>;
 	type CollectionDeposit = CollectionDeposit;
 	type ItemDeposit = ItemDeposit;
 	type MetadataDepositBase = MetadataDepositBase;
@@ -2105,7 +2105,7 @@ impl plant_nfts::Config for Runtime {
 	type Helper = ();
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<AccountId>>;
 	type Locker = ();
-	type BlockNumberProvider = topsoil_system::Pallet<Runtime>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Runtime>;
 }
 
 impl plant_transaction_storage::Config for Runtime {
@@ -2386,7 +2386,7 @@ pub mod dynamic_params {
 		#[codec(index = 1)]
 		pub static Origins: BoundedVec<(OriginCaller, u16), ConstU32<100>> =
 			BoundedVec::truncate_from(vec![(
-				OriginCaller::system(topsoil_system::RawOrigin::Root),
+				OriginCaller::system(topsoil_core::system::RawOrigin::Root),
 				0,
 			)]);
 	}
@@ -2412,11 +2412,11 @@ impl EnsureOriginWithArg<RuntimeOrigin, RuntimeParametersKey> for DynamicParamet
 	) -> Result<Self::Success, RuntimeOrigin> {
 		match key {
 			RuntimeParametersKey::Storage(_) => {
-				topsoil_system::ensure_root(origin.clone()).map_err(|_| origin)?;
+				topsoil_core::system::ensure_root(origin.clone()).map_err(|_| origin)?;
 				return Ok(());
 			},
 			RuntimeParametersKey::Referenda(_) => {
-				topsoil_system::ensure_root(origin.clone()).map_err(|_| origin)?;
+				topsoil_core::system::ensure_root(origin.clone()).map_err(|_| origin)?;
 				return Ok(());
 			},
 		}
@@ -2438,12 +2438,12 @@ impl plant_parameters::Config for Runtime {
 pub type MetaTxExtension = (
 	plant_verify_signature::VerifySignature<Runtime>,
 	plant_meta_tx::MetaTxMarker<Runtime>,
-	topsoil_system::CheckNonZeroSender<Runtime>,
-	topsoil_system::CheckSpecVersion<Runtime>,
-	topsoil_system::CheckTxVersion<Runtime>,
-	topsoil_system::CheckGenesis<Runtime>,
-	topsoil_system::CheckEra<Runtime>,
-	topsoil_system::CheckNonce<Runtime>,
+	topsoil_core::system::CheckNonZeroSender<Runtime>,
+	topsoil_core::system::CheckSpecVersion<Runtime>,
+	topsoil_core::system::CheckTxVersion<Runtime>,
+	topsoil_core::system::CheckGenesis<Runtime>,
+	topsoil_core::system::CheckEra<Runtime>,
+	topsoil_core::system::CheckNonce<Runtime>,
 	plant_metadata_hash_extension::CheckMetadataHash<Runtime>,
 );
 
@@ -2456,7 +2456,7 @@ impl plant_meta_tx::Config for Runtime {
 	type Extension = plant_meta_tx::WeightlessExtension<Runtime>;
 }
 
-#[topsoil_support::runtime]
+#[topsoil_core::runtime]
 mod runtime {
 	use super::*;
 
@@ -2476,7 +2476,7 @@ mod runtime {
 	pub struct Runtime;
 
 	#[runtime::pallet_index(0)]
-	pub type System = topsoil_system::Pallet<Runtime>;
+	pub type System = topsoil_core::system::Pallet<Runtime>;
 
 	#[runtime::pallet_index(1)]
 	pub type Utility = plant_utility::Pallet<Runtime>;
@@ -2740,17 +2740,17 @@ pub type BlockId = generic::BlockId<Block>;
 ///
 /// [`sign`]: <../../testing/src/keyring.rs.html>
 pub type TxExtension = (
-	topsoil_system::AuthorizeCall<Runtime>,
-	topsoil_system::CheckNonZeroSender<Runtime>,
-	topsoil_system::CheckSpecVersion<Runtime>,
-	topsoil_system::CheckTxVersion<Runtime>,
-	topsoil_system::CheckGenesis<Runtime>,
-	topsoil_system::CheckEra<Runtime>,
-	topsoil_system::CheckNonce<Runtime>,
-	topsoil_system::CheckWeight<Runtime>,
+	topsoil_core::system::AuthorizeCall<Runtime>,
+	topsoil_core::system::CheckNonZeroSender<Runtime>,
+	topsoil_core::system::CheckSpecVersion<Runtime>,
+	topsoil_core::system::CheckTxVersion<Runtime>,
+	topsoil_core::system::CheckGenesis<Runtime>,
+	topsoil_core::system::CheckEra<Runtime>,
+	topsoil_core::system::CheckNonce<Runtime>,
+	topsoil_core::system::CheckWeight<Runtime>,
 	plant_asset_conversion_tx_payment::ChargeAssetTxPayment<Runtime>,
 	plant_metadata_hash_extension::CheckMetadataHash<Runtime>,
-	topsoil_system::WeightReclaim<Runtime>,
+	topsoil_core::system::WeightReclaim<Runtime>,
 );
 
 /// Unchecked extrinsic type as expected by this runtime.
@@ -2767,7 +2767,7 @@ pub type CheckedExtrinsic = generic::CheckedExtrinsic<AccountId, RuntimeCall, Tx
 pub type Executive = topsoil_executive::Executive<
 	Runtime,
 	Block,
-	topsoil_system::ChainContext<Runtime>,
+	topsoil_core::system::ChainContext<Runtime>,
 	Runtime,
 	AllPalletsWithSystem,
 >;
@@ -2882,7 +2882,7 @@ impl
 	}
 
 	fn setup_balances_and_pool(asset_id: NativeOrWithId<u32>, account: AccountId) {
-		use topsoil_support::{assert_ok, traits::fungibles::Mutate};
+		use topsoil_core::{assert_ok, traits::fungibles::Mutate};
 		let NativeOrWithId::WithId(asset_idx) = asset_id.clone() else { unimplemented!() };
 		assert_ok!(Assets::force_create(
 			RuntimeOrigin::root(),
@@ -2977,7 +2977,7 @@ mod benches {
 		[plant_staking, Staking]
 		[plant_state_trie_migration, StateTrieMigration]
 		[plant_sudo, Sudo]
-		[topsoil_system, SystemBench::<Runtime>]
+		[topsoil_core::system, SystemBench::<Runtime>]
 		[frame_system_extensions, SystemExtensionsBench::<Runtime>]
 		[plant_timestamp, Timestamp]
 		[plant_tips, Tips]
@@ -3043,7 +3043,7 @@ fn benchmark_setup_session_membership_proof(
 
 	for who in plant_staking::testing_utils::create_validators::<Runtime>(n, 1000)? {
 		let validator =
-			<Runtime as topsoil_system::Config>::Lookup::lookup(who).map_err(|_| "lookup failed")?;
+			<Runtime as topsoil_core::system::Config>::Lookup::lookup(who).map_err(|_| "lookup failed")?;
 		let controller = Staking::bonded(&validator).ok_or("not stash")?;
 		let (keys, proof) = benchmark_generate_session_keys_and_proof(controller.clone());
 
@@ -3054,7 +3054,7 @@ fn benchmark_setup_session_membership_proof(
 		}
 
 		Session::set_keys(
-			topsoil_system::RawOrigin::Signed(controller).into(),
+			topsoil_core::system::RawOrigin::Signed(controller).into(),
 			keys,
 			proof,
 		)
@@ -3088,14 +3088,14 @@ fn benchmark_create_offender(
 	const MAX_BENCH_NOMINATORS: u32 = 100;
 
 	let stash: AccountId = topsoil_benchmarking::account("stash", index, SEED);
-	let stash_lookup = <Runtime as topsoil_system::Config>::Lookup::unlookup(stash.clone());
+	let stash_lookup = <Runtime as topsoil_core::system::Config>::Lookup::unlookup(stash.clone());
 	let reward_destination = plant_staking::RewardDestination::Staked;
 	let amount = benchmark_offence_bond_amount();
 	let free_amount = amount.saturating_mul(2u32.into());
 
 	plant_staking::asset::set_stakeable_balance::<Runtime>(&stash, free_amount);
 	Staking::bond(
-		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		topsoil_core::system::RawOrigin::Signed(stash.clone()).into(),
 		amount,
 		reward_destination.clone(),
 	)
@@ -3106,7 +3106,7 @@ fn benchmark_create_offender(
 		..Default::default()
 	};
 	Staking::validate(
-		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		topsoil_core::system::RawOrigin::Signed(stash.clone()).into(),
 		validator_prefs,
 	)
 	.map_err(|_| "failed to validate")?;
@@ -3114,7 +3114,7 @@ fn benchmark_create_offender(
 	let (keys, proof) = benchmark_generate_session_keys_and_proof(stash.clone());
 	Session::ensure_can_pay_key_deposit(&stash).map_err(|_| "key deposit")?;
 	Session::set_keys(
-		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		topsoil_core::system::RawOrigin::Signed(stash.clone()).into(),
 		keys,
 		proof,
 	)
@@ -3127,13 +3127,13 @@ fn benchmark_create_offender(
 			topsoil_benchmarking::account("nominator stash", index * MAX_BENCH_NOMINATORS + i, SEED);
 		plant_staking::asset::set_stakeable_balance::<Runtime>(&nominator_stash, free_amount);
 		Staking::bond(
-			topsoil_system::RawOrigin::Signed(nominator_stash.clone()).into(),
+			topsoil_core::system::RawOrigin::Signed(nominator_stash.clone()).into(),
 			amount,
 			reward_destination.clone(),
 		)
 		.map_err(|_| "failed to bond nominator")?;
 		Staking::nominate(
-			topsoil_system::RawOrigin::Signed(nominator_stash.clone()).into(),
+			topsoil_core::system::RawOrigin::Signed(nominator_stash.clone()).into(),
 			vec![stash_lookup.clone()],
 		)
 		.map_err(|_| "failed to nominate")?;
@@ -3265,8 +3265,8 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl topsoil_support::view_functions::runtime_api::RuntimeViewFunction<Block> for Runtime {
-		fn execute_view_function(id: topsoil_support::view_functions::ViewFunctionId, input: Vec<u8>) -> Result<Vec<u8>, topsoil_support::view_functions::ViewFunctionDispatchError> {
+	impl topsoil_core::view_functions::runtime_api::RuntimeViewFunction<Block> for Runtime {
+		fn execute_view_function(id: topsoil_core::view_functions::ViewFunctionId, input: Vec<u8>) -> Result<Vec<u8>, topsoil_core::view_functions::ViewFunctionDispatchError> {
 			Runtime::execute_view_function(id, input)
 		}
 	}
@@ -3466,7 +3466,7 @@ subsoil::api::impl_runtime_apis! {
 		}
 	}
 
-	impl topsoil_system_rpc_runtime_api::AccountNonceApi<Block, AccountId, Nonce> for Runtime {
+	impl topsoil_core_rpc_runtime_api::AccountNonceApi<Block, AccountId, Nonce> for Runtime {
 		fn account_nonce(account: AccountId) -> Nonce {
 			System::account_nonce(account)
 		}
@@ -3769,16 +3769,16 @@ subsoil::api::impl_runtime_apis! {
 	impl topsoil_benchmarking::Benchmark<Block> for Runtime {
 		fn benchmark_metadata(extra: bool) -> (
 			Vec<topsoil_benchmarking::BenchmarkList>,
-			Vec<topsoil_support::traits::StorageInfo>,
+			Vec<topsoil_core::traits::StorageInfo>,
 		) {
 			use topsoil_benchmarking::{baseline, BenchmarkList};
-			use topsoil_support::traits::StorageInfoTrait;
+			use topsoil_core::traits::StorageInfoTrait;
 
 			use plant_session::benchmarking::Pallet as SessionBench;
 			use plant_offences::benchmarking::Pallet as OffencesBench;
 			use plant_election_provider::benchmarking::Pallet as EPSBench;
-			use topsoil_system_benchmarking::Pallet as SystemBench;
-			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
+			use topsoil_core_system_benchmarking::Pallet as SystemBench;
+			use topsoil_core_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
 			use baseline::Pallet as BaselineBench;
 			use plant_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
 
@@ -3800,8 +3800,8 @@ subsoil::api::impl_runtime_apis! {
 			use plant_session::benchmarking::Pallet as SessionBench;
 			use plant_offences::benchmarking::Pallet as OffencesBench;
 			use plant_election_provider::benchmarking::Pallet as EPSBench;
-			use topsoil_system_benchmarking::Pallet as SystemBench;
-			use topsoil_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
+			use topsoil_core_system_benchmarking::Pallet as SystemBench;
+			use topsoil_core_system_benchmarking::extensions::Pallet as SystemExtensionsBench;
 			use baseline::Pallet as BaselineBench;
 			use plant_nomination_pools_benchmarking::Pallet as NominationPoolsBench;
 
@@ -3848,18 +3848,18 @@ subsoil::api::impl_runtime_apis! {
 			}
 
 			impl plant_election_provider::benchmarking::Config for Runtime {}
-			impl topsoil_system_benchmarking::Config for Runtime {}
+			impl topsoil_core_system_benchmarking::Config for Runtime {}
 			impl plant_transaction_payment::BenchmarkConfig for Runtime {}
 			impl baseline::Config for Runtime {}
 			impl plant_nomination_pools_benchmarking::Config for Runtime {}
 
-			use topsoil_support::traits::WhitelistedStorageKeys;
+			use topsoil_core::traits::WhitelistedStorageKeys;
 			let mut whitelist: Vec<TrackedStorageKey> = AllPalletsWithSystem::whitelisted_storage_keys();
 
 			// Treasury Account
 			// TODO: this is manual for now, someday we might be able to use a
 			// macro for this particular key
-			let treasury_key = topsoil_system::Account::<Runtime>::hashed_key_for(Treasury::account_id());
+			let treasury_key = topsoil_core::system::Account::<Runtime>::hashed_key_for(Treasury::account_id());
 			whitelist.push(treasury_key.to_vec().into());
 
 			let mut batches = Vec::<BenchmarkBatch>::new();
@@ -3887,7 +3887,7 @@ subsoil::api::impl_runtime_apis! {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use topsoil_system::offchain::CreateSignedTransaction;
+	use topsoil_core::system::offchain::CreateSignedTransaction;
 
 	#[test]
 	fn validate_transaction_submitter_bounds() {

@@ -39,7 +39,7 @@ fn events() -> Vec<Event<Test>> {
 	result
 }
 
-type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
+type AccountIdOf<Test> = <Test as topsoil_core::system::Config>::AccountId;
 
 fn account(id: u8) -> AccountIdOf<Test> {
 	[id; 32].into()
@@ -82,7 +82,7 @@ fn fractionalize_should_work() {
 		assert_eq!(Balances::total_balance_on_hold(&account(1)), 2);
 		assert_eq!(
 			String::from_utf8(
-				<Assets as Inspect<<Test as topsoil_system::Config>::AccountId>>::name(0)
+				<Assets as Inspect<<Test as topsoil_core::system::Config>::AccountId>>::name(0)
 			)
 			.unwrap(),
 			"Frac 0-0"

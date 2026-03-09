@@ -13,7 +13,7 @@ use subsoil::runtime::{
 	traits::{Saturating, Zero},
 	BoundedVec, Debug,
 };
-use topsoil_support::traits::Get;
+use topsoil_core::traits::Get;
 
 /// A number of lock periods, plus a vote, one way or the other.
 #[derive(DecodeWithMemTracking, Copy, Clone, Eq, PartialEq, Default, Debug)]

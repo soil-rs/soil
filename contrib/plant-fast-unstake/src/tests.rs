@@ -9,7 +9,7 @@
 use super::*;
 use crate::{mock::*, types::*, Event};
 use plant_staking::{CurrentEra, RewardDestination};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	testing_prelude::*,
 	traits::{
@@ -1103,8 +1103,8 @@ mod batched {
 #[test]
 fn kusama_estimate() {
 	use crate::WeightInfo;
-	let block_time = topsoil_support::weights::Weight::from_parts(
-		topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
+	let block_time = topsoil_core::weights::Weight::from_parts(
+		topsoil_core::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
 		0,
 	)
 	.ref_time() as f32;
@@ -1115,8 +1115,8 @@ fn kusama_estimate() {
 #[test]
 fn polkadot_estimate() {
 	use crate::WeightInfo;
-	let block_time = topsoil_support::weights::Weight::from_parts(
-		topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
+	let block_time = topsoil_core::weights::Weight::from_parts(
+		topsoil_core::weights::constants::WEIGHT_REF_TIME_PER_SECOND * 2,
 		0,
 	)
 	.ref_time() as f32;

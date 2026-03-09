@@ -20,7 +20,7 @@ use plant_election_provider::{
 	bounds::{ElectionBounds, ElectionBoundsBuilder},
 	onchain, BoundedSupports, SequentialPhragmen, Support, VoteWeight,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
 		ConstU64, EitherOfDiverse, FindAuthor, Get, Imbalance, OnUnbalanced, OneSessionHandler,
@@ -28,7 +28,7 @@ use topsoil_support::{
 	},
 	weights::constants::RocksDbWeight,
 };
-use topsoil_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_core::system::{EnsureRoot, EnsureSignedBy};
 
 pub const INIT_TIMESTAMP: u64 = 30_000;
 pub const BLOCK_TIME: u64 = 1000;
@@ -75,12 +75,12 @@ pub fn is_disabled(controller: AccountId) -> bool {
 	Session::disabled_validators().contains(&validator_index)
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Authorship: plant_authorship,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
@@ -96,7 +96,7 @@ pub struct Author11;
 impl FindAuthor<AccountId> for Author11 {
 	fn find_author<'a, I>(_digests: I) -> Option<AccountId>
 	where
-		I: 'a + IntoIterator<Item = (topsoil_support::ConsensusEngineId, &'a [u8])>,
+		I: 'a + IntoIterator<Item = (topsoil_core::ConsensusEngineId, &'a [u8])>,
 	{
 		Some(11)
 	}
@@ -111,15 +111,15 @@ parameter_types! {
 	pub static MaxControllersInDeprecationBatch: u32 = 5900;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type DbWeight = RocksDbWeight;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<Balance>;
 }
 #[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
 impl plant_balances::Config for Test {
-	type MaxLocks = topsoil_support::traits::ConstU32<1024>;
+	type MaxLocks = topsoil_core::traits::ConstU32<1024>;
 	type Balance = Balance;
 	type ExistentialDeposit = ExistentialDeposit;
 	type AccountStore = System;
@@ -324,7 +324,7 @@ where
 }
 
 pub(crate) type StakingCall = crate::Call<Test>;
-pub(crate) type TestCall = <Test as topsoil_system::Config>::RuntimeCall;
+pub(crate) type TestCall = <Test as topsoil_core::system::Config>::RuntimeCall;
 
 parameter_types! {
 	// if true, skips the try-state for the test running.
@@ -446,7 +446,7 @@ impl ExtBuilder {
 	}
 	fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
-		let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut storage = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let ed = ExistentialDeposit::get();
 
 		let _ = plant_balances::GenesisConfig::<Test> {
@@ -637,7 +637,7 @@ pub(crate) fn bond_virtual_nominator(
 pub(crate) fn run_to_block(n: BlockNumber) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		topsoil_system::RunToBlockHooks::default().after_initialize(|bn| {
+		topsoil_core::system::RunToBlockHooks::default().after_initialize(|bn| {
 			Timestamp::set_timestamp(bn * BLOCK_TIME + INIT_TIMESTAMP);
 		}),
 	);

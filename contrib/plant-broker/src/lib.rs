@@ -41,12 +41,12 @@ extern crate alloc;
 /// The log target for this pallet.
 const LOG_TARGET: &str = "runtime::broker";
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use alloc::vec::Vec;
 	use subsoil::runtime::traits::{Convert, ConvertBack, MaybeConvert};
-	use topsoil_support::{
+	use topsoil_core::{
 		pallet_prelude::{DispatchResult, DispatchResultWithPostInfo, *},
 		traits::{
 			fungible::{Balanced, Credit, Mutate},
@@ -54,7 +54,7 @@ pub mod pallet {
 		},
 		PalletId,
 	};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
 
@@ -63,10 +63,10 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Weight information for all calls of this pallet.
 		type WeightInfo: WeightInfo;
@@ -587,7 +587,7 @@ pub mod pallet {
 		CreditPurchaseTooSmall,
 	}
 
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
@@ -597,7 +597,7 @@ pub mod pallet {
 	#[pallet::genesis_build]
 	impl<T: Config> BuildGenesisConfig for GenesisConfig<T> {
 		fn build(&self) {
-			topsoil_system::Pallet::<T>::inc_providers(&Pallet::<T>::account_id());
+			topsoil_core::system::Pallet::<T>::inc_providers(&Pallet::<T>::account_id());
 		}
 	}
 

@@ -36,7 +36,7 @@ use std::{path::Path, sync::Arc};
 use subsoil::api::ProvideRuntimeApi;
 use subsoil::core::crypto::Pair;
 use subsoil::runtime::{generic, traits::Block as BlockT, SaturatedConversion};
-use topsoil_system_rpc_runtime_api::AccountNonceApi;
+use topsoil_core_rpc_runtime_api::AccountNonceApi;
 
 /// Host functions required for kitchensink runtime and Substrate node.
 #[cfg(not(feature = "runtime-benchmarks"))]
@@ -112,22 +112,22 @@ pub fn create_extrinsic(
 	let tip = 0;
 	let tx_ext: soil_test_staging_node_runtime::TxExtension =
 		(
-			topsoil_system::AuthorizeCall::<soil_test_staging_node_runtime::Runtime>::new(),
-			topsoil_system::CheckNonZeroSender::<soil_test_staging_node_runtime::Runtime>::new(),
-			topsoil_system::CheckSpecVersion::<soil_test_staging_node_runtime::Runtime>::new(),
-			topsoil_system::CheckTxVersion::<soil_test_staging_node_runtime::Runtime>::new(),
-			topsoil_system::CheckGenesis::<soil_test_staging_node_runtime::Runtime>::new(),
-			topsoil_system::CheckEra::<soil_test_staging_node_runtime::Runtime>::from(generic::Era::mortal(
+			topsoil_core::system::AuthorizeCall::<soil_test_staging_node_runtime::Runtime>::new(),
+			topsoil_core::system::CheckNonZeroSender::<soil_test_staging_node_runtime::Runtime>::new(),
+			topsoil_core::system::CheckSpecVersion::<soil_test_staging_node_runtime::Runtime>::new(),
+			topsoil_core::system::CheckTxVersion::<soil_test_staging_node_runtime::Runtime>::new(),
+			topsoil_core::system::CheckGenesis::<soil_test_staging_node_runtime::Runtime>::new(),
+			topsoil_core::system::CheckEra::<soil_test_staging_node_runtime::Runtime>::from(generic::Era::mortal(
 				period,
 				best_block.saturated_into(),
 			)),
-			topsoil_system::CheckNonce::<soil_test_staging_node_runtime::Runtime>::from(nonce),
-			topsoil_system::CheckWeight::<soil_test_staging_node_runtime::Runtime>::new(),
+			topsoil_core::system::CheckNonce::<soil_test_staging_node_runtime::Runtime>::from(nonce),
+			topsoil_core::system::CheckWeight::<soil_test_staging_node_runtime::Runtime>::new(),
 			plant_asset_conversion_tx_payment::ChargeAssetTxPayment::<
 				soil_test_staging_node_runtime::Runtime,
 			>::from(tip, None),
 			plant_metadata_hash_extension::CheckMetadataHash::new(false),
-			topsoil_system::WeightReclaim::<soil_test_staging_node_runtime::Runtime>::new(),
+			topsoil_core::system::WeightReclaim::<soil_test_staging_node_runtime::Runtime>::new(),
 		);
 
 	let raw_payload = soil_test_staging_node_runtime::SignedPayload::from_raw(
@@ -1095,17 +1095,17 @@ mod tests {
 					value: amount,
 				});
 
-				let authorize_call = topsoil_system::AuthorizeCall::new();
-				let check_non_zero_sender = topsoil_system::CheckNonZeroSender::new();
-				let check_spec_version = topsoil_system::CheckSpecVersion::new();
-				let check_tx_version = topsoil_system::CheckTxVersion::new();
-				let check_genesis = topsoil_system::CheckGenesis::new();
-				let check_era = topsoil_system::CheckEra::from(Era::Immortal);
-				let check_nonce = topsoil_system::CheckNonce::from(index);
-				let check_weight = topsoil_system::CheckWeight::new();
+				let authorize_call = topsoil_core::system::AuthorizeCall::new();
+				let check_non_zero_sender = topsoil_core::system::CheckNonZeroSender::new();
+				let check_spec_version = topsoil_core::system::CheckSpecVersion::new();
+				let check_tx_version = topsoil_core::system::CheckTxVersion::new();
+				let check_genesis = topsoil_core::system::CheckGenesis::new();
+				let check_era = topsoil_core::system::CheckEra::from(Era::Immortal);
+				let check_nonce = topsoil_core::system::CheckNonce::from(index);
+				let check_weight = topsoil_core::system::CheckWeight::new();
 				let tx_payment =
 					plant_asset_conversion_tx_payment::ChargeAssetTxPayment::from(0, None);
-				let weight_reclaim = topsoil_system::WeightReclaim::new();
+				let weight_reclaim = topsoil_core::system::WeightReclaim::new();
 				let metadata_hash = plant_metadata_hash_extension::CheckMetadataHash::new(false);
 				let tx_ext: TxExtension = (
 					authorize_call,

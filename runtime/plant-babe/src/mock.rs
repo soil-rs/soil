@@ -26,19 +26,19 @@ use plant_election_provider::{
 	onchain, SequentialPhragmen,
 };
 use plant_session::historical as pallet_session_historical;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::{ConstU128, ConstU32, ConstU64, OnInitialize},
 };
 
 type DummyValidatorId = u64;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Authorship: plant_authorship,
 		Balances: plant_balances,
 		Historical: pallet_session_historical,
@@ -50,13 +50,13 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u128>;
 }
 
-impl<C> topsoil_system::offchain::CreateTransactionBase<C> for Test
+impl<C> topsoil_core::system::offchain::CreateTransactionBase<C> for Test
 where
 	RuntimeCall: From<C>,
 {
@@ -64,7 +64,7 @@ where
 	type Extrinsic = TestXt<RuntimeCall, ()>;
 }
 
-impl<C> topsoil_system::offchain::CreateBare<C> for Test
+impl<C> topsoil_core::system::offchain::CreateBare<C> for Test
 where
 	RuntimeCall: From<C>,
 {
@@ -81,7 +81,7 @@ subsoil::impl_opaque_keys! {
 
 impl plant_session::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type ValidatorId = <Self as topsoil_system::Config>::AccountId;
+	type ValidatorId = <Self as topsoil_core::system::Config>::AccountId;
 	type ValidatorIdOf = subsoil::runtime::traits::ConvertInto;
 	type ShouldEndSession = Babe;
 	type NextSessionRotation = Babe;
@@ -156,7 +156,7 @@ impl plant_staking::Config for Test {
 	type Currency = Balances;
 	type SessionsPerEra = SessionsPerEra;
 	type BondingDuration = BondingDuration;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
 	type UnixTime = plant_timestamp::Pallet<Test>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
@@ -193,7 +193,7 @@ impl Config for Test {
 }
 
 pub fn go_to_block(n: u64, s: u64) {
-	use topsoil_support::traits::OnFinalize;
+	use topsoil_core::traits::OnFinalize;
 
 	Babe::on_finalize(System::block_number());
 	Session::on_finalize(System::block_number());
@@ -323,7 +323,7 @@ pub fn new_test_ext_raw_authorities(
 	authorities: Vec<AuthorityId>,
 ) -> subsoil::io::TestExternalities {
 	subsoil::tracing::try_init_simple();
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let balances: Vec<_> = (0..authorities.len()).map(|i| (i as u64, 10_000_000)).collect();
 
@@ -379,7 +379,7 @@ pub fn generate_equivocation_proof(
 	let make_header = || {
 		// We don't want to change any state, so we build the headers in a transaction and revert it
 		// afterward.
-		topsoil_support::storage::with_transaction(|| {
+		topsoil_core::storage::with_transaction(|| {
 			let parent_hash = System::parent_hash();
 			let pre_digest = make_secondary_plain_pre_digest(offender_authority_index, slot);
 			System::reset_events();

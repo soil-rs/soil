@@ -9,20 +9,20 @@
 #![cfg(feature = "try-runtime")]
 
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl,
 	migrations::VersionedMigration,
 	parameter_types,
 	traits::{GetStorageVersion, OnRuntimeUpgrade, StorageVersion, UncheckedOnRuntimeUpgrade},
 	weights::constants::RocksDbWeight,
 };
-use topsoil_system::Config;
+use topsoil_core::system::Config;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod dummy_pallet {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(4);
 
@@ -31,13 +31,13 @@ mod dummy_pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::storage]
 	pub type SomeStorage<T: Config> = StorageValue<_, u32, ValueQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
 		_config: core::marker::PhantomData<T>,
@@ -54,14 +54,14 @@ impl dummy_pallet::Config for Test {}
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system = 0,
+		System: topsoil_core::system = 0,
 		DummyPallet: dummy_pallet = 1,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
@@ -71,7 +71,7 @@ impl topsoil_system::Config for Test {
 }
 
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-	let storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let storage = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext: subsoil::io::TestExternalities = subsoil::io::TestExternalities::from(storage);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
@@ -100,7 +100,7 @@ impl<T: dummy_pallet::Config, const S: u32> UncheckedOnRuntimeUpgrade
 		Ok(PreUpgradeReturnBytes::get().to_vec())
 	}
 
-	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 		dummy_pallet::SomeStorage::<T>::put(S);
 		RocksDbWeight::get().reads_writes(UpgradeReads::get(), UpgradeWrites::get())
 	}

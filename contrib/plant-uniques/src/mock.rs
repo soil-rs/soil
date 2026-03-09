@@ -10,24 +10,24 @@ use super::*;
 use crate as plant_uniques;
 
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl,
 	traits::{AsEnsureOriginWithArg, ConstU32, ConstU64},
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Uniques: plant_uniques,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -42,8 +42,8 @@ impl Config for Test {
 	type CollectionId = u32;
 	type ItemId = u32;
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_core::system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<u64>;
 	type Locker = ();
 	type CollectionDeposit = ConstU64<2>;
 	type ItemDeposit = ConstU64<1>;
@@ -59,7 +59,7 @@ impl Config for Test {
 }
 
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));

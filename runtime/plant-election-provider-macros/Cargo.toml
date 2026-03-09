@@ -27,4 +27,4 @@ syn = { features = ["full", "visit"], workspace = true }
 codec = { workspace = true, default-features = true }
 scale-info = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
-topsoil-support = { workspace = true, default-features = true }
+topsoil-core = { workspace = true, default-features = true }

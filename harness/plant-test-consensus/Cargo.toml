@@ -26,8 +26,7 @@ plant-timestamp = { workspace = true, default-features = true }
 scale-info = { features = ["derive"], workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 topsoil-benchmarking = { workspace = true, default-features = true }
-topsoil-support = { workspace = true, default-features = true }
-topsoil-system = { workspace = true, default-features = true }
+topsoil-core = { workspace = true, default-features = true }
 
 [features]
 runtime-benchmarks = [
@@ -38,6 +37,5 @@ runtime-benchmarks = [
 	"plant-session/runtime-benchmarks",
 	"plant-staking/runtime-benchmarks",
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 ]

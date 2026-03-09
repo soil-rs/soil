@@ -24,7 +24,7 @@ fn can_pause_specific_call() {
 
 		assert_err!(
 			call_transfer(2, 1).dispatch(RuntimeOrigin::signed(2)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 		assert_ok!(call_transfer_keep_alive(3, 1).dispatch(RuntimeOrigin::signed(3)));
 	});
@@ -47,7 +47,7 @@ fn can_pause_all_calls_in_pallet_except_on_whitelist() {
 
 		assert_err!(
 			batch_call.clone().dispatch(RuntimeOrigin::signed(0)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 	});
 }
@@ -62,7 +62,7 @@ fn can_unpause_specific_call() {
 		));
 		assert_err!(
 			call_transfer(2, 1).dispatch(RuntimeOrigin::signed(2)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 
 		assert_ok!(TxPause::unpause(
@@ -88,7 +88,7 @@ fn can_filter_balance_in_batch_when_paused() {
 		System::assert_last_event(
 			plant_utility::Event::BatchInterrupted {
 				index: 0,
-				error: topsoil_system::Error::<Test>::CallFiltered.into(),
+				error: topsoil_core::system::Error::<Test>::CallFiltered.into(),
 			}
 			.into(),
 		);
@@ -108,7 +108,7 @@ fn can_filter_balance_in_proxy_when_paused() {
 		assert_ok!(Proxy::proxy(RuntimeOrigin::signed(2), 1, None, Box::new(call_transfer(1, 1))));
 		System::assert_last_event(
 			plant_proxy::Event::ProxyExecuted {
-				result: DispatchError::from(topsoil_system::Error::<Test>::CallFiltered).into(),
+				result: DispatchError::from(topsoil_core::system::Error::<Test>::CallFiltered).into(),
 			}
 			.into(),
 		);
@@ -147,7 +147,7 @@ fn fails_to_pause_unpausable_call_when_other_call_is_paused() {
 		assert_ok!(call_transfer_keep_alive(3, 1).dispatch(RuntimeOrigin::signed(3)));
 		assert_err!(
 			call_transfer(2, 1).dispatch(RuntimeOrigin::signed(0)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 	});
 }

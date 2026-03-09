@@ -12,8 +12,8 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature, MultiSigner,
 };
-use topsoil_support::derive_impl;
-use topsoil_system::{CheckEra, CheckGenesis, CheckNonce, CheckTxVersion};
+use topsoil_core::derive_impl;
+use topsoil_core::system::{CheckEra, CheckGenesis, CheckNonce, CheckTxVersion};
 use plant_verify_signature::VerifySignature;
 
 #[docify::export]
@@ -49,10 +49,10 @@ mod example_runtime {
 	pub type BlockNumber = u32;
 
 	// For testing the pallet, we construct a mock runtime.
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Runtime
 		{
-			System: topsoil_system,
+			System: topsoil_core::system,
 			VerifySignaturePallet: plant_verify_signature,
 
 			Assets: plant_assets,
@@ -60,8 +60,8 @@ mod example_runtime {
 		}
 	);
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Runtime {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Runtime {
 		type AccountId = AccountId;
 		type Block = Block;
 		type Lookup = IdentityLookup<Self::AccountId>;

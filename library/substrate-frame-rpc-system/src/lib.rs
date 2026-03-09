@@ -23,7 +23,7 @@ use subsoil::block_builder::BlockBuilder;
 use subsoil::core::{hexdisplay::HexDisplay, Bytes};
 use subsoil::runtime::{legacy, traits};
 
-pub use topsoil_system_rpc_runtime_api::AccountNonceApi;
+pub use topsoil_core_rpc_runtime_api::AccountNonceApi;
 
 /// System RPC methods.
 #[docify::export]

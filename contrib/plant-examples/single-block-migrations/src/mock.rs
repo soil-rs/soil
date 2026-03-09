@@ -7,24 +7,24 @@
 #![cfg(any(all(feature = "try-runtime", test), doc))]
 
 use crate::*;
-use topsoil_support::{derive_impl, weights::constants::ParityDbWeight};
+use topsoil_core::{derive_impl, weights::constants::ParityDbWeight};
 
 // Re-export crate as its pallet name for construct_runtime.
 use crate as pallet_example_storage_migration;
 
-type Block = topsoil_system::mocking::MockBlock<MockRuntime>;
+type Block = topsoil_core::system::mocking::MockBlock<MockRuntime>;
 
 // For testing the pallet, we construct a mock runtime.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub struct MockRuntime {
-		System: topsoil_system::{Pallet, Call, Config<T>, Storage, Event<T>},
+		System: topsoil_core::system::{Pallet, Call, Config<T>, Storage, Event<T>},
 		Balances: plant_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
 		Example: pallet_example_storage_migration::{Pallet, Call, Storage},
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for MockRuntime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for MockRuntime {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 	type DbWeight = ParityDbWeight;

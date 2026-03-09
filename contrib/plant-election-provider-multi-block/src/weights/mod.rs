@@ -16,7 +16,7 @@ mod pallet_election_provider_multi_block_signed_ksm_size;
 mod pallet_election_provider_multi_block_unsigned_ksm_size;
 mod pallet_election_provider_multi_block_verifier_ksm_size;
 
-use topsoil_support::pallet_prelude::Weight;
+use topsoil_core::pallet_prelude::Weight;
 
 pub mod traits {
 	use super::*;

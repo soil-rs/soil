@@ -15,14 +15,14 @@ use topsoil_benchmarking::{
 	v1::{account, BenchmarkError},
 	v2::*,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_ok, ensure,
 	traits::{
 		tokens::{ConversionFromAssetBalance, PaymentStatus},
 		EnsureOrigin, OnInitialize,
 	},
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 /// Trait describing factory functions for dispatchables' parameters.
 pub trait ArgumentsFactory<AssetKind, Beneficiary> {
@@ -86,7 +86,7 @@ fn setup_pot_account<T: Config<I>, I: 'static>() {
 }
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 // Create the arguments for the `spend` dispatchable.

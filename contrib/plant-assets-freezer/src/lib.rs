@@ -57,7 +57,7 @@ pub mod pallet {
 	use super::*;
 
 	#[pallet::config(with_default)]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config + plant_assets::Config<I> {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config + plant_assets::Config<I> {
 		/// The overarching freeze reason.
 		#[pallet::no_default_bounds]
 		type RuntimeFreezeReason: Parameter + Member + MaxEncodedLen + Copy + VariantCount;
@@ -66,7 +66,7 @@ pub mod pallet {
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::error]

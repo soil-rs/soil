@@ -15,7 +15,7 @@ use plant_election_provider::{
 	bounds::{CountBound, DataProviderBounds},
 	SortedListProvider,
 };
-use topsoil_support::traits::PalletInfoAccess;
+use topsoil_core::traits::PalletInfoAccess;
 
 /// Execute create a snapshot from topsoil-staking.
 pub async fn execute<Runtime, Block>(voter_limit: Option<usize>, currency_unit: u64, ws_url: String)
@@ -24,7 +24,7 @@ where
 	Block: BlockT + DeserializeOwned,
 	Block::Header: DeserializeOwned,
 {
-	use topsoil_support::storage::generator::StorageMap;
+	use topsoil_core::storage::generator::StorageMap;
 
 	let mut ext = Builder::<Block>::new()
 		.mode(Mode::Online(OnlineConfig {

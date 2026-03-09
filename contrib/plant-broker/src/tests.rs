@@ -12,12 +12,12 @@ use subsoil::runtime::{
 	traits::{BadOrigin, Get},
 	DispatchError, Perbill, TokenError,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok,
 	traits::nonfungible::{Inspect as NftInspect, Mutate, Transfer},
 	BoundedVec,
 };
-use topsoil_system::RawOrigin::Root;
+use topsoil_core::system::RawOrigin::Root;
 use CoreAssignment::*;
 use CoretimeTraceItem::*;
 use Finality::*;

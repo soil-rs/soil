@@ -11,20 +11,20 @@ use crate::{
 use subsoil::std::prelude::*;
 use topsoil_benchmarking::v2::*;
 use plant_election_provider::{ElectionProvider, NposSolution};
-use topsoil_support::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
 
 #[benchmarks(where
 	T: crate::Config + crate::signed::Config + crate::unsigned::Config,
-	<T as topsoil_system::Config>::RuntimeEvent: TryInto<crate::verifier::Event<T>>
+	<T as topsoil_core::system::Config>::RuntimeEvent: TryInto<crate::verifier::Event<T>>
 )]
 mod benchmarks {
 	use super::*;
 
 	fn events_for<T: Config>() -> Vec<Event<T>>
 	where
-		<T as topsoil_system::Config>::RuntimeEvent: TryInto<Event<T>>,
+		<T as topsoil_core::system::Config>::RuntimeEvent: TryInto<Event<T>>,
 	{
-		topsoil_system::Pallet::<T>::read_events_for_pallet::<Event<T>>()
+		topsoil_core::system::Pallet::<T>::read_events_for_pallet::<Event<T>>()
 	}
 
 	#[benchmark(pov_mode = Measured)]

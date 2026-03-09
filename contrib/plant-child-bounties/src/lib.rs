@@ -53,7 +53,7 @@ const LOG_TARGET: &str = "runtime::child-bounties";
 
 use alloc::vec::Vec;
 
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	Currency,
 	ExistenceRequirement::{AllowDeath, KeepAlive},
 	Get, OnUnbalanced, ReservableCurrency, WithdrawReasons,
@@ -69,8 +69,8 @@ use subsoil::runtime::{
 
 use scale_info::TypeInfo;
 use plant_bounties::BountyStatus;
-use topsoil_support::pallet_prelude::*;
-use topsoil_system::pallet_prelude::{
+use topsoil_core::pallet_prelude::*;
+use topsoil_core::system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
 pub use weights::WeightInfo;
@@ -80,7 +80,7 @@ pub use pallet::*;
 pub type BalanceOf<T> = plant_treasury::BalanceOf<T>;
 pub type BountiesError<T> = plant_bounties::Error<T>;
 pub type BountyIndex = plant_bounties::BountyIndex;
-pub type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+pub type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 pub type BlockNumberFor<T> =
 	<<T as plant_treasury::Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
@@ -126,7 +126,7 @@ pub enum ChildBountyStatus<AccountId, BlockNumber> {
 	},
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 
 	use super::*;
@@ -140,7 +140,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config:
-		topsoil_system::Config + plant_treasury::Config + plant_bounties::Config
+		topsoil_core::system::Config + plant_treasury::Config + plant_bounties::Config
 	{
 		/// Maximum number of child bounties that can be added to a parent bounty.
 		#[pallet::constant]
@@ -153,7 +153,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;

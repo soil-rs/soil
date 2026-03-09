@@ -13,7 +13,7 @@ use scale_info::{
 	Path, Type, TypeInfo,
 };
 use subsoil::runtime::traits::{Member, Zero};
-use topsoil_support::{
+use topsoil_core::{
 	traits::{ConstU32, Get},
 	BoundedVec, CloneNoBound, DebugNoBound, PartialEqNoBound,
 };

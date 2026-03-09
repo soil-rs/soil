@@ -10,25 +10,25 @@
 
 use crate::{self as plant_indices, Config};
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{derive_impl, parameter_types};
+use topsoil_core::{derive_impl, parameter_types};
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 parameter_types! {
 	pub static IndexDeposit: u64 = 1;
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Indices: plant_indices,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Nonce = u64;
 	type Lookup = Indices;
 	type Block = Block;
@@ -49,7 +49,7 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
 		..Default::default()

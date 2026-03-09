@@ -11,7 +11,7 @@
 use super::*;
 
 use topsoil_benchmarking::v2::*;
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 use alloc::vec;
 use subsoil::runtime::traits::Bounded;
@@ -550,8 +550,8 @@ mod benchmarks {
 	impl_benchmark_test_suite!(
 		Society,
 		subsoil::io::TestExternalities::from(
-			<topsoil_system::GenesisConfig::<crate::mock::Test> as subsoil::runtime::BuildStorage>::build_storage(
-				&topsoil_system::GenesisConfig::default()).unwrap()
+			<topsoil_core::system::GenesisConfig::<crate::mock::Test> as subsoil::runtime::BuildStorage>::build_storage(
+				&topsoil_core::system::GenesisConfig::default()).unwrap()
 			),
 		crate::mock::Test
 	);

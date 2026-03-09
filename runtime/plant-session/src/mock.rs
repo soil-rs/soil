@@ -21,7 +21,7 @@ use subsoil::runtime::{
 	BuildStorage,
 };
 use plant_balances::{self, AccountData};
-use topsoil_support::{derive_impl, parameter_types, traits::ConstU64};
+use topsoil_core::{derive_impl, parameter_types, traits::ConstU64};
 
 subsoil::impl_opaque_keys! {
 	pub struct MockSessionKeys {
@@ -64,13 +64,13 @@ impl OpaqueKeys for PreUpgradeMockSessionKeys {
 	}
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 #[cfg(feature = "historical")]
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Session: plant_session,
 		Balances: plant_balances,
 		Historical: pallet_session_historical,
@@ -78,10 +78,10 @@ topsoil_support::construct_runtime!(
 );
 
 #[cfg(not(feature = "historical"))]
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Session: plant_session,
 		Balances: plant_balances,
 	}
@@ -215,14 +215,14 @@ pub fn session_events_since_last_call() -> Vec<plant_session::Event<Test>> {
 }
 
 pub fn session_hold(who: u64) -> u64 {
-	<Balances as topsoil_support::traits::fungible::InspectHold<_>>::balance_on_hold(
+	<Balances as topsoil_core::traits::fungible::InspectHold<_>>::balance_on_hold(
 		&crate::HoldReason::Keys.into(),
 		&who,
 	)
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let ed = <Test as plant_balances::Config>::ExistentialDeposit::get();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![
@@ -254,8 +254,8 @@ pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	subsoil::io::TestExternalities::new(t)
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = AccountData<u64>;
 	type RuntimeEvent = RuntimeEvent;

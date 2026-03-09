@@ -20,8 +20,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 subsoil = { workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 plant-transaction-payment = { workspace = true }
 
 # Other dependencies
@@ -39,8 +38,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"plant-transaction-payment/std",
 	"scale-info/std",
 	"serde",
@@ -48,16 +46,14 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-assets/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"plant-transaction-payment/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-assets/try-runtime",
 	"plant-authorship/try-runtime",
 	"plant-balances/try-runtime",

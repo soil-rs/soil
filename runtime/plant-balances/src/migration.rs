@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
 use super::*;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{OnRuntimeUpgrade, PalletInfoAccess},
 	weights::Weight,
@@ -22,7 +22,7 @@ fn migrate_v0_to_v1<T: Config<I>, I: 'static>(accounts: &[T::AccountId]) -> Weig
 		Pallet::<T, I>::deactivate(total);
 
 		// Remove the old `StorageVersion` type.
-		topsoil_support::storage::unhashed::kill(&topsoil_support::storage::storage_prefix(
+		topsoil_core::storage::unhashed::kill(&topsoil_core::storage::storage_prefix(
 			Pallet::<T, I>::name().as_bytes(),
 			"StorageVersion".as_bytes(),
 		));
@@ -70,7 +70,7 @@ impl<T: Config<I>, I: 'static> OnRuntimeUpgrade for ResetInactive<T, I> {
 
 		if on_chain_version == 1 {
 			// Remove the old `StorageVersion` type.
-			topsoil_support::storage::unhashed::kill(&topsoil_support::storage::storage_prefix(
+			topsoil_core::storage::unhashed::kill(&topsoil_core::storage::storage_prefix(
 				Pallet::<T, I>::name().as_bytes(),
 				"StorageVersion".as_bytes(),
 			));

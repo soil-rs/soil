@@ -12,7 +12,7 @@ use subsoil::metadata_ir::{
 	RuntimeApiMethodParamMetadataIR,
 };
 use subsoil::runtime::traits::Block as BlockT;
-use topsoil_support::{derive_impl, traits::ConstU32};
+use topsoil_core::{derive_impl, traits::ConstU32};
 
 pub type BlockNumber = u64;
 pub type Header = subsoil::runtime::generic::Header<u32, subsoil::runtime::traits::BlakeTwo256>;
@@ -20,12 +20,12 @@ pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
 	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
-	type BaseCallFilter = topsoil_support::traits::Everything;
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -46,10 +46,10 @@ impl topsoil_system::Config for Runtime {
 	type MaxConsumers = ConstU32<16>;
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 	}
 );
 

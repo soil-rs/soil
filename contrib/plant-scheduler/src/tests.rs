@@ -13,7 +13,7 @@ use crate::mock::{
 };
 use subsoil::assert_eq_uvec;
 use subsoil::runtime::traits::Hash;
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok,
 	traits::{Contains, GetStorageVersion, OnInitialize, QueryPreimage, StorePreimage},
 	Hashable,
@@ -29,7 +29,7 @@ fn basic_scheduling_works() {
 
 		// BaseCallFilter should be implemented to accept `Logger::log` runtime call which is
 		// implemented for `BaseFilter` in the mock runtime
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 
 		// Schedule call to be executed at the 4th block
 		assert_ok!(Scheduler::do_schedule(
@@ -61,7 +61,7 @@ fn scheduling_with_preimages_works() {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
 
-		let hash = <Test as topsoil_system::Config>::Hashing::hash_of(&call);
+		let hash = <Test as topsoil_core::system::Config>::Hashing::hash_of(&call);
 		let len = call.using_encoded(|x| x.len()) as u32;
 
 		// Important to use here `Bounded::Lookup` to ensure that that the Scheduler can request the
@@ -97,7 +97,7 @@ fn schedule_after_works() {
 		System::run_to_block::<AllPalletsWithSystem>(2);
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 		// This will schedule the call 3 blocks after the next block... so block 3 + 3 = 6
 		assert_ok!(Scheduler::do_schedule(
 			DispatchTime::After(3),
@@ -121,7 +121,7 @@ fn schedule_after_zero_works() {
 		System::run_to_block::<AllPalletsWithSystem>(2);
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 		assert_ok!(Scheduler::do_schedule(
 			DispatchTime::After(0),
 			None,
@@ -1033,7 +1033,7 @@ fn reschedule_works() {
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 		assert_eq!(
 			Scheduler::do_schedule(
 				DispatchTime::At(4),
@@ -1072,7 +1072,7 @@ fn reschedule_named_works() {
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 		assert_eq!(
 			Scheduler::do_schedule_named(
 				[1u8; 32],
@@ -1112,7 +1112,7 @@ fn reschedule_named_periodic_works() {
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 		assert_eq!(
 			Scheduler::do_schedule_named(
 				[1u8; 32],
@@ -1381,11 +1381,11 @@ fn try_schedule_retry_respects_weight_limits() {
 		assert_eq!(Retries::<Test>::iter().count(), 0);
 		assert_eq!(logger::log(), vec![]);
 		// check the `RetryFailed` event happened
-		let events = topsoil_system::Pallet::<Test>::events();
-		let system_event: <Test as topsoil_system::Config>::RuntimeEvent =
+		let events = topsoil_core::system::Pallet::<Test>::events();
+		let system_event: <Test as topsoil_core::system::Config>::RuntimeEvent =
 			Event::RetryFailed { task: (4, 0), id: None }.into();
 		// compare to the last event record
-		let topsoil_system::EventRecord { event, .. } = &events[events.len() - 1];
+		let topsoil_core::system::EventRecord { event, .. } = &events[events.len() - 1];
 		assert_eq!(event, &system_event);
 	});
 }
@@ -1455,8 +1455,8 @@ fn schedule_retry_fails_when_retry_target_block_is_full(named: bool) {
 
 		// Verify `RetryFailed` event was emitted.
 		// Note: `id` is always `None` because `as_retry()` clears the task name.
-		let events = topsoil_system::Pallet::<Test>::events();
-		let retry_failed_event: <Test as topsoil_system::Config>::RuntimeEvent =
+		let events = topsoil_core::system::Pallet::<Test>::events();
+		let retry_failed_event: <Test as topsoil_core::system::Config>::RuntimeEvent =
 			Event::RetryFailed { task: (4, 0), id: None }.into();
 		assert!(
 			events.iter().any(|record| record.event == retry_failed_event),
@@ -1550,7 +1550,7 @@ fn scheduler_handles_periodic_unavailable_preimage() {
 		let max_weight: Weight = <Test as Config>::MaximumWeight::get();
 
 		let call = RuntimeCall::Logger(LoggerCall::log { i: 42, weight: (max_weight / 3) * 2 });
-		let hash = <Test as topsoil_system::Config>::Hashing::hash_of(&call);
+		let hash = <Test as topsoil_core::system::Config>::Hashing::hash_of(&call);
 		let len = call.using_encoded(|x| x.len()) as u32;
 		// Important to use here `Bounded::Lookup` to ensure that we request the hash.
 		let bound = Bounded::Lookup { hash, len };
@@ -1771,9 +1771,9 @@ fn on_initialize_weight_is_correct() {
 		);
 		assert_eq!(IncompleteSince::<Test>::get(), Some(now + 1));
 
-		topsoil_system::Pallet::<Test>::register_extra_weight_unchecked(
+		topsoil_core::system::Pallet::<Test>::register_extra_weight_unchecked(
 			BlockWeights::get().max_block,
-			topsoil_support::dispatch::DispatchClass::Mandatory,
+			topsoil_core::dispatch::DispatchClass::Mandatory,
 		);
 
 		let actual_weight = Scheduler::on_initialize(444); // block number unused
@@ -2100,7 +2100,7 @@ fn migration_to_v4_works() {
 					maybe_periodic: Some((456u64, 10)),
 				}),
 			];
-			topsoil_support::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
+			topsoil_core::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
 		}
 
 		Scheduler::migrate_v1_to_v4();
@@ -2255,7 +2255,7 @@ fn test_migrate_origin() {
 					_phantom: Default::default(),
 				}),
 			];
-			topsoil_support::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
+			topsoil_core::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
 		}
 
 		Scheduler::migrate_origin::<u32>();
@@ -2363,7 +2363,7 @@ fn postponed_named_task_cannot_be_rescheduled() {
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(1000, 0) });
-		let hash = <Test as topsoil_system::Config>::Hashing::hash_of(&call);
+		let hash = <Test as topsoil_core::system::Config>::Hashing::hash_of(&call);
 		let len = call.using_encoded(|x| x.len()) as u32;
 		// Important to use here `Bounded::Lookup` to ensure that we request the hash.
 		let hashed = Bounded::Lookup { hash, len };
@@ -2437,7 +2437,7 @@ fn postponed_named_task_cannot_be_rescheduled() {
 /// Using the scheduler as `v3::Anon` works.
 #[test]
 fn scheduler_v3_anon_basic_works() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2466,7 +2466,7 @@ fn scheduler_v3_anon_basic_works() {
 
 #[test]
 fn scheduler_v3_anon_cancel_works() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2493,7 +2493,7 @@ fn scheduler_v3_anon_cancel_works() {
 
 #[test]
 fn scheduler_v3_anon_reschedule_works() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2540,7 +2540,7 @@ fn scheduler_v3_anon_reschedule_works() {
 
 #[test]
 fn scheduler_v3_anon_next_schedule_time_works() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2577,7 +2577,7 @@ fn scheduler_v3_anon_next_schedule_time_works() {
 /// Re-scheduling a task changes its next dispatch time.
 #[test]
 fn scheduler_v3_anon_reschedule_and_next_schedule_time_work() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2617,7 +2617,7 @@ fn scheduler_v3_anon_reschedule_and_next_schedule_time_work() {
 
 #[test]
 fn scheduler_v3_anon_schedule_agenda_overflows() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	let max: u32 = <Test as Config>::MaxScheduledPerBlock::get();
 
 	new_test_ext().execute_with(|| {
@@ -2652,7 +2652,7 @@ fn scheduler_v3_anon_schedule_agenda_overflows() {
 /// Cancelling and scheduling does not overflow the agenda but fills holes.
 #[test]
 fn scheduler_v3_anon_cancel_and_schedule_fills_holes() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	let max: u32 = <Test as Config>::MaxScheduledPerBlock::get();
 	assert!(max > 3, "This test only makes sense for MaxScheduledPerBlock > 3");
 
@@ -2701,7 +2701,7 @@ fn scheduler_v3_anon_cancel_and_schedule_fills_holes() {
 /// Re-scheduling does not overflow the agenda but fills holes.
 #[test]
 fn scheduler_v3_anon_reschedule_fills_holes() {
-	use topsoil_support::traits::schedule::v3::Anon;
+	use topsoil_core::traits::schedule::v3::Anon;
 	let max: u32 = <Test as Config>::MaxScheduledPerBlock::get();
 	assert!(max > 3, "pre-condition: This test only makes sense for MaxScheduledPerBlock > 3");
 
@@ -2747,7 +2747,7 @@ fn scheduler_v3_anon_reschedule_fills_holes() {
 /// The scheduler can be used as `v3::Named` trait.
 #[test]
 fn scheduler_v3_named_basic_works() {
-	use topsoil_support::traits::schedule::v3::Named;
+	use topsoil_core::traits::schedule::v3::Named;
 
 	new_test_ext().execute_with(|| {
 		let call =
@@ -2780,7 +2780,7 @@ fn scheduler_v3_named_basic_works() {
 /// A named task can be cancelled by its name.
 #[test]
 fn scheduler_v3_named_cancel_named_works() {
-	use topsoil_support::traits::schedule::v3::Named;
+	use topsoil_core::traits::schedule::v3::Named;
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2812,7 +2812,7 @@ fn scheduler_v3_named_cancel_named_works() {
 /// A named task can also be cancelled by its address.
 #[test]
 fn scheduler_v3_named_cancel_without_name_works() {
-	use topsoil_support::traits::schedule::v3::{Anon, Named};
+	use topsoil_core::traits::schedule::v3::{Anon, Named};
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2844,7 +2844,7 @@ fn scheduler_v3_named_cancel_without_name_works() {
 /// A named task can be re-scheduled by its name but not by its address.
 #[test]
 fn scheduler_v3_named_reschedule_named_works() {
-	use topsoil_support::traits::schedule::v3::{Anon, Named};
+	use topsoil_core::traits::schedule::v3::{Anon, Named};
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -2903,7 +2903,7 @@ fn scheduler_v3_named_reschedule_named_works() {
 
 #[test]
 fn scheduler_v3_named_next_schedule_time_works() {
-	use topsoil_support::traits::schedule::v3::{Anon, Named};
+	use topsoil_core::traits::schedule::v3::{Anon, Named};
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
@@ -3095,12 +3095,12 @@ fn reschedule_named_last_task_removes_agenda() {
 /// Ensures that an unavailable call sends an event.
 #[test]
 fn unavailable_call_is_detected() {
-	use topsoil_support::traits::schedule::v3::Named;
+	use topsoil_core::traits::schedule::v3::Named;
 
 	new_test_ext().execute_with(|| {
 		let call =
 			RuntimeCall::Logger(LoggerCall::log { i: 42, weight: Weight::from_parts(10, 0) });
-		let hash = <Test as topsoil_system::Config>::Hashing::hash_of(&call);
+		let hash = <Test as topsoil_core::system::Config>::Hashing::hash_of(&call);
 		let len = call.using_encoded(|x| x.len()) as u32;
 		// Important to use here `Bounded::Lookup` to ensure that we request the hash.
 		let bound = Bounded::Lookup { hash, len };
@@ -3148,7 +3148,7 @@ fn postponed_task_is_still_available() {
 			4,
 			None,
 			128,
-			Box::new(RuntimeCall::from(topsoil_system::Call::remark {
+			Box::new(RuntimeCall::from(topsoil_core::system::Call::remark {
 				remark: vec![0u8; 3 * 1024 * 1024],
 			}))
 		));
@@ -3186,7 +3186,7 @@ fn on_initialize_misses_blocks() {
 			schedule_at,
 			None,
 			128,
-			Box::new(RuntimeCall::from(topsoil_system::Call::remark {
+			Box::new(RuntimeCall::from(topsoil_core::system::Call::remark {
 				remark: vec![0u8; 3 * 1024 * 1024],
 			}))
 		));
@@ -3221,7 +3221,7 @@ fn on_initialize_runs_twice_for_the_same_block() {
 			now,
 			None,
 			128,
-			Box::new(RuntimeCall::from(topsoil_system::Call::remark {
+			Box::new(RuntimeCall::from(topsoil_core::system::Call::remark {
 				remark: vec![0u8; 3 * 1024 * 1024],
 			}))
 		));

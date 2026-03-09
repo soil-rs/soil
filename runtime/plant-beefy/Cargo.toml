@@ -13,8 +13,7 @@ workspace = true
 
 [dependencies]
 codec = { features = ["derive"], workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 log = { workspace = true }
 plant-authorship = { workspace = true }
 plant-session = { workspace = true }
@@ -36,8 +35,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"plant-election-provider/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"plant-authorship/std",
 	"plant-balances/std",
@@ -51,8 +49,7 @@ std = [
 ]
 try-runtime = [
 	"plant-election-provider/try-runtime",
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-authorship/try-runtime",
 	"plant-balances/try-runtime",
 	"plant-offences/try-runtime",

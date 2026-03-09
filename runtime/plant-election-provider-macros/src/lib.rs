@@ -54,7 +54,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// ```ignore
 /// # use plant_election_provider_macros::generate_solution_type;
 /// # use subsoil::arithmetic::per_things::Perbill;
-/// # use topsoil_support::traits::ConstU32;
+/// # use topsoil_core::traits::ConstU32;
 /// generate_solution_type!(pub struct TestSolution::<
 ///     VoterIndex = u16,
 ///     TargetIndex = u8,
@@ -100,7 +100,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// # use plant_election_provider_macros::generate_solution_type;
 /// # use plant_election_provider::NposSolution;
 /// # use subsoil::arithmetic::per_things::Perbill;
-/// # use topsoil_support::traits::ConstU32;
+/// # use topsoil_core::traits::ConstU32;
 /// generate_solution_type!(
 ///     #[compact]
 ///     pub struct TestSolutionCompact::<

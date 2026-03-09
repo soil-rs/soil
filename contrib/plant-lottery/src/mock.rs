@@ -10,16 +10,16 @@ use super::*;
 use crate as plant_lottery;
 
 use subsoil::runtime::{BuildStorage, Perbill};
-use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
+use topsoil_core::{derive_impl, parameter_types, traits::ConstU32};
 use topsoil_test_support::TestRandomness;
-use topsoil_system::EnsureRoot;
+use topsoil_core::system::EnsureRoot;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Lottery: plant_lottery,
 	}
@@ -29,8 +29,8 @@ parameter_types! {
 	pub const AvailableBlockRatio: Perbill = Perbill::one();
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -57,11 +57,11 @@ impl Config for Test {
 	type WeightInfo = ();
 }
 
-pub type SystemCall = topsoil_system::Call<Test>;
+pub type SystemCall = topsoil_core::system::Call<Test>;
 pub type BalancesCall = plant_balances::Call<Test>;
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100)],
 		..Default::default()

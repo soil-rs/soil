@@ -11,8 +11,8 @@
 use subsoil::runtime::{traits::One, Perbill};
 #[cfg(feature = "runtime-benchmarks")]
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{pallet_prelude::*, weights::constants::*};
-use topsoil_system::RawOrigin;
+use topsoil_core::{pallet_prelude::*, weights::constants::*};
+use topsoil_core::system::RawOrigin;
 
 use crate::*;
 
@@ -76,7 +76,7 @@ mod benchmarks {
 		#[block]
 		{
 			Pallet::<T>::on_idle(
-				topsoil_system::Pallet::<T>::block_number(),
+				topsoil_core::system::Pallet::<T>::block_number(),
 				Weight::from_parts(WEIGHT_REF_TIME_PER_MILLIS * 100, WEIGHT_PROOF_SIZE_PER_MB * 5),
 			);
 		}
@@ -92,7 +92,7 @@ mod benchmarks {
 		#[block]
 		{
 			Pallet::<T>::on_idle(
-				topsoil_system::Pallet::<T>::block_number(),
+				topsoil_core::system::Pallet::<T>::block_number(),
 				Weight::from_parts(WEIGHT_REF_TIME_PER_MILLIS * 100, WEIGHT_PROOF_SIZE_PER_KB * 20),
 			);
 		}
@@ -104,7 +104,7 @@ mod benchmarks {
 		#[block]
 		{
 			Pallet::<T>::on_idle(
-				topsoil_system::Pallet::<T>::block_number(),
+				topsoil_core::system::Pallet::<T>::block_number(),
 				T::WeightInfo::empty_on_idle(),
 			);
 		}

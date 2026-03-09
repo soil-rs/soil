@@ -33,8 +33,8 @@ use subsoil::runtime::{
 	traits::TransactionExtension,
 	transaction_validity::{TransactionValidityError, UnknownTransaction},
 };
-use topsoil_support::{pallet_prelude::Weight, DebugNoBound};
-use topsoil_system::Config;
+use topsoil_core::{pallet_prelude::Weight, DebugNoBound};
+use topsoil_core::system::Config;
 
 #[cfg(test)]
 mod tests;

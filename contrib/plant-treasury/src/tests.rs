@@ -14,7 +14,7 @@ use subsoil::runtime::{
 	BuildStorage,
 };
 
-use topsoil_support::{
+use topsoil_core::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok, derive_impl,
 	pallet_prelude::Pays,
 	parameter_types,
@@ -28,22 +28,22 @@ use topsoil_support::{
 use super::*;
 use crate as treasury;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 type UtilityCall = plant_utility::Call<Test>;
 type TreasuryCall = crate::Call<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Treasury: treasury,
 		Utility: plant_utility,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = u128; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -131,17 +131,17 @@ parameter_types! {
 }
 
 pub struct TestSpendOrigin;
-impl topsoil_support::traits::EnsureOrigin<RuntimeOrigin> for TestSpendOrigin {
+impl topsoil_core::traits::EnsureOrigin<RuntimeOrigin> for TestSpendOrigin {
 	type Success = u64;
 	fn try_origin(outer: RuntimeOrigin) -> Result<Self::Success, RuntimeOrigin> {
-		Result::<topsoil_system::RawOrigin<_>, RuntimeOrigin>::from(outer.clone()).and_then(|o| {
+		Result::<topsoil_core::system::RawOrigin<_>, RuntimeOrigin>::from(outer.clone()).and_then(|o| {
 			match o {
-				topsoil_system::RawOrigin::Root => Ok(u64::max_value()),
-				topsoil_system::RawOrigin::Signed(10) => Ok(5),
-				topsoil_system::RawOrigin::Signed(11) => Ok(10),
-				topsoil_system::RawOrigin::Signed(12) => Ok(20),
-				topsoil_system::RawOrigin::Signed(13) => Ok(50),
-				topsoil_system::RawOrigin::Signed(14) => Ok(500),
+				topsoil_core::system::RawOrigin::Root => Ok(u64::max_value()),
+				topsoil_core::system::RawOrigin::Signed(10) => Ok(5),
+				topsoil_core::system::RawOrigin::Signed(11) => Ok(10),
+				topsoil_core::system::RawOrigin::Signed(12) => Ok(20),
+				topsoil_core::system::RawOrigin::Signed(13) => Ok(50),
+				topsoil_core::system::RawOrigin::Signed(14) => Ok(500),
 				_ => Err(outer),
 			}
 		})
@@ -151,7 +151,7 @@ impl topsoil_support::traits::EnsureOrigin<RuntimeOrigin> for TestSpendOrigin {
 		if TEST_SPEND_ORIGIN_TRY_SUCCESFUL_ORIGIN_ERR.with(|i| *i.borrow()) {
 			Err(())
 		} else {
-			Ok(topsoil_system::RawOrigin::Root.into())
+			Ok(topsoil_core::system::RawOrigin::Root.into())
 		}
 	}
 }
@@ -169,7 +169,7 @@ impl<N: Get<u64>> ConversionFromAssetBalance<u64, u32, u64> for MulBy<N> {
 impl Config for Test {
 	type PalletId = TreasuryPalletId;
 	type Currency = plant_balances::Pallet<Test>;
-	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
+	type RejectOrigin = topsoil_core::system::EnsureRoot<u128>;
 	type RuntimeEvent = RuntimeEvent;
 	type SpendPeriod = ConstU64<2>;
 	type Burn = Burn;
@@ -208,7 +208,7 @@ impl ExtBuilder {
 	}
 
 	pub fn build(self) -> subsoil::io::TestExternalities {
-		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		plant_balances::GenesisConfig::<Test> {
 			// Total issuance will be 200 with treasury account initialized at ED.
 			balances: vec![(0, 100), (1, 98), (2, 1)],
@@ -397,7 +397,7 @@ fn treasury_account_doesnt_get_deleted() {
 // This is useful for chain that will just update runtime.
 #[test]
 fn inexistent_account_works() {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(0, 100), (1, 99), (2, 1)],
 		..Default::default()
@@ -435,7 +435,7 @@ fn inexistent_account_works() {
 
 #[test]
 fn genesis_funding_works() {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let initial_funding = 100;
 	plant_balances::GenesisConfig::<Test> {
 		// Total issuance will be 200 with treasury account initialized with 100.
@@ -841,7 +841,7 @@ fn check_status_works() {
 #[test]
 fn try_state_proposals_invariant_1_works() {
 	ExtBuilder::default().build().execute_with(|| {
-		use topsoil_support::pallet_prelude::DispatchError::Other;
+		use topsoil_core::pallet_prelude::DispatchError::Other;
 		// Add a proposal and approve using `spend_local`
 		#[allow(deprecated)]
 		{
@@ -865,7 +865,7 @@ fn try_state_proposals_invariant_1_works() {
 #[test]
 fn try_state_proposals_invariant_2_works() {
 	ExtBuilder::default().build().execute_with(|| {
-		use topsoil_support::pallet_prelude::DispatchError::Other;
+		use topsoil_core::pallet_prelude::DispatchError::Other;
 		#[allow(deprecated)]
 		{
 			// Add a proposal and approve using `spend_local`
@@ -897,7 +897,7 @@ fn try_state_proposals_invariant_2_works() {
 #[test]
 fn try_state_proposals_invariant_3_works() {
 	ExtBuilder::default().build().execute_with(|| {
-		use topsoil_support::pallet_prelude::DispatchError::Other;
+		use topsoil_core::pallet_prelude::DispatchError::Other;
 		// Add a proposal and approve using `spend_local`
 		#[allow(deprecated)]
 		{
@@ -925,7 +925,7 @@ fn try_state_proposals_invariant_3_works() {
 #[test]
 fn try_state_spends_invariant_1_works() {
 	ExtBuilder::default().build().execute_with(|| {
-		use topsoil_support::pallet_prelude::DispatchError::Other;
+		use topsoil_core::pallet_prelude::DispatchError::Other;
 		// Propose and approve a spend
 		assert_ok!({
 			Treasury::spend(RuntimeOrigin::signed(10), Box::new(1), 1, Box::new(6), None)
@@ -947,7 +947,7 @@ fn try_state_spends_invariant_1_works() {
 #[test]
 fn try_state_spends_invariant_2_works() {
 	ExtBuilder::default().build().execute_with(|| {
-		use topsoil_support::pallet_prelude::DispatchError::Other;
+		use topsoil_core::pallet_prelude::DispatchError::Other;
 		// Propose and approve a spend
 		assert_ok!({
 			Treasury::spend(RuntimeOrigin::signed(10), Box::new(1), 1, Box::new(6), None)
@@ -976,7 +976,7 @@ fn try_state_spends_invariant_2_works() {
 #[test]
 fn try_state_spends_invariant_3_works() {
 	ExtBuilder::default().build().execute_with(|| {
-		use topsoil_support::pallet_prelude::DispatchError::Other;
+		use topsoil_core::pallet_prelude::DispatchError::Other;
 		// Propose and approve a spend
 		assert_ok!({
 			Treasury::spend(RuntimeOrigin::signed(10), Box::new(1), 1, Box::new(6), None)

@@ -12,11 +12,11 @@ use alloc::vec::Vec;
 use crate::{historical::Pallet as Historical, Call, Pallet as Session};
 use subsoil::runtime::KeyTypeId;
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::{KeyOwnerProofSystem, OnInitialize},
 };
-use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
+use topsoil_core::system::{pallet_prelude::BlockNumberFor, RawOrigin};
 
 const MAX_VALIDATORS: u32 = 1000;
 
@@ -39,7 +39,7 @@ pub trait Config: crate::Config + crate::historical::Config {
 }
 
 impl<T: Config> OnInitialize<BlockNumberFor<T>> for Pallet<T> {
-	fn on_initialize(n: BlockNumberFor<T>) -> topsoil_support::weights::Weight {
+	fn on_initialize(n: BlockNumberFor<T>) -> topsoil_core::weights::Weight {
 		Session::<T>::on_initialize(n)
 	}
 }
@@ -52,7 +52,7 @@ mod benchmarks {
 	fn set_keys() -> Result<(), BenchmarkError> {
 		let controller = T::setup_benchmark_controller().map_err(BenchmarkError::Stop)?;
 		let (keys, proof) = T::generate_session_keys_and_proof(controller.clone());
-		let controller_key = topsoil_system::Account::<T>::hashed_key_for(&controller);
+		let controller_key = topsoil_core::system::Account::<T>::hashed_key_for(&controller);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(controller_key.into());
 		assert_ok!(Session::<T>::ensure_can_pay_key_deposit(&controller));
 
@@ -68,7 +68,7 @@ mod benchmarks {
 		let (keys, proof) = T::generate_session_keys_and_proof(controller.clone());
 		assert_ok!(Session::<T>::ensure_can_pay_key_deposit(&controller));
 		Session::<T>::set_keys(RawOrigin::Signed(controller.clone()).into(), keys, proof)?;
-		let controller_key = topsoil_system::Account::<T>::hashed_key_for(&controller);
+		let controller_key = topsoil_core::system::Account::<T>::hashed_key_for(&controller);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(controller_key.into());
 
 		#[extrinsic_call]

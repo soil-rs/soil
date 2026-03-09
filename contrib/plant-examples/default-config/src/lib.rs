@@ -6,7 +6,7 @@
 
 //! # Default Config Pallet Example
 //!
-//! A simple example of a FRAME pallet that utilizes [`topsoil_support::derive_impl`] to demonstrate
+//! A simple example of a FRAME pallet that utilizes [`topsoil_core::derive_impl`] to demonstrate
 //! the simpler way to implement `Config` trait of pallets. This example only showcases this in a
 //! `mock.rs` environment, but the same applies to a real runtime as well.
 //!
@@ -17,37 +17,37 @@
 //! - [`pallet::DefaultConfig`], and how it differs from [`pallet::Config`].
 //! - [`struct@pallet::config_preludes::TestDefaultConfig`] and how it implements
 //!   [`pallet::DefaultConfig`].
-//! - Notice how [`pallet::DefaultConfig`] is independent of [`topsoil_system::Config`].
+//! - Notice how [`pallet::DefaultConfig`] is independent of [`topsoil_core::system::Config`].
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
 extern crate alloc;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	/// This pallet is annotated to have a default config. This will auto-generate
 	/// [`DefaultConfig`].
 	///
 	/// It will be an identical, but won't have anything that is `#[pallet::no_default]`.
 	#[pallet::config(with_default)]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching task type. This is coming from the runtime, and cannot have a default.  
 		/// In general, `Runtime*`-oriented types cannot have a sensible default.
 		#[pallet::no_default] // optional. `RuntimeEvent` is automatically excluded as well.
 		type RuntimeTask: Task;
 
 		/// An input parameter to this pallet. This value can have a default, because it is not
-		/// reliant on `topsoil_system::Config` or the overarching runtime in any way.
+		/// reliant on `topsoil_core::system::Config` or the overarching runtime in any way.
 		type WithDefaultValue: Get<u32>;
 
 		/// Same as [`Config::WithDefaultValue`], but we don't intend to define a default for this
 		/// in our tests below.
 		type OverwrittenDefaultValue: Get<u32>;
 
-		/// An input parameter that relies on `<Self as topsoil_system::Config>::AccountId`. This can
-		/// too have a default, as long as it is present in `topsoil_system::DefaultConfig`.
+		/// An input parameter that relies on `<Self as topsoil_core::system::Config>::AccountId`. This can
+		/// too have a default, as long as it is present in `topsoil_core::system::DefaultConfig`.
 		type CanDeriveDefaultFromSystem: Get<Self::AccountId>;
 
 		/// We might choose to declare as one that doesn't have a default, for whatever semantical
@@ -56,7 +56,7 @@ pub mod pallet {
 		type HasNoDefault: Get<u32>;
 
 		/// Some types can technically have no default, such as those the rely on
-		/// `topsoil_system::Config` but are not present in `topsoil_system::DefaultConfig`. For
+		/// `topsoil_core::system::Config` but are not present in `topsoil_core::system::DefaultConfig`. For
 		/// example, a `RuntimeCall` cannot reasonably have a default.
 		#[pallet::no_default] // if we skip this, there will be a compiler error.
 		type CannotHaveDefault: Get<Self::RuntimeCall>;
@@ -73,21 +73,21 @@ pub mod pallet {
 	pub mod config_preludes {
 		// This will help use not need to disambiguate anything when using `derive_impl`.
 		use super::*;
-		use topsoil_support::derive_impl;
+		use topsoil_core::derive_impl;
 
 		/// A type providing default configurations for this pallet in testing environment.
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for TestDefaultConfig {}
 
-		#[topsoil_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_core::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
-			type WithDefaultValue = topsoil_support::traits::ConstU32<42>;
-			type OverwrittenDefaultValue = topsoil_support::traits::ConstU32<42>;
+			type WithDefaultValue = topsoil_core::traits::ConstU32<42>;
+			type OverwrittenDefaultValue = topsoil_core::traits::ConstU32<42>;
 
-			// `topsoil_system::config_preludes::TestDefaultConfig` declares account-id as u64.
-			type CanDeriveDefaultFromSystem = topsoil_support::traits::ConstU64<42>;
+			// `topsoil_core::system::config_preludes::TestDefaultConfig` declares account-id as u64.
+			type CanDeriveDefaultFromSystem = topsoil_core::traits::ConstU64<42>;
 
 			type WithDefaultType = u32;
 			type OverwrittenDefaultType = u32;
@@ -96,18 +96,18 @@ pub mod pallet {
 		/// A type providing default configurations for this pallet in another environment. Examples
 		/// could be a parachain, or a solochain.
 		///
-		/// Appropriate derive for `topsoil_system::DefaultConfig` needs to be provided. In this
-		/// example, we simple derive `topsoil_system::config_preludes::TestDefaultConfig` again.
+		/// Appropriate derive for `topsoil_core::system::DefaultConfig` needs to be provided. In this
+		/// example, we simple derive `topsoil_core::system::config_preludes::TestDefaultConfig` again.
 		pub struct OtherDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for OtherDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for OtherDefaultConfig {}
 
-		#[topsoil_support::register_default_impl(OtherDefaultConfig)]
+		#[topsoil_core::register_default_impl(OtherDefaultConfig)]
 		impl DefaultConfig for OtherDefaultConfig {
-			type WithDefaultValue = topsoil_support::traits::ConstU32<66>;
-			type OverwrittenDefaultValue = topsoil_support::traits::ConstU32<66>;
-			type CanDeriveDefaultFromSystem = topsoil_support::traits::ConstU64<42>;
+			type WithDefaultValue = topsoil_core::traits::ConstU32<66>;
+			type OverwrittenDefaultValue = topsoil_core::traits::ConstU32<66>;
+			type CanDeriveDefaultFromSystem = topsoil_core::traits::ConstU64<42>;
 			type WithDefaultType = u32;
 			type OverwrittenDefaultType = u32;
 		}
@@ -124,23 +124,23 @@ pub mod pallet {
 pub mod tests {
 	use super::*;
 	use pallet::{self as plant_default_config_example, config_preludes::*};
-	use topsoil_support::{derive_impl, parameter_types};
+	use topsoil_core::{derive_impl, parameter_types};
 
-	type Block = topsoil_system::mocking::MockBlock<Runtime>;
+	type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Runtime {
-			System: topsoil_system,
+			System: topsoil_core::system,
 			DefaultPallet: plant_default_config_example,
 		}
 	);
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Runtime {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Runtime {
 		// these items are defined by topsoil-system as `no_default`, so we must specify them here.
 		type Block = Block;
 
-		// all of this is coming from `topsoil_system::config_preludes::TestDefaultConfig`.
+		// all of this is coming from `topsoil_core::system::config_preludes::TestDefaultConfig`.
 
 		// type Nonce = u32;
 		// type BlockNumber = u32;
@@ -148,8 +148,8 @@ pub mod tests {
 		// type Hashing = subsoil::runtime::traits::BlakeTwo256;
 		// type AccountId = u64;
 		// type Lookup = subsoil::runtime::traits::IdentityLookup<u64>;
-		// type BlockHashCount = topsoil_support::traits::ConstU32<10>;
-		// type MaxConsumers = topsoil_support::traits::ConstU32<16>;
+		// type BlockHashCount = topsoil_core::traits::ConstU32<10>;
+		// type MaxConsumers = topsoil_core::traits::ConstU32<16>;
 		// type AccountData = ();
 		// type OnNewAccount = ();
 		// type OnKilledAccount = ();
@@ -159,8 +159,8 @@ pub mod tests {
 		// type BlockWeights = ();
 		// type BlockLength = ();
 		// type DbWeight = ();
-		// type BaseCallFilter = topsoil_support::traits::Everything;
-		// type BlockHashCount = topsoil_support::traits::ConstU64<10>;
+		// type BaseCallFilter = topsoil_core::traits::Everything;
+		// type BlockHashCount = topsoil_core::traits::ConstU64<10>;
 		// type OnSetCode = ();
 
 		// These are marked as `#[inject_runtime_type]`. Hence, they are being injected as
@@ -172,11 +172,11 @@ pub mod tests {
 		// type PalletInfo = PalletInfo;
 
 		// you could still overwrite any of them if desired.
-		type SS58Prefix = topsoil_support::traits::ConstU16<456>;
+		type SS58Prefix = topsoil_core::traits::ConstU16<456>;
 	}
 
 	parameter_types! {
-		pub const SomeCall: RuntimeCall = RuntimeCall::System(topsoil_system::Call::<Runtime>::remark { remark: alloc::vec![] });
+		pub const SomeCall: RuntimeCall = RuntimeCall::System(topsoil_core::system::Call::<Runtime>::remark { remark: alloc::vec![] });
 	}
 
 	#[derive_impl(TestDefaultConfig as pallet::DefaultConfig)]
@@ -184,17 +184,17 @@ pub mod tests {
 		// This cannot have default.
 		type RuntimeTask = RuntimeTask;
 
-		type HasNoDefault = topsoil_support::traits::ConstU32<1>;
+		type HasNoDefault = topsoil_core::traits::ConstU32<1>;
 		type CannotHaveDefault = SomeCall;
 
-		type OverwrittenDefaultValue = topsoil_support::traits::ConstU32<678>;
+		type OverwrittenDefaultValue = topsoil_core::traits::ConstU32<678>;
 		type OverwrittenDefaultType = u128;
 	}
 
 	#[test]
 	fn it_works() {
 		use pallet::{Config, DefaultConfig};
-		use topsoil_support::traits::Get;
+		use topsoil_core::traits::Get;
 
 		// assert one of the value types that is not overwritten.
 		assert_eq!(

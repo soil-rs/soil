@@ -12,7 +12,7 @@ use enumflags2::BitFlag;
 use enumflags2::{bitflags, BitFlags};
 use scale_info::{build::Variants, Path, Type, TypeInfo};
 use subsoil::runtime::BoundedVec;
-use topsoil_support::{traits::Get, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
+use topsoil_core::{traits::Get, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 
 use crate::types::{Data, IdentityInformationProvider};
 

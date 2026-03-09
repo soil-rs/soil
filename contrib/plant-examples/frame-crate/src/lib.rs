@@ -11,7 +11,7 @@ pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -37,13 +37,13 @@ mod tests {
 
 	construct_runtime!(
 		pub enum Runtime {
-			System: topsoil_system,
+			System: topsoil_core::system,
 			MyPallet: my_pallet,
 		}
 	);
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Runtime {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Runtime {
 		type Block = MockBlock<Self>;
 	}
 

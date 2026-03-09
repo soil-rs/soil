@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_support::derive_impl;
+use topsoil_core::derive_impl;
 
 mod common;
 
@@ -13,9 +13,9 @@ pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
 	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
@@ -43,11 +43,11 @@ impl common::outer_enums::pallet3::Config<common::outer_enums::pallet::Instance1
 	type RuntimeEvent = RuntimeEvent;
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub struct Runtime
 	{
 		// Exclude part `Storage` in order not to check its metadata in tests.
-		System: topsoil_system::{Pallet, Config<T>, Call, Event<T> },
+		System: topsoil_core::system::{Pallet, Config<T>, Call, Event<T> },
 
 		// This pallet exposes the Error type explicitly.
 		Example: common::outer_enums::pallet::{Pallet, Config<T>, Event<T>, Error<T>},
@@ -73,18 +73,18 @@ fn module_error_outer_enum_expand_explicit() {
 	match RuntimeError::Example(pallet::Error::InsufficientProposersBalance) {
 		// Error passed implicitly to the pallet system.
 		RuntimeError::System(system) => match system {
-			topsoil_system::Error::InvalidSpecName => (),
-			topsoil_system::Error::SpecVersionNeedsToIncrease => (),
-			topsoil_system::Error::FailedToExtractRuntimeVersion => (),
-			topsoil_system::Error::NonDefaultComposite => (),
-			topsoil_system::Error::NonZeroRefCount => (),
-			topsoil_system::Error::CallFiltered => (),
-			topsoil_system::Error::MultiBlockMigrationsOngoing => (),
-			topsoil_system::Error::InvalidTask => (),
-			topsoil_system::Error::FailedTask => (),
-			topsoil_system::Error::NothingAuthorized => (),
-			topsoil_system::Error::Unauthorized => (),
-			topsoil_system::Error::__Ignore(_, _) => (),
+			topsoil_core::system::Error::InvalidSpecName => (),
+			topsoil_core::system::Error::SpecVersionNeedsToIncrease => (),
+			topsoil_core::system::Error::FailedToExtractRuntimeVersion => (),
+			topsoil_core::system::Error::NonDefaultComposite => (),
+			topsoil_core::system::Error::NonZeroRefCount => (),
+			topsoil_core::system::Error::CallFiltered => (),
+			topsoil_core::system::Error::MultiBlockMigrationsOngoing => (),
+			topsoil_core::system::Error::InvalidTask => (),
+			topsoil_core::system::Error::FailedTask => (),
+			topsoil_core::system::Error::NothingAuthorized => (),
+			topsoil_core::system::Error::Unauthorized => (),
+			topsoil_core::system::Error::__Ignore(_, _) => (),
 		},
 
 		// Error declared explicitly.

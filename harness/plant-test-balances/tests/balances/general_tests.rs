@@ -4,13 +4,13 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_system::AccountInfo;
+use topsoil_core::system::AccountInfo;
 use super::{
 	ensure_ti_valid, get_test_account, Balances, ExtBuilder, System, Test, TestId, UseSystem,
 };
 use plant_balances::{AccountData, ExtraFlags, TotalIssuance};
 use subsoil::runtime::DispatchError;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, hypothetically,
 	traits::{
 		fungible::{Mutate, MutateHold},
@@ -101,7 +101,7 @@ fn regression_historic_acc_does_not_evaporate_reserve() {
 #[test]
 fn try_state_works() {
 	use plant_balances::{Config, Freezes, Holds};
-	use topsoil_support::{
+	use topsoil_core::{
 		storage,
 		traits::{Get, Hooks, VariantCount},
 	};

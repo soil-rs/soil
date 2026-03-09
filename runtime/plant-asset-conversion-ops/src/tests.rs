@@ -7,7 +7,7 @@
 //! Asset Conversion Ops pallet tests.
 
 use crate::{mock::*, *};
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok,
 	traits::{
 		fungible::{Inspect as FungibleInspect, NativeOrWithId},

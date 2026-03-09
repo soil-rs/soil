@@ -18,13 +18,13 @@ use subsoil::runtime::{
 
 use mock::*;
 use plant_balances::Call as BalancesCall;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, PostDispatchInfo},
 	traits::{Currency, OriginTrait},
 	weights::Weight,
 };
-use topsoil_system as system;
+use topsoil_core::system as system;
 
 pub struct ExtBuilder {
 	balance_factor: u64,
@@ -74,7 +74,7 @@ impl ExtBuilder {
 	}
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		self.set_constants();
-		let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 		plant_balances::GenesisConfig::<Runtime> {
 			balances: if self.balance_factor > 0 {
 				vec![
@@ -200,7 +200,7 @@ fn transaction_extension_transaction_payment_is_bounded() {
 		// fee will be proportional to what is the actual maximum weight in the runtime.
 		assert_eq!(
 			Balances::free_balance(&1),
-			(10000 - <Runtime as topsoil_system::Config>::BlockWeights::get().max_block.ref_time())
+			(10000 - <Runtime as topsoil_core::system::Config>::BlockWeights::get().max_block.ref_time())
 				as u64
 		);
 	});
@@ -844,13 +844,13 @@ fn no_fee_and_no_weight_for_other_origins() {
 
 		let len = CALL.encoded_size();
 
-		let origin = topsoil_system::RawOrigin::Root.into();
+		let origin = topsoil_core::system::RawOrigin::Root.into();
 		let (pre, origin) = ext.validate_and_prepare(origin, CALL, &info, len, 0).unwrap();
 
 		assert!(origin.as_system_ref().unwrap().is_root());
 
 		let pd_res = Ok(());
-		let mut post_info = topsoil_support::dispatch::PostDispatchInfo {
+		let mut post_info = topsoil_core::dispatch::PostDispatchInfo {
 			actual_weight: Some(info.total_weight()),
 			pays_fee: Default::default(),
 		};

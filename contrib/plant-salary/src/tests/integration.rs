@@ -12,23 +12,23 @@ use topsoil::{deps::io, testing_prelude::*};
 use plant_ranked_collective::{EnsureRanked, Geometric};
 
 type Rank = u16;
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub struct Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Salary: plant_salary,
 		Club: plant_ranked_collective,
 	}
 );
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(Weight::from_parts(1_000_000, 0));
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 
@@ -96,21 +96,21 @@ impl plant_ranked_collective::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type PromoteOrigin = EitherOf<
 		// Root can promote arbitrarily.
-		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_core::system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can promote up to the rank of 2 below them.
 		MapSuccess<EnsureRanked<Test, (), 2>, ReduceBy<ConstU16<2>>>,
 	>;
 	type AddOrigin = MapSuccess<Self::PromoteOrigin, ReplaceWithDefault<()>>;
 	type DemoteOrigin = EitherOf<
 		// Root can demote arbitrarily.
-		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_core::system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can demote up to the rank of 3 below them.
 		MapSuccess<EnsureRanked<Test, (), 3>, ReduceBy<ConstU16<3>>>,
 	>;
 	type RemoveOrigin = Self::DemoteOrigin;
 	type ExchangeOrigin = EitherOf<
 		// Root can exchange arbitrarily.
-		topsoil_system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
+		topsoil_core::system::EnsureRootWithSuccess<Self::AccountId, ConstU16<65535>>,
 		// Members can exchange up to the rank of 2 below them.
 		MapSuccess<EnsureRanked<Test, (), 2>, ReduceBy<ConstU16<2>>>,
 	>;
@@ -124,16 +124,16 @@ impl plant_ranked_collective::Config for Test {
 }
 
 pub fn new_test_ext() -> TestState {
-	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut ext = TestState::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext
 }
 
 fn assert_last_event(generic_event: <Test as Config>::RuntimeEvent) {
-	let events = topsoil_system::Pallet::<Test>::events();
-	let system_event: <Test as topsoil_system::Config>::RuntimeEvent = generic_event.into();
-	let topsoil_system::EventRecord { event, .. } = events.last().expect("Event expected");
+	let events = topsoil_core::system::Pallet::<Test>::events();
+	let system_event: <Test as topsoil_core::system::Config>::RuntimeEvent = generic_event.into();
+	let topsoil_core::system::EventRecord { event, .. } = events.last().expect("Event expected");
 	assert_eq!(event, &system_event.into());
 }
 

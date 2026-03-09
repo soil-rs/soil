@@ -6,16 +6,16 @@
 
 use topsoil_benchmarking::v2::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod pallet {
-	use topsoil_system::pallet_prelude::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -32,7 +32,7 @@ pub use pallet::*;
 #[benchmarks]
 mod benches {
 	use super::*;
-	use topsoil_support::traits::OriginTrait;
+	use topsoil_core::traits::OriginTrait;
 
 	#[benchmark]
 	fn call_1() {

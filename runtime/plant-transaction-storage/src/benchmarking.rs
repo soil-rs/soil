@@ -13,8 +13,8 @@ use alloc::{vec, vec::Vec};
 use soil_transaction_storage_proof::TransactionStorageProof;
 use subsoil::runtime::traits::{Bounded, CheckedDiv, One, Zero};
 use topsoil_benchmarking::v2::*;
-use topsoil_support::traits::{Get, OnFinalize, OnInitialize};
-use topsoil_system::{pallet_prelude::BlockNumberFor, EventRecord, Pallet as System, RawOrigin};
+use topsoil_core::traits::{Get, OnFinalize, OnInitialize};
+use topsoil_core::system::{pallet_prelude::BlockNumberFor, EventRecord, Pallet as System, RawOrigin};
 
 // Proof generated from max size storage:
 // ```
@@ -92,20 +92,20 @@ fn proof() -> Vec<u8> {
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
 	let events = System::<T>::events();
-	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let system_event: <T as topsoil_core::system::Config>::RuntimeEvent = generic_event.into();
 	let EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
 }
 
-pub fn run_to_block<T: Config>(n: topsoil_system::pallet_prelude::BlockNumberFor<T>) {
-	while topsoil_system::Pallet::<T>::block_number() < n {
-		crate::Pallet::<T>::on_finalize(topsoil_system::Pallet::<T>::block_number());
-		topsoil_system::Pallet::<T>::on_finalize(topsoil_system::Pallet::<T>::block_number());
-		topsoil_system::Pallet::<T>::set_block_number(
-			topsoil_system::Pallet::<T>::block_number() + One::one(),
+pub fn run_to_block<T: Config>(n: topsoil_core::system::pallet_prelude::BlockNumberFor<T>) {
+	while topsoil_core::system::Pallet::<T>::block_number() < n {
+		crate::Pallet::<T>::on_finalize(topsoil_core::system::Pallet::<T>::block_number());
+		topsoil_core::system::Pallet::<T>::on_finalize(topsoil_core::system::Pallet::<T>::block_number());
+		topsoil_core::system::Pallet::<T>::set_block_number(
+			topsoil_core::system::Pallet::<T>::block_number() + One::one(),
 		);
-		topsoil_system::Pallet::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
-		crate::Pallet::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
+		topsoil_core::system::Pallet::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
+		crate::Pallet::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
 	}
 }
 

@@ -50,7 +50,7 @@ use subsoil::runtime::{
 	transaction_validity::{TransactionPriority, TransactionValidityError, ValidTransaction},
 	Debug, FixedPointNumber, FixedU128, Perbill, Perquintill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{
 		DispatchClass, DispatchInfo, DispatchResult, GetDispatchInfo, Pays, PostDispatchInfo,
 	},
@@ -167,7 +167,7 @@ impl MultiplierUpdate for () {
 
 impl<T, S, V, M, X> MultiplierUpdate for TargetedFeeAdjustment<T, S, V, M, X>
 where
-	T: topsoil_system::Config,
+	T: topsoil_core::system::Config,
 	S: Get<Perquintill>,
 	V: Get<Multiplier>,
 	M: Get<Multiplier>,
@@ -189,7 +189,7 @@ where
 
 impl<T, S, V, M, X> Convert<Multiplier, Multiplier> for TargetedFeeAdjustment<T, S, V, M, X>
 where
-	T: topsoil_system::Config,
+	T: topsoil_core::system::Config,
 	S: Get<Perquintill>,
 	V: Get<Multiplier>,
 	M: Get<Multiplier>,
@@ -207,7 +207,7 @@ where
 		// the computed ratio is only among the normal class.
 		let normal_max_weight =
 			weights.get(DispatchClass::Normal).max_total.unwrap_or(weights.max_block);
-		let current_block_weight = topsoil_system::Pallet::<T>::block_weight();
+		let current_block_weight = topsoil_core::system::Pallet::<T>::block_weight();
 		let normal_block_weight =
 			current_block_weight.get(DispatchClass::Normal).min(normal_max_weight);
 
@@ -308,10 +308,10 @@ impl Default for Releases {
 /// NextFeeMultiplierOnEmpty() to provide a value when none exists in storage.
 const MULTIPLIER_DEFAULT_VALUE: Multiplier = Multiplier::from_u32(1);
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	use super::*;
 
@@ -320,15 +320,15 @@ pub mod pallet {
 
 	pub mod config_preludes {
 		use super::*;
-		use topsoil_support::derive_impl;
+		use topsoil_core::derive_impl;
 
 		/// Default prelude sensible to be used in a testing environment.
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for TestDefaultConfig {}
 
-		#[topsoil_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_core::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
@@ -339,12 +339,12 @@ pub mod pallet {
 	}
 
 	#[pallet::config(with_default)]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Handler for withdrawing, refunding and depositing the transaction fee.
 		/// Transaction fees are withdrawn before the transaction is executed.
@@ -445,7 +445,7 @@ pub mod pallet {
 
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
-		fn on_finalize(_: topsoil_system::pallet_prelude::BlockNumberFor<T>) {
+		fn on_finalize(_: topsoil_core::system::pallet_prelude::BlockNumberFor<T>) {
 			NextFeeMultiplier::<T>::mutate(|fm| {
 				*fm = T::FeeMultiplierUpdate::convert(*fm);
 			});
@@ -493,7 +493,7 @@ pub mod pallet {
 			let min_value = T::FeeMultiplierUpdate::min();
 			let target = target + addition;
 
-			topsoil_system::Pallet::<T>::set_block_consumed_resources(target, 0);
+			topsoil_core::system::Pallet::<T>::set_block_consumed_resources(target, 0);
 			let next = T::FeeMultiplierUpdate::convert(min_value);
 			assert!(
 				next > min_value,
@@ -1005,7 +1005,7 @@ where
 		(ValidTransaction, Self::Val, <T::RuntimeCall as Dispatchable>::RuntimeOrigin),
 		TransactionValidityError,
 	> {
-		let Ok(who) = topsoil_system::ensure_signed(origin.clone()) else {
+		let Ok(who) = topsoil_core::system::ensure_signed(origin.clone()) else {
 			return Ok((ValidTransaction::default(), Val::NoCharge, origin));
 		};
 		let fee_with_tip = self.can_withdraw_fee(&who, call, info, len)?;

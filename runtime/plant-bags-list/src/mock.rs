@@ -11,9 +11,9 @@ use crate::{self as bags_list};
 use std::collections::HashMap;
 use subsoil::runtime::BuildStorage;
 use plant_election_provider::VoteWeight;
-use topsoil_support::{derive_impl, parameter_types};
+use topsoil_core::{derive_impl, parameter_types};
 
-pub type AccountId = <Runtime as topsoil_system::Config>::AccountId;
+pub type AccountId = <Runtime as topsoil_core::system::Config>::AccountId;
 pub type Balance = u32;
 
 parameter_types! {
@@ -36,8 +36,8 @@ impl ScoreProvider<AccountId> for StakingMock {
 	}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<Balance>;
 }
@@ -56,10 +56,10 @@ impl bags_list::Config for Runtime {
 	type Score = VoteWeight;
 }
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
-topsoil_support::construct_runtime!(
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		BagsList: bags_list,
 	}
 );
@@ -92,7 +92,7 @@ impl ExtBuilder {
 
 	pub(crate) fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
-		let storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+		let storage = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let ids_with_weight: Vec<_> = if self.skip_genesis_ids {
 			self.ids.iter().collect()
@@ -103,7 +103,7 @@ impl ExtBuilder {
 		let mut ext = subsoil::io::TestExternalities::from(storage);
 		ext.execute_with(|| {
 			for (id, weight) in ids_with_weight {
-				topsoil_support::assert_ok!(List::<Runtime>::insert(*id, *weight));
+				topsoil_core::assert_ok!(List::<Runtime>::insert(*id, *weight));
 				StakingMock::set_score_of(id, *weight);
 			}
 		});

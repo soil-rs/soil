@@ -9,12 +9,12 @@ use subsoil::core::{storage::well_known_keys, traits::Externalities};
 use subsoil::runtime::{
 	traits::Hash as HashT, transaction_validity::InvalidTransaction, ApplyExtrinsicResult,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchClass, GetDispatchInfo},
 	traits::Currency,
 	weights::Weight,
 };
-use topsoil_system::{self, AccountInfo, DispatchEventInfo, EventRecord, Phase};
+use topsoil_core::system::{self, AccountInfo, DispatchEventInfo, EventRecord, Phase};
 
 use soil_test_staging_node_runtime::{
 	constants::{currency::*, time::SLOT_DURATION},
@@ -168,7 +168,7 @@ fn block_with_size(time: u64, nonce: u32, size: usize) -> (Vec<u8>, Hash) {
 					alice(),
 					tx_ext(nonce, 0),
 				),
-				function: RuntimeCall::System(topsoil_system::Call::remark {
+				function: RuntimeCall::System(topsoil_core::system::Call::remark {
 					remark: vec![0; size],
 				}),
 			},
@@ -181,8 +181,8 @@ fn block_with_size(time: u64, nonce: u32, size: usize) -> (Vec<u8>, Hash) {
 fn panic_execution_with_foreign_code_gives_error() {
 	let mut t = new_test_ext(bloaty_code_unwrap());
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_core::system::Config>::Nonce, _> {
 			providers: 1,
 			data: (69u128, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -190,7 +190,7 @@ fn panic_execution_with_foreign_code_gives_error() {
 		.encode(),
 	);
 	t.insert(<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 69_u128.encode());
-	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_core::system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -205,8 +205,8 @@ fn panic_execution_with_foreign_code_gives_error() {
 fn bad_extrinsic_with_native_equivalent_code_gives_error() {
 	let mut t = new_test_ext(compact_code_unwrap());
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_core::system::Config>::Nonce, _> {
 			providers: 1,
 			data: (69u128, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -214,7 +214,7 @@ fn bad_extrinsic_with_native_equivalent_code_gives_error() {
 		.encode(),
 	);
 	t.insert(<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 69u128.encode());
-	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_core::system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -229,8 +229,8 @@ fn bad_extrinsic_with_native_equivalent_code_gives_error() {
 fn successful_execution_with_native_equivalent_code_gives_ok() {
 	let mut t = new_test_ext(compact_code_unwrap());
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_core::system::Config>::Nonce, _> {
 			providers: 1,
 			data: (111 * DOLLARS, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -238,10 +238,10 @@ fn successful_execution_with_native_equivalent_code_gives_ok() {
 		.encode(),
 	);
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(bob()),
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(bob()),
 		AccountInfo::<
-			<Runtime as topsoil_system::Config>::Nonce,
-			<Runtime as topsoil_system::Config>::AccountData,
+			<Runtime as topsoil_core::system::Config>::Nonce,
+			<Runtime as topsoil_core::system::Config>::AccountData,
 		>::default()
 		.encode(),
 	);
@@ -249,7 +249,7 @@ fn successful_execution_with_native_equivalent_code_gives_ok() {
 		<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(111 * DOLLARS).encode(),
 	);
-	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_core::system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -270,8 +270,8 @@ fn successful_execution_with_native_equivalent_code_gives_ok() {
 fn successful_execution_with_foreign_code_gives_ok() {
 	let mut t = new_test_ext(bloaty_code_unwrap());
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_core::system::Config>::Nonce, _> {
 			providers: 1,
 			data: (111 * DOLLARS, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -279,10 +279,10 @@ fn successful_execution_with_foreign_code_gives_ok() {
 		.encode(),
 	);
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(bob()),
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(bob()),
 		AccountInfo::<
-			<Runtime as topsoil_system::Config>::Nonce,
-			<Runtime as topsoil_system::Config>::AccountData,
+			<Runtime as topsoil_core::system::Config>::Nonce,
+			<Runtime as topsoil_core::system::Config>::AccountData,
 		>::default()
 		.encode(),
 	);
@@ -290,7 +290,7 @@ fn successful_execution_with_foreign_code_gives_ok() {
 		<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(111 * DOLLARS).encode(),
 	);
-	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_core::system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -320,7 +320,7 @@ fn full_native_block_import_works() {
 	let fees_after_refund = t.execute_with(|| transfer_fee_with_refund(&xt(), weight_refund));
 
 	let transfer_weight = default_transfer_call().get_dispatch_info().call_weight.saturating_add(
-		<Runtime as topsoil_system::Config>::BlockWeights::get()
+		<Runtime as topsoil_core::system::Config>::BlockWeights::get()
 			.get(DispatchClass::Normal)
 			.base_extrinsic,
 	);
@@ -328,7 +328,7 @@ fn full_native_block_import_works() {
 		.get_dispatch_info()
 		.call_weight
 		.saturating_add(
-			<Runtime as topsoil_system::Config>::BlockWeights::get()
+			<Runtime as topsoil_core::system::Config>::BlockWeights::get()
 				.get(DispatchClass::Mandatory)
 				.base_extrinsic,
 		);
@@ -342,7 +342,7 @@ fn full_native_block_import_works() {
 		let events = vec![
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(0),
-				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_core::system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: timestamp_weight,
 						class: DispatchClass::Mandatory,
@@ -389,7 +389,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_core::system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: transfer_weight
 							.saturating_add(extension_weight.saturating_sub(weight_refund)),
@@ -439,7 +439,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(0),
-				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_core::system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: timestamp_weight,
 						class: DispatchClass::Mandatory,
@@ -486,7 +486,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(1),
-				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_core::system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: transfer_weight
 							.saturating_add(extension_weight.saturating_sub(weight_refund)),
@@ -533,7 +533,7 @@ fn full_native_block_import_works() {
 			},
 			EventRecord {
 				phase: Phase::ApplyExtrinsic(2),
-				event: RuntimeEvent::System(topsoil_system::Event::ExtrinsicSuccess {
+				event: RuntimeEvent::System(topsoil_core::system::Event::ExtrinsicSuccess {
 					dispatch_info: DispatchEventInfo {
 						weight: transfer_weight
 							.saturating_add(extension_weight.saturating_sub(weight_refund)),
@@ -626,15 +626,15 @@ fn native_big_block_import_fails_on_fallback() {
 fn panic_execution_gives_error() {
 	let mut t = new_test_ext(bloaty_code_unwrap());
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_core::system::Config>::Nonce, _> {
 			data: (0 * DOLLARS, 0u128, 0u128, 0u128),
 			..Default::default()
 		}
 		.encode(),
 	);
 	t.insert(<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(), 0_u128.encode());
-	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_core::system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());
@@ -649,8 +649,8 @@ fn panic_execution_gives_error() {
 fn successful_execution_gives_ok() {
 	let mut t = new_test_ext(compact_code_unwrap());
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(alice()),
-		AccountInfo::<<Runtime as topsoil_system::Config>::Nonce, _> {
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(alice()),
+		AccountInfo::<<Runtime as topsoil_core::system::Config>::Nonce, _> {
 			providers: 1,
 			data: (111 * DOLLARS, 0u128, 0u128, 1u128 << 127),
 			..Default::default()
@@ -658,10 +658,10 @@ fn successful_execution_gives_ok() {
 		.encode(),
 	);
 	t.insert(
-		<topsoil_system::Account<Runtime>>::hashed_key_for(bob()),
+		<topsoil_core::system::Account<Runtime>>::hashed_key_for(bob()),
 		AccountInfo::<
-			<Runtime as topsoil_system::Config>::Nonce,
-			<Runtime as topsoil_system::Config>::AccountData,
+			<Runtime as topsoil_core::system::Config>::Nonce,
+			<Runtime as topsoil_core::system::Config>::AccountData,
 		>::default()
 		.encode(),
 	);
@@ -669,7 +669,7 @@ fn successful_execution_gives_ok() {
 		<plant_balances::TotalIssuance<Runtime>>::hashed_key().to_vec(),
 		(111 * DOLLARS).encode(),
 	);
-	t.insert(<topsoil_system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
+	t.insert(<topsoil_core::system::BlockHash<Runtime>>::hashed_key_for(0), vec![0u8; 32]);
 
 	let r = executor_call(&mut t, "Core_initialize_block", &vec![].and(&from_block_number(1u32))).0;
 	assert!(r.is_ok());

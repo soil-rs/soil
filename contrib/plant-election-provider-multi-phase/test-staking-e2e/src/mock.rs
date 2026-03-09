@@ -22,13 +22,13 @@ use subsoil::runtime::{
 	traits::Zero,
 	transaction_validity, BuildStorage, PerU16, Perbill, Percent,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, parameter_types, traits,
 	traits::{Hooks, UnfilteredDispatchable, VariantCountOf},
 	weights::constants,
 	PalletId,
 };
-use topsoil_system::EnsureRoot;
+use topsoil_core::system::EnsureRoot;
 
 use codec::Decode;
 use parking_lot::RwLock;
@@ -44,17 +44,17 @@ use plant_election_provider::{
 use plant_staking::{ActiveEra, CurrentEra, ErasStartSessionIndex, StakerStatus};
 
 use crate::{log, log_current_time};
-use topsoil_support::{derive_impl, traits::Nothing};
+use topsoil_core::{derive_impl, traits::Nothing};
 
 pub const INIT_TIMESTAMP: BlockNumber = 30_000;
 pub const BLOCK_TIME: BlockNumber = 1000;
 
-type Block = topsoil_system::mocking::MockBlockU32<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlockU32<Runtime>;
 type Extrinsic = subsoil::runtime::testing::TestXt<RuntimeCall, ()>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		ElectionProviderMultiPhase: plant_election_provider_multi_phase,
 		Staking: plant_staking,
 		DelegatedStaking: plant_delegated_staking,
@@ -75,8 +75,8 @@ pub(crate) type VoterIndex = u16;
 pub(crate) type TargetIndex = u16;
 pub(crate) type Moment = u32;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type AccountId = AccountId;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<Balance>;
@@ -86,7 +86,7 @@ impl topsoil_system::Config for Runtime {
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 parameter_types! {
 	pub static ExistentialDeposit: Balance = 1;
-	pub BlockWeights: topsoil_system::limits::BlockWeights = topsoil_system::limits::BlockWeights
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights = topsoil_core::system::limits::BlockWeights
 		::with_sensible_defaults(
 			Weight::from_parts(2u64 * constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 			NORMAL_DISPATCH_RATIO,
@@ -178,7 +178,7 @@ parameter_types! {
 impl plant_election_provider_multi_phase::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
-	type EstimateCallFee = topsoil_support::traits::ConstU64<8>;
+	type EstimateCallFee = topsoil_core::traits::ConstU64<8>;
 	type SignedPhase = SignedPhase;
 	type UnsignedPhase = UnsignedPhase;
 	type BetterSignedThreshold = ();
@@ -261,7 +261,7 @@ impl subsoil::runtime::traits::Convert<subsoil::core::U256, Balance> for U256ToB
 }
 
 parameter_types! {
-	pub const PoolsPalletId: topsoil_support::PalletId = topsoil_support::PalletId(*b"py/nopls");
+	pub const PoolsPalletId: topsoil_core::PalletId = topsoil_core::PalletId(*b"py/nopls");
 	pub static MaxUnbonding: u32 = 8;
 }
 
@@ -279,8 +279,8 @@ impl plant_nomination_pools::Config for Runtime {
 	type PalletId = PoolsPalletId;
 	type MaxMetadataLen = ConstU32<256>;
 	type MaxUnbonding = MaxUnbonding;
-	type MaxPointsToBalance = topsoil_support::traits::ConstU8<10>;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type MaxPointsToBalance = topsoil_core::traits::ConstU8<10>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type BlockNumberProvider = System;
 	type Filter = Nothing;
 }
@@ -334,7 +334,7 @@ impl plant_staking::Config for Runtime {
 	type BenchmarkingConfig = plant_staking::TestBenchmarkingConfig;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateTransactionBase<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -342,7 +342,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -569,7 +569,7 @@ impl ExtBuilder {
 	pub fn build(&self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
-			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let _ = plant_balances::GenesisConfig::<Runtime> {
 			balances: self.balances_builder.balances.clone(),

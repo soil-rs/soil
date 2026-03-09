@@ -63,7 +63,7 @@ use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Bounded, Dispatchable, One, Saturating, Zero},
 	DispatchError, Perbill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResult,
 	ensure,
 	traits::{
@@ -105,15 +105,15 @@ mod tests;
 #[cfg(feature = "runtime-benchmarks")]
 pub mod benchmarking;
 
-pub use topsoil_support::traits::Get;
+pub use topsoil_core::traits::Get;
 
 const ASSEMBLY_ID: LockIdentifier = *b"assembly";
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::{pallet_prelude::*, traits::EnsureOriginWithArg};
-	use topsoil_system::pallet_prelude::{
+	use topsoil_core::{pallet_prelude::*, traits::EnsureOriginWithArg};
+	use topsoil_core::system::pallet_prelude::{
 		ensure_root, ensure_signed, ensure_signed_or_root, BlockNumberFor as SystemBlockNumberFor,
 		OriginFor,
 	};
@@ -126,16 +126,16 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config + Sized {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config + Sized {
 		// System level stuff.
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>
 			+ From<Call<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeCall>
-			+ From<topsoil_system::Call<Self>>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeCall>
+			+ From<topsoil_core::system::Call<Self>>;
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 		/// The Scheduler.
@@ -809,7 +809,7 @@ impl<T: Config<I>, I: 'static> Polling<T::Tally> for Pallet<T, I> {
 		.expect("infinite length input; no invalid inputs for type; qed");
 		let mut status = ReferendumStatusOf::<T, I> {
 			track: class,
-			origin: topsoil_support::dispatch::RawOrigin::Root.into(),
+			origin: topsoil_core::dispatch::RawOrigin::Root.into(),
 			proposal: T::Preimages::bound(CallOf::<T, I>::from(Call::nudge_referendum { index }))
 				.map_err(|_| ())?,
 			enactment: DispatchTime::After(Zero::zero()),
@@ -927,7 +927,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 			DispatchTime::At(when),
 			None,
 			128u8,
-			topsoil_system::RawOrigin::Root.into(),
+			topsoil_core::system::RawOrigin::Root.into(),
 			call,
 		);
 		debug_assert!(

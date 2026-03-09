@@ -5,24 +5,24 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
 use subsoil::runtime::{traits::Identity, BuildStorage};
-use topsoil_support::{derive_impl, parameter_types, traits::WithdrawReasons};
+use topsoil_core::{derive_impl, parameter_types, traits::WithdrawReasons};
 
 use super::*;
 use crate as plant_vesting;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Vesting: plant_vesting,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountData = plant_balances::AccountData<u64>;
 	type Block = Block;
 }
@@ -73,7 +73,7 @@ impl ExtBuilder {
 
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		EXISTENTIAL_DEPOSIT.with(|v| *v.borrow_mut() = self.existential_deposit);
-		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		plant_balances::GenesisConfig::<Test> {
 			balances: vec![
 				(1, 10 * self.existential_deposit),

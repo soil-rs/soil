@@ -10,7 +10,7 @@ use alloc::boxed::Box;
 use plant_alliance::{IdentityVerifier, ProposalIndex, ProposalProvider};
 use plant_asset_tx_payment::HandleCredit;
 use plant_identity::legacy::IdentityField;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{
 		fungibles::{Balanced, Credit},
@@ -108,7 +108,7 @@ mod multiplier_tests {
 		traits::{Convert, One, Zero},
 		BuildStorage, FixedPointNumber,
 	};
-	use topsoil_support::{
+	use topsoil_core::{
 		dispatch::DispatchClass,
 		weights::{Weight, WeightToFee},
 	};
@@ -189,7 +189,7 @@ mod multiplier_tests {
 		F: Fn() -> (),
 	{
 		let mut t: subsoil::io::TestExternalities =
-			topsoil_system::GenesisConfig::<Runtime>::default()
+			topsoil_core::system::GenesisConfig::<Runtime>::default()
 				.build_storage()
 				.unwrap()
 				.into();
@@ -299,7 +299,7 @@ mod multiplier_tests {
 			- Weight::from_parts(100, 0);
 
 		// Default substrate weight.
-		let tx_weight = topsoil_support::weights::constants::ExtrinsicBaseWeight::get();
+		let tx_weight = topsoil_core::weights::constants::ExtrinsicBaseWeight::get();
 
 		run_with_system_weight(block_weight, || {
 			// initial value configured on module

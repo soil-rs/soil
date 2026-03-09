@@ -7,8 +7,8 @@
 //! Tests for the alliance pallet.
 
 use subsoil::runtime::traits::BadOrigin;
-use topsoil_support::{assert_noop, assert_ok};
-use topsoil_system::{EventRecord, Phase};
+use topsoil_core::{assert_noop, assert_ok};
+use topsoil_core::system::{EventRecord, Phase};
 
 use super::*;
 use crate::{self as alliance, mock::*};

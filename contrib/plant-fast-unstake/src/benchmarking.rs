@@ -13,11 +13,11 @@ use alloc::vec::Vec;
 use subsoil::staking::{EraIndex, StakingInterface};
 use subsoil::runtime::traits::Zero;
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::{Currency, EnsureOrigin, Get, Hooks},
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 const USER_SEED: u32 = 0;
 
@@ -47,7 +47,7 @@ fn fund_and_bond_account<T: Config>(account: &T::AccountId) {
 }
 
 pub(crate) fn fast_unstake_events<T: Config>() -> Vec<crate::Event<T>> {
-	topsoil_system::Pallet::<T>::events()
+	topsoil_core::system::Pallet::<T>::events()
 		.into_iter()
 		.map(|r| r.event)
 		.filter_map(|e| <T as Config>::RuntimeEvent::from(e).try_into().ok())
@@ -80,7 +80,7 @@ fn setup_staking<T: Config>(v: u32, until: EraIndex) {
 }
 
 fn on_idle_full_block<T: Config>() {
-	let remaining_weight = <T as topsoil_system::Config>::BlockWeights::get().max_block;
+	let remaining_weight = <T as topsoil_core::system::Config>::BlockWeights::get().max_block;
 	Pallet::<T>::on_idle(Zero::zero(), remaining_weight);
 }
 

@@ -12,7 +12,7 @@ use fungible::{
 	LoneFreezeConsideration, LoneHoldConsideration, Mutate, MutateFreeze, MutateHold, Unbalanced,
 };
 use subsoil::core::ConstU64;
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	tokens::{
 		Fortitude::{Force, Polite},
 		Precision::{BestEffort, Exact},

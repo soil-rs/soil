@@ -12,7 +12,7 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, Convert, Zero},
 	BuildStorage, FixedU128,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, derive_impl,
 	dispatch::Pays,
 	parameter_types,
@@ -22,16 +22,16 @@ use topsoil_support::{
 	},
 	Hashable,
 };
-use topsoil_system::{EnsureRoot, EventRecord, Phase};
+use topsoil_core::system::{EnsureRoot, EventRecord, Phase};
 
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
 	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Collective: plant_collective::<Instance1>,
 		CollectiveMajority: plant_collective::<Instance2>,
@@ -42,19 +42,19 @@ topsoil_support::construct_runtime!(
 
 mod mock_democracy {
 	pub use pallet::*;
-	#[topsoil_support::pallet(dev_mode)]
+	#[topsoil_core::pallet(dev_mode)]
 	pub mod pallet {
-		use topsoil_support::pallet_prelude::*;
-		use topsoil_system::pallet_prelude::*;
+		use topsoil_core::pallet_prelude::*;
+		use topsoil_core::system::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
 		#[pallet::config]
-		pub trait Config: topsoil_system::Config + Sized {
+		pub trait Config: topsoil_core::system::Config + Sized {
 			#[allow(deprecated)]
 			type RuntimeEvent: From<Event<Self>>
-				+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+				+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 			type ExternalMajorityOrigin: EnsureOrigin<Self::RuntimeOrigin>;
 		}
 
@@ -81,13 +81,13 @@ type AccountId = u64;
 parameter_types! {
 	pub const MotionDuration: u64 = 3;
 	pub const MaxProposals: u32 = 257;
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(Weight::MAX);
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(Weight::MAX);
 	pub static MaxProposalWeight: Weight = default_max_proposal_weight();
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -192,7 +192,7 @@ impl ExtBuilder {
 
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
-			system: topsoil_system::GenesisConfig::default(),
+			system: topsoil_core::system::GenesisConfig::default(),
 			// balances: plant_balances::GenesisConfig::default(),
 			balances: plant_balances::GenesisConfig {
 				balances: vec![(1, 100), (2, 200)],
@@ -224,7 +224,7 @@ impl ExtBuilder {
 }
 
 fn make_proposal(value: u64) -> RuntimeCall {
-	RuntimeCall::System(topsoil_system::Call::remark_with_event {
+	RuntimeCall::System(topsoil_core::system::Call::remark_with_event {
 		remark: value.to_be_bytes().to_vec(),
 	})
 }
@@ -1626,11 +1626,11 @@ fn genesis_build_panics_with_duplicate_members() {
 #[test]
 fn migration_v4() {
 	ExtBuilder::default().build_and_execute(|| {
-		use topsoil_support::traits::PalletInfoAccess;
+		use topsoil_core::traits::PalletInfoAccess;
 
 		let old_pallet = "OldCollective";
 		let new_pallet = <Collective as PalletInfoAccess>::name();
-		topsoil_support::storage::migration::move_pallet(
+		topsoil_core::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -1642,7 +1642,7 @@ fn migration_v4() {
 
 		let old_pallet = "OldCollectiveMajority";
 		let new_pallet = <CollectiveMajority as PalletInfoAccess>::name();
-		topsoil_support::storage::migration::move_pallet(
+		topsoil_core::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);
@@ -1654,7 +1654,7 @@ fn migration_v4() {
 
 		let old_pallet = "OldDefaultCollective";
 		let new_pallet = <DefaultCollective as PalletInfoAccess>::name();
-		topsoil_support::storage::migration::move_pallet(
+		topsoil_core::storage::migration::move_pallet(
 			new_pallet.as_bytes(),
 			old_pallet.as_bytes(),
 		);

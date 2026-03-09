@@ -20,7 +20,7 @@ use subsoil::core::{
 };
 use subsoil::runtime::{generic::ExtrinsicFormat, traits::BlakeTwo256};
 use subsoil::state_machine::TestExternalities as CoreTestExternalities;
-use topsoil_support::Hashable;
+use topsoil_core::Hashable;
 
 criterion_group!(benches, bench_execute_block);
 criterion_main!(benches);

@@ -72,7 +72,7 @@ use subsoil::runtime::{
 	traits::{AccountIdConversion, BadOrigin, Convert, Saturating, StaticLookup, TryConvert, Zero},
 	Debug, Permill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchResult, DispatchResultWithPostInfo},
 	dispatch_context::with_context,
 	pallet_prelude::*,
@@ -85,7 +85,7 @@ use topsoil_support::{
 	},
 	PalletId,
 };
-use topsoil_system::pallet_prelude::{
+use topsoil_core::system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
 
@@ -94,23 +94,23 @@ pub type BeneficiaryLookupOf<T, I> = <<T as Config<I>>::BeneficiaryLookup as Sta
 /// An index of a bounty. Just a `u32`.
 pub type BountyIndex = u32;
 /// Lookup type for account addresses.
-pub type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+pub type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 /// The payment identifier type used by the [`Config::Paymaster`].
 pub type PaymentIdOf<T, I = ()> = <<T as crate::Config<I>>::Paymaster as PayWithSource>::Id;
 /// Convenience alias for `Bounty`.
 pub type BountyOf<T, I> = Bounty<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 	<T as Config<I>>::Balance,
 	<T as Config<I>>::AssetKind,
-	<T as topsoil_system::Config>::Hash,
+	<T as topsoil_core::system::Config>::Hash,
 	PaymentIdOf<T, I>,
 	<T as Config<I>>::Beneficiary,
 >;
 /// Convenience alias for `ChildBounty`.
 pub type ChildBountyOf<T, I> = ChildBounty<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 	<T as Config<I>>::Balance,
-	<T as topsoil_system::Config>::Hash,
+	<T as topsoil_core::system::Config>::Hash,
 	PaymentIdOf<T, I>,
 	<T as Config<I>>::Beneficiary,
 >;
@@ -245,7 +245,7 @@ impl<Id: Clone> PaymentState<Id> {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -256,7 +256,7 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// The type in which the assets are measured.
 		type Balance: Balance;
 
@@ -1795,7 +1795,7 @@ pub struct CuratorDepositAmount<Mult, Min, Max, Balance>(PhantomData<(Mult, Min,
 impl<Mult, Min, Max, Balance> Convert<Balance, Balance>
 	for CuratorDepositAmount<Mult, Min, Max, Balance>
 where
-	Balance: topsoil_support::traits::tokens::Balance,
+	Balance: topsoil_core::traits::tokens::Balance,
 	Min: Get<Option<Balance>>,
 	Max: Get<Option<Balance>>,
 	Mult: Get<Permill>,

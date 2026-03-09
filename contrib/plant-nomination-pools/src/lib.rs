@@ -356,7 +356,7 @@ use subsoil::runtime::{
 	},
 	FixedPointNumber, Perbill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	defensive, defensive_assert, ensure,
 	pallet_prelude::{MaxEncodedLen, *},
 	storage::bounded_btree_map::BoundedBTreeMap,
@@ -379,7 +379,7 @@ macro_rules! log {
 	($level:tt, $patter:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: $crate::LOG_TARGET,
-			concat!("[{:?}] 🏊‍♂️ ", $patter), <topsoil_system::Pallet<T>>::block_number() $(, $values)*
+			concat!("[{:?}] 🏊‍♂️ ", $patter), <topsoil_core::system::Pallet<T>>::block_number() $(, $values)*
 		)
 	};
 }
@@ -399,11 +399,11 @@ pub use weights::WeightInfo;
 
 /// The balance type used by the currency system.
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Inspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 /// Type used for unique identifier of each pool.
 pub type PoolId = u32;
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
 pub type BlockNumberFor<T> =
 	<<T as Config>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
@@ -1635,12 +1635,12 @@ impl<T: Config> Get<u32> for TotalUnbondingPools<T> {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use subsoil::runtime::Perbill;
-	use topsoil_support::traits::StorageVersion;
-	use topsoil_system::pallet_prelude::{
+	use topsoil_core::traits::StorageVersion;
+	use topsoil_core::system::pallet_prelude::{
 		ensure_root, ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 	};
 
@@ -1652,11 +1652,11 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: weights::WeightInfo;
@@ -1684,7 +1684,7 @@ pub mod pallet {
 
 		/// The nomination pool's pallet id.
 		#[pallet::constant]
-		type PalletId: Get<topsoil_support::PalletId>;
+		type PalletId: Get<topsoil_core::PalletId>;
 
 		/// The maximum pool points-to-balance ratio that an `open` pool can have.
 		///
@@ -2449,8 +2449,8 @@ pub mod pallet {
 
 			if stash_killed {
 				// Maybe an extra consumer left on the pool account, if so, remove it.
-				if topsoil_system::Pallet::<T>::consumers(&pool_account) == 1 {
-					topsoil_system::Pallet::<T>::dec_consumers(&pool_account);
+				if topsoil_core::system::Pallet::<T>::consumers(&pool_account) == 1 {
+					topsoil_core::system::Pallet::<T>::dec_consumers(&pool_account);
 				}
 
 				// Note: This is not pretty, but we have to do this because of a bug where old pool
@@ -3296,11 +3296,11 @@ impl<T: Config> Pallet<T> {
 		// 2. the bonded account should become a 'killed stash' in the staking system, and all of
 		//    its consumers removed.
 		defensive_assert!(
-			topsoil_system::Pallet::<T>::consumers(&reward_account) == 0,
+			topsoil_core::system::Pallet::<T>::consumers(&reward_account) == 0,
 			"reward account of dissolving pool should have no consumers"
 		);
 		defensive_assert!(
-			topsoil_system::Pallet::<T>::consumers(&bonded_account) == 0,
+			topsoil_core::system::Pallet::<T>::consumers(&bonded_account) == 0,
 			"bonded account of dissolving pool should have no consumers"
 		);
 		defensive_assert!(
@@ -4061,7 +4061,7 @@ impl<T: Config> Pallet<T> {
 	/// full unbonding, not partial unbonding.
 	#[cfg(any(feature = "runtime-benchmarks", test))]
 	pub fn fully_unbond(
-		origin: topsoil_system::pallet_prelude::OriginFor<T>,
+		origin: topsoil_core::system::pallet_prelude::OriginFor<T>,
 		member: T::AccountId,
 	) -> DispatchResult {
 		let points = PoolMembers::<T>::get(&member).map(|d| d.active_points()).unwrap_or_default();

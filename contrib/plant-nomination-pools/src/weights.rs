@@ -33,7 +33,7 @@
 #![allow(unused_imports)]
 #![allow(missing_docs)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for `plant_nomination_pools`.
@@ -68,7 +68,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_nomination_pools` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `NominationPools::MinJoinBond` (r:1 w:0)
 	/// Proof: `NominationPools::MinJoinBond` (`max_values`: Some(1), `max_size`: Some(16), added: 511, mode: `MaxEncodedLen`)
 	/// Storage: `NominationPools::PoolMembers` (r:1 w:1)

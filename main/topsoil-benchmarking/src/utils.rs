@@ -19,7 +19,7 @@ use subsoil::runtime_interface::pass_by::{
 	PassFatPointerAndRead,
 };
 use subsoil::storage::TrackedStorageKey;
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchErrorWithPostInfo, pallet_prelude::*, traits::StorageInfo,
 };
 
@@ -495,7 +495,7 @@ pub fn whitelisted_caller<AccountId: Decode>() -> AccountId {
 macro_rules! whitelist_account {
 	($acc:ident) => {
 		topsoil_benchmarking::benchmarking::add_to_whitelist(
-			topsoil_system::Account::<T>::hashed_key_for(&$acc).into(),
+			topsoil_core::system::Account::<T>::hashed_key_for(&$acc).into(),
 		);
 	};
 }

@@ -11,14 +11,14 @@ pub use crate::*;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{derive_impl, traits::AsEnsureOriginWithArg};
+use topsoil_core::{derive_impl, traits::AsEnsureOriginWithArg};
 
-pub type AccountId = <Test as topsoil_system::Config>::AccountId;
+pub type AccountId = <Test as topsoil_core::system::Config>::AccountId;
 pub type Balance = <Test as plant_balances::Config>::Balance;
 pub type AssetId = <Test as plant_assets::Config>::AssetId;
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-#[topsoil_support::runtime]
+#[topsoil_core::runtime]
 mod runtime {
 	#[runtime::runtime]
 	#[runtime::derive(
@@ -33,7 +33,7 @@ mod runtime {
 	pub struct Test;
 
 	#[runtime::pallet_index(0)]
-	pub type System = topsoil_system;
+	pub type System = topsoil_core::system;
 	#[runtime::pallet_index(10)]
 	pub type Balances = plant_balances;
 	#[runtime::pallet_index(20)]
@@ -42,8 +42,8 @@ mod runtime {
 	pub type AssetsHolder = plant_assets_holder;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -56,8 +56,8 @@ impl plant_balances::Config for Test {
 #[derive_impl(plant_assets::config_preludes::TestDefaultConfig as plant_assets::DefaultConfig)]
 impl plant_assets::Config for Test {
 	// type AssetAccountDeposit = ConstU64<1>;
-	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_core::system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<u64>;
 	type Currency = Balances;
 	type Holder = AssetsHolder;
 }
@@ -110,7 +110,7 @@ pub fn new_test_ext(execute: impl FnOnce()) -> subsoil::io::TestExternalities {
 	ext.execute_with(|| {
 		System::set_block_number(1);
 		execute();
-		topsoil_support::assert_ok!(AssetsHolder::do_try_state());
+		topsoil_core::assert_ok!(AssetsHolder::do_try_state());
 	});
 
 	ext

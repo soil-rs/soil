@@ -13,7 +13,7 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, Verify},
 	TransactionOutcome,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, assert_storage_noop, derive_impl,
 	dispatch::DispatchResult,
 	storage::{with_transaction, TransactionOutcome::*},
@@ -22,17 +22,17 @@ use topsoil_support::{
 
 pub use self::pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -66,18 +66,18 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime
 
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		MyPallet: pallet,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;

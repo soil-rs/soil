@@ -54,7 +54,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_salary` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `Salary::Status` (r:1 w:1)
 	/// Proof: `Salary::Status` (`max_values`: Some(1), `max_size`: Some(56), added: 551, mode: `MaxEncodedLen`)
 	fn init() -> Weight {

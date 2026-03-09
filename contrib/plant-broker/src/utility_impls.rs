@@ -10,7 +10,7 @@ use subsoil::arithmetic::{
 	FixedPointNumber, FixedU64,
 };
 use subsoil::runtime::traits::{AccountIdConversion, BlockNumberProvider};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{
 		fungible::Balanced,

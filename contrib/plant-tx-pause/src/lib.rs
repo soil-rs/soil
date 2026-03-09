@@ -33,7 +33,7 @@
 //! Configuration of call filters:
 //!
 //! ```ignore
-//! impl topsoil_system::Config for Runtime {
+//! impl topsoil_core::system::Config for Runtime {
 //!   // …
 //!   type BaseCallFilter = InsideBoth<DefaultFilter, TxPause>;
 //!   // …
@@ -90,20 +90,20 @@ pub mod pallet {
 	pub struct Pallet<T>(PhantomData<T>);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The overarching call type.
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>
 			+ GetDispatchInfo
 			+ GetCallMetadata
-			+ From<topsoil_system::Call<Self>>
+			+ From<topsoil_core::system::Call<Self>>
 			+ IsSubType<Call<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeCall>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeCall>;
 
 		/// The only origin that can pause calls.
 		type PauseOrigin: EnsureOrigin<Self::RuntimeOrigin>;
@@ -266,12 +266,12 @@ impl<T: Config> Pallet<T> {
 	}
 }
 
-impl<T: pallet::Config> Contains<<T as topsoil_system::Config>::RuntimeCall> for Pallet<T>
+impl<T: pallet::Config> Contains<<T as topsoil_core::system::Config>::RuntimeCall> for Pallet<T>
 where
-	<T as topsoil_system::Config>::RuntimeCall: GetCallMetadata,
+	<T as topsoil_core::system::Config>::RuntimeCall: GetCallMetadata,
 {
 	/// Return whether the call is allowed to be dispatched.
-	fn contains(call: &<T as topsoil_system::Config>::RuntimeCall) -> bool {
+	fn contains(call: &<T as topsoil_core::system::Config>::RuntimeCall) -> bool {
 		let CallMetadata { pallet_name, function_name } = call.get_call_metadata();
 		!Pallet::<T>::is_paused_unbound(pallet_name.into(), function_name.into())
 	}

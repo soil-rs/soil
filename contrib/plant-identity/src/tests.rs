@@ -18,30 +18,30 @@ use subsoil::runtime::{
 	traits::{BadOrigin, BlakeTwo256, IdentifyAccount, IdentityLookup, Verify},
 	BuildStorage, MultiSignature, MultiSigner,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, Get},
 	BoundedVec,
 };
-use topsoil_system::EnsureRoot;
+use topsoil_core::system::EnsureRoot;
 
-type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
+type AccountIdOf<Test> = <Test as topsoil_core::system::Config>::AccountId;
 pub type AccountPublic = <MultiSignature as Verify>::Signer;
 pub type AccountId = <AccountPublic as IdentifyAccount>::AccountId;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Identity: plant_identity,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -84,7 +84,7 @@ impl plant_identity::Config for Test {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![
 			(account(1), 100),
@@ -1303,7 +1303,7 @@ fn set_username_with_acceptance_should_work() {
 
 		// set up username
 		let username = test_username_of(b"101".to_vec(), suffix.clone());
-		let now = topsoil_system::Pallet::<Test>::block_number();
+		let now = topsoil_core::system::Pallet::<Test>::block_number();
 		let expiration = now + <<Test as Config>::PendingUsernameExpiration as Get<u64>>::get();
 
 		assert_ok!(Identity::set_username_for(
@@ -1670,7 +1670,7 @@ fn unaccepted_usernames_through_grant_should_expire() {
 
 		// set up username
 		let username = test_username_of(b"101".to_vec(), suffix.clone());
-		let now = topsoil_system::Pallet::<Test>::block_number();
+		let now = topsoil_core::system::Pallet::<Test>::block_number();
 		let expiration = now + <<Test as Config>::PendingUsernameExpiration as Get<u64>>::get();
 
 		let suffix: Suffix<Test> = suffix.try_into().unwrap();
@@ -1734,7 +1734,7 @@ fn unaccepted_usernames_through_deposit_should_expire() {
 
 		// set up username
 		let username = test_username_of(b"101".to_vec(), suffix.clone());
-		let now = topsoil_system::Pallet::<Test>::block_number();
+		let now = topsoil_core::system::Pallet::<Test>::block_number();
 		let expiration = now + <<Test as Config>::PendingUsernameExpiration as Get<u64>>::get();
 
 		let suffix: Suffix<Test> = suffix.try_into().unwrap();

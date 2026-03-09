@@ -39,7 +39,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for `plant_grandpa`.
@@ -50,7 +50,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_grandpa` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// The range of component `x` is `[0, 1]`.
 	fn check_equivocation_proof(x: u32, ) -> Weight {
 		// Proof Size summary in bytes:

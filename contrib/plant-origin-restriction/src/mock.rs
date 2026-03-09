@@ -13,7 +13,7 @@ use subsoil::runtime::{
 	transaction_validity::{InvalidTransaction, TransactionSource},
 	BuildStorage, DispatchError, FixedU128, TransactionOutcome,
 };
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	dispatch::{DispatchErrorWithPostInfo, GetDispatchInfo},
 	pallet_prelude::TransactionValidityError,
@@ -23,7 +23,7 @@ use topsoil_support::{
 };
 use plant_transaction_payment::ConstFeeMultiplier;
 
-pub type AccountId = <Test as topsoil_system::Config>::AccountId;
+pub type AccountId = <Test as topsoil_core::system::Config>::AccountId;
 pub type BlockNumber = u64;
 
 pub type TransactionExtension = (RestrictOrigin<Test>,);
@@ -41,17 +41,17 @@ pub const CALL_WEIGHT: u64 = 15;
 pub const CALL_WEIGHT_EXCESS: u64 = 150;
 
 /// A small mock pallet to test calls from within the runtime.
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod mock_pallet {
 	use super::{CALL_WEIGHT, CALL_WEIGHT_EXCESS};
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
@@ -75,9 +75,9 @@ pub mod mock_pallet {
 	}
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		MockPallet: mock_pallet,
 		OriginsRestriction: crate,
 		TransactionPayment: plant_transaction_payment,
@@ -87,8 +87,8 @@ topsoil_support::construct_runtime!(
 /// Convenience aliases for the mock pallet calls.
 pub type MockPalletCall = mock_pallet::Call<Test>;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
@@ -130,10 +130,10 @@ impl RestrictedEntity<OriginCaller, u64> for RuntimeRestrictedEntity {
 
 	fn restricted_entity(caller: &OriginCaller) -> Option<RuntimeRestrictedEntity> {
 		match caller {
-			OriginCaller::system(topsoil_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1)) => {
+			OriginCaller::system(topsoil_core::system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1)) => {
 				Some(RuntimeRestrictedEntity::A)
 			},
-			OriginCaller::system(topsoil_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_2)) => {
+			OriginCaller::system(topsoil_core::system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_2)) => {
 				Some(RuntimeRestrictedEntity::B)
 			},
 			_ => None,
@@ -142,7 +142,7 @@ impl RestrictedEntity<OriginCaller, u64> for RuntimeRestrictedEntity {
 
 	#[cfg(feature = "runtime-benchmarks")]
 	fn benchmarked_restricted_origin() -> OriginCaller {
-		OriginCaller::system(topsoil_system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1))
+		OriginCaller::system(topsoil_core::system::Origin::<Test>::Signed(RESTRICTED_ORIGIN_1))
 	}
 }
 
@@ -169,7 +169,7 @@ impl crate::Config for Test {
 	type OperationAllowedOneTimeExcess = TestOperationAllowedOneTimeExcess;
 }
 
-topsoil_support::parameter_types! {
+topsoil_core::parameter_types! {
 	pub ConstFeeMultiplierInner: FixedU128 = FixedU128::from_u32(1);
 }
 
@@ -321,7 +321,7 @@ pub fn exec_tx(tx: UncheckedExtrinsic) -> Result<(), TransactionExecutionError> 
 	let info = tx.get_dispatch_info();
 	let len = tx.encoded_size();
 
-	let checked = Checkable::check(tx, &topsoil_system::ChainContext::<Test>::default())?;
+	let checked = Checkable::check(tx, &topsoil_core::system::ChainContext::<Test>::default())?;
 
 	with_transaction(|| {
 		let validity = checked.validate::<Test>(TransactionSource::External, &info, len);

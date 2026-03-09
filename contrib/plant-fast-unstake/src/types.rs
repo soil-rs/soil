@@ -10,7 +10,7 @@ use crate::Config;
 use codec::{Decode, Encode, MaxEncodedLen};
 use scale_info::TypeInfo;
 use subsoil::staking::{EraIndex, StakingInterface};
-use topsoil_support::{
+use topsoil_core::{
 	traits::Currency, BoundedVec, CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound,
 };
 
@@ -21,7 +21,7 @@ use topsoil_support::{
 #[codec(mel_bound(T: Config))]
 #[scale_info(skip_type_params(T))]
 pub struct MaxChecking<T: Config>(core::marker::PhantomData<T>);
-impl<T: Config> topsoil_support::traits::Get<u32> for MaxChecking<T> {
+impl<T: Config> topsoil_core::traits::Get<u32> for MaxChecking<T> {
 	fn get() -> u32 {
 		T::Staking::bonding_duration() + 1
 	}
@@ -29,7 +29,7 @@ impl<T: Config> topsoil_support::traits::Get<u32> for MaxChecking<T> {
 
 #[docify::export]
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 /// An unstake request.
 ///
 /// This is stored in [`crate::Head`] storage item and points to the current unstake request that is

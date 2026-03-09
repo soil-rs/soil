@@ -24,7 +24,7 @@ use plant_nomination_pools::{
 	BondExtra, BondedPool, GlobalMaxCommission, LastPoolId, MaxPoolMembers, MaxPoolMembersPerPool,
 	MaxPools, MinCreateBond, MinJoinBond, PoolId,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::{Currency, GetCallName, UnfilteredDispatchable},
 };

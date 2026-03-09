@@ -11,19 +11,19 @@
 use crate::{paged_list::StoragePagedListMeta, Config, ListPrefix};
 use topsoil::testing_prelude::*;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
 construct_runtime!(
 	pub enum Test {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		PagedList: crate,
 		PagedList2: crate::<Instance2>,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Nonce = u64;
 	type AccountId = u64;
 	type Lookup = IdentityLookup<Self::AccountId>;
@@ -51,7 +51,7 @@ pub type MetaOf<T, I> =
 
 /// Build genesis storage according to the mock runtime.
 pub fn new_test_ext() -> TestState {
-	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }
 
 /// Run this closure in test externalities.

@@ -16,32 +16,32 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, Verify},
 	BuildStorage,
 };
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	inherent::{InherentData, InherentIdentifier, MakeFatalError, ProvideInherent},
 	traits::ConstU32,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 pub trait Currency {}
 
 // Test for:
 // * No default instance
 // * Origin, Inherent, Event
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod module1 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		type RuntimeOrigin: From<Origin<Self, I>>;
 		type SomeParameter: Get<u32>;
 		type GenericType: Parameter + Member + MaybeSerializeDeserialize + Default + MaxEncodedLen;
@@ -139,20 +139,20 @@ mod module1 {
 // Test for:
 // * default instance
 // * use of no_genesis_config_phantom_data
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod module2 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		type Amount: Parameter + MaybeSerializeDeserialize + Default + MaxEncodedLen;
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		type RuntimeOrigin: From<Origin<Self, I>>;
 	}
 
@@ -243,17 +243,17 @@ mod module2 {
 
 // Test for:
 // * Depends on multiple instances of a module with instances
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod module3 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
 	pub trait Config<I: 'static = ()>:
-		topsoil_system::Config + module2::Config<I> + module2::Config<module2::Instance1>
+		topsoil_core::system::Config + module2::Config<I> + module2::Config<module2::Instance1>
 	{
 		type Currency: Currency;
 		type Currency2: Currency;
@@ -270,10 +270,10 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Module1_1: module1::<Instance1>,
 		Module1_2: module1::<Instance2>,
 		Module2: module2,
@@ -284,9 +284,9 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;

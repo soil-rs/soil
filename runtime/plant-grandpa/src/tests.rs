@@ -14,12 +14,12 @@ use fg_primitives::ScheduledChange;
 use subsoil::core::H256;
 use subsoil::keyring::Ed25519Keyring;
 use subsoil::runtime::testing::Digest;
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok,
 	dispatch::{GetDispatchInfo, Pays},
 	traits::{Currency, KeyOwnerProofSystem, OnFinalize, OneSessionHandler},
 };
-use topsoil_system::{EventRecord, Phase};
+use topsoil_core::system::{EventRecord, Phase};
 
 #[test]
 fn authorities_change_logged() {

@@ -13,7 +13,7 @@ use subsoil::consensus::babe::{
 };
 use subsoil::core::crypto::Pair;
 use plant_session::ShouldEndSession;
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok,
 	dispatch::{GetDispatchInfo, Pays},
 	traits::{Currency, EstimateNextSessionRotation, FindAuthor, KeyOwnerProofSystem, OnFinalize},
@@ -937,7 +937,7 @@ fn valid_equivocation_reports_dont_pay_fees() {
 
 #[test]
 fn add_epoch_configurations_migration_works() {
-	use topsoil_support::storage::migration::{get_storage_value, put_storage_value};
+	use topsoil_core::storage::migration::{get_storage_value, put_storage_value};
 
 	new_test_ext(1).execute_with(|| {
 		let next_config_descriptor =

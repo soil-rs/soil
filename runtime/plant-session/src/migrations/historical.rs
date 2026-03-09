@@ -7,7 +7,7 @@
 use core::str;
 use subsoil::io::hashing::twox_128;
 
-use topsoil_support::{
+use topsoil_core::{
 	storage::{generator::StorageValue, StoragePrefixedMap},
 	traits::{
 		Get, GetStorageVersion, PalletInfoAccess, StorageVersion,
@@ -50,7 +50,7 @@ pub fn migrate<T: pallet_session_historical::Config, P: GetStorageVersion + Pall
 
 	if on_chain_storage_version < 1 {
 		let storage_prefix = pallet_session_historical::HistoricalSessions::<T>::storage_prefix();
-		topsoil_support::storage::migration::move_storage_from_pallet(
+		topsoil_core::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			OLD_PREFIX.as_bytes(),
 			new_pallet_name.as_bytes(),
@@ -58,7 +58,7 @@ pub fn migrate<T: pallet_session_historical::Config, P: GetStorageVersion + Pall
 		log_migration("migration", storage_prefix, OLD_PREFIX, new_pallet_name);
 
 		let storage_prefix = pallet_session_historical::StoredRange::<T>::storage_prefix();
-		topsoil_support::storage::migration::move_storage_from_pallet(
+		topsoil_core::storage::migration::move_storage_from_pallet(
 			storage_prefix,
 			OLD_PREFIX.as_bytes(),
 			new_pallet_name.as_bytes(),
@@ -66,7 +66,7 @@ pub fn migrate<T: pallet_session_historical::Config, P: GetStorageVersion + Pall
 		log_migration("migration", storage_prefix, OLD_PREFIX, new_pallet_name);
 
 		StorageVersion::new(1).put::<P>();
-		<T as topsoil_system::Config>::BlockWeights::get().max_block
+		<T as topsoil_core::system::Config>::BlockWeights::get().max_block
 	} else {
 		log::warn!(
 			target: LOG_TARGET,
@@ -78,7 +78,7 @@ pub fn migrate<T: pallet_session_historical::Config, P: GetStorageVersion + Pall
 }
 
 /// Some checks prior to migration. This can be linked to
-/// `topsoil_support::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
+/// `topsoil_core::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn pre_migrate<
@@ -101,7 +101,7 @@ pub fn pre_migrate<
 	let new_pallet_prefix = twox_128(new_pallet_name.as_bytes());
 	let storage_version_key = twox_128(STORAGE_VERSION_STORAGE_KEY_POSTFIX);
 
-	let mut new_pallet_prefix_iter = topsoil_support::storage::KeyPrefixIterator::new(
+	let mut new_pallet_prefix_iter = topsoil_core::storage::KeyPrefixIterator::new(
 		new_pallet_prefix.to_vec(),
 		new_pallet_prefix.to_vec(),
 		|key| Ok(key.to_vec()),
@@ -114,7 +114,7 @@ pub fn pre_migrate<
 }
 
 /// Some checks for after migration. This can be linked to
-/// `topsoil_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
+/// `topsoil_core::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn post_migrate<
@@ -143,7 +143,7 @@ pub fn post_migrate<
 	let old_pallet_prefix = twox_128(OLD_PREFIX.as_bytes());
 	let old_historical_sessions_key =
 		[&old_pallet_prefix, &twox_128(storage_prefix_historical_sessions)[..]].concat();
-	let old_historical_sessions_key_iter = topsoil_support::storage::KeyPrefixIterator::new(
+	let old_historical_sessions_key_iter = topsoil_core::storage::KeyPrefixIterator::new(
 		old_historical_sessions_key.to_vec(),
 		old_historical_sessions_key.to_vec(),
 		|_| Ok(()),
@@ -152,7 +152,7 @@ pub fn post_migrate<
 
 	let old_stored_range_key =
 		[&old_pallet_prefix, &twox_128(storage_prefix_stored_range)[..]].concat();
-	let old_stored_range_key_iter = topsoil_support::storage::KeyPrefixIterator::new(
+	let old_stored_range_key_iter = topsoil_core::storage::KeyPrefixIterator::new(
 		old_stored_range_key.to_vec(),
 		old_stored_range_key.to_vec(),
 		|_| Ok(()),
@@ -163,7 +163,7 @@ pub fn post_migrate<
 	// moved to the new prefix.
 	// NOTE: storage_version_key is already in the new prefix.
 	let new_pallet_prefix = twox_128(new_pallet_name.as_bytes());
-	let new_pallet_prefix_iter = topsoil_support::storage::KeyPrefixIterator::new(
+	let new_pallet_prefix_iter = topsoil_core::storage::KeyPrefixIterator::new(
 		new_pallet_prefix.to_vec(),
 		new_pallet_prefix.to_vec(),
 		|_| Ok(()),

@@ -8,31 +8,31 @@ use super::*;
 use crate as plant_glutton;
 
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{assert_ok, derive_impl};
+use topsoil_core::{assert_ok, derive_impl};
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Glutton: plant_glutton,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 
 impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type WeightInfo = ();
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));

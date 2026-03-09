@@ -204,14 +204,14 @@ use plant_election_provider::{
 	onchain, BoundedSupportsOf, DataProviderBounds, ElectionDataProvider, ElectionProvider,
 	InstantElectionProvider,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::PostDispatchInfo,
 	pallet_prelude::*,
 	traits::{Defensive, EnsureOrigin},
 	weights::WeightMeter,
 	DebugNoBound, Twox64Concat,
 };
-use topsoil_system::pallet_prelude::*;
+use topsoil_core::system::pallet_prelude::*;
 
 #[cfg(test)]
 mod mock;
@@ -402,7 +402,7 @@ impl<T: Config, Queued: Get<Phase<T>>, NotQueued: Get<Phase<T>>> Get<Phase<T>>
 ///
 /// Note that this is different from [`pallet::Error`].
 #[derive(
-	topsoil_support::DebugNoBound, topsoil_support::PartialEqNoBound, topsoil_support::EqNoBound,
+	topsoil_core::DebugNoBound, topsoil_core::PartialEqNoBound, topsoil_core::EqNoBound,
 )]
 pub enum ElectionError<T: Config> {
 	/// An error happened in the feasibility check sub-system.
@@ -521,12 +521,12 @@ impl<T: Config> OnRoundRotation for CleanRound<T> {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Duration of the unsigned phase.
 		#[pallet::constant]
 		type UnsignedPhase: Get<BlockNumberFor<Self>>;
@@ -569,7 +569,7 @@ pub mod pallet {
 		/// miner implementation should implement this trait, and use the said `BaseMiner`.
 		type MinerConfig: crate::unsigned::miner::MinerConfig<
 			Pages = Self::Pages,
-			AccountId = <Self as topsoil_system::Config>::AccountId,
+			AccountId = <Self as topsoil_core::system::Config>::AccountId,
 			MaxVotesPerVoter = <Self::DataProvider as ElectionDataProvider>::MaxVotesPerVoter,
 			VoterSnapshotPerBlock = Self::VoterSnapshotPerBlock,
 			TargetSnapshotPerBlock = Self::TargetSnapshotPerBlock,
@@ -1227,7 +1227,7 @@ pub mod pallet {
 	>;
 	/// Same as [`PagedVoterSnapshot`], but it will store the hash of the snapshot.
 	///
-	/// The hash is generated using [`topsoil_system::Config::Hashing`].
+	/// The hash is generated using [`topsoil_core::system::Config::Hashing`].
 	#[pallet::storage]
 	pub type PagedVoterSnapshotHash<T: Config> =
 		StorageDoubleMap<_, Twox64Concat, u32, Twox64Concat, PageIndex, T::Hash>;
@@ -1245,7 +1245,7 @@ pub mod pallet {
 	>;
 	/// Same as [`PagedTargetSnapshot`], but it will store the hash of the snapshot.
 	///
-	/// The hash is generated using [`topsoil_system::Config::Hashing`].
+	/// The hash is generated using [`topsoil_core::system::Config::Hashing`].
 	#[pallet::storage]
 	pub type PagedTargetSnapshotHash<T: Config> =
 		StorageDoubleMap<_, Twox64Concat, u32, Twox64Concat, PageIndex, T::Hash>;
@@ -1596,7 +1596,7 @@ impl<T: Config> Pallet<T> {
 		maybe_max_ratio: Option<subsoil::runtime::Percent>,
 		maybe_max_warn_ratio: Option<subsoil::runtime::Percent>,
 	) {
-		use topsoil_support::weights::constants::{
+		use topsoil_core::weights::constants::{
 			WEIGHT_PROOF_SIZE_PER_KB, WEIGHT_REF_TIME_PER_MILLIS,
 		};
 
@@ -1775,9 +1775,9 @@ where
 
 	/// Progress blocks until one block before the criteria is met.
 	pub(crate) fn roll_until_before_matches(criteria: impl FnOnce() -> bool + Copy) {
-		use topsoil_support::storage::TransactionOutcome;
+		use topsoil_core::storage::TransactionOutcome;
 		loop {
-			let should_break = topsoil_support::storage::with_transaction(
+			let should_break = topsoil_core::storage::with_transaction(
 				|| -> TransactionOutcome<Result<_, DispatchError>> {
 					Pallet::<T>::roll_next(false);
 					if criteria() {
@@ -1814,7 +1814,7 @@ where
 		PagedRawSolution { score, solution_pages, .. }: PagedRawSolution<T::MinerConfig>,
 	) -> DispatchResultWithPostInfo {
 		use subsoil::std::boxed::Box;
-		use topsoil_system::RawOrigin;
+		use topsoil_core::system::RawOrigin;
 		use types::Pagify;
 
 		// register alice
@@ -1842,7 +1842,7 @@ where
 
 	fn funded_account(seed: &'static str, index: u32) -> T::AccountId {
 		use topsoil_benchmarking::whitelist;
-		use topsoil_support::traits::fungible::{Inspect, Mutate};
+		use topsoil_core::traits::fungible::{Inspect, Mutate};
 		let who: T::AccountId = topsoil_benchmarking::account(seed, index, 777);
 		whitelist!(who);
 
@@ -1875,20 +1875,20 @@ where
 
 	/// Roll all pallets forward, for the given number of blocks.
 	pub(crate) fn roll_to(n: BlockNumberFor<T>, try_state: bool) {
-		let now = topsoil_system::Pallet::<T>::block_number();
+		let now = topsoil_core::system::Pallet::<T>::block_number();
 		assert!(n > now, "cannot roll to current or past block");
 		let one: BlockNumberFor<T> = 1u32.into();
 		let mut i = now + one;
 		while i <= n {
 			// remove previous weight usage in system.
-			topsoil_system::BlockWeight::<T>::kill();
+			topsoil_core::system::BlockWeight::<T>::kill();
 
-			topsoil_system::Pallet::<T>::set_block_number(i);
-			let mut meter = topsoil_system::Pallet::<T>::remaining_block_weight();
+			topsoil_core::system::Pallet::<T>::set_block_number(i);
+			let mut meter = topsoil_core::system::Pallet::<T>::remaining_block_weight();
 			Pallet::<T>::on_poll(i, &mut meter);
 
 			// register the new weight in system
-			topsoil_system::Pallet::<T>::register_extra_weight_unchecked(
+			topsoil_core::system::Pallet::<T>::register_extra_weight_unchecked(
 				meter.consumed(),
 				DispatchClass::Mandatory,
 			);
@@ -1907,7 +1907,7 @@ where
 
 	/// Roll to next block.
 	pub(crate) fn roll_next(try_state: bool) {
-		Self::roll_to(topsoil_system::Pallet::<T>::block_number() + 1u32.into(), try_state);
+		Self::roll_to(topsoil_core::system::Pallet::<T>::block_number() + 1u32.into(), try_state);
 	}
 }
 
@@ -2024,7 +2024,7 @@ mod phase_rotation {
 	use super::{Event, *};
 	use crate::{mock::*, verifier::Status, Phase};
 	use plant_election_provider::ElectionProvider;
-	use topsoil_support::assert_ok;
+	use topsoil_core::assert_ok;
 
 	#[test]
 	fn single_page() {
@@ -2743,7 +2743,7 @@ mod election_provider {
 		Phase,
 	};
 	use plant_election_provider::{BoundedSupport, BoundedSupports, ElectionProvider};
-	use topsoil_support::{
+	use topsoil_core::{
 		assert_storage_noop, testing_prelude::bounded_vec, unsigned::ValidateUnsigned,
 	};
 

@@ -9,8 +9,8 @@
 #![cfg(feature = "runtime-benchmarks")]
 
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{dispatch::DispatchResultWithPostInfo, traits::OnInitialize};
-use topsoil_system::RawOrigin;
+use topsoil_core::{dispatch::DispatchResultWithPostInfo, traits::OnInitialize};
+use topsoil_core::system::RawOrigin;
 
 #[cfg(test)]
 use crate::tests::MEMBERS;

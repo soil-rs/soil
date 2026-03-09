@@ -19,7 +19,7 @@ use subsoil::runtime::{
 	BuildStorage, DispatchError,
 };
 use plant_balances::Call as BalancesCall;
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_ok, derive_impl,
 	migrations::MultiStepMigrator,
 	pallet_prelude::*,
@@ -27,13 +27,13 @@ use topsoil_support::{
 	traits::{fungible, ConstU8, Currency, IsInherent, VariantCount, VariantCountOf},
 	weights::{ConstantMultiplier, IdentityFee, RuntimeDbWeight, Weight, WeightMeter, WeightToFee},
 };
-use topsoil_system::{pallet_prelude::*, ChainContext, LastRuntimeUpgrade, LastRuntimeUpgradeInfo};
+use topsoil_core::system::{pallet_prelude::*, ChainContext, LastRuntimeUpgrade, LastRuntimeUpgradeInfo};
 use plant_transaction_payment::FungibleAdapter;
 
 const TEST_KEY: &[u8] = b":test:key:";
 const TEST_KEY_2: &[u8] = b":test:key_2:";
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod custom {
 	use super::*;
 
@@ -41,7 +41,7 @@ mod custom {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
@@ -73,34 +73,34 @@ mod custom {
 	impl<T: Config> Pallet<T> {
 		pub fn some_function(origin: OriginFor<T>) -> DispatchResult {
 			// NOTE: does not make any difference.
-			topsoil_system::ensure_signed(origin)?;
+			topsoil_core::system::ensure_signed(origin)?;
 			Ok(())
 		}
 
 		#[pallet::weight((200, DispatchClass::Operational))]
 		pub fn some_root_operation(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_root(origin)?;
+			topsoil_core::system::ensure_root(origin)?;
 			Ok(())
 		}
 
 		pub fn some_unsigned_message(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_none(origin)?;
+			topsoil_core::system::ensure_none(origin)?;
 			Ok(())
 		}
 
 		pub fn allowed_unsigned(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_root(origin)?;
+			topsoil_core::system::ensure_root(origin)?;
 			Ok(())
 		}
 
 		pub fn unallowed_unsigned(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_root(origin)?;
+			topsoil_core::system::ensure_root(origin)?;
 			Ok(())
 		}
 
 		#[pallet::weight((0, DispatchClass::Mandatory))]
 		pub fn inherent(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_none(origin)?;
+			topsoil_core::system::ensure_none(origin)?;
 			Ok(())
 		}
 
@@ -151,7 +151,7 @@ mod custom {
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod custom2 {
 	use super::*;
 
@@ -159,7 +159,7 @@ mod custom2 {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::hooks]
 	impl<T: Config> Hooks<BlockNumberFor<T>> for Pallet<T> {
@@ -198,7 +198,7 @@ mod custom2 {
 	#[pallet::call]
 	impl<T: Config> Pallet<T> {
 		pub fn allowed_unsigned(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_root(origin)?;
+			topsoil_core::system::ensure_root(origin)?;
 			Ok(())
 		}
 
@@ -212,7 +212,7 @@ mod custom2 {
 
 		#[pallet::weight({0})]
 		pub fn optional_inherent(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_none(origin)?;
+			topsoil_core::system::ensure_none(origin)?;
 
 			assert!(MockedSystemCallbacks::pre_inherent_called());
 			assert!(!MockedSystemCallbacks::post_inherent_called(), "Should not already be called");
@@ -223,7 +223,7 @@ mod custom2 {
 
 		#[pallet::weight((0, DispatchClass::Mandatory))]
 		pub fn inherent(origin: OriginFor<T>) -> DispatchResult {
-			topsoil_system::ensure_none(origin)?;
+			topsoil_core::system::ensure_none(origin)?;
 
 			assert!(MockedSystemCallbacks::pre_inherent_called());
 			assert!(!MockedSystemCallbacks::post_inherent_called(), "Should not already be called");
@@ -274,10 +274,10 @@ mod custom2 {
 	}
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub struct Runtime
 	{
-		System: topsoil_system::{Pallet, Call, Config<T>, Storage, Event<T>},
+		System: topsoil_core::system::{Pallet, Call, Config<T>, Storage, Event<T>},
 		Balances: plant_balances::{Pallet, Call, Storage, Config<T>, Event<T>},
 		TransactionPayment: plant_transaction_payment::{Pallet, Storage, Event<T>},
 		Custom: custom::{Pallet, Call, ValidateUnsigned, Inherent},
@@ -286,8 +286,8 @@ topsoil_support::construct_runtime!(
 );
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::builder()
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::builder()
 			.base_block(Weight::from_parts(10, 0))
 			.for_class(DispatchClass::all(), |weights| weights.base_extrinsic = Weight::from_parts(5, 0))
 			.for_class(DispatchClass::non_mandatory(), |weights| weights.max_total = Weight::from_parts(1024, u64::MAX).into())
@@ -299,7 +299,7 @@ parameter_types! {
 }
 
 pub struct MockExtensionsWeights;
-impl topsoil_system::ExtensionsWeightInfo for MockExtensionsWeights {
+impl topsoil_core::system::ExtensionsWeightInfo for MockExtensionsWeights {
 	fn check_genesis() -> Weight {
 		Weight::zero()
 	}
@@ -329,8 +329,8 @@ impl topsoil_system::ExtensionsWeightInfo for MockExtensionsWeights {
 	}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type BlockWeights = BlockWeights;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
@@ -440,7 +440,7 @@ impl custom::Config for Runtime {}
 impl custom2::Config for Runtime {}
 
 pub struct RuntimeVersion;
-impl topsoil_support::traits::Get<subsoil::version::RuntimeVersion> for RuntimeVersion {
+impl topsoil_core::traits::Get<subsoil::version::RuntimeVersion> for RuntimeVersion {
 	fn get() -> subsoil::version::RuntimeVersion {
 		RuntimeVersionTestValues::get().clone()
 	}
@@ -452,12 +452,12 @@ parameter_types! {
 }
 
 type TxExtension = (
-	topsoil_system::AuthorizeCall<Runtime>,
-	topsoil_system::CheckEra<Runtime>,
-	topsoil_system::CheckNonce<Runtime>,
-	topsoil_system::CheckWeight<Runtime>,
+	topsoil_core::system::AuthorizeCall<Runtime>,
+	topsoil_core::system::CheckEra<Runtime>,
+	topsoil_core::system::CheckNonce<Runtime>,
+	topsoil_core::system::CheckWeight<Runtime>,
 	plant_transaction_payment::ChargeTransactionPayment<Runtime>,
-	topsoil_system::WeightReclaim<Runtime>,
+	topsoil_core::system::WeightReclaim<Runtime>,
 );
 type UncheckedXt = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
@@ -476,7 +476,7 @@ impl OnRuntimeUpgrade for CustomOnRuntimeUpgrade {
 		subsoil::io::storage::set(TEST_KEY, "custom_upgrade".as_bytes());
 		subsoil::io::storage::set(TEST_KEY_2, "try_runtime_upgrade_works".as_bytes());
 		subsoil::io::storage::set(CUSTOM_ON_RUNTIME_KEY, &true.encode());
-		System::deposit_event(topsoil_system::Event::CodeUpdated);
+		System::deposit_event(topsoil_core::system::Event::CodeUpdated);
 
 		assert_eq!(0, System::last_runtime_upgrade_spec_version());
 
@@ -516,7 +516,7 @@ impl PreInherents for MockedSystemCallbacks {
 		assert_eq!(SystemCallbacksCalled::get(), 0);
 		SystemCallbacksCalled::set(1);
 		// Change the storage to modify the root hash:
-		topsoil_support::storage::unhashed::put(b":pre_inherent", b"0");
+		topsoil_core::storage::unhashed::put(b":pre_inherent", b"0");
 	}
 }
 
@@ -525,7 +525,7 @@ impl PostInherents for MockedSystemCallbacks {
 		assert_eq!(SystemCallbacksCalled::get(), 1);
 		SystemCallbacksCalled::set(2);
 		// Change the storage to modify the root hash:
-		topsoil_support::storage::unhashed::put(b":post_inherent", b"0");
+		topsoil_core::storage::unhashed::put(b":post_inherent", b"0");
 	}
 }
 
@@ -534,7 +534,7 @@ impl PostTransactions for MockedSystemCallbacks {
 		assert_eq!(SystemCallbacksCalled::get(), 2);
 		SystemCallbacksCalled::set(3);
 		// Change the storage to modify the root hash:
-		topsoil_support::storage::unhashed::put(b":post_transaction", b"0");
+		topsoil_core::storage::unhashed::put(b":post_transaction", b"0");
 	}
 }
 
@@ -553,9 +553,9 @@ impl MockedSystemCallbacks {
 
 	fn reset() {
 		SystemCallbacksCalled::set(0);
-		topsoil_support::storage::unhashed::kill(b":pre_inherent");
-		topsoil_support::storage::unhashed::kill(b":post_inherent");
-		topsoil_support::storage::unhashed::kill(b":post_transaction");
+		topsoil_core::storage::unhashed::kill(b":pre_inherent");
+		topsoil_core::storage::unhashed::kill(b":post_inherent");
+		topsoil_core::storage::unhashed::kill(b":post_transaction");
 	}
 }
 
@@ -576,12 +576,12 @@ impl MultiStepMigrator for MockedModeGetter {
 
 fn tx_ext(nonce: u64, fee: Balance) -> TxExtension {
 	(
-		topsoil_system::AuthorizeCall::<Runtime>::new(),
-		topsoil_system::CheckEra::from(Era::Immortal),
-		topsoil_system::CheckNonce::from(nonce),
-		topsoil_system::CheckWeight::new(),
+		topsoil_core::system::AuthorizeCall::<Runtime>::new(),
+		topsoil_core::system::CheckEra::from(Era::Immortal),
+		topsoil_core::system::CheckNonce::from(nonce),
+		topsoil_core::system::CheckWeight::new(),
 		plant_transaction_payment::ChargeTransactionPayment::from(fee),
-		topsoil_system::WeightReclaim::new(),
+		topsoil_core::system::WeightReclaim::new(),
 	)
 		.into()
 }
@@ -592,13 +592,13 @@ fn call_transfer(dest: u64, value: u64) -> RuntimeCall {
 
 #[test]
 fn balance_transfer_dispatch_works() {
-	let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Runtime> { balances: vec![(1, 211)], ..Default::default() }
 		.assimilate_storage(&mut t)
 		.unwrap();
 	let xt = UncheckedXt::new_signed(call_transfer(2, 69), 1, 1.into(), tx_ext(0, 0));
 	let weight = xt.get_dispatch_info().total_weight()
-		+ <Runtime as topsoil_system::Config>::BlockWeights::get()
+		+ <Runtime as topsoil_core::system::Config>::BlockWeights::get()
 			.get(DispatchClass::Normal)
 			.base_extrinsic;
 	let fee: Balance =
@@ -614,7 +614,7 @@ fn balance_transfer_dispatch_works() {
 }
 
 fn new_test_ext(balance_factor: Balance) -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Runtime> {
 		balances: vec![(1, 111 * balance_factor)],
 		..Default::default()
@@ -629,7 +629,7 @@ fn new_test_ext(balance_factor: Balance) -> subsoil::io::TestExternalities {
 }
 
 fn new_test_ext_v0(balance_factor: Balance) -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Runtime> {
 		balances: vec![(1, 111 * balance_factor)],
 		..Default::default()
@@ -729,7 +729,7 @@ fn bad_extrinsic_not_inserted() {
 			Executive::apply_extrinsic(xt),
 			TransactionValidityError::Invalid(InvalidTransaction::Future)
 		);
-		assert_eq!(<topsoil_system::Pallet<Runtime>>::extrinsic_index(), Some(0));
+		assert_eq!(<topsoil_core::system::Pallet<Runtime>>::extrinsic_index(), Some(0));
 	});
 }
 
@@ -741,7 +741,7 @@ fn block_weight_limit_enforced() {
 	let extension_weight = tx_ext(0u32.into(), 0)
 		.weight(&RuntimeCall::Balances(BalancesCall::transfer_allow_death { dest: 33, value: 0 }));
 	// on_initialize weight + base block execution weight
-	let block_weights = <Runtime as topsoil_system::Config>::BlockWeights::get();
+	let block_weights = <Runtime as topsoil_core::system::Config>::BlockWeights::get();
 	let base_block_weight = Weight::from_parts(175, 0) + block_weights.base_block;
 	let limit = block_weights.get(DispatchClass::Normal).max_total.unwrap() - base_block_weight;
 	let num_to_exhaust_block =
@@ -749,7 +749,7 @@ fn block_weight_limit_enforced() {
 	t.execute_with(|| {
 		Executive::initialize_block(&Header::new_from_number(1));
 		// Base block execution weight + `on_initialize` weight from the custom module.
-		assert_eq!(<topsoil_system::Pallet<Runtime>>::block_weight().total(), base_block_weight);
+		assert_eq!(<topsoil_core::system::Pallet<Runtime>>::block_weight().total(), base_block_weight);
 
 		for nonce in 0..=num_to_exhaust_block {
 			let xt = UncheckedXt::new_signed(
@@ -764,7 +764,7 @@ fn block_weight_limit_enforced() {
 			if nonce != num_to_exhaust_block {
 				assert!(res.is_ok());
 				assert_eq!(
-					<topsoil_system::Pallet<Runtime>>::block_weight().total(),
+					<topsoil_core::system::Pallet<Runtime>>::block_weight().total(),
 					//---------------------
 					// on_initialize
 					// + block_execution
@@ -779,7 +779,7 @@ fn block_weight_limit_enforced() {
 					) + base_block_weight,
 				);
 				assert_eq!(
-					<topsoil_system::Pallet<Runtime>>::extrinsic_index(),
+					<topsoil_core::system::Pallet<Runtime>>::extrinsic_index(),
 					Some(nonce as u32 + 1)
 				);
 			} else {
@@ -816,14 +816,14 @@ fn block_weight_and_size_is_stored_per_tx() {
 	t.execute_with(|| {
 		// Block execution weight + on_initialize weight from custom module
 		let base_block_weight = Weight::from_parts(175, 0)
-			+ <Runtime as topsoil_system::Config>::BlockWeights::get().base_block;
+			+ <Runtime as topsoil_core::system::Config>::BlockWeights::get().base_block;
 
 		Executive::initialize_block(&Header::new_from_number(1));
 
-		assert_eq!(<topsoil_system::Pallet<Runtime>>::block_weight().total(), base_block_weight);
+		assert_eq!(<topsoil_core::system::Pallet<Runtime>>::block_weight().total(), base_block_weight);
 		// After initialize_block, block_size includes the header overhead (digest + empty
 		// header size).
-		let header_overhead = <topsoil_system::Pallet<Runtime>>::block_size();
+		let header_overhead = <topsoil_core::system::Pallet<Runtime>>::block_size();
 
 		assert!(Executive::apply_extrinsic(xt.clone()).unwrap().is_ok());
 		assert!(Executive::apply_extrinsic(x1.clone()).unwrap().is_ok());
@@ -831,26 +831,26 @@ fn block_weight_and_size_is_stored_per_tx() {
 
 		let extrinsic_weight = transfer_weight
 			+ extension_weight
-			+ <Runtime as topsoil_system::Config>::BlockWeights::get()
+			+ <Runtime as topsoil_core::system::Config>::BlockWeights::get()
 				.get(DispatchClass::Normal)
 				.base_extrinsic;
 		// Check we account for all extrinsic weight and their len.
 		assert_eq!(
-			<topsoil_system::Pallet<Runtime>>::block_weight().total(),
+			<topsoil_core::system::Pallet<Runtime>>::block_weight().total(),
 			base_block_weight + 3u64 * extrinsic_weight + 3u64 * Weight::from_parts(0, len as u64),
 		);
-		assert_eq!(<topsoil_system::Pallet<Runtime>>::block_size(), 3 * len + header_overhead);
+		assert_eq!(<topsoil_core::system::Pallet<Runtime>>::block_size(), 3 * len + header_overhead);
 
-		let _ = <topsoil_system::Pallet<Runtime>>::finalize();
+		let _ = <topsoil_core::system::Pallet<Runtime>>::finalize();
 		// Block size cleaned on `System::finalize`
-		assert_eq!(<topsoil_system::Pallet<Runtime>>::block_size(), 0);
+		assert_eq!(<topsoil_core::system::Pallet<Runtime>>::block_size(), 0);
 
 		// Reset to a new block.
 		SystemCallbacksCalled::take();
 		Executive::initialize_block(&Header::new_from_number(2));
 
 		// Block weight cleaned up on `System::initialize`
-		assert_eq!(<topsoil_system::Pallet<Runtime>>::block_weight().total(), base_block_weight);
+		assert_eq!(<topsoil_core::system::Pallet<Runtime>>::block_weight().total(), base_block_weight);
 	});
 }
 
@@ -900,7 +900,7 @@ fn can_not_pay_for_tx_fee_on_full_lock() {
 		)
 		.unwrap();
 		let xt = UncheckedXt::new_signed(
-			RuntimeCall::System(topsoil_system::Call::remark { remark: vec![1u8] }),
+			RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![1u8] }),
 			1,
 			1.into(),
 			tx_ext(0, 0),
@@ -921,7 +921,7 @@ fn block_hooks_weight_is_stored() {
 		// For now it only accounts for the base block execution weight and
 		// the `on_initialize` weight defined in the custom test module.
 		assert_eq!(
-			<topsoil_system::Pallet<Runtime>>::block_weight().total(),
+			<topsoil_core::system::Pallet<Runtime>>::block_weight().total(),
 			Weight::from_parts(175 + 175 + 10, 0)
 		);
 	})
@@ -1020,7 +1020,7 @@ fn event_from_runtime_upgrade_is_included() {
 		System::set_block_number(1);
 
 		Executive::initialize_block(&Header::new_from_number(2));
-		System::assert_last_event(topsoil_system::Event::<Runtime>::CodeUpdated.into());
+		System::assert_last_event(topsoil_core::system::Event::<Runtime>::CodeUpdated.into());
 	});
 }
 
@@ -1093,11 +1093,11 @@ fn all_weights_are_recorded_correctly() {
 		let runtime_upgrade_weight = Executive::execute_on_runtime_upgrade();
 		let on_initialize_weight =
 			<AllPalletsWithSystem as OnInitialize<u64>>::on_initialize(block_number);
-		let base_block_weight = <Runtime as topsoil_system::Config>::BlockWeights::get().base_block;
+		let base_block_weight = <Runtime as topsoil_core::system::Config>::BlockWeights::get().base_block;
 
 		// Weights are recorded correctly
 		assert_eq!(
-			topsoil_system::Pallet::<Runtime>::block_weight().total(),
+			topsoil_core::system::Pallet::<Runtime>::block_weight().total(),
 			runtime_upgrade_weight + on_initialize_weight + base_block_weight,
 		);
 	});
@@ -1324,7 +1324,7 @@ fn try_execute_block_works() {
 #[test]
 #[cfg(feature = "try-runtime")]
 fn try_runtime_upgrade_works() {
-	use topsoil_support::traits::OnGenesis;
+	use topsoil_core::traits::OnGenesis;
 
 	subsoil::tracing::init_for_tests();
 
@@ -1649,7 +1649,7 @@ fn max_transaction_depth_is_respected() {
 
 	let client = TestClientBuilder::default().build();
 
-	let mut call = RuntimeCall::System(topsoil_system::Call::remark { remark: vec![1, 2, 3] });
+	let mut call = RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![1, 2, 3] });
 	for _ in 0..MAX_EXTRINSIC_DEPTH {
 		call = RuntimeCall::Utility(UtilityCall::batch { calls: vec![call] });
 	}

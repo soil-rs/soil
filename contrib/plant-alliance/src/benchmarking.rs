@@ -12,8 +12,8 @@ use core::{cmp, mem::size_of};
 use subsoil::runtime::traits::{Bounded, Hash, StaticLookup};
 
 use topsoil_benchmarking::{account, v2::*, BenchmarkError};
-use topsoil_support::traits::{EnsureOrigin, Get, UnfilteredDispatchable};
-use topsoil_system::{pallet_prelude::BlockNumberFor, Pallet as System, RawOrigin as SystemOrigin};
+use topsoil_core::traits::{EnsureOrigin, Get, UnfilteredDispatchable};
+use topsoil_core::system::{pallet_prelude::BlockNumberFor, Pallet as System, RawOrigin as SystemOrigin};
 
 use super::{Call as AllianceCall, Pallet as Alliance, *};
 
@@ -22,7 +22,7 @@ const SEED: u32 = 0;
 const MAX_BYTES: u32 = 1_024;
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn cid(input: impl AsRef<[u8]>) -> Cid {
@@ -181,7 +181,7 @@ mod benchmarks {
 		let approve = false;
 
 		// Whitelist voter account from further DB operations.
-		let voter_key = topsoil_system::Account::<T>::hashed_key_for(&voter);
+		let voter_key = topsoil_core::system::Account::<T>::hashed_key_for(&voter);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(voter_key.into());
 
 		#[extrinsic_call]
@@ -252,7 +252,7 @@ mod benchmarks {
 		)?;
 
 		// Whitelist voter account from further DB operations.
-		let voter_key = topsoil_system::Account::<T>::hashed_key_for(&voter);
+		let voter_key = topsoil_core::system::Account::<T>::hashed_key_for(&voter);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(voter_key.into());
 
 		#[extrinsic_call]

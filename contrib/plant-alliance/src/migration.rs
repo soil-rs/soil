@@ -6,7 +6,7 @@
 
 use crate::{Config, Pallet, Weight, LOG_TARGET};
 use log;
-use topsoil_support::{pallet_prelude::*, storage::migration, traits::OnRuntimeUpgrade};
+use topsoil_core::{pallet_prelude::*, storage::migration, traits::OnRuntimeUpgrade};
 
 /// The in-code storage version.
 pub const STORAGE_VERSION: StorageVersion = StorageVersion::new(2);

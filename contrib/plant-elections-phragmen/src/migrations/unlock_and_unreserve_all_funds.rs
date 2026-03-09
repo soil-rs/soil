@@ -11,7 +11,7 @@ use alloc::{collections::btree_map::BTreeMap, vec::Vec};
 use core::iter::Sum;
 use subsoil::core::Get;
 use subsoil::runtime::traits::Zero;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::ValueQuery,
 	storage_alias,
 	traits::{Currency, LockIdentifier, LockableCurrency, OnRuntimeUpgrade, ReservableCurrency},
@@ -33,7 +33,7 @@ pub trait UnlockConfig: 'static {
 	/// Should match the currency type previously used for the pallet, if applicable.
 	type Currency: LockableCurrency<Self::AccountId> + ReservableCurrency<Self::AccountId>;
 	/// The name of the pallet as previously configured in
-	/// [`construct_runtime!`](topsoil_support::construct_runtime).
+	/// [`construct_runtime!`](topsoil_core::construct_runtime).
 	type PalletName: Get<&'static str>;
 	/// The maximum number of votes per voter as configured previously in the previous runtime.
 	type MaxVotesPerVoter: Get<u32>;
@@ -81,7 +81,7 @@ type Voting<T: UnlockConfig> = StorageMap<
 ///
 /// The pallet should be made inoperable before this migration is run.
 ///
-/// (See also [`RemovePallet`][topsoil_support::migrations::RemovePallet])
+/// (See also [`RemovePallet`][topsoil_core::migrations::RemovePallet])
 pub struct UnlockAndUnreserveAllFunds<T: UnlockConfig>(core::marker::PhantomData<T>);
 
 impl<T: UnlockConfig> UnlockAndUnreserveAllFunds<T> {
@@ -104,11 +104,11 @@ impl<T: UnlockConfig> UnlockAndUnreserveAllFunds<T> {
 	///   deposit sums.
 	/// * `BTreeMap<T::AccountId, BalanceOf<T>>`: Map of account IDs to their respective total
 	///   staked sums.
-	/// * `topsoil_support::weights::Weight`: The weight of reading the storage.
+	/// * `topsoil_core::weights::Weight`: The weight of reading the storage.
 	fn get_account_deposited_and_staked_sums() -> (
 		BTreeMap<T::AccountId, BalanceOf<T>>,
 		BTreeMap<T::AccountId, BalanceOf<T>>,
-		topsoil_support::weights::Weight,
+		topsoil_core::weights::Weight,
 	) {
 		use subsoil::runtime::Saturating;
 
@@ -233,7 +233,7 @@ where
 	/// 1. Retrieves the deposit and stake amounts from the pallet.
 	/// 2. Unreserves the deposited funds for each account.
 	/// 3. Unlocks the staked funds for each account.
-	fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+	fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 		// Get staked and deposited balances as reported by this pallet.
 		let (account_deposited_sums, account_staked_sums, initial_reads) =
 			Self::get_account_deposited_and_staked_sums();
@@ -314,7 +314,7 @@ mod test {
 		tests::{Balances, ElectionsPhragmenPalletId, ExtBuilder, PhragmenMaxVoters, Test},
 		Candidates, Members, RunnersUp, SeatHolder, Voter, Voting,
 	};
-	use topsoil_support::{
+	use topsoil_core::{
 		assert_ok, parameter_types,
 		traits::{Currency, OnRuntimeUpgrade, ReservableCurrency, WithdrawReasons},
 	};

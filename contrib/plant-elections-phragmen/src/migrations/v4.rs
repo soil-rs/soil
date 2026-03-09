@@ -7,7 +7,7 @@
 //! Migrations to version `4.0.0`, as denoted by the changelog.
 
 use super::super::LOG_TARGET;
-use topsoil_support::{
+use topsoil_core::{
 	traits::{Get, StorageVersion},
 	weights::Weight,
 };
@@ -19,7 +19,7 @@ pub const OLD_PREFIX: &[u8] = b"PhragmenElection";
 ///
 /// This new prefix must be the same as the one set in construct_runtime. For safety, use
 /// `PalletInfo` to get it, as:
-/// `<Runtime as topsoil_system::Config>::PalletInfo::name::<ElectionsPhragmenPallet>`.
+/// `<Runtime as topsoil_core::system::Config>::PalletInfo::name::<ElectionsPhragmenPallet>`.
 ///
 /// The old storage prefix, `PhragmenElection` is hardcoded in the migration code.
 pub fn migrate<T: crate::Config, N: AsRef<str>>(new_pallet_name: N) -> Weight {
@@ -39,14 +39,14 @@ pub fn migrate<T: crate::Config, N: AsRef<str>>(new_pallet_name: N) -> Weight {
 
 	if storage_version <= 3 {
 		log::info!("new prefix: {}", new_pallet_name.as_ref());
-		topsoil_support::storage::migration::move_pallet(
+		topsoil_core::storage::migration::move_pallet(
 			OLD_PREFIX,
 			new_pallet_name.as_ref().as_bytes(),
 		);
 
 		StorageVersion::new(4).put::<crate::Pallet<T>>();
 
-		<T as topsoil_system::Config>::BlockWeights::get().max_block
+		<T as topsoil_core::system::Config>::BlockWeights::get().max_block
 	} else {
 		log::warn!(
 			target: LOG_TARGET,
@@ -58,7 +58,7 @@ pub fn migrate<T: crate::Config, N: AsRef<str>>(new_pallet_name: N) -> Weight {
 }
 
 /// Some checks prior to migration. This can be linked to
-/// `topsoil_support::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
+/// `topsoil_core::traits::OnRuntimeUpgrade::pre_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn pre_migration<T: crate::Config, N: AsRef<str>>(new: N) {
@@ -88,7 +88,7 @@ pub fn pre_migration<T: crate::Config, N: AsRef<str>>(new: N) {
 }
 
 /// Some checks for after migration. This can be linked to
-/// `topsoil_support::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
+/// `topsoil_core::traits::OnRuntimeUpgrade::post_upgrade` for further testing.
 ///
 /// Panics if anything goes wrong.
 pub fn post_migration<T: crate::Config>() {

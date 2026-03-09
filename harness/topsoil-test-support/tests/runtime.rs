@@ -19,10 +19,10 @@ use subsoil::runtime::{
 	DispatchError, ModuleError,
 };
 use subsoil::version::RuntimeVersion;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types, traits::PalletInfo as _, weights::RuntimeDbWeight,
 };
-use topsoil_system::{
+use topsoil_core::system::{
 	limits::{BlockLength, BlockWeights},
 	DispatchEventInfo,
 };
@@ -31,19 +31,19 @@ parameter_types! {
 	pub static IntegrityTestExec: u32 = 0;
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod module1 {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::call]
@@ -62,7 +62,7 @@ mod module1 {
 
 	#[pallet::event]
 	pub enum Event<T: Config<I>, I: 'static = ()> {
-		A(<T as topsoil_system::Config>::AccountId),
+		A(<T as topsoil_core::system::Config>::AccountId),
 	}
 
 	#[pallet::error]
@@ -71,20 +71,20 @@ mod module1 {
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod module2 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::hooks]
@@ -121,20 +121,20 @@ mod module2 {
 mod nested {
 	use super::*;
 
-	#[topsoil_support::pallet(dev_mode)]
+	#[topsoil_core::pallet(dev_mode)]
 	pub mod module3 {
 		use super::*;
-		use topsoil_support::pallet_prelude::*;
-		use topsoil_system::pallet_prelude::*;
+		use topsoil_core::pallet_prelude::*;
+		use topsoil_core::system::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
 		#[pallet::config]
-		pub trait Config: topsoil_system::Config {
+		pub trait Config: topsoil_core::system::Config {
 			#[allow(deprecated)]
 			type RuntimeEvent: From<Event<Self>>
-				+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+				+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		}
 
 		#[pallet::hooks]
@@ -176,7 +176,7 @@ mod nested {
 		}
 
 		#[pallet::genesis_config]
-		#[derive(topsoil_support::DefaultNoBound)]
+		#[derive(topsoil_core::DefaultNoBound)]
 		pub struct GenesisConfig<T: Config> {
 			#[serde(skip)]
 			pub _config: core::marker::PhantomData<T>,
@@ -200,20 +200,20 @@ mod nested {
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod module3 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::call]
@@ -262,7 +262,7 @@ pub mod module3 {
 	}
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
 		pub _config: core::marker::PhantomData<T>,
@@ -295,7 +295,7 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Signature, ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-#[topsoil_support::runtime]
+#[topsoil_core::runtime]
 mod runtime {
 	#[runtime::runtime]
 	#[runtime::derive(
@@ -313,7 +313,7 @@ mod runtime {
 	pub struct Runtime;
 
 	#[runtime::pallet_index(30)]
-	pub type System = topsoil_system + Pallet + Call + Event<T> + Origin<T>;
+	pub type System = topsoil_core::system + Pallet + Call + Event<T> + Origin<T>;
 
 	#[runtime::pallet_index(31)]
 	pub type Module1_1 = module1<Instance1>;
@@ -355,11 +355,11 @@ mod runtime {
 	pub type Module1_9 = module1<Instance9>;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = subsoil::runtime::traits::IdentityLookup<AccountId>;
-	type BaseCallFilter = topsoil_support::traits::Everything;
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type RuntimeCall = RuntimeCall;
 	type RuntimeEvent = RuntimeEvent;
@@ -413,7 +413,7 @@ fn test_pub() -> AccountId {
 fn check_modules_error_type() {
 	subsoil::io::TestExternalities::default().execute_with(|| {
 		assert_eq!(
-			Module1_1::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_1::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 31,
 				error: [0; 4],
@@ -421,7 +421,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module2::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module2::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 32,
 				error: [0; 4],
@@ -429,7 +429,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_2::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_2::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 33,
 				error: [0; 4],
@@ -437,7 +437,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			NestedModule3::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			NestedModule3::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 34,
 				error: [0; 4],
@@ -445,7 +445,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_3::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_3::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 6,
 				error: [0; 4],
@@ -453,7 +453,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_4::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_4::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 3,
 				error: [0; 4],
@@ -461,7 +461,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_5::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_5::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 4,
 				error: [0; 4],
@@ -469,7 +469,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_6::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_6::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 1,
 				error: [0; 4],
@@ -477,7 +477,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_7::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_7::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 2,
 				error: [0; 4],
@@ -485,7 +485,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_8::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_8::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 12,
 				error: [0; 4],
@@ -493,7 +493,7 @@ fn check_modules_error_type() {
 			})),
 		);
 		assert_eq!(
-			Module1_9::fail(topsoil_system::Origin::<Runtime>::Root.into()),
+			Module1_9::fail(topsoil_core::system::Origin::<Runtime>::Root.into()),
 			Err(DispatchError::Module(ModuleError {
 				index: 13,
 				error: [0; 4],
@@ -513,7 +513,7 @@ fn integrity_test_works() {
 fn origin_codec() {
 	use codec::Encode;
 
-	let origin = OriginCaller::system(topsoil_system::RawOrigin::None);
+	let origin = OriginCaller::system(topsoil_core::system::RawOrigin::None);
 	assert_eq!(origin.encode()[0], 30);
 
 	let origin = OriginCaller::Module1_1(module1::Origin(Default::default()));
@@ -548,7 +548,7 @@ fn origin_codec() {
 fn event_codec() {
 	use codec::Encode;
 
-	let event = topsoil_system::Event::<Runtime>::ExtrinsicSuccess {
+	let event = topsoil_core::system::Event::<Runtime>::ExtrinsicSuccess {
 		dispatch_info: DispatchEventInfo {
 			weight: Default::default(),
 			class: Default::default(),
@@ -592,7 +592,7 @@ fn event_codec() {
 fn call_codec() {
 	use codec::Encode;
 	assert_eq!(
-		RuntimeCall::System(topsoil_system::Call::remark { remark: vec![1] }).encode()[0],
+		RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![1] }).encode()[0],
 		30
 	);
 	assert_eq!(RuntimeCall::Module1_1(module1::Call::fail {}).encode()[0], 31);
@@ -639,7 +639,7 @@ fn call_encode_is_correct_and_decode_works() {
 
 #[test]
 fn call_weight_should_attach_to_call_enum() {
-	use topsoil_support::{
+	use topsoil_core::{
 		dispatch::{DispatchClass, DispatchInfo, GetDispatchInfo, Pays},
 		weights::Weight,
 	};
@@ -667,14 +667,14 @@ fn call_weight_should_attach_to_call_enum() {
 
 #[test]
 fn call_name() {
-	use topsoil_support::traits::GetCallName;
+	use topsoil_core::traits::GetCallName;
 	let name = module3::Call::<Runtime>::aux_4 {}.get_call_name();
 	assert_eq!("aux_4", name);
 }
 
 #[test]
 fn call_metadata() {
-	use topsoil_support::traits::{CallMetadata, GetCallMetadata};
+	use topsoil_core::traits::{CallMetadata, GetCallMetadata};
 	let call = RuntimeCall::Module3(module3::Call::<Runtime>::aux_4 {});
 	let metadata = call.get_call_metadata();
 	let expected = CallMetadata { function_name: "aux_4".into(), pallet_name: "Module3".into() };
@@ -683,14 +683,14 @@ fn call_metadata() {
 
 #[test]
 fn get_call_names() {
-	use topsoil_support::traits::GetCallName;
+	use topsoil_core::traits::GetCallName;
 	let call_names = module3::Call::<Runtime>::get_call_names();
 	assert_eq!(["fail", "aux_1", "aux_2", "aux_3", "aux_4", "operational"], call_names);
 }
 
 #[test]
 fn get_module_names() {
-	use topsoil_support::traits::GetCallMetadata;
+	use topsoil_core::traits::GetCallMetadata;
 	let module_names = RuntimeCall::get_module_names();
 	assert_eq!(
 		[
@@ -712,7 +712,7 @@ fn get_module_names() {
 
 #[test]
 fn call_subtype_conversion() {
-	use topsoil_support::{dispatch::CallableCallFor, traits::IsSubType};
+	use topsoil_core::{dispatch::CallableCallFor, traits::IsSubType};
 	let call = RuntimeCall::Module3(module3::Call::<Runtime>::fail {});
 	let subcall: Option<&CallableCallFor<Module3, Runtime>> = call.is_sub_type();
 	let subcall_none: Option<&CallableCallFor<Module2, Runtime>> = call.is_sub_type();
@@ -808,8 +808,8 @@ fn test_metadata() {
 		PalletMetadata {
 			name: "System",
 			storage: None,
-			calls: Some(meta_type::<topsoil_system::Call<Runtime>>().into()),
-			event: Some(meta_type::<topsoil_system::Event<Runtime>>().into()),
+			calls: Some(meta_type::<topsoil_core::system::Call<Runtime>>().into()),
+			event: Some(meta_type::<topsoil_core::system::Event<Runtime>>().into()),
 			constants: vec![
 				PalletConstantMetadata {
 					name: "BlockWeights",
@@ -854,7 +854,7 @@ fn test_metadata() {
 					]),
 				},
 			],
-			error: Some(meta_type::<topsoil_system::Error<Runtime>>().into()),
+			error: Some(meta_type::<topsoil_core::system::Error<Runtime>>().into()),
 			index: 30,
 		},
 		PalletMetadata {
@@ -1002,7 +1002,7 @@ fn pallet_in_runtime_is_correct() {
 
 #[test]
 fn test_validate_unsigned() {
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	let call = RuntimeCall::NestedModule3(nested::module3::Call::fail {});
 	let validity = Runtime::validate_unsigned(TransactionSource::Local, &call).unwrap_err();

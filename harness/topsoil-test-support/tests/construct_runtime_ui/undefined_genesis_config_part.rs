@@ -4,14 +4,14 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_support::{construct_runtime, derive_impl};
+use topsoil_core::{construct_runtime, derive_impl};
 use subsoil::core::sr25519;
 use subsoil::runtime::{generic, traits::BlakeTwo256};
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod pallet {
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -25,9 +25,9 @@ pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, Sign
 
 impl pallet::Config for Runtime {}
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -37,7 +37,7 @@ impl topsoil_system::Config for Runtime {
 	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
 	type Block = Block;
 	type RuntimeEvent = RuntimeEvent;
-	type BlockHashCount = topsoil_support::traits::ConstU32<250>;
+	type BlockHashCount = topsoil_core::traits::ConstU32<250>;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type DbWeight = ();
@@ -49,13 +49,13 @@ impl topsoil_system::Config for Runtime {
 	type SystemWeightInfo = ();
 	type SS58Prefix = ();
 	type OnSetCode = ();
-	type MaxConsumers = topsoil_support::traits::ConstU32<16>;
+	type MaxConsumers = topsoil_core::traits::ConstU32<16>;
 }
 
 construct_runtime! {
 	pub struct Runtime
 	{
-		System: topsoil_system expanded::{}::{Pallet, Call, Storage, Config<T>, Event<T>},
+		System: topsoil_core::system expanded::{}::{Pallet, Call, Storage, Config<T>, Event<T>},
 		Pallet: pallet expanded::{}::{Pallet, Config},
 	}
 }

@@ -13,20 +13,20 @@ use subsoil::runtime::traits::{
 	AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable,
 };
 use topsoil_benchmarking::v2::*;
-use topsoil_support::dispatch::{DispatchInfo, GetDispatchInfo};
-use topsoil_system::RawOrigin;
+use topsoil_core::dispatch::{DispatchInfo, GetDispatchInfo};
+use topsoil_core::system::RawOrigin;
 
 fn assert_last_event<T: Config>(generic_event: crate::Event<T>) {
 	let re: <T as Config>::RuntimeEvent = generic_event.into();
-	topsoil_system::Pallet::<T>::assert_last_event(re.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(re.into());
 }
 
 #[benchmarks(where
 	T: Send + Sync,
-	<T as Config>::RuntimeCall: From<topsoil_system::Call<T>>,
-	<T as topsoil_system::Config>::RuntimeCall: Dispatchable<Info = DispatchInfo> + GetDispatchInfo,
-	<<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::PostInfo: Default,
-	<<T as topsoil_system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin:
+	<T as Config>::RuntimeCall: From<topsoil_core::system::Call<T>>,
+	<T as topsoil_core::system::Config>::RuntimeCall: Dispatchable<Info = DispatchInfo> + GetDispatchInfo,
+	<<T as topsoil_core::system::Config>::RuntimeCall as Dispatchable>::PostInfo: Default,
+	<<T as topsoil_core::system::Config>::RuntimeCall as Dispatchable>::RuntimeOrigin:
 		AsSystemOriginSigner<T::AccountId> + AsTransactionAuthorizedOrigin + Clone,
 )]
 mod benchmarks {
@@ -51,7 +51,7 @@ mod benchmarks {
 		let caller: T::AccountId = whitelisted_caller();
 		Key::<T>::put(&caller);
 
-		let call = topsoil_system::Call::remark { remark: vec![] }.into();
+		let call = topsoil_core::system::Call::remark { remark: vec![] }.into();
 
 		#[extrinsic_call]
 		_(RawOrigin::Signed(caller), Box::new(call));
@@ -64,7 +64,7 @@ mod benchmarks {
 		let caller: T::AccountId = whitelisted_caller();
 		Key::<T>::put(caller.clone());
 
-		let call = topsoil_system::Call::remark { remark: vec![] }.into();
+		let call = topsoil_core::system::Call::remark { remark: vec![] }.into();
 
 		let who: T::AccountId = account("as", 0, 0);
 		let who_lookup = T::Lookup::unlookup(who);
@@ -91,8 +91,8 @@ mod benchmarks {
 		let caller: T::AccountId = whitelisted_caller();
 		Key::<T>::put(&caller);
 
-		let call: <T as topsoil_system::Config>::RuntimeCall =
-			topsoil_system::Call::remark { remark: vec![] }.into();
+		let call: <T as topsoil_core::system::Config>::RuntimeCall =
+			topsoil_core::system::Call::remark { remark: vec![] }.into();
 		let info = call.get_dispatch_info();
 		let ext = CheckOnlySudoAccount::<T>::new();
 

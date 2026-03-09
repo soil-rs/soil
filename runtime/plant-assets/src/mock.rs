@@ -12,17 +12,17 @@ use crate as plant_assets;
 use codec::Encode;
 use subsoil::io::storage;
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, construct_runtime, derive_impl, parameter_types,
 	traits::{AsEnsureOriginWithArg, ConstU32},
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Assets: plant_assets,
 	}
@@ -31,8 +31,8 @@ construct_runtime!(
 type AccountId = u64;
 type AssetId = u32;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 	type MaxConsumers = ConstU32<3>;
@@ -89,8 +89,8 @@ impl AssetsCallbackHandle {
 #[derive_impl(crate::config_preludes::TestDefaultConfig)]
 impl Config for Test {
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<u64>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_core::system::EnsureSigned<u64>>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<u64>;
 	type Freezer = TestFreezer;
 	type Holder = TestHolder;
 	type CallbackHandle = (AssetsCallbackHandle, AutoIncAssetId<Test>);
@@ -205,7 +205,7 @@ pub(crate) fn take_hooks() -> Vec<Hook> {
 }
 
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut storage = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	let config: plant_assets::GenesisConfig<Test> = plant_assets::GenesisConfig {
 		assets: vec![

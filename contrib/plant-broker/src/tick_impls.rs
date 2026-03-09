@@ -8,7 +8,7 @@ use super::*;
 use alloc::{vec, vec::Vec};
 use subsoil::arithmetic::traits::{One, SaturatedConversion, Saturating, Zero};
 use subsoil::runtime::traits::{BlockNumberProvider, ConvertBack, MaybeConvert};
-use topsoil_support::{pallet_prelude::*, traits::defensive_prelude::*, weights::WeightMeter};
+use topsoil_core::{pallet_prelude::*, traits::defensive_prelude::*, weights::WeightMeter};
 use CompletionStatus::Complete;
 
 impl<T: Config> Pallet<T> {

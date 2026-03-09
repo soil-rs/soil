@@ -15,7 +15,7 @@ use subsoil::runtime::{
 	traits::{DispatchInfoOf, MaybeSerializeDeserialize, One, PostDispatchInfoOf},
 	transaction_validity::InvalidTransaction,
 };
-use topsoil_support::{
+use topsoil_core::{
 	traits::{
 		fungibles::{Balanced, Credit, Inspect},
 		tokens::{

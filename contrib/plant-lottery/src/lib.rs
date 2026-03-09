@@ -52,7 +52,7 @@ use subsoil::runtime::{
 	traits::{AccountIdConversion, Dispatchable, Saturating, Zero},
 	ArithmeticError, Debug, DispatchError,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchResult, GetDispatchInfo},
 	ensure,
 	pallet_prelude::MaxEncodedLen,
@@ -63,7 +63,7 @@ use topsoil_support::{
 pub use weights::WeightInfo;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 // Any runtime call can be encoded into two bytes which represent the pallet and call index.
 // We use this to uniquely match someone's incoming call with the calls configured for the lottery.
@@ -105,18 +105,18 @@ impl<T: Config> ValidateCall<T> for Pallet<T> {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	/// The pallet's config trait.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The Lottery's pallet id
 		#[pallet::constant]
 		type PalletId: Get<PalletId>;
@@ -125,7 +125,7 @@ pub mod pallet {
 		type RuntimeCall: Parameter
 			+ Dispatchable<RuntimeOrigin = Self::RuntimeOrigin>
 			+ GetDispatchInfo
-			+ From<topsoil_system::Call<Self>>;
+			+ From<topsoil_core::system::Call<Self>>;
 
 		/// The currency trait.
 		type Currency: ReservableCurrency<Self::AccountId>;
@@ -136,7 +136,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The manager origin.
 		type ManagerOrigin: EnsureOrigin<Self::RuntimeOrigin>;
@@ -350,7 +350,7 @@ pub mod pallet {
 				ensure!(lottery.is_none(), Error::<T>::InProgress);
 				let index = LotteryIndex::<T>::get();
 				let new_index = index.checked_add(1).ok_or(ArithmeticError::Overflow)?;
-				let start = topsoil_system::Pallet::<T>::block_number();
+				let start = topsoil_core::system::Pallet::<T>::block_number();
 				// Use new_index to more easily track everything with the current state.
 				*lottery = Some(LotteryConfig { price, start, length, delay, repeat });
 				LotteryIndex::<T>::put(new_index);
@@ -428,7 +428,7 @@ impl<T: Config> Pallet<T> {
 	fn do_buy_ticket(caller: &T::AccountId, call: &<T as Config>::RuntimeCall) -> DispatchResult {
 		// Check the call is valid lottery
 		let config = Lottery::<T>::get().ok_or(Error::<T>::NotConfigured)?;
-		let block_number = topsoil_system::Pallet::<T>::block_number();
+		let block_number = topsoil_core::system::Pallet::<T>::block_number();
 		ensure!(
 			block_number < config.start.saturating_add(config.length),
 			Error::<T>::AlreadyEnded

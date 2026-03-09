@@ -28,14 +28,14 @@ use subsoil::runtime::{
 	traits::{IsMember, One, SaturatedConversion, Saturating, Zero},
 	ConsensusEngineId, Permill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	ensure,
 	traits::{ConstU32, DisabledValidators, FindAuthor, Get, OnTimestampSet, OneSessionHandler},
 	weights::Weight,
 	BoundedVec, WeakBoundedVec,
 };
-use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
+use topsoil_core::system::pallet_prelude::{BlockNumberFor, HeaderFor};
 
 pub use subsoil::consensus::babe::AuthorityId;
 
@@ -93,11 +93,11 @@ impl EpochChangeTrigger for SameAuthoritiesForever {
 
 const UNDER_CONSTRUCTION_SEGMENT_LENGTH: u32 = 256;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// The BABE Pallet
 	#[pallet::pallet]
@@ -295,7 +295,7 @@ pub mod pallet {
 	pub type SkippedEpochs<T> =
 		StorageValue<_, BoundedVec<(u64, SessionIndex), ConstU32<100>>, ValueQuery>;
 
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		pub authorities: Vec<(AuthorityId, BabeAuthorityWeight)>,
@@ -674,7 +674,7 @@ impl<T: Config> Pallet<T> {
 		// Update the start blocks of the previous and new current epoch.
 		EpochStart::<T>::mutate(|(previous_epoch_start_block, current_epoch_start_block)| {
 			*previous_epoch_start_block = core::mem::take(current_epoch_start_block);
-			*current_epoch_start_block = <topsoil_system::Pallet<T>>::block_number();
+			*current_epoch_start_block = <topsoil_core::system::Pallet<T>>::block_number();
 		});
 
 		// After we update the current epoch, we signal the *next* epoch change
@@ -755,7 +755,7 @@ impl<T: Config> Pallet<T> {
 
 	fn deposit_consensus<U: Encode>(new: U) {
 		let log = DigestItem::Consensus(BABE_ENGINE_ID, new.encode());
-		<topsoil_system::Pallet<T>>::deposit_log(log)
+		<topsoil_core::system::Pallet<T>>::deposit_log(log)
 	}
 
 	fn deposit_randomness(randomness: &BabeRandomness) {
@@ -812,7 +812,7 @@ impl<T: Config> Pallet<T> {
 		}
 
 		let pre_digest =
-			<topsoil_system::Pallet<T>>::digest()
+			<topsoil_core::system::Pallet<T>>::digest()
 				.logs
 				.iter()
 				.filter_map(|s| s.as_pre_runtime())
@@ -927,7 +927,7 @@ impl<T: Config> OnTimestampSet<T::Moment> for Pallet<T> {
 	}
 }
 
-impl<T: Config> topsoil_support::traits::EstimateNextSessionRotation<BlockNumberFor<T>>
+impl<T: Config> topsoil_core::traits::EstimateNextSessionRotation<BlockNumberFor<T>>
 	for Pallet<T>
 {
 	fn average_session_length() -> BlockNumberFor<T> {
@@ -955,7 +955,7 @@ impl<T: Config> topsoil_support::traits::EstimateNextSessionRotation<BlockNumber
 	}
 }
 
-impl<T: Config> topsoil_support::traits::Lateness<BlockNumberFor<T>> for Pallet<T> {
+impl<T: Config> topsoil_core::traits::Lateness<BlockNumberFor<T>> for Pallet<T> {
 	fn lateness(&self) -> BlockNumberFor<T> {
 		Lateness::<T>::get()
 	}
@@ -1034,7 +1034,7 @@ pub fn compute_randomness(
 
 pub mod migrations {
 	use super::*;
-	use topsoil_support::pallet_prelude::{StorageValue, ValueQuery};
+	use topsoil_core::pallet_prelude::{StorageValue, ValueQuery};
 
 	/// Something that can return the storage prefix of the `Babe` pallet.
 	pub trait BabePalletPrefix: Config {
@@ -1042,7 +1042,7 @@ pub mod migrations {
 	}
 
 	struct __OldNextEpochConfig<T>(core::marker::PhantomData<T>);
-	impl<T: BabePalletPrefix> topsoil_support::traits::StorageInstance for __OldNextEpochConfig<T> {
+	impl<T: BabePalletPrefix> topsoil_core::traits::StorageInstance for __OldNextEpochConfig<T> {
 		fn pallet_prefix() -> &'static str {
 			T::pallet_prefix()
 		}

@@ -9,25 +9,25 @@
 #![recursion_limit = "128"]
 
 use subsoil::runtime::{generic, traits::BlakeTwo256};
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	traits::{Contains, OriginTrait},
 };
 
 mod nested {
-	#[topsoil_support::pallet(dev_mode)]
+	#[topsoil_core::pallet(dev_mode)]
 	pub mod module {
-		use topsoil_support::pallet_prelude::*;
-		use topsoil_system::pallet_prelude::*;
+		use topsoil_core::pallet_prelude::*;
+		use topsoil_core::system::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
 		#[pallet::config]
-		pub trait Config: topsoil_system::Config {
+		pub trait Config: topsoil_core::system::Config {
 			#[allow(deprecated)]
 			type RuntimeEvent: From<Event<Self>>
-				+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+				+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		}
 
 		#[pallet::call]
@@ -62,7 +62,7 @@ mod nested {
 		}
 
 		#[pallet::genesis_config]
-		#[derive(topsoil_support::DefaultNoBound)]
+		#[derive(topsoil_core::DefaultNoBound)]
 		pub struct GenesisConfig<T: Config> {
 			#[serde(skip)]
 			pub _config: core::marker::PhantomData<T>,
@@ -75,19 +75,19 @@ mod nested {
 	}
 }
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod module {
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::call]
@@ -136,7 +136,7 @@ pub mod module {
 	}
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		#[serde(skip)]
 		pub _config: core::marker::PhantomData<T>,
@@ -164,17 +164,17 @@ pub type Header = generic::Header<BlockNumber, BlakeTwo256>;
 pub type UncheckedExtrinsic = generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 pub type Block = generic::Block<Header, UncheckedExtrinsic>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum RuntimeOriginTest
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		NestedModule: nested::module,
 		Module: module,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for RuntimeOriginTest {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for RuntimeOriginTest {
 	type BaseCallFilter = BaseCallFilter;
 	type Block = Block;
 	type RuntimeOrigin = RuntimeOrigin;

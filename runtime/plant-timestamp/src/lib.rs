@@ -42,17 +42,17 @@
 //! ```
 //! use plant_timestamp::{self as timestamp};
 //!
-//! #[topsoil_support::pallet]
+//! #[topsoil_core::pallet]
 //! pub mod pallet {
 //! 	use super::*;
-//! 	use topsoil_support::pallet_prelude::*;
-//! 	use topsoil_system::pallet_prelude::*;
+//! 	use topsoil_core::pallet_prelude::*;
+//! 	use topsoil_core::system::pallet_prelude::*;
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: topsoil_system::Config + timestamp::Config {}
+//! 	pub trait Config: topsoil_core::system::Config + timestamp::Config {}
 //!
 //! 	#[pallet::call]
 //! 	impl<T: Config> Pallet<T> {
@@ -77,22 +77,22 @@
 //! included in a block.
 //!
 //! To provide inherent data to the runtime, this pallet implements
-//! [`ProvideInherent`](topsoil_support::inherent::ProvideInherent). It will only create an inherent
+//! [`ProvideInherent`](topsoil_core::inherent::ProvideInherent). It will only create an inherent
 //! if the [`Call::set`] dispatchable is called, using the
-//! [`inherent`](topsoil_support::pallet_macros::inherent) macro which enables validator nodes to call
+//! [`inherent`](topsoil_core::pallet_macros::inherent) macro which enables validator nodes to call
 //! into the runtime to check that the timestamp provided is valid.
-//! The implementation of [`ProvideInherent`](topsoil_support::inherent::ProvideInherent) specifies a
+//! The implementation of [`ProvideInherent`](topsoil_core::inherent::ProvideInherent) specifies a
 //! constant called `MAX_TIMESTAMP_DRIFT_MILLIS` which is used to determine the acceptable range for
 //! a valid timestamp. If a block author sets a timestamp to anything that is more than this
 //! constant, a validator node will reject the block.
 //!
 //! The pallet also ensures that a timestamp is set at the start of each block by running an
-//! assertion in the `on_finalize` runtime hook. See [`topsoil_support::traits::Hooks`] for more
+//! assertion in the `on_finalize` runtime hook. See [`topsoil_core::traits::Hooks`] for more
 //! information about how hooks work.
 //!
 //! Because inherents are applied to a block in the order they appear in the runtime
 //! construction, the index of this pallet in
-//! [`construct_runtime`](topsoil_support::construct_runtime) must always be less than any other
+//! [`construct_runtime`](topsoil_core::construct_runtime) must always be less than any other
 //! pallet that depends on it.
 //!
 //! The [`Config::OnTimestampSet`] configuration trait can be set to another pallet we want to
@@ -124,16 +124,16 @@ pub mod weights;
 use core::{cmp, result};
 use subsoil::runtime::traits::{AtLeast32Bit, SaturatedConversion, Scale, Zero};
 use subsoil::timestamp::{InherentError, InherentType, INHERENT_IDENTIFIER};
-use topsoil_support::traits::{OnTimestampSet, Time, UnixTime};
+use topsoil_core::traits::{OnTimestampSet, Time, UnixTime};
 pub use weights::WeightInfo;
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::{derive_impl, pallet_prelude::*};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{derive_impl, pallet_prelude::*};
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// Default preludes for [`Config`].
 	pub mod config_preludes {
@@ -142,10 +142,10 @@ pub mod pallet {
 		/// Default prelude sensible to be used in a testing environment.
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for TestDefaultConfig {}
 
-		#[topsoil_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_core::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type Moment = u64;
 			type OnTimestampSet = ();
@@ -156,7 +156,7 @@ pub mod pallet {
 
 	/// The pallet configuration trait
 	#[pallet::config(with_default)]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Type used for expressing a timestamp.
 		#[pallet::no_default_bounds]
 		type Moment: Parameter

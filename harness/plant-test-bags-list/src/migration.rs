@@ -10,7 +10,7 @@ use crate::{RuntimeT, LOG_TARGET};
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use subsoil::runtime::{traits::Block as BlockT, DeserializeOwned};
 use plant_staking::Nominators;
-use topsoil_support::traits::PalletInfoAccess;
+use topsoil_core::traits::PalletInfoAccess;
 
 /// Test voter bags migration. `currency_unit` is the number of planks per the the runtimes `UNITS`
 /// (i.e. number of decimal places per DOT, KSM etc)

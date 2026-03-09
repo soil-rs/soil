@@ -21,7 +21,7 @@ fn fails_to_filter_calls_to_safe_mode_pallet() {
 
 		assert_err!(
 			call_transfer().dispatch(RuntimeOrigin::signed(0)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 
 		next_block();
@@ -29,7 +29,7 @@ fn fails_to_filter_calls_to_safe_mode_pallet() {
 		assert_ok!(SafeMode::force_extend(signed(ForceExtendStrong::get())));
 		assert_err!(
 			call_transfer().dispatch(RuntimeOrigin::signed(0)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 		assert_ok!(SafeMode::force_exit(RuntimeOrigin::signed(mock::ForceExitOrigin::get())));
 		assert_ok!(SafeMode::force_release_deposit(
@@ -42,7 +42,7 @@ fn fails_to_filter_calls_to_safe_mode_pallet() {
 		assert_ok!(SafeMode::enter(RuntimeOrigin::signed(0)));
 		assert_err!(
 			call_transfer().dispatch(RuntimeOrigin::signed(0)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 		assert_ok!(SafeMode::force_exit(RuntimeOrigin::signed(mock::ForceExitOrigin::get())));
 		assert_ok!(SafeMode::force_slash_deposit(
@@ -131,7 +131,7 @@ fn can_filter_balance_calls_when_activated() {
 		assert_ok!(SafeMode::enter(RuntimeOrigin::signed(0)));
 		assert_err!(
 			call_transfer().dispatch(RuntimeOrigin::signed(0)),
-			topsoil_system::Error::<Test>::CallFiltered
+			topsoil_core::system::Error::<Test>::CallFiltered
 		);
 	});
 }
@@ -150,7 +150,7 @@ fn can_filter_balance_in_batch_when_activated() {
 		System::assert_last_event(
 			plant_utility::Event::BatchInterrupted {
 				index: 0,
-				error: topsoil_system::Error::<Test>::CallFiltered.into(),
+				error: topsoil_core::system::Error::<Test>::CallFiltered.into(),
 			}
 			.into(),
 		);
@@ -170,7 +170,7 @@ fn can_filter_balance_in_proxy_when_activated() {
 		assert_ok!(Proxy::proxy(RuntimeOrigin::signed(2), 1, None, Box::new(call_transfer())));
 		System::assert_last_event(
 			plant_proxy::Event::ProxyExecuted {
-				result: DispatchError::from(topsoil_system::Error::<Test>::CallFiltered).into(),
+				result: DispatchError::from(topsoil_core::system::Error::<Test>::CallFiltered).into(),
 			}
 			.into(),
 		);

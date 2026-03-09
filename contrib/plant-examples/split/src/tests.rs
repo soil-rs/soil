@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: MIT-0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
 use crate::{mock::*, Error, Event, Something};
-use topsoil_support::{assert_noop, assert_ok};
+use topsoil_core::{assert_noop, assert_ok};
 
 #[test]
 fn it_works_for_default_value() {

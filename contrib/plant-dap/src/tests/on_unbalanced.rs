@@ -7,7 +7,7 @@
 //! OnUnbalanced tests for the DAP pallet.
 
 use crate::mock::{new_test_ext, Balances, Test};
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	fungible::{Balanced, Inspect},
 	tokens::{Fortitude, Precision, Preservation},
 	OnUnbalanced,

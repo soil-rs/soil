@@ -14,7 +14,7 @@ use crate::Pallet as CoreFellowship;
 use alloc::{boxed::Box, vec};
 use subsoil::arithmetic::traits::Bounded;
 use topsoil_benchmarking::v2::*;
-use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
+use topsoil_core::system::{pallet_prelude::BlockNumberFor, RawOrigin};
 
 const SEED: u32 = 0;
 
@@ -122,7 +122,7 @@ mod benchmarks {
 		let member = make_member::<T, I>(0)?;
 
 		// Set it to the max value to ensure that any possible auto-demotion period has passed.
-		topsoil_system::Pallet::<T>::set_block_number(BlockNumberFor::<T>::max_value());
+		topsoil_core::system::Pallet::<T>::set_block_number(BlockNumberFor::<T>::max_value());
 		ensure_evidence::<T, I>(&member)?;
 		assert!(Member::<T, I>::contains_key(&member));
 
@@ -143,7 +143,7 @@ mod benchmarks {
 		let member = make_member::<T, I>(initial_rank)?;
 
 		// Set it to the max value to ensure that any possible auto-demotion period has passed.
-		topsoil_system::Pallet::<T>::set_block_number(BlockNumberFor::<T>::max_value());
+		topsoil_core::system::Pallet::<T>::set_block_number(BlockNumberFor::<T>::max_value());
 		ensure_evidence::<T, I>(&member)?;
 
 		assert!(Member::<T, I>::contains_key(&member));
@@ -201,7 +201,7 @@ mod benchmarks {
 		let to_rank = (current_rank + 1).min(max_rank); // Ensure `to_rank` <= `max_rank`.
 
 		// Set block number to avoid auto-demotion.
-		topsoil_system::Pallet::<T>::set_block_number(BlockNumberFor::<T>::max_value());
+		topsoil_core::system::Pallet::<T>::set_block_number(BlockNumberFor::<T>::max_value());
 		ensure_evidence::<T, I>(&member)?;
 
 		#[extrinsic_call]
@@ -288,9 +288,9 @@ mod benchmarks {
 	#[benchmark]
 	fn approve() -> Result<(), BenchmarkError> {
 		let member = make_member::<T, I>(1)?;
-		let then = topsoil_system::Pallet::<T>::block_number();
+		let then = topsoil_core::system::Pallet::<T>::block_number();
 		let now = then.saturating_plus_one();
-		topsoil_system::Pallet::<T>::set_block_number(now);
+		topsoil_core::system::Pallet::<T>::set_block_number(now);
 		ensure_evidence::<T, I>(&member)?;
 
 		assert_eq!(Member::<T, I>::get(&member).unwrap().last_proof, then);

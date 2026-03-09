@@ -8,8 +8,8 @@
 
 use super::{Pallet as Membership, *};
 use topsoil_benchmarking::v1::{account, benchmarks_instance_pallet, whitelist, BenchmarkError};
-use topsoil_support::{assert_ok, traits::EnsureOrigin};
-use topsoil_system::RawOrigin;
+use topsoil_core::{assert_ok, traits::EnsureOrigin};
+use topsoil_core::system::RawOrigin;
 
 const SEED: u32 = 0;
 

@@ -23,12 +23,12 @@ extern crate alloc;
 pub use benchmarking::BenchmarkHelper;
 use codec::{Decode, Encode};
 pub use extension::VerifySignature;
-use topsoil_support::Parameter;
+use topsoil_core::Parameter;
 pub use weights::WeightInfo;
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use subsoil::runtime::traits::{IdentifyAccount, Verify};
@@ -38,7 +38,7 @@ pub mod pallet {
 
 	/// Configuration trait.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Signature type that the extension of this pallet can verify.
 		type Signature: Verify<Signer = Self::AccountIdentifier>
 			+ Parameter

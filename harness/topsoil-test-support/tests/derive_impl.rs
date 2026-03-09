@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_support::derive_impl;
+use topsoil_core::derive_impl;
 
 trait Shape {
 	fn area(&self) -> u32;
@@ -12,7 +12,7 @@ trait Shape {
 
 struct SomeRectangle {}
 
-#[topsoil_support::register_default_impl(SomeRectangle)]
+#[topsoil_core::register_default_impl(SomeRectangle)]
 impl Shape for SomeRectangle {
 	fn area(&self) -> u32 {
 		10

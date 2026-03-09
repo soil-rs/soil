@@ -8,7 +8,7 @@
 
 use remote_externalities::{Builder, Mode, OnlineConfig};
 use subsoil::runtime::{traits::Block as BlockT, DeserializeOwned};
-use topsoil_support::{
+use topsoil_core::{
 	storage::generator::StorageMap,
 	traits::{Get, PalletInfoAccess},
 };

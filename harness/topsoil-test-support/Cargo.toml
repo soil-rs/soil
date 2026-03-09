@@ -20,8 +20,7 @@ docify = { workspace = true }
 topsoil-benchmarking = { workspace = true }
 topsoil-executive = { workspace = true }
 frame-metadata = { features = ["current", "unstable"], workspace = true }
-topsoil-support = { features = ["experimental"], workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { features = ["experimental"], workspace = true }
 pretty_assertions = { workspace = true }
 rustversion = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
@@ -39,22 +38,19 @@ std = [
 	"topsoil-benchmarking/std",
 	"topsoil-executive/std",
 	"frame-metadata/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"scale-info/std",
 	"serde/std",
 	"subsoil/std",
 	"test-pallet/std"]
-experimental = ["topsoil-support/experimental", "topsoil-system/experimental"]
+experimental = ["topsoil-core/experimental", "topsoil-core/experimental"]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"subsoil/runtime-benchmarks"]
 try-runtime = [
 	"topsoil-executive/try-runtime",
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"subsoil/try-runtime"]
 # WARNING:
 # Only CI runs with this feature enabled. This feature is for testing stuff related to the FRAME macros
@@ -63,4 +59,4 @@ frame-feature-testing = []
 frame-feature-testing-2 = []
 # Disable ui tests
 disable-ui-tests = []
-no-metadata-docs = ["topsoil-support/no-metadata-docs"]
+no-metadata-docs = ["topsoil-core/no-metadata-docs"]

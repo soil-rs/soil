@@ -18,8 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { features = ["derive"], workspace = true }
 topsoil-benchmarking = { workspace = true, optional = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 impl-trait-for-tuples = { workspace = true }
 log = { workspace = true }
 plant-balances = { workspace = true }
@@ -40,8 +39,7 @@ historical = []
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"plant-balances/std",
 	"plant-timestamp/std",
@@ -49,8 +47,7 @@ std = [
 	"subsoil/std",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-balances/try-runtime",
 	"plant-timestamp/try-runtime",
 	"subsoil/try-runtime",
@@ -58,8 +55,7 @@ try-runtime = [
 runtime-benchmarks = [
 	"historical",
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"plant-timestamp/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",

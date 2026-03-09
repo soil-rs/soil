@@ -6,12 +6,12 @@
 
 #![cfg(feature = "experimental")]
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod my_pallet {
-	use topsoil_support::pallet_prelude::{StorageValue, ValueQuery};
+	use topsoil_core::pallet_prelude::{StorageValue, ValueQuery};
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
@@ -25,7 +25,7 @@ mod my_pallet {
 		#[pallet::task_condition(|i, j| i == 0u32 && j == 2u64)]
 		#[pallet::task_list(vec![(0u32, 2u64), (2u32, 4u64)].iter())]
 		#[pallet::task_weight(0.into())]
-		fn foo(i: u32, j: u64) -> topsoil_support::pallet_prelude::DispatchResult {
+		fn foo(i: u32, j: u64) -> topsoil_core::pallet_prelude::DispatchResult {
 			<SomeStorage<T, I>>::put((i, j));
 			Ok(())
 		}
@@ -33,12 +33,12 @@ mod my_pallet {
 }
 
 // Another pallet for which we won't implement the default instance.
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 mod my_pallet_2 {
-	use topsoil_support::pallet_prelude::{StorageValue, ValueQuery};
+	use topsoil_core::pallet_prelude::{StorageValue, ValueQuery};
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {}
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {}
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
@@ -52,7 +52,7 @@ mod my_pallet_2 {
 		#[pallet::task_condition(|i, j| i == 0u32 && j == 2u64)]
 		#[pallet::task_list(vec![(0u32, 2u64), (2u32, 4u64)].iter())]
 		#[pallet::task_weight(0.into())]
-		fn foo(i: u32, j: u64) -> topsoil_support::pallet_prelude::DispatchResult {
+		fn foo(i: u32, j: u64) -> topsoil_core::pallet_prelude::DispatchResult {
 			<SomeStorage<T, I>>::put((i, j));
 			Ok(())
 		}
@@ -65,10 +65,10 @@ type Header = subsoil::runtime::generic::Header<BlockNumber, subsoil::runtime::t
 type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		MyPallet: my_pallet,
 		MyPallet2: my_pallet::<Instance2>,
 		#[cfg(feature = "frame-feature-testing")]
@@ -78,21 +78,21 @@ topsoil_support::construct_runtime!(
 );
 
 // NOTE: Needed for derive_impl expansion
-use topsoil_support::derive_impl;
-#[topsoil_support::derive_impl(topsoil_system::config_preludes::TestDefaultConfig as topsoil_system::DefaultConfig)]
-impl topsoil_system::Config for Runtime {
+use topsoil_core::derive_impl;
+#[topsoil_core::derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig as topsoil_core::system::DefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Block = Block;
 	type AccountId = AccountId;
 }
 
 impl my_pallet::Config for Runtime {}
 
-impl my_pallet::Config<topsoil_support::instances::Instance2> for Runtime {}
+impl my_pallet::Config<topsoil_core::instances::Instance2> for Runtime {}
 
 #[cfg(feature = "frame-feature-testing")]
-impl my_pallet::Config<topsoil_support::instances::Instance3> for Runtime {}
+impl my_pallet::Config<topsoil_core::instances::Instance3> for Runtime {}
 
-impl my_pallet_2::Config<topsoil_support::instances::Instance1> for Runtime {}
+impl my_pallet_2::Config<topsoil_core::instances::Instance1> for Runtime {}
 
 fn new_test_ext() -> subsoil::io::TestExternalities {
 	use subsoil::runtime::BuildStorage;
@@ -103,22 +103,22 @@ fn new_test_ext() -> subsoil::io::TestExternalities {
 #[test]
 fn tasks_work() {
 	new_test_ext().execute_with(|| {
-		use topsoil_support::instances::{Instance1, Instance2};
+		use topsoil_core::instances::{Instance1, Instance2};
 
 		let task = RuntimeTask::MyPallet(my_pallet::Task::<Runtime>::Foo { i: 0u32, j: 2u64 });
 
-		topsoil_support::assert_ok!(System::do_task(RuntimeOrigin::signed(1), task.clone(),));
+		topsoil_core::assert_ok!(System::do_task(RuntimeOrigin::signed(1), task.clone(),));
 		assert_eq!(my_pallet::SomeStorage::<Runtime>::get(), (0, 2));
 
 		let task = RuntimeTask::MyPallet2(my_pallet::Task::<Runtime, _>::Foo { i: 0u32, j: 2u64 });
 
-		topsoil_support::assert_ok!(System::do_task(RuntimeOrigin::signed(1), task.clone(),));
+		topsoil_core::assert_ok!(System::do_task(RuntimeOrigin::signed(1), task.clone(),));
 		assert_eq!(my_pallet::SomeStorage::<Runtime, Instance2>::get(), (0, 2));
 
 		let task =
 			RuntimeTask::MyPallet4(my_pallet_2::Task::<Runtime, _>::Foo { i: 0u32, j: 2u64 });
 
-		topsoil_support::assert_ok!(System::do_task(RuntimeOrigin::signed(1), task.clone(),));
+		topsoil_core::assert_ok!(System::do_task(RuntimeOrigin::signed(1), task.clone(),));
 		assert_eq!(my_pallet_2::SomeStorage::<Runtime, Instance1>::get(), (0, 2));
 	});
 }
@@ -126,12 +126,12 @@ fn tasks_work() {
 #[test]
 fn do_task_unsigned_validation_rejects_external_source() {
 	new_test_ext().execute_with(|| {
-		use topsoil_support::pallet_prelude::{
+		use topsoil_core::pallet_prelude::{
 			InvalidTransaction, TransactionSource, TransactionValidityError, ValidateUnsigned,
 		};
 
 		let task = RuntimeTask::MyPallet(my_pallet::Task::<Runtime>::Foo { i: 0u32, j: 2u64 });
-		let call = topsoil_system::Call::do_task { task };
+		let call = topsoil_core::system::Call::do_task { task };
 
 		assert!(matches!(
 			System::validate_unsigned(TransactionSource::External, &call),

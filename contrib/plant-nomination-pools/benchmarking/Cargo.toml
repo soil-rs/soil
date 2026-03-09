@@ -24,8 +24,7 @@ scale-info = { features = ["derive"], workspace = true }
 # FRAME
 topsoil-benchmarking = { workspace = true }
 plant-election-provider = { workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 plant-bags-list = { workspace = true }
 plant-delegated-staking = { workspace = true }
 plant-nomination-pools = { workspace = true }
@@ -45,8 +44,7 @@ std = [
 	"codec/std",
 	"topsoil-benchmarking/std",
 	"plant-election-provider/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"plant-bags-list/std",
 	"plant-balances/std",
 	"plant-delegated-staking/std",
@@ -59,8 +57,7 @@ std = [
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
 	"plant-election-provider/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-bags-list/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"plant-delegated-staking/runtime-benchmarks",

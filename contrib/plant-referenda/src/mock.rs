@@ -15,21 +15,21 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, Hash},
 	BuildStorage, DispatchResult, Perbill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
 		ConstU32, ConstU64, Contains, EqualPrivilegeOnly, OnInitialize, OriginTrait, Polling,
 	},
 	weights::Weight,
 };
-use topsoil_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_core::system::{EnsureRoot, EnsureSignedBy};
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Preimage: plant_preimage,
 		Scheduler: plant_scheduler,
@@ -48,8 +48,8 @@ impl Contains<RuntimeCall> for BaseFilter {
 parameter_types! {
 	pub MaxWeight: Weight = Weight::from_parts(2_000_000_000_000, u64::MAX);
 }
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
@@ -72,7 +72,7 @@ impl plant_scheduler::Config for Test {
 	type WeightInfo = ();
 	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 	type Preimages = Preimage;
-	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Test>;
 }
 #[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
 impl plant_balances::Config for Test {
@@ -167,11 +167,11 @@ impl TracksInfo<u64, u64> for TestTracksInfo {
 		DATA.iter().map(Cow::Borrowed)
 	}
 	fn track_for(id: &Self::RuntimeOrigin) -> Result<Self::Id, ()> {
-		if let Ok(system_origin) = topsoil_system::RawOrigin::try_from(id.clone()) {
+		if let Ok(system_origin) = topsoil_core::system::RawOrigin::try_from(id.clone()) {
 			match system_origin {
-				topsoil_system::RawOrigin::Root => Ok(0),
-				topsoil_system::RawOrigin::None => Ok(1),
-				topsoil_system::RawOrigin::Signed(1) => Ok(2),
+				topsoil_core::system::RawOrigin::Root => Ok(0),
+				topsoil_core::system::RawOrigin::None => Ok(1),
+				topsoil_core::system::RawOrigin::Signed(1) => Ok(2),
 				_ => Err(()),
 			}
 		} else {
@@ -186,7 +186,7 @@ impl Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type Scheduler = Scheduler;
 	type Currency = plant_balances::Pallet<Self>;
-	type SubmitOrigin = topsoil_system::EnsureSigned<u64>;
+	type SubmitOrigin = topsoil_core::system::EnsureSigned<u64>;
 	type CancelOrigin = EnsureSignedBy<Four, u64>;
 	type KillOrigin = EnsureRoot<u64>;
 	type Slash = ();
@@ -210,7 +210,7 @@ impl Default for ExtBuilder {
 
 impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
-		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let balances = vec![(1, 100), (2, 100), (3, 100), (4, 100), (5, 100), (6, 100)];
 		plant_balances::GenesisConfig::<Test> { balances, ..Default::default() }
 			.assimilate_storage(&mut t)
@@ -295,7 +295,7 @@ pub fn set_balance_proposal_bounded(value: u64) -> BoundedCallOf<Test, ()> {
 pub fn propose_set_balance(who: u64, value: u64, delay: u64) -> DispatchResult {
 	Referenda::submit(
 		RuntimeOrigin::signed(who),
-		Box::new(topsoil_system::RawOrigin::Root.into()),
+		Box::new(topsoil_core::system::RawOrigin::Root.into()),
 		set_balance_proposal_bounded(value),
 		DispatchTime::After(delay),
 	)
@@ -423,7 +423,7 @@ impl RefState {
 	pub fn create(self) -> ReferendumIndex {
 		assert_ok!(Referenda::submit(
 			RuntimeOrigin::signed(1),
-			Box::new(topsoil_support::dispatch::RawOrigin::Root.into()),
+			Box::new(topsoil_core::dispatch::RawOrigin::Root.into()),
 			set_balance_proposal_bounded(1),
 			DispatchTime::At(10),
 		));
@@ -451,7 +451,7 @@ impl RefState {
 }
 
 /// note a new preimage without registering.
-pub fn note_preimage(who: u64) -> <Test as topsoil_system::Config>::Hash {
+pub fn note_preimage(who: u64) -> <Test as topsoil_core::system::Config>::Hash {
 	use std::sync::atomic::{AtomicU8, Ordering};
 	// note a new preimage on every function invoke.
 	static COUNTER: AtomicU8 = AtomicU8::new(0);

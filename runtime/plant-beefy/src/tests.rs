@@ -21,7 +21,7 @@ use subsoil::consensus::beefy::{
 	Payload, ValidatorSet, ValidatorSetId, KEY_TYPE as BEEFY_KEY_TYPE,
 };
 use subsoil::runtime::{DigestItem, Perbill};
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_ok,
 	dispatch::{DispatchResultWithPostInfo, Pays},
 	traits::{Currency, KeyOwnerProofSystem, OnInitialize},

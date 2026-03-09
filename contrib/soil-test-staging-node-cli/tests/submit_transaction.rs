@@ -11,7 +11,7 @@ use subsoil::core::offchain::{testing::TestTransactionPoolExt, TransactionPoolEx
 use subsoil::keyring::sr25519::Keyring::Alice;
 use subsoil::keystore::{testing::MemoryKeystore, Keystore, KeystoreExt};
 use subsoil::runtime::generic;
-use topsoil_system::offchain::{SendSignedTransaction, Signer, SubmitTransaction};
+use topsoil_core::system::offchain::{SendSignedTransaction, Signer, SubmitTransaction};
 
 pub mod common;
 use self::common::*;
@@ -118,7 +118,7 @@ fn should_submit_signed_twice_from_the_same_account() {
 
 		// now check that the transaction nonces are not equal
 		let s = state.read();
-		fn nonce(tx: UncheckedExtrinsic) -> topsoil_system::CheckNonce<Runtime> {
+		fn nonce(tx: UncheckedExtrinsic) -> topsoil_core::system::CheckNonce<Runtime> {
 			let extra = tx.preamble.to_signed().unwrap().2;
 			extra.6
 		}
@@ -167,7 +167,7 @@ fn should_submit_signed_twice_from_all_accounts() {
 
 		// now check that the transaction nonces are not equal
 		let s = state.read();
-		fn nonce(tx: UncheckedExtrinsic) -> topsoil_system::CheckNonce<Runtime> {
+		fn nonce(tx: UncheckedExtrinsic) -> topsoil_core::system::CheckNonce<Runtime> {
 			let extra = tx.preamble.to_signed().unwrap().2;
 			extra.6
 		}
@@ -231,14 +231,14 @@ fn submitted_transaction_should_be_valid() {
 			free: ExistentialDeposit::get() * 10,
 			..Default::default()
 		};
-		let account = topsoil_system::AccountInfo { providers: 1, data, ..Default::default() };
-		<topsoil_system::Account<Runtime>>::insert(&address, account);
+		let account = topsoil_core::system::AccountInfo { providers: 1, data, ..Default::default() };
+		<topsoil_core::system::Account<Runtime>>::insert(&address, account);
 
 		// check validity
 		let res = Executive::validate_transaction(
 			source,
 			extrinsic,
-			topsoil_system::BlockHash::<Runtime>::get(0),
+			topsoil_core::system::BlockHash::<Runtime>::get(0),
 		)
 		.unwrap();
 

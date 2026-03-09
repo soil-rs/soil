@@ -15,8 +15,8 @@ use crate::Pallet as Bounties;
 use alloc::{borrow::Cow, vec};
 use subsoil::core::crypto::FromEntropy;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
-use topsoil_support::assert_ok;
-use topsoil_system::RawOrigin;
+use topsoil_core::assert_ok;
+use topsoil_core::system::RawOrigin;
 
 /// Trait describing factory functions for dispatchables' parameters.
 pub trait ArgumentsFactory<AssetKind, Beneficiary, Balance> {
@@ -67,15 +67,15 @@ struct BenchmarkBounty<T: Config<I>, I: 'static> {
 const SEED: u32 = 0;
 
 fn assert_last_event<T: Config<I>, I: 'static>(
-	generic_event: <T as topsoil_system::Config>::RuntimeEvent,
+	generic_event: <T as topsoil_core::system::Config>::RuntimeEvent,
 ) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config<I>, I: 'static>(
-	generic_event: <T as topsoil_system::Config>::RuntimeEvent,
+	generic_event: <T as topsoil_core::system::Config>::RuntimeEvent,
 ) {
-	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 pub fn get_payment_id<T: Config<I>, I: 'static>(

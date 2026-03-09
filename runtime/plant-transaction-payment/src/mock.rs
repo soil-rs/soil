@@ -7,18 +7,18 @@
 use super::*;
 use crate as plant_transaction_payment;
 use plant_balances::Call as BalancesCall;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	dispatch::DispatchClass,
 	parameter_types,
 	traits::{fungible, Imbalance, OnUnbalanced},
 	weights::{Weight, WeightToFee as WeightToFeeT},
 };
-use topsoil_system as system;
+use topsoil_core::system as system;
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub struct Runtime
 	{
 		System: system,
@@ -27,7 +27,7 @@ topsoil_support::construct_runtime!(
 	}
 );
 
-pub(crate) const CALL: &<Runtime as topsoil_system::Config>::RuntimeCall =
+pub(crate) const CALL: &<Runtime as topsoil_core::system::Config>::RuntimeCall =
 	&RuntimeCall::Balances(BalancesCall::transfer_allow_death { dest: 2, value: 69 });
 
 parameter_types! {
@@ -35,9 +35,9 @@ parameter_types! {
 }
 
 pub struct BlockWeights;
-impl Get<topsoil_system::limits::BlockWeights> for BlockWeights {
-	fn get() -> topsoil_system::limits::BlockWeights {
-		topsoil_system::limits::BlockWeights::builder()
+impl Get<topsoil_core::system::limits::BlockWeights> for BlockWeights {
+	fn get() -> topsoil_core::system::limits::BlockWeights {
+		topsoil_core::system::limits::BlockWeights::builder()
 			.base_block(Weight::zero())
 			.for_class(DispatchClass::all(), |weights| {
 				weights.base_extrinsic = ExtrinsicBaseWeight::get().into();
@@ -55,8 +55,8 @@ parameter_types! {
 	pub static OperationalFeeMultiplier: u8 = 5;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type BlockWeights = BlockWeights;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<Self::AccountId>;
@@ -91,12 +91,12 @@ parameter_types! {
 }
 
 pub struct DealWithFees;
-impl OnUnbalanced<fungible::Credit<<Runtime as topsoil_system::Config>::AccountId, Balances>>
+impl OnUnbalanced<fungible::Credit<<Runtime as topsoil_core::system::Config>::AccountId, Balances>>
 	for DealWithFees
 {
 	fn on_unbalanceds(
 		mut fees_then_tips: impl Iterator<
-			Item = fungible::Credit<<Runtime as topsoil_system::Config>::AccountId, Balances>,
+			Item = fungible::Credit<<Runtime as topsoil_core::system::Config>::AccountId, Balances>,
 		>,
 	) {
 		if let Some(fees) = fees_then_tips.next() {

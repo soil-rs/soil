@@ -13,7 +13,7 @@ use crate as plant_bounties;
 use crate::mock::{Bounties, *};
 
 use subsoil::runtime::{traits::Dispatchable, TokenError};
-use topsoil_support::{
+use topsoil_core::{
 	assert_err_ignore_postinfo, assert_noop, assert_ok,
 	traits::{fungible::Mutate, Currency},
 };
@@ -212,7 +212,7 @@ fn fund_bounty_fails() {
 		);
 
 		// When/Then
-		let invalid_metadata: <Test as topsoil_system::Config>::Hash = [1u8; 32].into();
+		let invalid_metadata: <Test as topsoil_core::system::Config>::Hash = [1u8; 32].into();
 		assert_noop!(
 			Bounties::fund_bounty(
 				RuntimeOrigin::root(),
@@ -405,7 +405,7 @@ fn fund_child_bounty_fails() {
 		);
 
 		// When/Then
-		let invalid_metadata: <Test as topsoil_system::Config>::Hash = [1u8; 32].into();
+		let invalid_metadata: <Test as topsoil_core::system::Config>::Hash = [1u8; 32].into();
 		assert_noop!(
 			Bounties::fund_child_bounty(
 				RuntimeOrigin::signed(s.curator),

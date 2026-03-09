@@ -12,8 +12,8 @@ use crate::{
 use subsoil::std::boxed::Box;
 use topsoil_benchmarking::v2::*;
 use plant_election_provider::ElectionProvider;
-use topsoil_support::{assert_ok, pallet_prelude::*};
-use topsoil_system::RawOrigin;
+use topsoil_core::{assert_ok, pallet_prelude::*};
+use topsoil_core::system::RawOrigin;
 
 #[benchmarks(where T: crate::Config + crate::signed::Config + crate::verifier::Config)]
 mod benchmarks {

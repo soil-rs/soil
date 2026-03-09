@@ -50,7 +50,7 @@ mod benchmarks {
 
 		assert_eq!(
 			EnteredUntil::<T>::get().unwrap(),
-			topsoil_system::Pallet::<T>::block_number() + T::EnterDuration::get()
+			topsoil_core::system::Pallet::<T>::block_number() + T::EnterDuration::get()
 		);
 		Ok(())
 	}
@@ -68,7 +68,7 @@ mod benchmarks {
 
 		assert_eq!(
 			EnteredUntil::<T>::get().unwrap(),
-			topsoil_system::Pallet::<T>::block_number() + duration
+			topsoil_core::system::Pallet::<T>::block_number() + duration
 		);
 		Ok(())
 	}
@@ -81,7 +81,7 @@ mod benchmarks {
 		let alice: T::AccountId = whitelisted_caller();
 		<T::Currency as fungible::Mutate<_>>::set_balance(&alice, init_bal::<T>());
 
-		topsoil_system::Pallet::<T>::set_block_number(1u32.into());
+		topsoil_core::system::Pallet::<T>::set_block_number(1u32.into());
 		assert!(SafeMode::<T>::do_enter(None, 1u32.into()).is_ok());
 
 		#[extrinsic_call]
@@ -89,7 +89,7 @@ mod benchmarks {
 
 		assert_eq!(
 			EnteredUntil::<T>::get().unwrap(),
-			topsoil_system::Pallet::<T>::block_number() + 1u32.into() + T::ExtendDuration::get()
+			topsoil_core::system::Pallet::<T>::block_number() + 1u32.into() + T::ExtendDuration::get()
 		);
 		Ok(())
 	}
@@ -100,7 +100,7 @@ mod benchmarks {
 		let force_origin = T::ForceExtendOrigin::try_successful_origin()
 			.map_err(|_| BenchmarkError::Weightless)?;
 
-		topsoil_system::Pallet::<T>::set_block_number(1u32.into());
+		topsoil_core::system::Pallet::<T>::set_block_number(1u32.into());
 		assert!(SafeMode::<T>::do_enter(None, 1u32.into()).is_ok());
 
 		let duration = T::ForceExtendOrigin::ensure_origin(force_origin.clone()).unwrap();
@@ -113,7 +113,7 @@ mod benchmarks {
 
 		assert_eq!(
 			EnteredUntil::<T>::get().unwrap(),
-			topsoil_system::Pallet::<T>::block_number() + 1u32.into() + duration
+			topsoil_core::system::Pallet::<T>::block_number() + 1u32.into() + duration
 		);
 		Ok(())
 	}
@@ -149,9 +149,9 @@ mod benchmarks {
 		EnteredUntil::<T>::put(&block);
 		assert!(SafeMode::<T>::do_exit(ExitReason::Force).is_ok());
 
-		topsoil_system::Pallet::<T>::set_block_number(delay + One::one() + 2u32.into());
-		topsoil_system::Pallet::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
-		SafeMode::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
+		topsoil_core::system::Pallet::<T>::set_block_number(delay + One::one() + 2u32.into());
+		topsoil_core::system::Pallet::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
+		SafeMode::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
 
 		#[extrinsic_call]
 		_(origin, alice.clone(), 1u32.into());
@@ -183,11 +183,11 @@ mod benchmarks {
 		);
 		assert!(SafeMode::<T>::do_exit(ExitReason::Force).is_ok());
 
-		topsoil_system::Pallet::<T>::set_block_number(
-			topsoil_system::Pallet::<T>::block_number() + One::one(),
+		topsoil_core::system::Pallet::<T>::set_block_number(
+			topsoil_core::system::Pallet::<T>::block_number() + One::one(),
 		);
-		topsoil_system::Pallet::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
-		SafeMode::<T>::on_initialize(topsoil_system::Pallet::<T>::block_number());
+		topsoil_core::system::Pallet::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
+		SafeMode::<T>::on_initialize(topsoil_core::system::Pallet::<T>::block_number());
 
 		#[extrinsic_call]
 		_(force_origin as T::RuntimeOrigin, alice.clone(), block);

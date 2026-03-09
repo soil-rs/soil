@@ -27,8 +27,7 @@ subsoil = { workspace = true }
 subsoil-crypto-hashing = { optional = true, workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 
 plant-collective = { optional = true, workspace = true }
 plant-identity = { workspace = true }
@@ -44,8 +43,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"plant-balances/std",
 	"plant-collective?/std",
@@ -57,8 +55,7 @@ std = [
 runtime-benchmarks = [
 	"array-bytes",
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-balances/runtime-benchmarks",
 	"plant-collective/runtime-benchmarks",
 	"plant-identity/runtime-benchmarks",
@@ -66,8 +63,7 @@ runtime-benchmarks = [
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-balances/try-runtime",
 	"plant-collective?/try-runtime",
 	"plant-identity/try-runtime",

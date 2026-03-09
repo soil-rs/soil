@@ -19,9 +19,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 topsoil-executive = { workspace = true }
 plant-metadata-hash-extension = { workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
-topsoil-system-rpc-runtime-api = { workspace = true }
+topsoil-core = { workspace = true }
+topsoil-core-rpc-runtime-api = { workspace = true }
 plant-babe = { workspace = true }
 plant-balances = { workspace = true }
 plant-timestamp = { workspace = true }
@@ -60,9 +59,8 @@ std = [
 	"codec/std",
 	"topsoil-executive/std",
 	"plant-metadata-hash-extension/std",
-	"topsoil-support/std",
-	"topsoil-system-rpc-runtime-api/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
+	"topsoil-core-rpc-runtime-api/std",
 	"log/std",
 	"plant-babe/std",
 	"plant-balances/std",

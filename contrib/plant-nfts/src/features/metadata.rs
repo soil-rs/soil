@@ -8,7 +8,7 @@
 
 use crate::*;
 use alloc::vec::Vec;
-use topsoil_support::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Sets the metadata for a specific item within a collection.

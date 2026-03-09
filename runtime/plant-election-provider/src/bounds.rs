@@ -320,7 +320,7 @@ impl ElectionBoundsBuilder {
 mod test {
 	use super::*;
 
-	use topsoil_support::{assert_err, assert_ok};
+	use topsoil_core::{assert_err, assert_ok};
 
 	#[test]
 	fn data_provider_bounds_unbounded_works() {

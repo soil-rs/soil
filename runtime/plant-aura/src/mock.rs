@@ -11,26 +11,26 @@
 use crate as plant_aura;
 use subsoil::consensus::aura::{ed25519::AuthorityId, AuthorityIndex};
 use subsoil::runtime::{testing::UintAuthorityId, BuildStorage};
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, DisabledValidators},
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 pub const SLOT_DURATION: u64 = 2;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Timestamp: plant_timestamp,
 		Aura: plant_aura,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 
@@ -78,7 +78,7 @@ impl plant_aura::Config for Test {
 }
 
 pub fn build_ext(authorities: Vec<u64>) -> subsoil::io::TestExternalities {
-	let mut storage = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut storage = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_aura::GenesisConfig::<Test> {
 		authorities: authorities.into_iter().map(|a| UintAuthorityId(a).to_public_key()).collect(),
 	}

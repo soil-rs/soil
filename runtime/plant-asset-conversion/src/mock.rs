@@ -14,7 +14,7 @@ use subsoil::runtime::{
 	traits::{AccountIdConversion, IdentityLookup},
 	BuildStorage,
 };
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl,
 	instances::{Instance1, Instance2},
 	ord_parameter_types, parameter_types,
@@ -27,14 +27,14 @@ use topsoil_support::{
 	},
 	PalletId,
 };
-use topsoil_system::{EnsureSigned, EnsureSignedBy};
+use topsoil_core::system::{EnsureSigned, EnsureSignedBy};
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Assets: plant_assets::<Instance1>,
 		PoolAssets: plant_assets::<Instance2>,
@@ -42,8 +42,8 @@ construct_runtime!(
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = u128;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -66,7 +66,7 @@ impl plant_assets::Config<Instance1> for Test {
 	type ReserveData = ();
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSigned<Self::AccountId>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU128<1>;
 	type AssetAccountDeposit = ConstU128<10>;
 	type MetadataDepositBase = ConstU128<1>;
@@ -93,7 +93,7 @@ impl plant_assets::Config<Instance2> for Test {
 	type Currency = Balances;
 	type CreateOrigin =
 		AsEnsureOriginWithArg<EnsureSignedBy<AssetConversionOrigin, Self::AccountId>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type AssetDeposit = ConstU128<0>;
 	type AssetAccountDeposit = ConstU128<0>;
 	type MetadataDepositBase = ConstU128<0>;
@@ -151,7 +151,7 @@ impl Config for Test {
 }
 
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10000), (2, 20000), (3, 30000), (4, 40000)],

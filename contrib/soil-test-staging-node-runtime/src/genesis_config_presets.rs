@@ -23,7 +23,7 @@ use subsoil::keyring::Sr25519Keyring;
 use subsoil::mixnet::types::AuthorityId as MixnetId;
 use subsoil::runtime::Perbill;
 use plant_im_online::sr25519::AuthorityId as ImOnlineId;
-use topsoil_support::build_struct_json_patch;
+use topsoil_core::build_struct_json_patch;
 
 pub const ENDOWMENT: Balance = 10_000_000 * DOLLARS;
 pub const STASH: Balance = ENDOWMENT / 1000;

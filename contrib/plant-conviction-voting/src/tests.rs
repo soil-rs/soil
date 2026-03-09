@@ -9,7 +9,7 @@
 use std::{cell::RefCell, collections::BTreeMap};
 
 use subsoil::runtime::BuildStorage;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, Contains, Polling, VoteTally},
 };
@@ -17,12 +17,12 @@ use topsoil_support::{
 use super::*;
 use crate as plant_conviction_voting;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Voting: plant_conviction_voting,
 	}
@@ -36,8 +36,8 @@ impl Contains<RuntimeCall> for BaseFilter {
 	}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
@@ -130,7 +130,7 @@ impl Polling<TallyOf<Test>> for TestPolls {
 			Some(Ongoing(..)) => {},
 			_ => return Err(()),
 		}
-		let now = topsoil_system::Pallet::<Test>::block_number();
+		let now = topsoil_core::system::Pallet::<Test>::block_number();
 		polls.insert(index, Completed(now, approved));
 		Polls::set(polls);
 		Ok(())
@@ -143,14 +143,14 @@ impl Config for Test {
 	type VoteLockingPeriod = ConstU64<3>;
 	type MaxVotes = ConstU32<3>;
 	type WeightInfo = ();
-	type MaxTurnout = topsoil_support::traits::TotalIssuanceOf<Balances, Self::AccountId>;
+	type MaxTurnout = topsoil_core::traits::TotalIssuanceOf<Balances, Self::AccountId>;
 	type Polls = TestPolls;
 	type BlockNumberProvider = System;
 	type VotingHooks = HooksHandler;
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
 		..Default::default()

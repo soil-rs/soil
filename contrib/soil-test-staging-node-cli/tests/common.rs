@@ -20,8 +20,8 @@ use subsoil::runtime::{
 	ApplyExtrinsicResult, Digest, DigestItem, MultiSignature, MultiSigner,
 };
 use subsoil::state_machine::TestExternalities as CoreTestExternalities;
-use topsoil_support::Hashable;
-use topsoil_system::offchain::AppCrypto;
+use topsoil_core::Hashable;
+use topsoil_core::system::offchain::AppCrypto;
 
 use soil_test_staging_node_runtime::{
 	constants::currency::*, Block, BuildStorage, CheckedExtrinsic, Header, Runtime,

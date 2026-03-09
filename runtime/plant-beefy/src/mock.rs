@@ -21,11 +21,11 @@ use plant_election_provider::{
 	onchain, SequentialPhragmen, Weight,
 };
 use plant_session::historical as pallet_session_historical;
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64, KeyOwnerProofSystem, OnFinalize, OnInitialize},
 };
-use topsoil_system::pallet_prelude::HeaderFor;
+use topsoil_core::system::pallet_prelude::HeaderFor;
 
 use crate as plant_beefy;
 
@@ -40,12 +40,12 @@ subsoil::impl_opaque_keys! {
 	}
 }
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Authorship: plant_authorship,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
@@ -57,13 +57,13 @@ construct_runtime!(
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u128>;
 }
 
-impl<C> topsoil_system::offchain::CreateTransactionBase<C> for Test
+impl<C> topsoil_core::system::offchain::CreateTransactionBase<C> for Test
 where
 	RuntimeCall: From<C>,
 {
@@ -71,7 +71,7 @@ where
 	type Extrinsic = TestXt<RuntimeCall, ()>;
 }
 
-impl<C> topsoil_system::offchain::CreateBare<C> for Test
+impl<C> topsoil_core::system::offchain::CreateBare<C> for Test
 where
 	RuntimeCall: From<C>,
 {
@@ -234,7 +234,7 @@ impl plant_staking::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type OldCurrency = Balances;
 	type Currency = Balances;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
 	type UnixTime = plant_timestamp::Pallet<Test>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
@@ -266,7 +266,7 @@ impl ExtBuilder {
 
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
-		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 		let balances: Vec<_> =
 			(0..self.authorities.len()).map(|i| (i as u64, 10_000_000)).collect();
@@ -284,7 +284,7 @@ impl ExtBuilder {
 
 		BasicExternalities::execute_with_storage(&mut t, || {
 			for (ref id, ..) in &session_keys {
-				topsoil_system::Pallet::<Test>::inc_providers(id);
+				topsoil_core::system::Pallet::<Test>::inc_providers(id);
 			}
 		});
 

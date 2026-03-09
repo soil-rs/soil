@@ -24,8 +24,7 @@ scale-info = { features = ["derive"], workspace = true, default-features = true 
 subsoil = { workspace = true, default-features = true }
 
 plant-election-provider = { workspace = true, default-features = true }
-topsoil-support = { workspace = true, default-features = true }
-topsoil-system = { workspace = true, default-features = true }
+topsoil-core = { workspace = true, default-features = true }
 
 plant-bags-list = { workspace = true, default-features = true }
 plant-balances = { workspace = true, default-features = true }
@@ -39,8 +38,7 @@ plant-timestamp = { workspace = true, default-features = true }
 [features]
 try-runtime = [
 	"plant-election-provider/try-runtime",
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-bags-list/try-runtime",
 	"plant-balances/try-runtime",
 	"plant-delegated-staking/try-runtime",

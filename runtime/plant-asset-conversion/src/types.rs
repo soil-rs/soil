@@ -21,7 +21,7 @@ use subsoil::runtime::traits::TryConvert;
 pub type BalancePath<T> = Vec<(<T as Config>::AssetKind, <T as Config>::Balance)>;
 
 /// Credit of [Config::Assets].
-pub type CreditOf<T> = Credit<<T as topsoil_system::Config>::AccountId, <T as Config>::Assets>;
+pub type CreditOf<T> = Credit<<T as topsoil_core::system::Config>::AccountId, <T as Config>::Assets>;
 
 /// Stores the lp_token asset id a particular pool has been assigned.
 #[derive(Decode, Encode, Default, PartialEq, Eq, MaxEncodedLen, TypeInfo)]

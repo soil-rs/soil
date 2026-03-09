@@ -18,7 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { workspace = true, default-features = true }
 plant-metadata-hash-extension = { workspace = true, default-features = true }
-topsoil-system = { workspace = true, default-features = true }
+topsoil-core = { workspace = true, default-features = true }
 fs_extra = { workspace = true }
 futures = { workspace = true }
 soil-test-staging-node-runtime = { workspace = true }

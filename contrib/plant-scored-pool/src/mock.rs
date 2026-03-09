@@ -10,18 +10,18 @@ use super::*;
 use crate as plant_scored_pool;
 
 use subsoil::runtime::{bounded_vec, BuildStorage};
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl, ord_parameter_types, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
-use topsoil_system::EnsureSignedBy;
+use topsoil_core::system::EnsureSignedBy;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		ScoredPool: plant_scored_pool,
 	}
@@ -35,8 +35,8 @@ ord_parameter_types! {
 	pub const ScoreOrigin: u64 = 3;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -89,7 +89,7 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	let mut balances = vec![];
 	for i in 1..31 {
 		balances.push((i, 500_000));

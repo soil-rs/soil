@@ -40,8 +40,8 @@ use subsoil::consensus::beefy::{
 };
 use plant_mmr::{primitives::AncestryProof, LeafDataProvider, NodesUtils, ParentNumberAndHash};
 
-use topsoil_support::{crypto::ecdsa::ECDSAExt, pallet_prelude::Weight, traits::Get};
-use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
+use topsoil_core::{crypto::ecdsa::ECDSAExt, pallet_prelude::Weight, traits::Get};
+use topsoil_core::system::pallet_prelude::{BlockNumberFor, HeaderFor};
 
 pub use pallet::*;
 pub use weights::WeightInfo;
@@ -69,7 +69,7 @@ where
 				<T as plant_beefy::Config>::BeefyId,
 			>::MmrRoot(*root)),
 		);
-		topsoil_system::Pallet::<T>::deposit_log(digest);
+		topsoil_core::system::Pallet::<T>::deposit_log(digest);
 	}
 }
 
@@ -92,12 +92,12 @@ impl Convert<subsoil::consensus::beefy::ecdsa_crypto::AuthorityId, Vec<u8>>
 type MerkleRootOf<T> =
 	<<T as plant_mmr::Config>::Hashing as subsoil::runtime::traits::Hash>::Output;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	#![allow(missing_docs)]
 
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	/// BEEFY-MMR pallet.
 	#[pallet::pallet]
@@ -146,7 +146,7 @@ pub mod pallet {
 impl<T: Config> LeafDataProvider for Pallet<T> {
 	type LeafData = MmrLeaf<
 		BlockNumberFor<T>,
-		<T as topsoil_system::Config>::Hash,
+		<T as topsoil_core::system::Config>::Hash,
 		MerkleRootOf<T>,
 		T::LeafExtra,
 	>;
@@ -200,7 +200,7 @@ where
 
 	fn extract_validation_context(header: HeaderFor<T>) -> Option<Self::ValidationContext> {
 		// Check if the provided header is canonical.
-		let expected_hash = topsoil_system::Pallet::<T>::block_hash(header.number());
+		let expected_hash = topsoil_core::system::Pallet::<T>::block_hash(header.number());
 		if expected_hash != header.hash() {
 			return None;
 		}

@@ -12,8 +12,8 @@ use super::*;
 use crate::Pallet;
 use subsoil::runtime::traits::{AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable};
 use topsoil_benchmarking::v2::*;
-use topsoil_support::dispatch::{DispatchInfo, PostDispatchInfo};
-use topsoil_system::{EventRecord, RawOrigin};
+use topsoil_core::dispatch::{DispatchInfo, PostDispatchInfo};
+use topsoil_core::system::{EventRecord, RawOrigin};
 
 /// Benchmark configuration trait.
 ///
@@ -30,8 +30,8 @@ pub trait Config: crate::Config {
 }
 
 fn assert_last_event<T: crate::Config>(generic_event: <T as crate::Config>::RuntimeEvent) {
-	let events = topsoil_system::Pallet::<T>::events();
-	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let events = topsoil_core::system::Pallet::<T>::events();
+	let system_event: <T as topsoil_core::system::Config>::RuntimeEvent = generic_event.into();
 	// compare to the last event record
 	let EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
@@ -59,7 +59,7 @@ mod benchmarks {
 
 		// Build the call and dispatch info first so we can compute the actual fee
 		let ext: ChargeTransactionPayment<T> = ChargeTransactionPayment::from(tip);
-		let inner = topsoil_system::Call::remark { remark: alloc::vec![] };
+		let inner = topsoil_core::system::Call::remark { remark: alloc::vec![] };
 		let call = T::RuntimeCall::from(inner);
 		let extension_weight = ext.weight(&call);
 		let info = DispatchInfo {

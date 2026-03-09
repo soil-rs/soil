@@ -72,7 +72,7 @@ use subsoil::runtime::{
 	Debug, DispatchResult,
 };
 use subsoil::std::{prelude::*, vec};
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::Pays,
 	ensure,
 	pallet_prelude::*,
@@ -80,7 +80,7 @@ use topsoil_support::{
 	weights::Weight,
 	PalletId, Parameter,
 };
-use topsoil_system::pallet_prelude::*;
+use topsoil_core::system::pallet_prelude::*;
 
 #[cfg(feature = "runtime-benchmarks")]
 mod benchmarking;
@@ -116,7 +116,7 @@ impl<OracleKey, OracleValue, L: Get<u32>> BenchmarkHelper<OracleKey, OracleValue
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -148,7 +148,7 @@ pub mod pallet {
 	}
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// A hook to be called when new data is received.
 		///
 		/// This hook is triggered whenever an oracle operator successfully submits new data.

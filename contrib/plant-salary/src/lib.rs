@@ -71,24 +71,24 @@ pub mod pallet {
 	pub struct Pallet<T, I = ()>(PhantomData<(T, I)>);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 
 		/// The runtime event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Means by which we can make payments to accounts. This also defines the currency and the
 		/// balance which we use to denote that currency.
 		type Paymaster: Pay<
-			Beneficiary = <Self as topsoil_system::Config>::AccountId,
+			Beneficiary = <Self as topsoil_core::system::Config>::AccountId,
 			AssetKind = (),
 		>;
 
 		/// The current membership of payees.
-		type Members: RankedMembers<AccountId = <Self as topsoil_system::Config>::AccountId>;
+		type Members: RankedMembers<AccountId = <Self as topsoil_core::system::Config>::AccountId>;
 
 		/// The maximum payout to be made for a single period to an active member of the given rank.
 		///
@@ -197,7 +197,7 @@ pub mod pallet {
 		#[pallet::call_index(0)]
 		pub fn init(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 			ensure_signed(origin)?;
-			let now = topsoil_system::Pallet::<T>::block_number();
+			let now = topsoil_core::system::Pallet::<T>::block_number();
 			ensure!(!Status::<T, I>::exists(), Error::<T, I>::AlreadyStarted);
 			let status = StatusType {
 				cycle_index: Zero::zero(),
@@ -219,7 +219,7 @@ pub mod pallet {
 		#[pallet::call_index(1)]
 		pub fn bump(origin: OriginFor<T>) -> DispatchResultWithPostInfo {
 			ensure_signed(origin)?;
-			let now = topsoil_system::Pallet::<T>::block_number();
+			let now = topsoil_core::system::Pallet::<T>::block_number();
 			let cycle_period = Self::cycle_period();
 			let mut status = Status::<T, I>::get().ok_or(Error::<T, I>::NotStarted)?;
 			status.cycle_start.saturating_accrue(cycle_period);
@@ -265,7 +265,7 @@ pub mod pallet {
 			let rank = T::Members::rank_of(&who).ok_or(Error::<T, I>::NotMember)?;
 			let mut status = Status::<T, I>::get().ok_or(Error::<T, I>::NotStarted)?;
 			let mut claimant = Claimant::<T, I>::get(&who).ok_or(Error::<T, I>::NotInducted)?;
-			let now = topsoil_system::Pallet::<T>::block_number();
+			let now = topsoil_core::system::Pallet::<T>::block_number();
 			ensure!(
 				now < status.cycle_start + T::RegistrationPeriod::get(),
 				Error::<T, I>::TooLate
@@ -375,7 +375,7 @@ pub mod pallet {
 			let mut status = Status::<T, I>::get().ok_or(Error::<T, I>::NotStarted)?;
 			let mut claimant = Claimant::<T, I>::get(&who).ok_or(Error::<T, I>::NotInducted)?;
 
-			let now = topsoil_system::Pallet::<T>::block_number();
+			let now = topsoil_core::system::Pallet::<T>::block_number();
 			ensure!(
 				now >= status.cycle_start + T::RegistrationPeriod::get(),
 				Error::<T, I>::TooEarly,
@@ -461,11 +461,11 @@ impl<T: Config<I>, I: 'static>
 
 #[cfg(feature = "runtime-benchmarks")]
 impl<T: Config<I>, I: 'static>
-	plant_ranked_collective::BenchmarkSetup<<T as topsoil_system::Config>::AccountId>
+	plant_ranked_collective::BenchmarkSetup<<T as topsoil_core::system::Config>::AccountId>
 	for Pallet<T, I>
 {
-	fn ensure_member(who: &<T as topsoil_system::Config>::AccountId) {
-		Self::init(topsoil_system::RawOrigin::Signed(who.clone()).into()).unwrap();
-		Self::induct(topsoil_system::RawOrigin::Signed(who.clone()).into()).unwrap();
+	fn ensure_member(who: &<T as topsoil_core::system::Config>::AccountId) {
+		Self::init(topsoil_core::system::RawOrigin::Signed(who.clone()).into()).unwrap();
+		Self::induct(topsoil_core::system::RawOrigin::Signed(who.clone()).into()).unwrap();
 	}
 }

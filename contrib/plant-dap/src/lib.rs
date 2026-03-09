@@ -29,7 +29,7 @@ mod tests;
 
 extern crate alloc;
 
-use topsoil_support::{
+use topsoil_core::{
 	defensive,
 	pallet_prelude::*,
 	traits::{
@@ -45,12 +45,12 @@ const LOG_TARGET: &str = "runtime::dap";
 
 /// Type alias for balance.
 pub type BalanceOf<T> =
-	<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Inspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::{subsoil::runtime::traits::AccountIdConversion, traits::StorageVersion};
+	use topsoil_core::{subsoil::runtime::traits::AccountIdConversion, traits::StorageVersion};
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -60,7 +60,7 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The currency type (new fungible traits).
 		type Currency: Inspect<Self::AccountId>
 			+ Mutate<Self::AccountId>
@@ -86,7 +86,7 @@ pub mod pallet {
 
 /// Type alias for credit (negative imbalance - funds that were slashed/removed).
 /// This is for the `fungible::Balanced` trait as used by staking-async.
-pub type CreditOf<T> = Credit<<T as topsoil_system::Config>::AccountId, <T as Config>::Currency>;
+pub type CreditOf<T> = Credit<<T as topsoil_core::system::Config>::AccountId, <T as Config>::Currency>;
 
 /// Implementation of OnUnbalanced for the fungible::Balanced trait.
 /// Example: use as `type Slash = Dap` in staking-async config.

@@ -12,7 +12,7 @@ use subsoil::runtime::{
 	Permill,
 };
 use plant_asset_conversion::{Ascending, Chain, WithFirstAsset};
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	dispatch::DispatchClass,
 	instances::Instance2,
@@ -30,15 +30,15 @@ use topsoil_support::{
 	weights::{Weight, WeightToFee as WeightToFeeT},
 	PalletId,
 };
-use topsoil_system as system;
-use topsoil_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_core::system as system;
+use topsoil_core::system::{EnsureRoot, EnsureSignedBy};
 use plant_transaction_payment::FungibleAdapter;
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 type Balance = u64;
 type AccountId = u64;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime
 	{
 		System: system,
@@ -56,9 +56,9 @@ parameter_types! {
 }
 
 pub struct BlockWeights;
-impl Get<topsoil_system::limits::BlockWeights> for BlockWeights {
-	fn get() -> topsoil_system::limits::BlockWeights {
-		topsoil_system::limits::BlockWeights::builder()
+impl Get<topsoil_core::system::limits::BlockWeights> for BlockWeights {
+	fn get() -> topsoil_core::system::limits::BlockWeights {
+		topsoil_core::system::limits::BlockWeights::builder()
 			.base_block(Weight::zero())
 			.for_class(DispatchClass::all(), |weights| {
 				weights.base_extrinsic = ExtrinsicBaseWeight::get().into();
@@ -75,8 +75,8 @@ parameter_types! {
 	pub static TransactionByteFee: u64 = 1;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type BlockWeights = BlockWeights;
 	type Nonce = u64;
 	type AccountId = AccountId;
@@ -119,12 +119,12 @@ parameter_types! {
 }
 
 pub struct DealWithFees;
-impl OnUnbalanced<fungible::Credit<<Runtime as topsoil_system::Config>::AccountId, Balances>>
+impl OnUnbalanced<fungible::Credit<<Runtime as topsoil_core::system::Config>::AccountId, Balances>>
 	for DealWithFees
 {
 	fn on_unbalanceds(
 		mut fees_then_tips: impl Iterator<
-			Item = fungible::Credit<<Runtime as topsoil_system::Config>::AccountId, Balances>,
+			Item = fungible::Credit<<Runtime as topsoil_core::system::Config>::AccountId, Balances>,
 		>,
 	) {
 		if let Some(fees) = fees_then_tips.next() {
@@ -149,7 +149,7 @@ impl OnUnbalanced<fungibles::Credit<AccountId, NativeAndAssets>> for DealWithFun
 	fn on_unbalanceds(
 		mut fees_then_tips: impl Iterator<
 			Item = fungibles::Credit<
-				<Runtime as topsoil_system::Config>::AccountId,
+				<Runtime as topsoil_core::system::Config>::AccountId,
 				NativeAndAssets,
 			>,
 		>,
@@ -182,7 +182,7 @@ impl plant_assets::Config for Runtime {
 	type AssetIdParameter = codec::Compact<AssetId>;
 	type ReserveData = ();
 	type Currency = Balances;
-	type CreateOrigin = AsEnsureOriginWithArg<topsoil_system::EnsureSigned<AccountId>>;
+	type CreateOrigin = AsEnsureOriginWithArg<topsoil_core::system::EnsureSigned<AccountId>>;
 	type ForceOrigin = EnsureRoot<AccountId>;
 	type AssetDeposit = ConstU64<2>;
 	type AssetAccountDeposit = ConstU64<2>;
@@ -210,7 +210,7 @@ impl plant_assets::Config<Instance2> for Runtime {
 	type ReserveData = ();
 	type Currency = Balances;
 	type CreateOrigin = AsEnsureOriginWithArg<EnsureSignedBy<AssetConversionOrigin, u64>>;
-	type ForceOrigin = topsoil_system::EnsureRoot<u64>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<u64>;
 	type AssetDeposit = ConstU64<0>;
 	type AssetAccountDeposit = ConstU64<0>;
 	type MetadataDepositBase = ConstU64<0>;
@@ -320,7 +320,7 @@ impl BenchmarkHelperTrait<u64, NativeOrWithId<u32>, NativeOrWithId<u32>> for Hel
 
 	fn setup_balances_and_pool(asset_id: NativeOrWithId<u32>, account: u64) {
 		use subsoil::runtime::traits::StaticLookup;
-		use topsoil_support::{assert_ok, traits::fungibles::Mutate};
+		use topsoil_core::{assert_ok, traits::fungibles::Mutate};
 		let NativeOrWithId::WithId(asset_idx) = asset_id.clone() else { unimplemented!() };
 		assert_ok!(Assets::force_create(
 			RuntimeOrigin::root(),
@@ -354,7 +354,7 @@ impl BenchmarkHelperTrait<u64, NativeOrWithId<u32>, NativeOrWithId<u32>> for Hel
 			lp_provider_account,
 		));
 
-		use topsoil_support::traits::Currency;
+		use topsoil_core::traits::Currency;
 		let _ = Balances::deposit_creating(&account, u32::MAX.into());
 
 		let beneficiary = <Runtime as system::Config>::Lookup::unlookup(account);

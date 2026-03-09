@@ -6,7 +6,7 @@
 
 use super::*;
 use alloc::vec::Vec;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::{DispatchResult, *},
 	traits::nonfungible::{Inspect, Mutate, Transfer},
 };

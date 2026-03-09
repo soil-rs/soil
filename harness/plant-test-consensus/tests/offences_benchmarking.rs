@@ -23,11 +23,11 @@ use plant_election_provider::{
 use plant_grandpa::TimeSlot as GrandpaTimeSlot;
 use plant_session::historical as pallet_session_historical;
 use topsoil_benchmarking::account;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 };
-use topsoil_system as system;
+use topsoil_core::system as system;
 
 const SEED: u32 = 0;
 const MAX_BENCH_NOMINATORS: u32 = 100;
@@ -39,8 +39,8 @@ type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 type UncheckedExtrinsic =
 	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, u64, ()>;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 }
@@ -143,7 +143,7 @@ impl plant_staking::Config for Test {
 	type Currency = Balances;
 	type CurrencyBalance = <Self as plant_balances::Config>::Balance;
 	type UnixTime = plant_timestamp::Pallet<Self>;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type SessionInterface = Self;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type NextNewSession = Session;
@@ -172,7 +172,7 @@ impl plant_offences::Config for Test {
 	type OnOffenceHandler = Staking;
 }
 
-impl<T> topsoil_system::offchain::CreateTransactionBase<T> for Test
+impl<T> topsoil_core::system::offchain::CreateTransactionBase<T> for Test
 where
 	RuntimeCall: From<T>,
 {
@@ -180,7 +180,7 @@ where
 	type RuntimeCall = RuntimeCall;
 }
 
-impl<T> topsoil_system::offchain::CreateBare<T> for Test
+impl<T> topsoil_core::system::offchain::CreateBare<T> for Test
 where
 	RuntimeCall: From<T>,
 {
@@ -189,7 +189,7 @@ where
 	}
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
 		System: system::{Pallet, Call, Event<T>},
@@ -221,13 +221,13 @@ fn bond_amount() -> <Test as plant_staking::Config>::CurrencyBalance {
 
 fn create_offender(n: u32, nominators: u32) -> Result<Offender, &'static str> {
 	let stash: AccountId = account("stash", n, SEED);
-	let stash_lookup = <Test as topsoil_system::Config>::Lookup::unlookup(stash.clone());
+	let stash_lookup = <Test as topsoil_core::system::Config>::Lookup::unlookup(stash.clone());
 	let reward_destination = plant_staking::RewardDestination::Staked;
 	let amount = bond_amount();
 	let free_amount = amount.saturating_mul(2u32.into());
 	plant_staking::asset::set_stakeable_balance::<Test>(&stash, free_amount);
 	plant_staking::Pallet::<Test>::bond(
-		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		topsoil_core::system::RawOrigin::Signed(stash.clone()).into(),
 		amount,
 		reward_destination.clone(),
 	)
@@ -238,7 +238,7 @@ fn create_offender(n: u32, nominators: u32) -> Result<Offender, &'static str> {
 		..Default::default()
 	};
 	plant_staking::Pallet::<Test>::validate(
-		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		topsoil_core::system::RawOrigin::Signed(stash.clone()).into(),
 		validator_prefs,
 	)
 	.map_err(|_| "failed to validate")?;
@@ -246,7 +246,7 @@ fn create_offender(n: u32, nominators: u32) -> Result<Offender, &'static str> {
 	let (keys, proof) = generate_session_keys_and_proof(stash.clone());
 	plant_session::Pallet::<Test>::ensure_can_pay_key_deposit(&stash).map_err(|_| "key deposit")?;
 	plant_session::Pallet::<Test>::set_keys(
-		topsoil_system::RawOrigin::Signed(stash.clone()).into(),
+		topsoil_core::system::RawOrigin::Signed(stash.clone()).into(),
 		keys,
 		proof,
 	)
@@ -259,14 +259,14 @@ fn create_offender(n: u32, nominators: u32) -> Result<Offender, &'static str> {
 			account("nominator stash", n * MAX_BENCH_NOMINATORS + i, SEED);
 		plant_staking::asset::set_stakeable_balance::<Test>(&nominator_stash, free_amount);
 		plant_staking::Pallet::<Test>::bond(
-			topsoil_system::RawOrigin::Signed(nominator_stash.clone()).into(),
+			topsoil_core::system::RawOrigin::Signed(nominator_stash.clone()).into(),
 			amount,
 			reward_destination.clone(),
 		)
 		.map_err(|_| "failed to bond nominator")?;
 		let selected_validators = vec![stash_lookup.clone()];
 		plant_staking::Pallet::<Test>::nominate(
-			topsoil_system::RawOrigin::Signed(nominator_stash.clone()).into(),
+			topsoil_core::system::RawOrigin::Signed(nominator_stash.clone()).into(),
 			selected_validators,
 		)
 		.map_err(|_| "failed to nominate")?;
@@ -317,13 +317,13 @@ fn make_offenders(num_offenders: u32, num_nominators: u32) -> Result<Vec<Identif
 
 #[allow(dead_code)]
 fn assert_all_slashes_applied(offender_count: usize) {
-	assert_eq!(topsoil_system::Pallet::<Test>::read_events_for_pallet::<plant_balances::Event<Test>>().len(), 3);
+	assert_eq!(topsoil_core::system::Pallet::<Test>::read_events_for_pallet::<plant_balances::Event<Test>>().len(), 3);
 	assert_eq!(
-		topsoil_system::Pallet::<Test>::read_events_for_pallet::<plant_staking::Event<Test>>().len(),
+		topsoil_core::system::Pallet::<Test>::read_events_for_pallet::<plant_staking::Event<Test>>().len(),
 		1 * (offender_count + 1) + 1
 	);
-	assert_eq!(topsoil_system::Pallet::<Test>::read_events_for_pallet::<plant_offences::Event>().len(), 1);
-	assert_eq!(topsoil_system::Pallet::<Test>::read_events_for_pallet::<topsoil_system::Event<Test>>().len(), 1);
+	assert_eq!(topsoil_core::system::Pallet::<Test>::read_events_for_pallet::<plant_offences::Event>().len(), 1);
+	assert_eq!(topsoil_core::system::Pallet::<Test>::read_events_for_pallet::<topsoil_core::system::Event<Test>>().len(), 1);
 }
 
 impl plant_offences::benchmarking::Config for Test {
@@ -344,7 +344,7 @@ impl plant_offences::benchmarking::Config for Test {
 			validator_set_count,
 			offender: offenders.pop().ok_or("missing offender")?,
 		};
-		assert_eq!(topsoil_system::Pallet::<Self>::event_count(), 0);
+		assert_eq!(topsoil_core::system::Pallet::<Self>::event_count(), 0);
 		Ok((reporters, offence))
 	}
 
@@ -361,7 +361,7 @@ impl plant_offences::benchmarking::Config for Test {
 			validator_set_count,
 			offender: offenders.pop().ok_or("missing offender")?,
 		};
-		assert_eq!(topsoil_system::Pallet::<Self>::event_count(), 0);
+		assert_eq!(topsoil_core::system::Pallet::<Self>::event_count(), 0);
 		Ok((reporters, offence))
 	}
 
@@ -369,6 +369,6 @@ impl plant_offences::benchmarking::Config for Test {
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	subsoil::tracing::try_init_simple();
-	let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	subsoil::io::TestExternalities::new(t)
 }

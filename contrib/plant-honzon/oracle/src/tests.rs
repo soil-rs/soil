@@ -6,7 +6,7 @@
 
 use super::*;
 use mock::*;
-use topsoil_support::{assert_noop, assert_ok};
+use topsoil_core::{assert_noop, assert_ok};
 
 #[test]
 fn should_feed_values_from_member() {

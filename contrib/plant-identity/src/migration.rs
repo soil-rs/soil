@@ -9,7 +9,7 @@
 extern crate alloc;
 
 use super::*;
-use topsoil_support::{
+use topsoil_core::{
 	migrations::VersionedMigration, pallet_prelude::*, storage_alias,
 	traits::UncheckedOnRuntimeUpgrade, IterableStorageMap,
 };
@@ -31,7 +31,7 @@ pub mod versioned {
 		1,
 		v1::VersionUncheckedMigrateV0ToV1<T, KL>,
 		crate::pallet::Pallet<T>,
-		<T as topsoil_system::Config>::DbWeight,
+		<T as topsoil_core::system::Config>::DbWeight,
 	>;
 }
 
@@ -43,7 +43,7 @@ mod types_v0 {
 	pub type IdentityOf<T: Config> = StorageMap<
 		Pallet<T>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		Registration<
 			BalanceOf<T>,
 			<T as pallet::Config>::MaxRegistrars,
@@ -61,7 +61,7 @@ mod types_v1 {
 	pub type IdentityOf<T: Config> = StorageMap<
 		Pallet<T>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		(
 			Registration<
 				BalanceOf<T>,
@@ -77,7 +77,7 @@ mod types_v1 {
 	pub type UsernameAuthorities<T: Config> = StorageMap<
 		Pallet<T>,
 		Twox64Concat,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		AuthorityProperties<Suffix<T>>,
 		OptionQuery,
 	>;
@@ -87,7 +87,7 @@ mod types_v1 {
 		Pallet<T>,
 		Blake2_128Concat,
 		Username<T>,
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 		OptionQuery,
 	>;
 
@@ -97,7 +97,7 @@ mod types_v1 {
 		Pallet<T>,
 		Blake2_128Concat,
 		Username<T>,
-		(<T as topsoil_system::Config>::AccountId, BlockNumberFor<T>),
+		(<T as topsoil_core::system::Config>::AccountId, BlockNumberFor<T>),
 		OptionQuery,
 	>;
 }
@@ -172,7 +172,7 @@ pub mod v1 {
 
 pub mod v2 {
 	use super::*;
-	use topsoil_support::{
+	use topsoil_core::{
 		migrations::{MigrationId, SteppedMigration, SteppedMigrationError},
 		weights::WeightMeter,
 	};
@@ -180,11 +180,11 @@ pub mod v2 {
 	type HashedKey = BoundedVec<u8, ConstU32<256>>;
 	// The resulting state of the step and the actual weight consumed.
 	type StepResultOf<T> =
-		MigrationState<<T as topsoil_system::Config>::AccountId, Username<T>, Suffix<T>>;
+		MigrationState<<T as topsoil_core::system::Config>::AccountId, Username<T>, Suffix<T>>;
 
 	#[cfg(feature = "runtime-benchmarks")]
 	pub(crate) type BenchmarkingSetupOf<T> =
-		BenchmarkingSetup<Suffix<T>, <T as topsoil_system::Config>::AccountId, Username<T>>;
+		BenchmarkingSetup<Suffix<T>, <T as topsoil_core::system::Config>::AccountId, Username<T>>;
 
 	/// Progressive states of a migration. The migration starts with the first variant and ends with
 	/// the last.
@@ -589,7 +589,7 @@ pub mod v2 {
 	#[cfg(feature = "runtime-benchmarks")]
 	impl<T: Config> LazyMigrationV1ToV2<T> {
 		pub(crate) fn setup_benchmark_env_for_migration() -> BenchmarkingSetupOf<T> {
-			use topsoil_support::Hashable;
+			use topsoil_core::Hashable;
 			let suffix: Suffix<T> = b"bench".to_vec().try_into().unwrap();
 			let authority: T::AccountId = topsoil_benchmarking::account("authority", 0, 0);
 			let account_id: T::AccountId = topsoil_benchmarking::account("account", 1, 0);
@@ -605,7 +605,7 @@ pub mod v2 {
 				<T as Config>::MaxRegistrars,
 				<T as Config>::IdentityInformation,
 			> = Registration { judgements: Default::default(), deposit: 10u32.into(), info };
-			topsoil_support::migration::put_storage_value(
+			topsoil_core::migration::put_storage_value(
 				b"Identity",
 				b"IdentityOf",
 				&account_id.twox_64_concat(),
@@ -613,7 +613,7 @@ pub mod v2 {
 			);
 			types_v1::AccountOfUsername::<T>::insert(&username, &account_id);
 			let since: BlockNumberFor<T> = 0u32.into();
-			topsoil_support::migration::put_storage_value(
+			topsoil_core::migration::put_storage_value(
 				b"Identity",
 				b"PendingUsernames",
 				&username.blake2_128_concat(),
@@ -673,7 +673,7 @@ pub mod v2 {
 
 	#[cfg(test)]
 	mod tests {
-		use topsoil_support::Hashable;
+		use topsoil_core::Hashable;
 
 		use super::*;
 		use crate::tests::{new_test_ext, Test};
@@ -692,7 +692,7 @@ pub mod v2 {
 			}
 		}
 
-		fn account_from_u8(byte: u8) -> <Test as topsoil_system::Config>::AccountId {
+		fn account_from_u8(byte: u8) -> <Test as topsoil_core::system::Config>::AccountId {
 			[byte; 32].into()
 		}
 
@@ -726,7 +726,7 @@ pub mod v2 {
 					if i % 2 == 0 {
 						let has_identity = i % 4 == 0;
 						let reg = registration(has_identity);
-						topsoil_support::migration::put_storage_value(
+						topsoil_core::migration::put_storage_value(
 							b"Identity",
 							b"IdentityOf",
 							&account_id.twox_64_concat(),
@@ -740,7 +740,7 @@ pub mod v2 {
 						let username_2: Username<Test> = username_2.try_into().unwrap();
 						types_v1::AccountOfUsername::<Test>::insert(&username_2, &account_id);
 						let reg = registration(has_identity);
-						topsoil_support::migration::put_storage_value(
+						topsoil_core::migration::put_storage_value(
 							b"Identity",
 							b"IdentityOf",
 							&account_id.twox_64_concat(),
@@ -758,7 +758,7 @@ pub mod v2 {
 					bare_username.extend(suffix_1.iter());
 					let username: Username<Test> = bare_username.try_into().unwrap();
 					let since: BlockNumberFor<Test> = i.into();
-					topsoil_support::migration::put_storage_value(
+					topsoil_core::migration::put_storage_value(
 						b"Identity",
 						b"PendingUsernames",
 						&username.blake2_128_concat(),
@@ -771,7 +771,7 @@ pub mod v2 {
 				for i in 120u8..130u8 {
 					let account_id = account_from_u8(i);
 					let reg = registration(true);
-					topsoil_support::migration::put_storage_value(
+					topsoil_core::migration::put_storage_value(
 						b"Identity",
 						b"IdentityOf",
 						&account_id.twox_64_concat(),

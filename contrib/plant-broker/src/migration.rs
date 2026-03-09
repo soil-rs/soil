@@ -9,12 +9,12 @@ use crate::types::RegionRecord;
 use codec::{Decode, Encode};
 use core::marker::PhantomData;
 use subsoil::runtime::Saturating;
-use topsoil_support::traits::{Get, UncheckedOnRuntimeUpgrade};
+use topsoil_core::traits::{Get, UncheckedOnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
+use topsoil_core::ensure;
 
 mod v1 {
 	use super::*;
@@ -33,7 +33,7 @@ mod v1 {
 	pub struct MigrateToV1Impl<T>(PhantomData<T>);
 
 	impl<T: Config> UncheckedOnRuntimeUpgrade for MigrateToV1Impl<T> {
-		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 			let mut count: u64 = 0;
 
 			<Regions<T>>::translate::<RegionRecordV0<T::AccountId, BalanceOf<T>>, _>(|_, v0| {
@@ -68,7 +68,7 @@ mod v1 {
 
 mod v2 {
 	use super::*;
-	use topsoil_support::{
+	use topsoil_core::{
 		pallet_prelude::{OptionQuery, Twox64Concat},
 		storage_alias,
 	};
@@ -85,7 +85,7 @@ mod v2 {
 	pub struct MigrateToV2Impl<T>(PhantomData<T>);
 
 	impl<T: Config> UncheckedOnRuntimeUpgrade for MigrateToV2Impl<T> {
-		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 			let mut count = 0;
 			for (renewal_id, renewal) in AllowedRenewals::<T>::drain() {
 				PotentialRenewals::<T>::insert(renewal_id, renewal);
@@ -121,16 +121,16 @@ mod v3 {
 	use super::*;
 	use codec::MaxEncodedLen;
 	use subsoil::arithmetic::Perbill;
-	use topsoil_support::{
+	use topsoil_core::{
 		pallet_prelude::{Debug, OptionQuery, TypeInfo},
 		storage_alias,
 	};
-	use topsoil_system::Pallet as System;
+	use topsoil_core::system::Pallet as System;
 
 	pub struct MigrateToV3Impl<T>(PhantomData<T>);
 
 	impl<T: Config> UncheckedOnRuntimeUpgrade for MigrateToV3Impl<T> {
-		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 			let acc = Pallet::<T>::account_id();
 			System::<T>::inc_providers(&acc);
 			// calculate and return migration weights
@@ -155,7 +155,7 @@ mod v3 {
 	#[storage_alias]
 	pub type Configuration<T: Config> = StorageValue<Pallet<T>, ConfigRecordOf<T>, OptionQuery>;
 	pub type ConfigRecordOf<T> =
-		ConfigRecord<topsoil_system::pallet_prelude::BlockNumberFor<T>, RelayBlockNumberOf<T>>;
+		ConfigRecord<topsoil_core::system::pallet_prelude::BlockNumberFor<T>, RelayBlockNumberOf<T>>;
 
 	// types added here for v4 migration
 	#[derive(Encode, Decode, Clone, PartialEq, Eq, Debug, TypeInfo, MaxEncodedLen)]
@@ -184,7 +184,7 @@ mod v3 {
 	#[storage_alias]
 	pub type SaleInfo<T: Config> = StorageValue<Pallet<T>, SaleInfoRecordOf<T>, OptionQuery>;
 	pub type SaleInfoRecordOf<T> =
-		SaleInfoRecord<BalanceOf<T>, topsoil_system::pallet_prelude::BlockNumberFor<T>>;
+		SaleInfoRecord<BalanceOf<T>, topsoil_core::system::pallet_prelude::BlockNumberFor<T>>;
 
 	/// The status of a Bulk Coretime Sale.
 	#[derive(Encode, Decode, Clone, PartialEq, Eq, Debug, TypeInfo, MaxEncodedLen)]
@@ -219,7 +219,7 @@ mod v3 {
 pub mod v4 {
 	use super::*;
 
-	type BlockNumberFor<T> = topsoil_system::pallet_prelude::BlockNumberFor<T>;
+	type BlockNumberFor<T> = topsoil_core::system::pallet_prelude::BlockNumberFor<T>;
 
 	pub trait BlockToRelayHeightConversion<T: Config> {
 		/// Converts absolute value of parachain block number to relay chain block number
@@ -269,7 +269,7 @@ pub mod v4 {
 				.encode())
 		}
 
-		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 			let mut weight = T::DbWeight::get().reads(1);
 
 			if let Some(config_record) = v3::Configuration::<T>::take() {
@@ -392,34 +392,34 @@ pub mod v4 {
 }
 
 /// Migrate the pallet storage from `0` to `1`.
-pub type MigrateV0ToV1<T> = topsoil_support::migrations::VersionedMigration<
+pub type MigrateV0ToV1<T> = topsoil_core::migrations::VersionedMigration<
 	0,
 	1,
 	v1::MigrateToV1Impl<T>,
 	Pallet<T>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;
 
-pub type MigrateV1ToV2<T> = topsoil_support::migrations::VersionedMigration<
+pub type MigrateV1ToV2<T> = topsoil_core::migrations::VersionedMigration<
 	1,
 	2,
 	v2::MigrateToV2Impl<T>,
 	Pallet<T>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;
 
-pub type MigrateV2ToV3<T> = topsoil_support::migrations::VersionedMigration<
+pub type MigrateV2ToV3<T> = topsoil_core::migrations::VersionedMigration<
 	2,
 	3,
 	v3::MigrateToV3Impl<T>,
 	Pallet<T>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;
 
-pub type MigrateV3ToV4<T, BlockConversion> = topsoil_support::migrations::VersionedMigration<
+pub type MigrateV3ToV4<T, BlockConversion> = topsoil_core::migrations::VersionedMigration<
 	3,
 	4,
 	v4::MigrateToV4Impl<T, BlockConversion>,
 	Pallet<T>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;

@@ -9,7 +9,7 @@
 use std::collections::BTreeMap;
 
 use scale_info::TypeInfo;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	dispatch::Parameter,
 	parameter_types,
@@ -36,23 +36,23 @@ impl SomeAssociation1 for u64 {
 	type _1 = u64;
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	pub(crate) const STORAGE_VERSION: StorageVersion = StorageVersion::new(10);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config
+	pub trait Config: topsoil_core::system::Config
 	where
-		<Self as topsoil_system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
+		<Self as topsoil_core::system::Config>::AccountId: From<SomeType1> + SomeAssociation1,
 	{
 		type Balance: Parameter + Default + TypeInfo;
 
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -101,13 +101,13 @@ pub mod pallet {
 	pub struct Origin<T>(PhantomData<T>);
 }
 
-topsoil_support::parameter_types!(
+topsoil_core::parameter_types!(
 	pub const MyGetParam3: u32 = 12;
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -130,13 +130,13 @@ pub type UncheckedExtrinsic = subsoil::runtime::generic::UncheckedExtrinsic<
 	u64,
 	RuntimeCall,
 	subsoil::runtime::testing::UintAuthorityId,
-	topsoil_system::CheckNonZeroSender<Runtime>,
+	topsoil_core::system::CheckNonZeroSender<Runtime>,
 >;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub struct Runtime {
 		// Exclude part `Storage` in order not to check its metadata in tests.
-		System: topsoil_system exclude_parts { Pallet, Storage },
+		System: topsoil_core::system exclude_parts { Pallet, Storage },
 		Example: pallet,
 
 	}

@@ -22,7 +22,7 @@ use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Saturating, StaticLookup, Zero},
 	ArithmeticError, DispatchError, Perbill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResult,
 	ensure,
 	traits::{
@@ -58,19 +58,19 @@ const CONVICTION_VOTING_ID: LockIdentifier = *b"pyconvot";
 pub type BlockNumberFor<T, I> =
 	<<T as Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 pub type BalanceOf<T, I = ()> =
-	<<T as Config<I>>::Currency as Currency<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config<I>>::Currency as Currency<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 pub type VotingOf<T, I = ()> = Voting<
 	BalanceOf<T, I>,
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 	BlockNumberFor<T, I>,
 	PollIndexOf<T, I>,
 	<T as Config<I>>::MaxVotes,
 >;
 #[allow(dead_code)]
 type DelegatingOf<T, I = ()> =
-	Delegating<BalanceOf<T, I>, <T as topsoil_system::Config>::AccountId, BlockNumberFor<T, I>>;
+	Delegating<BalanceOf<T, I>, <T as topsoil_core::system::Config>::AccountId, BlockNumberFor<T, I>>;
 pub type TallyOf<T, I = ()> = Tally<BalanceOf<T, I>, <T as Config<I>>::MaxTurnout>;
 pub type VotesOf<T, I = ()> = BalanceOf<T, I>;
 pub type PollIndexOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T, I>>>::Index;
@@ -78,28 +78,28 @@ pub type PollIndexOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T,
 pub type IndexOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T, I>>>::Index;
 pub type ClassOf<T, I = ()> = <<T as Config<I>>::Polls as Polling<TallyOf<T, I>>>::Class;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use subsoil::runtime::BoundedVec;
-	use topsoil_support::{
+	use topsoil_core::{
 		pallet_prelude::{
 			DispatchResultWithPostInfo, IsType, StorageDoubleMap, StorageMap, ValueQuery,
 		},
 		traits::ClassCountOf,
 		Twox64Concat,
 	};
-	use topsoil_system::pallet_prelude::{ensure_signed, OriginFor};
+	use topsoil_core::system::pallet_prelude::{ensure_signed, OriginFor};
 
 	#[pallet::pallet]
 	pub struct Pallet<T, I = ()>(_);
 
 	#[pallet::config]
-	pub trait Config<I: 'static = ()>: topsoil_system::Config + Sized {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config + Sized {
 		// System level stuff.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// Weight information for extrinsics in this pallet.
 		type WeightInfo: WeightInfo;
 		/// Currency type with which voting happens.

@@ -14,20 +14,20 @@ use subsoil::runtime::{
 	traits::{Applyable, Checkable, Hash, IdentityLookup},
 	DispatchErrorWithPostInfo, MultiSignature,
 };
-use topsoil_support::traits::tokens::fungible::Inspect;
+use topsoil_core::traits::tokens::fungible::Inspect;
 type VerifySignatureExt = plant_verify_signature::VerifySignature<Runtime>;
 
 fn create_tx_bare_ext(account: AccountId) -> TxBareExtension {
 	(
-		topsoil_system::CheckNonZeroSender::<Runtime>::new(),
-		topsoil_system::CheckSpecVersion::<Runtime>::new(),
-		topsoil_system::CheckTxVersion::<Runtime>::new(),
-		topsoil_system::CheckGenesis::<Runtime>::new(),
-		topsoil_system::CheckMortality::<Runtime>::from(Era::immortal()),
-		topsoil_system::CheckNonce::<Runtime>::from(
-			topsoil_system::Pallet::<Runtime>::account(&account).nonce,
+		topsoil_core::system::CheckNonZeroSender::<Runtime>::new(),
+		topsoil_core::system::CheckSpecVersion::<Runtime>::new(),
+		topsoil_core::system::CheckTxVersion::<Runtime>::new(),
+		topsoil_core::system::CheckGenesis::<Runtime>::new(),
+		topsoil_core::system::CheckMortality::<Runtime>::from(Era::immortal()),
+		topsoil_core::system::CheckNonce::<Runtime>::from(
+			topsoil_core::system::Pallet::<Runtime>::account(&account).nonce,
 		),
-		topsoil_system::CheckWeight::<Runtime>::new(),
+		topsoil_core::system::CheckWeight::<Runtime>::new(),
 		plant_transaction_payment::ChargeTransactionPayment::<Runtime>::from(0),
 	)
 }
@@ -35,13 +35,13 @@ fn create_tx_bare_ext(account: AccountId) -> TxBareExtension {
 pub fn create_meta_tx_bare_ext(account: AccountId) -> MetaTxBareExtension {
 	(
 		MetaTxMarker::new(),
-		topsoil_system::CheckNonZeroSender::<Runtime>::new(),
-		topsoil_system::CheckSpecVersion::<Runtime>::new(),
-		topsoil_system::CheckTxVersion::<Runtime>::new(),
-		topsoil_system::CheckGenesis::<Runtime>::new(),
-		topsoil_system::CheckMortality::<Runtime>::from(Era::immortal()),
-		topsoil_system::CheckNonce::<Runtime>::from(
-			topsoil_system::Pallet::<Runtime>::account(&account).nonce,
+		topsoil_core::system::CheckNonZeroSender::<Runtime>::new(),
+		topsoil_core::system::CheckSpecVersion::<Runtime>::new(),
+		topsoil_core::system::CheckTxVersion::<Runtime>::new(),
+		topsoil_core::system::CheckGenesis::<Runtime>::new(),
+		topsoil_core::system::CheckMortality::<Runtime>::from(Era::immortal()),
+		topsoil_core::system::CheckNonce::<Runtime>::from(
+			topsoil_core::system::Pallet::<Runtime>::account(&account).nonce,
 		),
 	)
 }
@@ -93,7 +93,7 @@ fn sign_and_execute_meta_tx() {
 		// Alice builds a meta transaction.
 
 		let remark_call =
-			RuntimeCall::System(topsoil_system::Call::remark_with_event { remark: vec![1] });
+			RuntimeCall::System(topsoil_core::system::Call::remark_with_event { remark: vec![1] });
 		let meta_tx_bare_ext = create_meta_tx_bare_ext(alice_account.clone());
 		let meta_tx_sig =
 			create_signature(remark_call.clone(), meta_tx_bare_ext.clone(), alice_keyring);
@@ -156,9 +156,9 @@ fn sign_and_execute_meta_tx() {
 			}),
 		}));
 
-		System::assert_has_event(RuntimeEvent::System(topsoil_system::Event::Remarked {
+		System::assert_has_event(RuntimeEvent::System(topsoil_core::system::Event::Remarked {
 			sender: alice_account.clone(),
-			hash: <Runtime as topsoil_system::Config>::Hashing::hash(&[1]),
+			hash: <Runtime as topsoil_core::system::Config>::Hashing::hash(&[1]),
 		}));
 
 		// Alice balance is unchanged, Bob paid the transaction fee.
@@ -185,7 +185,7 @@ fn invalid_signature() {
 		// Alice builds a meta transaction.
 
 		let remark_call =
-			RuntimeCall::System(topsoil_system::Call::remark_with_event { remark: vec![1] });
+			RuntimeCall::System(topsoil_core::system::Call::remark_with_event { remark: vec![1] });
 		let meta_tx_bare_ext = create_meta_tx_bare_ext(alice_account.clone());
 		// signature is invalid since it's signed by charlie instead of alice.
 		let invalid_meta_tx_sig = create_signature(
@@ -257,7 +257,7 @@ fn meta_tx_extension_work() {
 		// Alice builds a meta transaction.
 
 		let remark_call =
-			RuntimeCall::System(topsoil_system::Call::remark_with_event { remark: vec![1] });
+			RuntimeCall::System(topsoil_core::system::Call::remark_with_event { remark: vec![1] });
 
 		let meta_tx_bare_ext = create_meta_tx_bare_ext(alice_account.clone());
 		let meta_tx_sig =
@@ -292,7 +292,7 @@ fn meta_tx_extension_work() {
 
 		// increment alice's nonce to invalidate the meta tx and verify that the
 		// meta tx extension works.
-		topsoil_system::Pallet::<Runtime>::inc_account_nonce(alice_account.clone());
+		topsoil_core::system::Pallet::<Runtime>::inc_account_nonce(alice_account.clone());
 
 		// Check Extrinsic validity and apply it.
 		let result = apply_extrinsic(uxt);

@@ -12,7 +12,7 @@ use crate::{
 };
 use rand::SeedableRng;
 use subsoil::npos_elections::{Support, Supports};
-use topsoil_support::traits::ConstU32;
+use topsoil_core::traits::ConstU32;
 
 mod solution_type {
 	use super::*;
@@ -96,7 +96,7 @@ mod solution_type {
 				VoterIndex = u32,
 				TargetIndex = u16,
 				Accuracy = TestAccuracy,
-				MaxVoters = topsoil_support::traits::ConstU32::<20>,
+				MaxVoters = topsoil_core::traits::ConstU32::<20>,
 			>(16)
 		);
 

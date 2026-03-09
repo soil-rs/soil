@@ -17,24 +17,24 @@ use subsoil::runtime::{
 	FixedPointNumber, Saturating,
 };
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{
+use topsoil_core::{
 	storage::bounded_vec::BoundedVec,
 	traits::{
 		fungible::{Inspect, Mutate},
 		EnsureOrigin, Hooks,
 	},
 };
-use topsoil_system::{Pallet as System, RawOrigin};
+use topsoil_core::system::{Pallet as System, RawOrigin};
 
 const SEED: u32 = 0;
 const MAX_CORE_COUNT: u16 = 1_000;
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 fn new_config_record<T: Config>() -> ConfigRecordOf<T> {

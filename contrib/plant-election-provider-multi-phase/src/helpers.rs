@@ -17,7 +17,7 @@ macro_rules! log {
 	($level:tt, $pattern:expr $(, $values:expr)* $(,)?) => {
 		log::$level!(
 			target: $crate::LOG_TARGET,
-			concat!("[#{:?}] 🗳  ", $pattern), topsoil_system::Pallet::<T>::block_number() $(, $values)*
+			concat!("[#{:?}] 🗳  ", $pattern), topsoil_core::system::Pallet::<T>::block_number() $(, $values)*
 		)
 	};
 }

@@ -7,7 +7,7 @@
 #[cfg(test)]
 use super::{Config, Runtime};
 #[cfg(test)]
-use topsoil_support::{derive_impl, pallet_prelude::inject_runtime_type};
+use topsoil_core::{derive_impl, pallet_prelude::inject_runtime_type};
 #[cfg(test)]
 use static_assertions::assert_type_eq_all;
 
@@ -25,7 +25,7 @@ fn derive_impl_works_with_no_aggregated_types() {
 	struct DummyRuntime;
 
 	#[derive_impl(
-        super::topsoil_system::config_preludes::TestDefaultConfig as super::topsoil_system::DefaultConfig,
+        super::topsoil_core::system::config_preludes::TestDefaultConfig as super::topsoil_core::system::DefaultConfig,
         no_aggregated_types
     )]
 	impl Config for DummyRuntime {

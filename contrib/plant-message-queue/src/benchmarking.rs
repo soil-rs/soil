@@ -13,8 +13,8 @@ use super::{mock_helpers::*, Pallet as MessageQueue, *};
 
 use subsoil::io::hashing::blake2_256;
 use topsoil_benchmarking::v2::*;
-use topsoil_support::traits::Get;
-use topsoil_system::RawOrigin;
+use topsoil_core::traits::Get;
+use topsoil_core::system::RawOrigin;
 
 #[benchmarks(
 	where

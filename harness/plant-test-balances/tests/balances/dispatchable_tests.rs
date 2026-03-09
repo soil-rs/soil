@@ -12,7 +12,7 @@ use plant_balances::{
 	Event,
 };
 use fungible::{hold::Mutate as HoldMutate, Inspect, Mutate};
-use topsoil_support::traits::{fungible::Unbalanced, tokens::Preservation::Expendable};
+use topsoil_core::traits::{fungible::Unbalanced, tokens::Preservation::Expendable};
 
 /// Alice account ID for more readable tests.
 const ALICE: u64 = 1;
@@ -165,7 +165,7 @@ fn transfer_all_works_4() {
 fn set_balance_handles_killing_account() {
 	ExtBuilder::default().build_and_execute_with(|| {
 		let _ = Balances::mint_into(&1, 111);
-		assert_ok!(topsoil_system::Pallet::<Test>::inc_consumers(&1));
+		assert_ok!(topsoil_core::system::Pallet::<Test>::inc_consumers(&1));
 		assert_noop!(
 			Balances::force_set_balance(RuntimeOrigin::root(), 1, 0),
 			DispatchError::ConsumerRemaining,
@@ -211,7 +211,7 @@ fn upgrade_accounts_should_work() {
 			assert_eq!(System::providers(&7), 1);
 			assert_eq!(System::consumers(&7), 1);
 
-			<Balances as topsoil_support::traits::ReservableCurrency<_>>::unreserve(&7, 5);
+			<Balances as topsoil_core::traits::ReservableCurrency<_>>::unreserve(&7, 5);
 			assert_ok!(<Balances as fungible::Mutate<_>>::transfer(&7, &1, 10, Expendable));
 			assert_eq!(Balances::total_balance(&7), 0);
 			assert_eq!(System::providers(&7), 0);

@@ -27,7 +27,7 @@ use subsoil::staking::{
 	SessionIndex,
 };
 use subsoil::runtime::{traits::Hash, Perbill};
-use topsoil_support::weights::Weight;
+use topsoil_core::weights::Weight;
 
 pub use pallet::*;
 
@@ -35,14 +35,14 @@ pub use pallet::*;
 type OpaqueTimeSlot = Vec<u8>;
 
 /// A type alias for a report identifier.
-type ReportIdOf<T> = <T as topsoil_system::Config>::Hash;
+type ReportIdOf<T> = <T as topsoil_core::system::Config>::Hash;
 
 const LOG_TARGET: &str = "runtime::offences";
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 
@@ -53,10 +53,10 @@ pub mod pallet {
 
 	/// The pallet's config trait.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
-		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+		type RuntimeEvent: From<Event> + IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// Full identification of the validator.
 		type IdentificationTuple: Parameter;
 		/// A handler called for every offence report.

@@ -9,12 +9,12 @@ use crate::*;
 
 use crate::{
 	primitives::{Compact, LeafDataProvider},
-	topsoil_system::DefaultConfig,
+	topsoil_core::system::DefaultConfig,
 };
 use codec::{Decode, Encode};
 use topsoil::{
-	deps::topsoil_support::derive_impl,
-	prelude::{topsoil_system, topsoil_system::config_preludes::TestDefaultConfig},
+	deps::topsoil_core::derive_impl,
+	prelude::{topsoil_core::system, topsoil_core::system::config_preludes::TestDefaultConfig},
 	testing_prelude::*,
 };
 
@@ -23,13 +23,13 @@ type Block = MockBlock<Test>;
 construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		MMR: plant_mmr,
 	}
 );
 
 #[derive_impl(TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 

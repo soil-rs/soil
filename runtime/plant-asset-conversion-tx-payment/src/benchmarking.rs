@@ -14,11 +14,11 @@ use subsoil::runtime::traits::{
 	AsSystemOriginSigner, AsTransactionAuthorizedOrigin, DispatchTransaction, Dispatchable,
 };
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchInfo, PostDispatchInfo},
 	pallet_prelude::*,
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 #[benchmarks(where
 	T::RuntimeOrigin: AsTransactionAuthorizedOrigin,
@@ -34,7 +34,7 @@ mod benchmarks {
 	fn charge_asset_tx_payment_zero() {
 		let caller: T::AccountId = account("caller", 0, 0);
 		let ext: ChargeAssetTxPayment<T> = ChargeAssetTxPayment::from(0u64.into(), None);
-		let inner = topsoil_system::Call::remark { remark: alloc::vec![] };
+		let inner = topsoil_core::system::Call::remark { remark: alloc::vec![] };
 		let call = T::RuntimeCall::from(inner);
 		let info = DispatchInfo {
 			call_weight: Weight::zero(),
@@ -58,7 +58,7 @@ mod benchmarks {
 		let (fun_asset_id, _) = <T as Config>::BenchmarkHelper::create_asset_id_parameter(1);
 		<T as Config>::BenchmarkHelper::setup_balances_and_pool(fun_asset_id, caller.clone());
 		let ext: ChargeAssetTxPayment<T> = ChargeAssetTxPayment::from(10u64.into(), None);
-		let inner = topsoil_system::Call::remark { remark: alloc::vec![] };
+		let inner = topsoil_core::system::Call::remark { remark: alloc::vec![] };
 		let call = T::RuntimeCall::from(inner);
 		let info = DispatchInfo {
 			call_weight: Weight::from_parts(10, 0),
@@ -87,7 +87,7 @@ mod benchmarks {
 
 		let tip = 10u64.into();
 		let ext: ChargeAssetTxPayment<T> = ChargeAssetTxPayment::from(tip, Some(asset_id));
-		let inner = topsoil_system::Call::remark { remark: alloc::vec![] };
+		let inner = topsoil_core::system::Call::remark { remark: alloc::vec![] };
 		let call = T::RuntimeCall::from(inner);
 		let info = DispatchInfo {
 			call_weight: Weight::from_parts(10, 0),

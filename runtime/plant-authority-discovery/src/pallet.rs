@@ -11,25 +11,25 @@
 
 use alloc::vec::Vec;
 use crate::AuthorityId;
-use topsoil_support::{
+use topsoil_core::{
 	traits::{Get, OneSessionHandler},
 	WeakBoundedVec,
 };
 
 pub use pallet::*;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::BlockNumberFor;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
 	/// The pallet's config trait.
-	pub trait Config: topsoil_system::Config + plant_session::Config {
+	pub trait Config: topsoil_core::system::Config + plant_session::Config {
 		/// The maximum number of authorities that can be added.
 		type MaxAuthorities: Get<u32>;
 	}
@@ -44,7 +44,7 @@ pub mod pallet {
 	pub type NextKeys<T: Config> =
 		StorageValue<_, WeakBoundedVec<AuthorityId, T::MaxAuthorities>, ValueQuery>;
 
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	#[pallet::genesis_config]
 	pub struct GenesisConfig<T: Config> {
 		pub keys: Vec<AuthorityId>,
@@ -170,7 +170,7 @@ impl<T: Config> Pallet<T> {
 	/// * `Keys` should not contain duplicates.
 	/// * `NextKeys` should not contain duplicates.
 	pub fn do_try_state() -> Result<(), subsoil::runtime::TryRuntimeError> {
-		use topsoil_support::ensure;
+		use topsoil_core::ensure;
 		let keys = Keys::<T>::get();
 		ensure!(keys.len() as u32 <= T::MaxAuthorities::get(), "Keys exceeds MaxAuthorities");
 		let mut sorted_keys = keys.to_vec();
@@ -207,14 +207,14 @@ mod tests {
 		traits::{ConvertInto, IdentityLookup, OpaqueKeys},
 		BuildStorage, KeyTypeId, Perbill,
 	};
-	use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
+	use topsoil_core::{derive_impl, parameter_types, traits::ConstU32};
 
-	type Block = topsoil_system::mocking::MockBlock<Test>;
+	type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Test
 		{
-			System: topsoil_system,
+			System: topsoil_core::system,
 			Session: plant_session,
 			Balances: plant_balances,
 			AuthorityDiscovery: plant_authority_discovery,
@@ -251,8 +251,8 @@ mod tests {
 		pub const Offset: BlockNumber = 0;
 	}
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Test {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Test {
 		type AccountId = AuthorityId;
 		type Lookup = IdentityLookup<Self::AccountId>;
 		type Block = Block;
@@ -330,7 +330,7 @@ mod tests {
 			.collect::<Vec<(&AuthorityId, AuthorityId)>>();
 
 		// Build genesis.
-		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 
 		plant_authority_discovery::GenesisConfig::<Test> { keys: vec![], ..Default::default() }
 			.assimilate_storage(&mut t)
@@ -340,7 +340,7 @@ mod tests {
 		let mut externalities = TestExternalities::new(t);
 
 		externalities.execute_with(|| {
-			use topsoil_support::traits::OneSessionHandler;
+			use topsoil_core::traits::OneSessionHandler;
 
 			AuthorityDiscovery::on_genesis_session(
 				first_authorities.iter().map(|id| (id, id.clone())),

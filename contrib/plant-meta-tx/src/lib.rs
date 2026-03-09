@@ -34,8 +34,8 @@
 //! `plant_verify_signature::VerifySignature`, which provides the signer address
 //! and the signature of the payload, encompassing the call and the meta-transaction’s
 //! configurations, such as its mortality.  The extensions follow the same [`TransactionExtension`]
-//! contract, and common types such as [`topsoil_system::CheckGenesis`],
-//! [`topsoil_system::CheckMortality`], [`topsoil_system::CheckNonce`], etc., are applicable in the
+//! contract, and common types such as [`topsoil_core::system::CheckGenesis`],
+//! [`topsoil_core::system::CheckMortality`], [`topsoil_core::system::CheckNonce`], etc., are applicable in the
 //! context of meta transactions. Check the `mock` setup for the example.
 
 #![cfg_attr(not(feature = "std"), no_std)]
@@ -60,11 +60,11 @@ use subsoil::runtime::{
 	},
 };
 use subsoil::std::prelude::*;
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchInfo, GetDispatchInfo, PostDispatchInfo},
 	pallet_prelude::*,
 };
-use topsoil_system::{pallet_prelude::*, RawOrigin as SystemOrigin};
+use topsoil_core::system::{pallet_prelude::*, RawOrigin as SystemOrigin};
 
 /// Meta Transaction type.
 ///
@@ -88,19 +88,19 @@ impl<Call, Extension> MetaTx<Call, Extension> {
 
 /// The [`MetaTx`] for the given config.
 pub type MetaTxFor<T> =
-	MetaTx<<T as topsoil_system::Config>::RuntimeCall, <T as Config>::Extension>;
+	MetaTx<<T as topsoil_core::system::Config>::RuntimeCall, <T as Config>::Extension>;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config]
 	pub trait Config:
-		topsoil_system::Config<
+		topsoil_core::system::Config<
 		RuntimeCall: Dispatchable<
 			Info = DispatchInfo,
 			PostInfo = PostDispatchInfo,
-			RuntimeOrigin = <Self as topsoil_system::Config>::RuntimeOrigin,
+			RuntimeOrigin = <Self as topsoil_core::system::Config>::RuntimeOrigin,
 		>,
 		RuntimeOrigin: AsTransactionAuthorizedOrigin + From<SystemOrigin<Self::AccountId>>,
 	>
@@ -110,14 +110,14 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// Transaction extension/s for meta transactions.
 		///
 		/// The extensions that must be present in every meta transaction. This generally includes
 		/// extensions like `plant_verify_signature::VerifySignature`,
-		/// [topsoil_system::CheckSpecVersion], [topsoil_system::CheckTxVersion],
-		/// [topsoil_system::CheckGenesis], [topsoil_system::CheckMortality],
-		/// [topsoil_system::CheckNonce], etc. Check the `mock` setup for the example.
+		/// [topsoil_core::system::CheckSpecVersion], [topsoil_core::system::CheckTxVersion],
+		/// [topsoil_core::system::CheckGenesis], [topsoil_core::system::CheckMortality],
+		/// [topsoil_core::system::CheckNonce], etc. Check the `mock` setup for the example.
 		///
 		/// The types implementing the [`TransactionExtension`] trait can be composed into a tuple
 		/// type that will implement the same trait by piping invocations through each type.
@@ -126,7 +126,7 @@ pub mod pallet {
 		/// The extension must provide an origin and the extension's weight must be zero. Use
 		/// `plant_meta_tx::WeightlessExtension` type when the `runtime-benchmarks` feature
 		/// enabled.
-		type Extension: TransactionExtension<<Self as topsoil_system::Config>::RuntimeCall>;
+		type Extension: TransactionExtension<<Self as topsoil_core::system::Config>::RuntimeCall>;
 	}
 
 	#[pallet::error]

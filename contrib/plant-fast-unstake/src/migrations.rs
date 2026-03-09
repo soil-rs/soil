@@ -8,7 +8,7 @@ pub mod v1 {
 	use crate::{types::BalanceOf, *};
 	use alloc::vec::Vec;
 	use subsoil::staking::EraIndex;
-	use topsoil_support::{
+	use topsoil_core::{
 		storage::unhashed,
 		traits::{Defensive, Get, GetStorageVersion, OnRuntimeUpgrade},
 		weights::Weight,
@@ -17,7 +17,7 @@ pub mod v1 {
 	#[cfg(feature = "try-runtime")]
 	use subsoil::runtime::TryRuntimeError;
 	#[cfg(feature = "try-runtime")]
-	use topsoil_support::ensure;
+	use topsoil_core::ensure;
 
 	pub struct MigrateToV1<T>(core::marker::PhantomData<T>);
 	impl<T: Config> OnRuntimeUpgrade for MigrateToV1<T> {

@@ -10,7 +10,7 @@
 //! to have the functionality defined in this module.
 
 use crate::*;
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{Currency, ExistenceRequirement, ExistenceRequirement::KeepAlive},
 };

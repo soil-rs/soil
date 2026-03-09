@@ -11,15 +11,15 @@ use crate as plant_membership;
 
 use subsoil::runtime::{bounded_vec, BuildStorage};
 
-use topsoil_support::{derive_impl, ord_parameter_types, parameter_types, traits::ConstU32};
-use topsoil_system::EnsureSignedBy;
+use topsoil_core::{derive_impl, ord_parameter_types, parameter_types, traits::ConstU32};
+use topsoil_core::system::EnsureSignedBy;
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Membership: plant_membership,
 	}
 );
@@ -29,8 +29,8 @@ parameter_types! {
 	pub static Prime: Option<u64> = None;
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 ord_parameter_types! {
@@ -83,7 +83,7 @@ impl Config for Test {
 }
 
 pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	// We use default for brevity, but you can configure as desired if needed.
 	plant_membership::GenesisConfig::<Test> {
 		members: bounded_vec![10, 20, 30],
@@ -96,7 +96,7 @@ pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
 
 #[cfg(feature = "runtime-benchmarks")]
 pub(crate) fn new_bench_ext() -> subsoil::io::TestExternalities {
-	topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+	topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 }
 
 #[cfg(feature = "runtime-benchmarks")]

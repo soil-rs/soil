@@ -16,9 +16,8 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { workspace = true }
-topsoil-support = { workspace = true }
-topsoil-support-procedural = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
+topsoil-core-procedural = { workspace = true }
 linregress = { optional = true, workspace = true }
 log = { workspace = true }
 paste = { workspace = true, default-features = true }
@@ -36,16 +35,14 @@ soil-client = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"topsoil-support-procedural/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core-procedural/std",
+	"topsoil-core/std",
 	"linregress",
 	"log/std",
 	"scale-info/std",
 	"serde",
 	"subsoil/std"]
 runtime-benchmarks = [
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"soil-client/runtime-benchmarks",
 	"subsoil/runtime-benchmarks"]

@@ -36,18 +36,18 @@ extern crate alloc;
 use alloc::boxed::Box;
 use subsoil::runtime::traits::{TryConvert, Zero};
 use plant_asset_conversion::{PoolLocator, Pools};
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	fungible::{Inspect as FungibleInspect, Mutate as FungibleMutate},
 	fungibles::{roles::ResetTeam, Inspect, Mutate, Refund},
 	tokens::{Fortitude, Precision, Preservation},
 	AccountTouch,
 };
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -59,12 +59,12 @@ pub mod pallet {
 				<Self as plant_asset_conversion::Config>::AssetKind,
 				<Self as plant_asset_conversion::Config>::AssetKind,
 			),
-		> + topsoil_system::Config
+		> + topsoil_core::system::Config
 	{
 		/// Overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Type previously used to derive the account ID for a pool. Indicates that the pool's
 		/// liquidity assets are located at this account before the migration.

@@ -12,8 +12,8 @@ use subsoil::runtime::traits::Saturating;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelisted_caller, BenchmarkError,
 };
-use topsoil_support::ensure;
-use topsoil_system::RawOrigin;
+use topsoil_core::ensure;
+use topsoil_core::system::RawOrigin;
 
 use super::*;
 use crate::Pallet as TipsMod;
@@ -67,7 +67,7 @@ fn create_tips<T: Config<I>, I: 'static>(
 	}
 	Tips::<T, I>::mutate(hash, |maybe_tip| {
 		if let Some(open_tip) = maybe_tip {
-			open_tip.closes = Some(topsoil_system::pallet_prelude::BlockNumberFor::<T>::zero());
+			open_tip.closes = Some(topsoil_core::system::pallet_prelude::BlockNumberFor::<T>::zero());
 		}
 	});
 	Ok(())
@@ -85,7 +85,7 @@ benchmarks_instance_pallet! {
 		let (caller, reason, awesome_person) = setup_awesome::<T, I>(r);
 		let awesome_person_lookup = T::Lookup::unlookup(awesome_person);
 		// Whitelist caller account from further DB operations.
-		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_core::system::Account::<T>::hashed_key_for(&caller);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(caller_key.into());
 	}: _(RawOrigin::Signed(caller), reason, awesome_person_lookup)
 
@@ -101,7 +101,7 @@ benchmarks_instance_pallet! {
 		let reason_hash = T::Hashing::hash(&reason[..]);
 		let hash = T::Hashing::hash_of(&(&reason_hash, &awesome_person));
 		// Whitelist caller account from further DB operations.
-		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_core::system::Account::<T>::hashed_key_for(&caller);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(caller_key.into());
 	}: _(RawOrigin::Signed(caller), hash)
 
@@ -112,7 +112,7 @@ benchmarks_instance_pallet! {
 		let (caller, reason, beneficiary, value) = setup_tip::<T, I>(r, t)?;
 		let beneficiary_lookup = T::Lookup::unlookup(beneficiary);
 		// Whitelist caller account from further DB operations.
-		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_core::system::Account::<T>::hashed_key_for(&caller);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(caller_key.into());
 	}: _(RawOrigin::Signed(caller), reason, beneficiary_lookup, value)
 
@@ -133,7 +133,7 @@ benchmarks_instance_pallet! {
 		create_tips::<T, I>(t - 1, hash, value)?;
 		let caller = account("member", t - 1, SEED);
 		// Whitelist caller account from further DB operations.
-		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_core::system::Account::<T>::hashed_key_for(&caller);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(caller_key.into());
 	}: _(RawOrigin::Signed(caller), hash, value)
 
@@ -163,7 +163,7 @@ benchmarks_instance_pallet! {
 
 		let caller = account("caller", t, SEED);
 		// Whitelist caller account from further DB operations.
-		let caller_key = topsoil_system::Account::<T>::hashed_key_for(&caller);
+		let caller_key = topsoil_core::system::Account::<T>::hashed_key_for(&caller);
 		topsoil_benchmarking::benchmarking::add_to_whitelist(caller_key.into());
 	}: _(RawOrigin::Signed(caller), hash)
 

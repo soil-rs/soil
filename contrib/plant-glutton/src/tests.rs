@@ -9,7 +9,7 @@
 use super::{mock::*, *};
 
 use subsoil::runtime::{traits::One, Perbill};
-use topsoil_support::{assert_err, assert_noop, assert_ok, weights::constants::*};
+use topsoil_core::{assert_err, assert_noop, assert_ok, weights::constants::*};
 
 const CALIBRATION_ERROR: &'static str =
 	"Weight calibration failed. Please re-run the benchmarks on the same hardware.";

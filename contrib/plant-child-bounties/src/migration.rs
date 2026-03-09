@@ -6,7 +6,7 @@
 
 use super::*;
 use core::marker::PhantomData;
-use topsoil_support::{
+use topsoil_core::{
 	storage_alias,
 	traits::{Get, UncheckedOnRuntimeUpgrade},
 };
@@ -15,7 +15,7 @@ use alloc::collections::BTreeSet;
 #[cfg(feature = "try-runtime")]
 use alloc::vec::Vec;
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
+use topsoil_core::ensure;
 
 pub mod v1 {
 	use super::*;
@@ -40,7 +40,7 @@ pub mod v1 {
 	impl<T: Config, TransferWeight: Get<Weight>> UncheckedOnRuntimeUpgrade
 		for MigrateToV1Impl<T, TransferWeight>
 	{
-		fn on_runtime_upgrade() -> topsoil_support::weights::Weight {
+		fn on_runtime_upgrade() -> topsoil_core::weights::Weight {
 			// increment reads/writes after the action
 			let mut reads = 0u64;
 			let mut writes = 0u64;
@@ -209,10 +209,10 @@ pub mod v1 {
 }
 
 /// Migrate the pallet storage from `0` to `1`.
-pub type MigrateV0ToV1<T, TransferWeight> = topsoil_support::migrations::VersionedMigration<
+pub type MigrateV0ToV1<T, TransferWeight> = topsoil_core::migrations::VersionedMigration<
 	0,
 	1,
 	v1::MigrateToV1Impl<T, TransferWeight>,
 	Pallet<T>,
-	<T as topsoil_system::Config>::DbWeight,
+	<T as topsoil_core::system::Config>::DbWeight,
 >;

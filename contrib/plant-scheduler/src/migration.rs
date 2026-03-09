@@ -7,7 +7,7 @@
 //! Migrations for the scheduler pallet.
 
 use super::*;
-use topsoil_support::traits::OnRuntimeUpgrade;
+use topsoil_core::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
@@ -17,9 +17,9 @@ const TARGET: &'static str = "runtime::scheduler::migration";
 
 pub mod v1 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub(crate) type Agenda<T: Config> = StorageMap<
 		Pallet<T>,
 		Twox64Concat,
@@ -28,16 +28,16 @@ pub mod v1 {
 		ValueQuery,
 	>;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub(crate) type Lookup<T: Config> =
 		StorageMap<Pallet<T>, Twox64Concat, Vec<u8>, TaskAddress<BlockNumberFor<T>>>;
 }
 
 pub mod v2 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub(crate) type Agenda<T: Config> = StorageMap<
 		Pallet<T>,
 		Twox64Concat,
@@ -46,16 +46,16 @@ pub mod v2 {
 		ValueQuery,
 	>;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub(crate) type Lookup<T: Config> =
 		StorageMap<Pallet<T>, Twox64Concat, Vec<u8>, TaskAddress<BlockNumberFor<T>>>;
 }
 
 pub mod v3 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub(crate) type Agenda<T: Config> = StorageMap<
 		Pallet<T>,
 		Twox64Concat,
@@ -64,7 +64,7 @@ pub mod v3 {
 		ValueQuery,
 	>;
 
-	#[topsoil_support::storage_alias]
+	#[topsoil_core::storage_alias]
 	pub(crate) type Lookup<T: Config> =
 		StorageMap<Pallet<T>, Twox64Concat, Vec<u8>, TaskAddress<BlockNumberFor<T>>>;
 
@@ -109,7 +109,7 @@ pub mod v3 {
 			for (block_number, agenda) in Agenda::<T>::iter() {
 				for schedule in agenda.iter().cloned().flatten() {
 					match schedule.call {
-						topsoil_support::traits::schedule::MaybeHashed::Value(call) => {
+						topsoil_core::traits::schedule::MaybeHashed::Value(call) => {
 							let l = call.using_encoded(|c| c.len());
 							if l > max_length {
 								log::error!(
@@ -176,7 +176,7 @@ pub mod v3 {
 
 pub mod v4 {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	/// This migration cleans up empty agendas of the V4 scheduler.
 	///
@@ -244,7 +244,7 @@ pub mod v4 {
 						writes.saturating_inc();
 					},
 					Some(_) => {
-						topsoil_support::defensive!(
+						topsoil_core::defensive!(
 							// Bad but let's not panic.
 							"Cannot have more None suffix schedules that schedules in total"
 						);
@@ -295,7 +295,7 @@ mod test {
 	use crate::mock::*;
 	use alloc::borrow::Cow;
 	use subsoil::assert_eq_uvec;
-	use topsoil_support::Hashable;
+	use topsoil_core::Hashable;
 
 	#[test]
 	#[allow(deprecated)]
@@ -306,13 +306,13 @@ mod test {
 
 			// Call that will be bounded to a `Lookup`.
 			let large_call =
-				RuntimeCall::System(topsoil_system::Call::remark { remark: vec![0; 1024] });
+				RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![0; 1024] });
 			// Call that can be inlined.
 			let small_call =
-				RuntimeCall::System(topsoil_system::Call::remark { remark: vec![0; 10] });
+				RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![0; 10] });
 			// Call that is already hashed and can will be converted to `Legacy`.
 			let hashed_call =
-				RuntimeCall::System(topsoil_system::Call::remark { remark: vec![0; 2048] });
+				RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![0; 2048] });
 			let bound_hashed_call = Preimage::bound(hashed_call.clone()).unwrap();
 			assert!(bound_hashed_call.lookup_needed());
 			// A Call by hash that will fail to decode becomes `None`.
@@ -356,7 +356,7 @@ mod test {
 						_phantom: PhantomData::<u64>::default(),
 					}),
 				];
-				topsoil_support::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
+				topsoil_core::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
 			}
 
 			let state = v3::MigrateToV4::<Test>::pre_upgrade().unwrap();
@@ -454,7 +454,7 @@ mod test {
 			// Assume that we are at V3.
 			StorageVersion::new(3).put::<Scheduler>();
 
-			let too_large_call = RuntimeCall::System(topsoil_system::Call::remark {
+			let too_large_call = RuntimeCall::System(topsoil_core::system::Call::remark {
 				remark: vec![0; <Test as Config>::Preimages::MAX_LENGTH + 1],
 			});
 
@@ -468,7 +468,7 @@ mod test {
 				origin: root(),
 				_phantom: PhantomData::<u64>::default(),
 			})];
-			topsoil_support::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
+			topsoil_core::migration::put_storage_value(b"Scheduler", b"Agenda", &k, old);
 
 			// The pre_upgrade hook fails:
 			let err = v3::MigrateToV4::<Test>::pre_upgrade().unwrap_err();
@@ -492,7 +492,7 @@ mod test {
 		new_test_ext().execute_with(|| {
 			StorageVersion::new(4).put::<Scheduler>();
 
-			let call = RuntimeCall::System(topsoil_system::Call::remark { remark: vec![] });
+			let call = RuntimeCall::System(topsoil_core::system::Call::remark { remark: vec![] });
 			let bounded_call = Preimage::bound(call).unwrap();
 			let some = Some(ScheduledOf::<Test> {
 				maybe_id: None,

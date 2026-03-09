@@ -9,7 +9,7 @@
 use crate::mock::*;
 
 use plant_assets::BalanceOnHold;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok,
 	traits::tokens::fungibles::{Inspect, InspectHold, MutateHold, UnbalancedHold},
 };
@@ -276,7 +276,7 @@ mod impl_hold_unbalanced {
 mod impl_hold_mutate {
 	use super::*;
 	use subsoil::runtime::TokenError;
-	use topsoil_support::traits::tokens::{Fortitude, Precision, Preservation};
+	use topsoil_core::traits::tokens::{Fortitude, Precision, Preservation};
 
 	#[test]
 	fn hold_works() {

@@ -52,7 +52,7 @@ use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::{traits::Saturating, Perbill};
 use subsoil::std::prelude::*;
 use plant_election_provider::PageIndex;
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResultWithPostInfo,
 	pallet_prelude::{StorageDoubleMap, ValueQuery, *},
 	traits::{
@@ -64,7 +64,7 @@ use topsoil_support::{
 	},
 	BoundedVec, Twox64Concat,
 };
-use topsoil_system::{ensure_signed, pallet_prelude::*};
+use topsoil_core::system::{ensure_signed, pallet_prelude::*};
 
 /// Explore all weights
 pub use crate::weights::traits::pallet_election_provider_multi_block_signed::*;
@@ -80,11 +80,11 @@ pub(crate) type SignedWeightsOf<T> = <T as crate::signed::Config>::WeightInfo;
 mod tests;
 
 type BalanceOf<T> =
-	<<T as Config>::Currency as Inspect<<T as topsoil_system::Config>::AccountId>>::Balance;
+	<<T as Config>::Currency as Inspect<<T as topsoil_core::system::Config>::AccountId>>::Balance;
 
 /// All of the (meta) data around a signed submission
 #[derive(Encode, Decode, MaxEncodedLen, TypeInfo, Default, DebugNoBound)]
-#[cfg_attr(test, derive(topsoil_support::PartialEqNoBound, topsoil_support::EqNoBound))]
+#[cfg_attr(test, derive(topsoil_core::PartialEqNoBound, topsoil_core::EqNoBound))]
 #[codec(mel_bound(T: Config))]
 #[scale_info(skip_type_params(T))]
 pub struct SubmissionMetadata<T: Config> {
@@ -216,7 +216,7 @@ impl<Balance: From<u32> + Saturating, G: Get<Balance>> CalculatePageDeposit<Bala
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -627,7 +627,7 @@ pub mod pallet {
 	#[cfg(any(feature = "try-runtime", test, feature = "runtime-benchmarks", debug_assertions))]
 	impl<T: Config> Submissions<T> {
 		pub(crate) fn sorted_submitters(round: u32) -> BoundedVec<T::AccountId, T::MaxSubmissions> {
-			use topsoil_support::traits::TryCollect;
+			use topsoil_core::traits::TryCollect;
 			SortedScores::<T>::get(round).into_iter().map(|(x, _)| x).try_collect().unwrap()
 		}
 

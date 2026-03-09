@@ -17,7 +17,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 
 [dependencies]
 codec = { workspace = true, default-features = true }
-topsoil-support = { workspace = true, default-features = true }
+topsoil-core = { workspace = true, default-features = true }
 jsonrpsee = { features = ["jsonrpsee-types"], workspace = true }
 soil-rpc = { workspace = true, default-features = true }
 scale-info = { workspace = true, default-features = true }
@@ -25,6 +25,5 @@ serde = { workspace = true, default-features = true }
 subsoil = { workspace = true, default-features = true }
 
 [dev-dependencies]
-topsoil-system = { workspace = true, default-features = true }
 jsonrpsee = { features = ["jsonrpsee-types", "ws-client"], workspace = true }
 tokio = { workspace = true, default-features = true }

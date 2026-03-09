@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: MIT-0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-use topsoil_support::pallet_macros::*;
+use topsoil_core::pallet_macros::*;
 
 /// A [`pallet_section`] that defines the events for a pallet.
 /// This can later be imported into the pallet using [`import_section`].

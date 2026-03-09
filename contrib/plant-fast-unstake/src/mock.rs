@@ -7,7 +7,7 @@
 use crate::{self as fast_unstake};
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
 use plant_election_provider::PageIndex;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl,
 	pallet_prelude::*,
 	parameter_types,
@@ -23,14 +23,14 @@ pub type Balance = u128;
 pub type T = Runtime;
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(
 			Weight::from_parts(2u64 * WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 		);
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<Balance>;
 	// we use U128 account id in order to get a better iteration order out of a map.
@@ -114,7 +114,7 @@ impl plant_staking::Config for Runtime {
 	type OldCurrency = Balances;
 	type Currency = Balances;
 	type UnixTime = plant_timestamp::Pallet<Self>;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type BondingDuration = BondingDuration;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider = MockElection;
@@ -133,17 +133,17 @@ impl fast_unstake::Config for Runtime {
 	type Deposit = Deposit;
 	type Currency = Balances;
 	type Staking = Staking;
-	type ControlOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type ControlOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type BatchSize = BatchSize;
 	type WeightInfo = ();
 	type MaxErasToCheckPerBlock = ConstU32<16>;
 }
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
 		Staking: plant_staking,
@@ -218,7 +218,7 @@ impl ExtBuilder {
 	pub(crate) fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
-			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let validators_range = VALIDATOR_PREFIX..VALIDATOR_PREFIX + VALIDATORS_PER_ERA;
 		let nominators_range =
@@ -254,7 +254,7 @@ impl ExtBuilder {
 
 		ext.execute_with(|| {
 			// for events to be deposited.
-			topsoil_system::Pallet::<Runtime>::set_block_number(1);
+			topsoil_core::system::Pallet::<Runtime>::set_block_number(1);
 
 			for era in 0..=(BondingDuration::get()) {
 				Self::register_stakers_for_era(era);
@@ -277,7 +277,7 @@ impl ExtBuilder {
 pub(crate) fn run_to_block(n: u64, on_idle: bool) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		topsoil_system::RunToBlockHooks::default()
+		topsoil_core::system::RunToBlockHooks::default()
 			.before_finalize(|_| {
 				// Satisfy the timestamp pallet.
 				Timestamp::set_timestamp(0);

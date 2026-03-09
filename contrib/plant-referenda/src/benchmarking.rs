@@ -14,11 +14,11 @@ use subsoil::runtime::traits::Bounded as ArithBounded;
 use topsoil_benchmarking::v1::{
 	account, benchmarks_instance_pallet, whitelist_account, BenchmarkError,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::{Currency, EnsureOrigin, EnsureOriginWithArg, UnfilteredDispatchable},
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 const SEED: u32 = 0;
 
@@ -27,7 +27,7 @@ fn set_block_number<T: Config<I>, I: 'static>(n: BlockNumberFor<T, I>) {
 }
 
 fn assert_last_event<T: Config<I>, I: 'static>(generic_event: <T as Config<I>>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn funded_account<T: Config<I>, I: 'static>(name: &'static str, index: u32) -> T::AccountId {
@@ -37,13 +37,13 @@ fn funded_account<T: Config<I>, I: 'static>(name: &'static str, index: u32) -> T
 }
 
 fn dummy_call<T: Config<I>, I: 'static>() -> BoundedCallOf<T, I> {
-	let inner = topsoil_system::Call::remark { remark: vec![] };
+	let inner = topsoil_core::system::Call::remark { remark: vec![] };
 	let call = <T as Config<I>>::RuntimeCall::from(inner);
 	T::Preimages::bound(call).unwrap()
 }
 
 fn create_referendum<T: Config<I>, I: 'static>(origin: T::RuntimeOrigin) -> ReferendumIndex {
-	if let Ok(caller) = topsoil_system::ensure_signed(origin.clone()) {
+	if let Ok(caller) = topsoil_core::system::ensure_signed(origin.clone()) {
 		T::Currency::make_free_balance_be(&caller, BalanceOf::<T, I>::max_value());
 		whitelist_account!(caller);
 	}
@@ -190,7 +190,7 @@ benchmarks_instance_pallet! {
 	submit {
 		let origin =
 			T::SubmitOrigin::try_successful_origin(&RawOrigin::Root.into()).map_err(|_| BenchmarkError::Weightless)?;
-		if let Ok(caller) = topsoil_system::ensure_signed(origin.clone()) {
+		if let Ok(caller) = topsoil_core::system::ensure_signed(origin.clone()) {
 			T::Currency::make_free_balance_be(&caller, BalanceOf::<T, I>::max_value());
 			whitelist_account!(caller);
 		}
@@ -279,7 +279,7 @@ benchmarks_instance_pallet! {
 		let origin =
 			T::SubmitOrigin::try_successful_origin(&RawOrigin::Root.into()).map_err(|_| BenchmarkError::Weightless)?;
 		let index = create_referendum::<T, I>(origin.clone());
-		let caller = topsoil_system::ensure_signed(origin.clone()).unwrap();
+		let caller = topsoil_core::system::ensure_signed(origin.clone()).unwrap();
 		let balance = T::Currency::free_balance(&caller);
 		assert_ok!(Referenda::<T, I>::cancel(
 			T::CancelOrigin::try_successful_origin()

@@ -8,7 +8,7 @@
 //! pallet.
 
 use crate::*;
-use topsoil_support::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Locks a collection with specified settings.

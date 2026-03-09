@@ -33,7 +33,7 @@ use subsoil::trie::{
 	LayoutV0, MemoryDB, RandomState, Recorder, StorageProof, Trie, TrieMut, TrieRecorder,
 };
 
-use topsoil_support::{
+use topsoil_core::{
 	print,
 	traits::{KeyOwnerProofSystem, ValidatorSet, ValidatorSetWithIdentification},
 	Parameter,
@@ -46,10 +46,10 @@ use crate::{self as plant_session, Pallet as Session};
 pub use pallet::*;
 use subsoil::trie::{accessed_nodes_tracker::AccessedNodesTracker, recorder_ext::RecorderExt};
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -60,11 +60,11 @@ pub mod pallet {
 
 	/// Config necessary for the historical pallet.
 	#[pallet::config]
-	pub trait Config: plant_session::Config + topsoil_system::Config {
+	pub trait Config: plant_session::Config + topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Full identification of the validator.
 		type FullIdentification: Parameter;
@@ -391,12 +391,12 @@ pub(crate) mod tests {
 	use subsoil::runtime::{key_types::DUMMY, testing::UintAuthorityId, BuildStorage};
 	use subsoil::state_machine::BasicExternalities;
 
-	use topsoil_support::traits::{KeyOwnerProofSystem, OnInitialize};
+	use topsoil_core::traits::{KeyOwnerProofSystem, OnInitialize};
 
 	type Historical = Pallet<Test>;
 
 	pub(crate) fn new_test_ext() -> subsoil::io::TestExternalities {
-		let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		let keys: Vec<_> = NextValidators::get()
 			.iter()
 			.cloned()
@@ -404,7 +404,7 @@ pub(crate) mod tests {
 			.collect();
 		BasicExternalities::execute_with_storage(&mut t, || {
 			for (ref k, ..) in &keys {
-				topsoil_system::Pallet::<Test>::inc_providers(k);
+				topsoil_core::system::Pallet::<Test>::inc_providers(k);
 			}
 		});
 		plant_session::GenesisConfig::<Test> { keys, ..Default::default() }

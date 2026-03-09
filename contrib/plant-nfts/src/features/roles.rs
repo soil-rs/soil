@@ -8,7 +8,7 @@
 
 use crate::*;
 use alloc::{collections::btree_map::BTreeMap, vec::Vec};
-use topsoil_support::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
 
 impl<T: Config<I>, I: 'static> Pallet<T, I> {
 	/// Set the team roles for a specific collection.

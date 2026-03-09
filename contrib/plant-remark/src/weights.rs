@@ -35,7 +35,7 @@
 #![allow(unused_imports)]
 #![allow(missing_docs)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for `plant_remark`.
@@ -45,7 +45,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_remark` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// The range of component `l` is `[1, 1048576]`.
 	fn store(l: u32, ) -> Weight {
 		// Proof Size summary in bytes:

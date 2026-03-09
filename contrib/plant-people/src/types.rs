@@ -9,7 +9,7 @@
 #![allow(clippy::result_unit_err)]
 
 use super::*;
-use topsoil_support::{pallet_prelude::*, DefaultNoBound};
+use topsoil_core::{pallet_prelude::*, DefaultNoBound};
 
 pub type RevisionIndex = u32;
 pub type PageIndex = u32;

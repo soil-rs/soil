@@ -12,7 +12,7 @@ use subsoil::runtime::{
 	ArithmeticError,
 };
 use plant_assets::BalanceOnHold;
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	fungibles::{Dust, Inspect, InspectHold, MutateHold, Unbalanced, UnbalancedHold},
 	tokens::{
 		DepositConsequence, Fortitude, Precision, Preservation, Provenance, WithdrawConsequence,
@@ -48,9 +48,9 @@ impl<T: Config<I>, I: 'static> BalanceOnHold<T::AssetId, T::AccountId, T::Balanc
 	}
 }
 
-// Implement [`fungibles::Inspect`](topsoil_support::traits::fungibles::Inspect) as it is bound by
-// [`fungibles::InspectHold`](topsoil_support::traits::fungibles::InspectHold) and
-// [`fungibles::MutateHold`](topsoil_support::traits::fungibles::MutateHold). To do so, we'll
+// Implement [`fungibles::Inspect`](topsoil_core::traits::fungibles::Inspect) as it is bound by
+// [`fungibles::InspectHold`](topsoil_core::traits::fungibles::InspectHold) and
+// [`fungibles::MutateHold`](topsoil_core::traits::fungibles::MutateHold). To do so, we'll
 // re-export all of `topsoil-assets` implementation of the same trait.
 impl<T: Config<I>, I: 'static> Inspect<T::AccountId> for Pallet<T, I> {
 	type AssetId = T::AssetId;

@@ -30,23 +30,23 @@ mod events;
 pub mod weights;
 pub use weights::*;
 
-use topsoil_support::pallet_macros::*;
+use topsoil_core::pallet_macros::*;
 
 /// Imports a [`pallet_section`] defined at [`events::events`].
 /// This brings the events defined in that section into the pallet's namespace.
 #[import_section(events::events)]
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	/// Configure the pallet by specifying the parameters and types on which it depends.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Type representing the weight of this pallet
 		type WeightInfo: WeightInfo;
 	}

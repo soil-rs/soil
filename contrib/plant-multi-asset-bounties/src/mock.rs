@@ -17,7 +17,7 @@ use subsoil::runtime::{
 	traits::{BlakeTwo256, Convert, Hash, Identity, IdentityLookup},
 	BuildStorage, Perbill,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl, parameter_types,
 	traits::{
 		fungible::{HoldConsideration, Mutate},
@@ -28,7 +28,7 @@ use topsoil_support::{
 	PalletId,
 };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 thread_local! {
 	pub static PAID: RefCell<BTreeMap<(u128, u32), u64>> = RefCell::new(BTreeMap::new());
@@ -75,10 +75,10 @@ impl PayWithSource for TestBountiesPay {
 	}
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Preimage: plant_preimage,
 		Utility: plant_utility,
@@ -93,8 +93,8 @@ parameter_types! {
 
 type Balance = u64;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type AccountId = u128; // u64 is not enough to hold bytes used to generate bounty account
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -112,7 +112,7 @@ impl plant_preimage::Config for Test {
 	type RuntimeEvent = RuntimeEvent;
 	type WeightInfo = ();
 	type Currency = Balances;
-	type ManagerOrigin = topsoil_system::EnsureRoot<u64>;
+	type ManagerOrigin = topsoil_core::system::EnsureRoot<u64>;
 	type Consideration = ();
 }
 
@@ -132,22 +132,22 @@ parameter_types! {
 }
 
 pub struct TestSpendOrigin;
-impl topsoil_support::traits::EnsureOrigin<RuntimeOrigin> for TestSpendOrigin {
+impl topsoil_core::traits::EnsureOrigin<RuntimeOrigin> for TestSpendOrigin {
 	type Success = u64;
 	fn try_origin(o: RuntimeOrigin) -> Result<Self::Success, RuntimeOrigin> {
-		Result::<topsoil_system::RawOrigin<_>, RuntimeOrigin>::from(o).and_then(|o| match o {
-			topsoil_system::RawOrigin::Root => Ok(SpendLimit::get()),
-			topsoil_system::RawOrigin::Signed(10) => Ok(5),
-			topsoil_system::RawOrigin::Signed(11) => Ok(10),
-			topsoil_system::RawOrigin::Signed(12) => Ok(20),
-			topsoil_system::RawOrigin::Signed(13) => Ok(50),
-			topsoil_system::RawOrigin::Signed(14) => Ok(500),
+		Result::<topsoil_core::system::RawOrigin<_>, RuntimeOrigin>::from(o).and_then(|o| match o {
+			topsoil_core::system::RawOrigin::Root => Ok(SpendLimit::get()),
+			topsoil_core::system::RawOrigin::Signed(10) => Ok(5),
+			topsoil_core::system::RawOrigin::Signed(11) => Ok(10),
+			topsoil_core::system::RawOrigin::Signed(12) => Ok(20),
+			topsoil_core::system::RawOrigin::Signed(13) => Ok(50),
+			topsoil_core::system::RawOrigin::Signed(14) => Ok(500),
 			r => Err(RuntimeOrigin::from(r)),
 		})
 	}
 	#[cfg(feature = "runtime-benchmarks")]
 	fn try_successful_origin() -> Result<RuntimeOrigin, ()> {
-		Ok(topsoil_system::RawOrigin::Root.into())
+		Ok(topsoil_core::system::RawOrigin::Root.into())
 	}
 }
 
@@ -162,7 +162,7 @@ parameter_types! {
 
 impl Config for Test {
 	type Balance = <Self as plant_balances::Config>::Balance;
-	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
+	type RejectOrigin = topsoil_core::system::EnsureRoot<u128>;
 	type SpendOrigin = TestSpendOrigin;
 	type AssetKind = u32;
 	type Beneficiary = u128;
@@ -196,7 +196,7 @@ type CuratorDeposit =
 	CuratorDepositAmount<CuratorDepositMultiplier, CuratorDepositMin, CuratorDepositMax, Balance>;
 impl Config<Instance1> for Test {
 	type Balance = <Self as plant_balances::Config>::Balance;
-	type RejectOrigin = topsoil_system::EnsureRoot<u128>;
+	type RejectOrigin = topsoil_core::system::EnsureRoot<u128>;
 	type SpendOrigin = TestSpendOrigin;
 	type AssetKind = u32;
 	type Beneficiary = u128;
@@ -234,7 +234,7 @@ impl Default for ExtBuilder {
 impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		let mut ext: subsoil::io::TestExternalities = RuntimeGenesisConfig {
-			system: topsoil_system::GenesisConfig::default(),
+			system: topsoil_core::system::GenesisConfig::default(),
 			balances: plant_balances::GenesisConfig {
 				balances: vec![(0, 100), (1, 98), (2, 1)],
 				..Default::default()
@@ -244,7 +244,7 @@ impl ExtBuilder {
 		.unwrap()
 		.into();
 		ext.execute_with(|| {
-			topsoil_system::Pallet::<Test>::set_block_number(1);
+			topsoil_core::system::Pallet::<Test>::set_block_number(1);
 		});
 		ext
 	}
@@ -295,7 +295,7 @@ pub fn expect_events(e: Vec<BountiesEvent<Test>>) {
 }
 
 /// note a new preimage without registering.
-pub fn note_preimage(who: u128) -> <Test as topsoil_system::Config>::Hash {
+pub fn note_preimage(who: u128) -> <Test as topsoil_core::system::Config>::Hash {
 	use std::sync::atomic::{AtomicU8, Ordering};
 	// note a new preimage on every function invoke.
 	static COUNTER: AtomicU8 = AtomicU8::new(0);
@@ -372,7 +372,7 @@ pub struct TestBounty {
 	pub child_curator_deposit: u64,
 	pub beneficiary: u128,
 	pub child_beneficiary: u128,
-	pub metadata: <Test as topsoil_system::Config>::Hash,
+	pub metadata: <Test as topsoil_core::system::Config>::Hash,
 }
 
 pub fn setup_bounty() -> TestBounty {

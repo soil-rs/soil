@@ -13,7 +13,7 @@ use subsoil::runtime::{
 	BuildStorage, Perbill,
 };
 use plant_balances::{BalanceLock, Error as BalancesError};
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{
 		ConstU32, ConstU64, Contains, EqualPrivilegeOnly, OnInitialize, SortedMembers,
@@ -21,7 +21,7 @@ use topsoil_support::{
 	},
 	weights::Weight,
 };
-use topsoil_system::{EnsureRoot, EnsureSigned, EnsureSignedBy};
+use topsoil_core::system::{EnsureRoot, EnsureSigned, EnsureSignedBy};
 mod cancellation;
 mod decoders;
 mod delegation;
@@ -38,12 +38,12 @@ const NAY: Vote = Vote { aye: false, conviction: Conviction::None };
 const BIG_AYE: Vote = Vote { aye: true, conviction: Conviction::Locked1x };
 const BIG_NAY: Vote = Vote { aye: false, conviction: Conviction::Locked1x };
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Preimage: plant_preimage,
 		Scheduler: plant_scheduler,
@@ -60,14 +60,14 @@ impl Contains<RuntimeCall> for BaseFilter {
 }
 
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights =
-		topsoil_system::limits::BlockWeights::simple_max(
-			Weight::from_parts(topsoil_support::weights::constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights =
+		topsoil_core::system::limits::BlockWeights::simple_max(
+			Weight::from_parts(topsoil_core::weights::constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 		);
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type BaseCallFilter = BaseFilter;
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
@@ -95,7 +95,7 @@ impl plant_scheduler::Config for Test {
 	type WeightInfo = ();
 	type OriginPrivilegeCmp = EqualPrivilegeOnly;
 	type Preimages = ();
-	type BlockNumberProvider = topsoil_system::Pallet<Test>;
+	type BlockNumberProvider = topsoil_core::system::Pallet<Test>;
 }
 
 #[derive_impl(plant_balances::config_preludes::TestDefaultConfig)]
@@ -156,7 +156,7 @@ impl Config for Test {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let mut t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	plant_balances::GenesisConfig::<Test> {
 		balances: vec![(1, 10), (2, 20), (3, 30), (4, 40), (5, 50), (6, 60)],
 		..Default::default()
@@ -190,7 +190,7 @@ fn set_balance_proposal(value: u64) -> BoundedCallOf<Test> {
 fn set_balance_proposal_is_correctly_filtered_out() {
 	for i in 0..10 {
 		let call = Preimage::realize(&set_balance_proposal(i)).unwrap().0;
-		assert!(!<Test as topsoil_system::Config>::BaseCallFilter::contains(&call));
+		assert!(!<Test as topsoil_core::system::Config>::BaseCallFilter::contains(&call));
 	}
 }
 
@@ -238,7 +238,7 @@ fn tally(r: ReferendumIndex) -> Tally<u64> {
 }
 
 /// note a new preimage without registering.
-fn note_preimage(who: u64) -> <Test as topsoil_system::Config>::Hash {
+fn note_preimage(who: u64) -> <Test as topsoil_core::system::Config>::Hash {
 	use std::sync::atomic::{AtomicU8, Ordering};
 	// note a new preimage on every function invoke.
 	static COUNTER: AtomicU8 = AtomicU8::new(0);

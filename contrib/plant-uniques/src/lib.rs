@@ -11,7 +11,7 @@
 //! ## Related Modules
 //!
 //! * [`System`](../topsoil_system/index.html)
-//! * [`Support`](../topsoil_support/index.html)
+//! * [`Support`](../topsoil_core/index.html)
 
 #![recursion_limit = "256"]
 // Ensure we're `no_std` when compiling for Wasm.
@@ -40,10 +40,10 @@ use subsoil::runtime::{
 	traits::{Saturating, StaticLookup, Zero},
 	ArithmeticError, Debug,
 };
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	tokens::Locker, BalanceStatus::Reserved, Currency, EnsureOriginWithArg, ReservableCurrency,
 };
-use topsoil_system::Config as SystemConfig;
+use topsoil_core::system::Config as SystemConfig;
 
 pub use pallet::*;
 pub use types::*;
@@ -53,13 +53,13 @@ pub use weights::WeightInfo;
 const LOG_TARGET: &str = "runtime::uniques";
 
 /// A type alias for the account ID type used in the dispatchable functions of this pallet.
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
 
@@ -84,11 +84,11 @@ pub mod pallet {
 
 	#[pallet::config]
 	/// The module configuration trait.
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Identifier for the collection of item.
 		type CollectionId: Member + Parameter + MaxEncodedLen;
@@ -885,7 +885,7 @@ pub mod pallet {
 
 				details.owner = new_owner.clone();
 				OwnershipAcceptance::<T, I>::remove(&new_owner);
-				topsoil_system::Pallet::<T>::dec_consumers(&new_owner);
+				topsoil_core::system::Pallet::<T>::dec_consumers(&new_owner);
 
 				Self::deposit_event(Event::OwnerChanged { collection, new_owner });
 				Ok(())
@@ -1441,10 +1441,10 @@ pub mod pallet {
 			let exists = OwnershipAcceptance::<T, I>::contains_key(&who);
 			match (exists, maybe_collection.is_some()) {
 				(false, true) => {
-					topsoil_system::Pallet::<T>::inc_consumers(&who)?;
+					topsoil_core::system::Pallet::<T>::inc_consumers(&who)?;
 				},
 				(true, false) => {
-					topsoil_system::Pallet::<T>::dec_consumers(&who);
+					topsoil_core::system::Pallet::<T>::dec_consumers(&who);
 				},
 				_ => {},
 			}

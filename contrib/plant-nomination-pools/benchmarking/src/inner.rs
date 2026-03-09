@@ -22,7 +22,7 @@ use plant_nomination_pools::{
 	Pallet as Pools, PoolId, PoolMembers, PoolRoles, PoolState, RewardPools, SubPoolsStorage,
 };
 use plant_staking::MaxNominationsOf;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, ensure,
 	traits::{
 		fungible::{Inspect, Mutate, Unbalanced},
@@ -30,7 +30,7 @@ use topsoil_support::{
 		Get, Imbalance,
 	},
 };
-use topsoil_system::RawOrigin as RuntimeOrigin;
+use topsoil_core::system::RawOrigin as RuntimeOrigin;
 // `topsoil_benchmarking::benchmarks!` macro needs this
 use plant_nomination_pools::Call;
 
@@ -514,7 +514,7 @@ mod benchmarks {
 		// should never exist by time the depositor withdraws so we test that it gets cleaned
 		// up when unbonding.
 		let reward_account = Pools::<T>::generate_reward_account(1);
-		assert!(topsoil_system::Account::<T>::contains_key(&reward_account));
+		assert!(topsoil_core::system::Account::<T>::contains_key(&reward_account));
 		Pools::<T>::fully_unbond(
 			RuntimeOrigin::Signed(depositor.clone()).into(),
 			depositor.clone(),
@@ -538,7 +538,7 @@ mod benchmarks {
 		assert!(SubPoolsStorage::<T>::contains_key(&1));
 		assert!(RewardPools::<T>::contains_key(&1));
 		assert!(PoolMembers::<T>::contains_key(&depositor));
-		assert!(topsoil_system::Account::<T>::contains_key(&reward_account));
+		assert!(topsoil_core::system::Account::<T>::contains_key(&reward_account));
 
 		whitelist_account!(depositor);
 
@@ -551,8 +551,8 @@ mod benchmarks {
 		assert!(!SubPoolsStorage::<T>::contains_key(&1));
 		assert!(!RewardPools::<T>::contains_key(&1));
 		assert!(!PoolMembers::<T>::contains_key(&depositor));
-		assert!(!topsoil_system::Account::<T>::contains_key(&pool_account));
-		assert!(!topsoil_system::Account::<T>::contains_key(&reward_account));
+		assert!(!topsoil_core::system::Account::<T>::contains_key(&pool_account));
+		assert!(!topsoil_core::system::Account::<T>::contains_key(&reward_account));
 
 		// Funds where transferred back correctly
 		assert_eq!(

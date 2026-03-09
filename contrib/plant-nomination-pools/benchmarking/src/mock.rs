@@ -10,7 +10,7 @@ use subsoil::runtime::{
 	BuildStorage, FixedU128, Perbill,
 };
 use plant_election_provider::VoteWeight;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl,
 	pallet_prelude::*,
 	parameter_types,
@@ -22,8 +22,8 @@ type AccountId = u128;
 type BlockNumber = u64;
 type Balance = u128;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type AccountId = AccountId;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -71,7 +71,7 @@ impl plant_staking::Config for Runtime {
 	type Currency = Balances;
 	type CurrencyBalance = Balance;
 	type UnixTime = plant_timestamp::Pallet<Self>;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider =
 		plant_election_provider::NoElection<(AccountId, BlockNumber, Staking, (), ())>;
@@ -129,7 +129,7 @@ impl plant_nomination_pools::Config for Runtime {
 	type MaxUnbonding = ConstU32<8>;
 	type PalletId = PoolsPalletId;
 	type MaxPointsToBalance = MaxPointsToBalance;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type BlockNumberProvider = System;
 	type Filter = Nothing;
 }
@@ -150,11 +150,11 @@ impl plant_delegated_staking::Config for Runtime {
 
 impl crate::Config for Runtime {}
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
 		Staking: plant_staking,
@@ -165,7 +165,7 @@ topsoil_support::construct_runtime!(
 );
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let mut storage = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let mut storage = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let _ = plant_nomination_pools::GenesisConfig::<Runtime> {
 		min_join_bond: 2,
 		min_create_bond: 2,

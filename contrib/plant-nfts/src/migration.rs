@@ -6,13 +6,13 @@
 
 use super::*;
 use log;
-use topsoil_support::traits::OnRuntimeUpgrade;
+use topsoil_core::traits::OnRuntimeUpgrade;
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
 
 pub mod v1 {
-	use topsoil_support::{pallet_prelude::*, weights::Weight};
+	use topsoil_core::{pallet_prelude::*, weights::Weight};
 
 	use super::*;
 

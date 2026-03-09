@@ -11,14 +11,14 @@ use crate::Pallet as AssetRewards;
 use subsoil::runtime::{traits::One, Saturating};
 use subsoil::std::prelude::*;
 use topsoil_benchmarking::{v2::*, whitelisted_caller, BenchmarkError};
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::{
 		fungibles::{Create, Inspect, Mutate},
 		Consideration, EnsureOrigin, Footprint,
 	},
 };
-use topsoil_system::{Pallet as System, RawOrigin};
+use topsoil_core::system::{Pallet as System, RawOrigin};
 
 /// Benchmark Helper
 pub trait BenchmarkHelper<AssetId> {

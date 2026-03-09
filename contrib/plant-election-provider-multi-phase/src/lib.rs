@@ -252,14 +252,14 @@ use plant_election_provider::{
 	BoundedSupports, BoundedSupportsOf, ElectionDataProvider, ElectionProvider,
 	InstantElectionProvider, NposSolution, PageIndex,
 };
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchClass,
 	ensure,
 	traits::{Currency, Get, OnUnbalanced, ReservableCurrency},
 	weights::Weight,
 	DefaultNoBound, EqNoBound, PartialEqNoBound,
 };
-use topsoil_system::{ensure_none, offchain::CreateBare, pallet_prelude::BlockNumberFor};
+use topsoil_core::system::{ensure_none, offchain::CreateBare, pallet_prelude::BlockNumberFor};
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
@@ -491,7 +491,7 @@ pub struct SolutionOrSnapshotSize {
 /// Internal errors of the pallet.
 ///
 /// Note that this is different from [`pallet::Error`].
-#[derive(topsoil_support::DebugNoBound)]
+#[derive(topsoil_core::DebugNoBound)]
 #[cfg_attr(feature = "runtime-benchmarks", derive(strum::IntoStaticStr))]
 pub enum ElectionError<T: Config> {
 	/// An error happened in the feasibility check sub-system.
@@ -579,19 +579,19 @@ impl From<subsoil::npos_elections::Error> for FeasibilityError {
 }
 
 pub use pallet::*;
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use subsoil::runtime::traits::Convert;
 	use plant_election_provider::{InstantElectionProvider, NposSolver};
-	use topsoil_support::{pallet_prelude::*, traits::EstimateCallFee};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::{pallet_prelude::*, traits::EstimateCallFee};
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config + CreateBare<Call<Self>> {
+	pub trait Config: topsoil_core::system::Config + CreateBare<Call<Self>> {
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>
 			+ TryInto<Event<Self>>;
 
 		/// Currency type.
@@ -843,7 +843,7 @@ pub mod pallet {
 			// This should only come useful in an **abrupt** termination of execution, otherwise the
 			// guard will be dropped upon successful execution.
 			let mut lock =
-				StorageLock::<BlockAndTime<topsoil_system::Pallet<T>>>::with_block_deadline(
+				StorageLock::<BlockAndTime<topsoil_core::system::Pallet<T>>>::with_block_deadline(
 					unsigned::OFFCHAIN_LOCK,
 					T::UnsignedPhase::get().saturated_into(),
 				);
@@ -1157,9 +1157,9 @@ pub mod pallet {
 		/// Not much can be said about which computes failed in the process.
 		ElectionFailed,
 		/// An account has been rewarded for their signed submission being finalized.
-		Rewarded { account: <T as topsoil_system::Config>::AccountId, value: BalanceOf<T> },
+		Rewarded { account: <T as topsoil_core::system::Config>::AccountId, value: BalanceOf<T> },
 		/// An account has been slashed for submitting an invalid signed submission.
-		Slashed { account: <T as topsoil_system::Config>::AccountId, value: BalanceOf<T> },
+		Slashed { account: <T as topsoil_core::system::Config>::AccountId, value: BalanceOf<T> },
 		/// There was a phase transition in a given round.
 		PhaseTransitioned {
 			from: Phase<BlockNumberFor<T>>,
@@ -1580,7 +1580,7 @@ impl<T: Config> Pallet<T> {
 	///
 	/// This is always mandatory weight.
 	fn register_weight(weight: Weight) {
-		topsoil_system::Pallet::<T>::register_extra_weight_unchecked(
+		topsoil_core::system::Pallet::<T>::register_extra_weight_unchecked(
 			weight,
 			DispatchClass::Mandatory,
 		);
@@ -1861,7 +1861,7 @@ mod feasibility_check {
 		raw_solution, roll_to, EpochLength, ExtBuilder, MultiPhase, Runtime, SignedPhase,
 		TargetIndex, UnsignedPhase, VoterIndex,
 	};
-	use topsoil_support::{assert_noop, assert_ok};
+	use topsoil_core::{assert_noop, assert_ok};
 
 	const COMPUTE: ElectionCompute = ElectionCompute::OnChain;
 
@@ -2065,7 +2065,7 @@ mod tests {
 	};
 	use subsoil::npos_elections::{BalancingConfig, Support};
 	use plant_election_provider::bounds::ElectionBoundsBuilder;
-	use topsoil_support::{assert_noop, assert_ok};
+	use topsoil_core::{assert_noop, assert_ok};
 
 	#[test]
 	fn phase_rotation_works() {
@@ -2728,7 +2728,7 @@ mod tests {
 
 		let mut active = 1;
 		while weight_with(active)
-			.all_lte(<Runtime as topsoil_system::Config>::BlockWeights::get().max_block)
+			.all_lte(<Runtime as topsoil_core::system::Config>::BlockWeights::get().max_block)
 			|| active == all_voters
 		{
 			active += 1;

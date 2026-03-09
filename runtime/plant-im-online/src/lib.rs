@@ -33,17 +33,17 @@
 //! ```
 //! use plant_im_online::{self as im_online};
 //!
-//! #[topsoil_support::pallet]
+//! #[topsoil_core::pallet]
 //! pub mod pallet {
 //! 	use super::*;
-//! 	use topsoil_support::pallet_prelude::*;
-//! 	use topsoil_system::pallet_prelude::*;
+//! 	use topsoil_core::pallet_prelude::*;
+//! 	use topsoil_core::system::pallet_prelude::*;
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: topsoil_system::Config + im_online::Config {}
+//! 	pub trait Config: topsoil_core::system::Config + im_online::Config {}
 //!
 //! 	#[pallet::call]
 //! 	impl<T: Config> Pallet<T> {
@@ -87,7 +87,7 @@ use subsoil::runtime::{
 	traits::{AtLeast32BitUnsigned, Convert, Saturating, TrailingZeroInput},
 	Debug, PerThing, Perbill, Permill, SaturatedConversion,
 };
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{
 		EstimateNextSessionRotation, Get, OneSessionHandler, ValidatorSet,
@@ -95,7 +95,7 @@ use topsoil_support::{
 	},
 	BoundedSlice, WeakBoundedVec,
 };
-use topsoil_system::{
+use topsoil_core::system::{
 	offchain::{CreateBare, SubmitTransaction},
 	pallet_prelude::*,
 };
@@ -224,7 +224,7 @@ where
 
 /// A type for representing the validator id in a session.
 pub type ValidatorId<T> = <<T as Config>::ValidatorSet as ValidatorSet<
-	<T as topsoil_system::Config>::AccountId,
+	<T as topsoil_core::system::Config>::AccountId,
 >>::ValidatorId;
 
 /// A tuple of (ValidatorId, Identification) where `Identification` is the full identification of
@@ -232,13 +232,13 @@ pub type ValidatorId<T> = <<T as Config>::ValidatorSet as ValidatorSet<
 pub type IdentificationTuple<T> = (
 	ValidatorId<T>,
 	<<T as Config>::ValidatorSet as ValidatorSetWithIdentification<
-		<T as topsoil_system::Config>::AccountId,
+		<T as topsoil_core::system::Config>::AccountId,
 	>>::Identification,
 );
 
 type OffchainResult<T, A> = Result<A, OffchainErr<BlockNumberFor<T>>>;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -250,7 +250,7 @@ pub mod pallet {
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: CreateBare<Call<Self>> + topsoil_system::Config {
+	pub trait Config: CreateBare<Call<Self>> + topsoil_core::system::Config {
 		/// The identifier type for an authority.
 		type AuthorityId: Member
 			+ Parameter
@@ -268,7 +268,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// A type for retrieving the validators supposed to be online in a session.
 		type ValidatorSet: ValidatorSetWithIdentification<Self::AccountId>;
@@ -357,7 +357,7 @@ pub mod pallet {
 	>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub keys: Vec<T::AuthorityId>,
 	}
@@ -749,7 +749,7 @@ impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T> {
 		// Tell the offchain worker to start making the next session's heartbeats.
 		// Since we consider producing blocks as being online,
 		// the heartbeat is deferred a bit to prevent spamming.
-		let block_number = <topsoil_system::Pallet<T>>::block_number();
+		let block_number = <topsoil_core::system::Pallet<T>>::block_number();
 		let half_session = T::NextSessionRotation::average_session_length() / 2u32.into();
 		<HeartbeatAfter<T>>::put(block_number + half_session);
 

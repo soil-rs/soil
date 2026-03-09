@@ -14,7 +14,7 @@ use crate::{
 	AccountData, ExtraFlags, TotalIssuance,
 };
 use subsoil::runtime::DispatchError;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, hypothetically,
 	traits::{
 		fungible::{Mutate, MutateHold},
@@ -105,7 +105,7 @@ fn regression_historic_acc_does_not_evaporate_reserve() {
 #[test]
 fn try_state_works() {
 	use crate::{Config, Freezes, Holds};
-	use topsoil_support::{
+	use topsoil_core::{
 		storage,
 		traits::{Get, Hooks, VariantCount},
 	};

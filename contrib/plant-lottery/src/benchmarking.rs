@@ -17,11 +17,11 @@ use topsoil_benchmarking::{
 	v1::{account, whitelisted_caller, BenchmarkError},
 	v2::*,
 };
-use topsoil_support::{
+use topsoil_core::{
 	storage::bounded_vec::BoundedVec,
 	traits::{EnsureOrigin, OnInitialize},
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 // Set up and start a lottery
 fn setup_lottery<T: Config>(repeat: bool) -> Result<(), &'static str> {
@@ -30,11 +30,11 @@ fn setup_lottery<T: Config>(repeat: bool) -> Result<(), &'static str> {
 	let delay = 5u32.into();
 	// Calls will be maximum length...
 	let mut calls = vec![
-		topsoil_system::Call::<T>::set_code { code: vec![] }.into();
+		topsoil_core::system::Call::<T>::set_code { code: vec![] }.into();
 		T::MaxCalls::get().saturating_sub(1) as usize
 	];
 	// Last call will be the match for worst case scenario.
-	calls.push(topsoil_system::Call::<T>::remark { remark: vec![] }.into());
+	calls.push(topsoil_core::system::Call::<T>::remark { remark: vec![] }.into());
 	let origin = T::ManagerOrigin::try_successful_origin()
 		.expect("ManagerOrigin has no successful origin required for the benchmark");
 	Lottery::<T>::set_calls(origin.clone(), calls)?;
@@ -53,7 +53,7 @@ mod benchmarks {
 		setup_lottery::<T>(false)?;
 		// force user to have a long vec of calls participating
 		let set_code_index: CallIndex = Lottery::<T>::call_to_index(
-			&topsoil_system::Call::<T>::set_code { code: vec![] }.into(),
+			&topsoil_core::system::Call::<T>::set_code { code: vec![] }.into(),
 		)?;
 		let already_called: (u32, BoundedVec<CallIndex, T::MaxCalls>) = (
 			LotteryIndex::<T>::get(),
@@ -66,7 +66,7 @@ mod benchmarks {
 		);
 		Participants::<T>::insert(&caller, already_called);
 
-		let call = topsoil_system::Call::<T>::remark { remark: vec![] };
+		let call = topsoil_core::system::Call::<T>::remark { remark: vec![] };
 
 		#[extrinsic_call]
 		_(RawOrigin::Signed(caller), Box::new(call.into()));
@@ -78,7 +78,7 @@ mod benchmarks {
 
 	#[benchmark]
 	fn set_calls(n: Linear<0, { T::MaxCalls::get() }>) -> Result<(), BenchmarkError> {
-		let calls = vec![topsoil_system::Call::<T>::remark { remark: vec![] }.into(); n as usize];
+		let calls = vec![topsoil_core::system::Call::<T>::remark { remark: vec![] }.into(); n as usize];
 		let origin =
 			T::ManagerOrigin::try_successful_origin().map_err(|_| BenchmarkError::Weightless)?;
 		assert!(CallIndices::<T>::get().is_empty());
@@ -137,7 +137,7 @@ mod benchmarks {
 			T::Currency::minimum_balance() * 10u32.into(),
 		);
 		// Buy a ticket
-		let call = topsoil_system::Call::<T>::remark { remark: vec![] };
+		let call = topsoil_core::system::Call::<T>::remark { remark: vec![] };
 		Lottery::<T>::buy_ticket(RawOrigin::Signed(winner.clone()).into(), Box::new(call.into()))?;
 		// Kill user account for worst case
 		T::Currency::make_free_balance_be(&winner, 0u32.into());
@@ -176,7 +176,7 @@ mod benchmarks {
 			T::Currency::minimum_balance() * 10u32.into(),
 		);
 		// Buy a ticket
-		let call = topsoil_system::Call::<T>::remark { remark: vec![] };
+		let call = topsoil_core::system::Call::<T>::remark { remark: vec![] };
 		Lottery::<T>::buy_ticket(RawOrigin::Signed(winner.clone()).into(), Box::new(call.into()))?;
 		// Kill user account for worst case
 		T::Currency::make_free_balance_be(&winner, 0u32.into());

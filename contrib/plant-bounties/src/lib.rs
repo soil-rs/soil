@@ -84,7 +84,7 @@ extern crate alloc;
 
 use alloc::vec::Vec;
 
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	fungibles::{Inspect as FungiblesInspect, Mutate as FungiblesMutate},
 	tokens::{Fortitude, Preservation},
 	Currency,
@@ -98,10 +98,10 @@ use subsoil::runtime::{
 };
 
 use scale_info::TypeInfo;
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResultWithPostInfo, pallet_prelude::*, traits::EnsureOrigin,
 };
-use topsoil_system::pallet_prelude::{
+use topsoil_core::system::pallet_prelude::{
 	ensure_signed, BlockNumberFor as SystemBlockNumberFor, OriginFor,
 };
 pub use weights::WeightInfo;
@@ -115,7 +115,7 @@ type PositiveImbalanceOf<T, I = ()> = plant_treasury::PositiveImbalanceOf<T, I>;
 /// An index of a bounty. Just a `u32`.
 pub type BountyIndex = u32;
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
 type BlockNumberFor<T, I = ()> =
 	<<T as plant_treasury::Config<I>>::BlockNumberProvider as BlockNumberProvider>::BlockNumber;
@@ -251,7 +251,7 @@ where
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
@@ -263,7 +263,7 @@ pub mod pallet {
 
 	#[pallet::config]
 	pub trait Config<I: 'static = ()>:
-		topsoil_system::Config + plant_treasury::Config<I>
+		topsoil_core::system::Config + plant_treasury::Config<I>
 	{
 		/// The amount held on deposit for placing a bounty proposal.
 		#[pallet::constant]
@@ -308,7 +308,7 @@ pub mod pallet {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Maximum acceptable reason length.
 		///

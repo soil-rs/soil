@@ -42,8 +42,8 @@ use subsoil::runtime::{
 	},
 	DispatchError, KeyTypeId, Perbill, RuntimeAppPublic,
 };
-use topsoil_support::traits::{Get, KeyOwnerProofSystem};
-use topsoil_system::pallet_prelude::{BlockNumberFor, HeaderFor};
+use topsoil_core::traits::{Get, KeyOwnerProofSystem};
+use topsoil_core::system::pallet_prelude::{BlockNumberFor, HeaderFor};
 
 use super::{Call, Config, Error, Pallet, LOG_TARGET};
 
@@ -253,7 +253,7 @@ impl<T: Config> EquivocationEvidenceFor<T> {
 			EquivocationEvidenceFor::FutureBlockVotingProof(equivocation_proof, _) => {
 				let FutureBlockVotingProof { vote } = equivocation_proof;
 				// Check if the commitment actually targets a future block
-				if vote.commitment.block_number < topsoil_system::Pallet::<T>::block_number() {
+				if vote.commitment.block_number < topsoil_core::system::Pallet::<T>::block_number() {
 					return Err(Error::<T>::InvalidFutureBlockVotingProof);
 				}
 
@@ -280,7 +280,7 @@ impl<T: Config> EquivocationEvidenceFor<T> {
 impl<T, R, P, L> OffenceReportSystem<Option<T::AccountId>, EquivocationEvidenceFor<T>>
 	for EquivocationReportSystem<T, R, P, L>
 where
-	T: Config + plant_authorship::Config + topsoil_system::offchain::CreateBare<Call<T>>,
+	T: Config + plant_authorship::Config + topsoil_core::system::offchain::CreateBare<Call<T>>,
 	R: ReportOffence<
 		T::AccountId,
 		P::IdentificationTuple,
@@ -293,7 +293,7 @@ where
 	type Longevity = L;
 
 	fn publish_evidence(evidence: EquivocationEvidenceFor<T>) -> Result<(), ()> {
-		use topsoil_system::offchain::SubmitTransaction;
+		use topsoil_core::system::offchain::SubmitTransaction;
 
 		let call: Call<T> = evidence.into();
 		let xt = T::create_bare(call.into());

@@ -15,7 +15,7 @@ use subsoil::core::offchain::{
 	OffchainDbExt, OffchainWorkerExt, TransactionPoolExt,
 };
 use subsoil::runtime::testing::UintAuthorityId;
-use topsoil_support::{assert_noop, dispatch};
+use topsoil_core::{assert_noop, dispatch};
 
 #[test]
 fn test_unresponsiveness_slash_fraction() {

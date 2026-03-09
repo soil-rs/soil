@@ -12,14 +12,14 @@ use alloc::vec;
 use core::marker::PhantomData;
 use subsoil::core::Get;
 use topsoil_benchmarking::{v2::*, whitelisted_caller};
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::{
 		fungible::NativeOrWithId,
 		fungibles::{Create, Inspect, Mutate, Refund},
 	},
 };
-use topsoil_system::RawOrigin as SystemOrigin;
+use topsoil_core::system::RawOrigin as SystemOrigin;
 
 /// Benchmark Helper
 pub trait BenchmarkHelper<AssetKind> {
@@ -156,10 +156,10 @@ where
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	let events = topsoil_system::Pallet::<T>::events();
-	let system_event: <T as topsoil_system::Config>::RuntimeEvent = generic_event.into();
+	let events = topsoil_core::system::Pallet::<T>::events();
+	let system_event: <T as topsoil_core::system::Config>::RuntimeEvent = generic_event.into();
 	// compare to the last event record
-	let topsoil_system::EventRecord { event, .. } = &events[events.len() - 1];
+	let topsoil_core::system::EventRecord { event, .. } = &events[events.len() - 1];
 	assert_eq!(event, &system_event);
 }
 

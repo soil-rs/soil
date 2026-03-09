@@ -68,7 +68,7 @@ mod benchmarking;
 /// The miner.
 pub mod miner;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 mod pallet {
 	use super::WeightInfo;
 	use crate::{
@@ -79,8 +79,8 @@ mod pallet {
 	};
 	use subsoil::runtime::traits::SaturatedConversion;
 	use subsoil::std::prelude::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::{offchain::CreateBare, pallet_prelude::*};
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::{offchain::CreateBare, pallet_prelude::*};
 
 	/// convert a [`crate::CommonError`] to a custom InvalidTransaction with the inner code being
 	/// the index of the variant.
@@ -247,7 +247,7 @@ mod pallet {
 			// This should only come useful in an **abrupt** termination of execution, otherwise the
 			// guard will be dropped upon successful execution.
 			let mut lock =
-				StorageLock::<BlockAndTime<topsoil_system::Pallet<T>>>::with_block_deadline(
+				StorageLock::<BlockAndTime<topsoil_core::system::Pallet<T>>>::with_block_deadline(
 					miner::OffchainWorkerMiner::<T>::OFFCHAIN_LOCK,
 					T::UnsignedPhase::get().saturated_into(),
 				);
@@ -361,7 +361,7 @@ mod pallet {
 #[cfg(test)]
 mod validate_unsigned {
 	use plant_election_provider::Support;
-	use topsoil_support::{
+	use topsoil_core::{
 		pallet_prelude::InvalidTransaction,
 		unsigned::{TransactionSource, TransactionValidityError, ValidateUnsigned},
 	};

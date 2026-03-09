@@ -4,22 +4,22 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-//! Minimal pallet without `topsoil_system::Config`-super trait.
+//! Minimal pallet without `topsoil_core::system::Config`-super trait.
 
 // Make sure we fail compilation on warnings
 #![warn(missing_docs)]
 #![deny(warnings)]
 
-pub use topsoil_support::dispatch::RawOrigin;
-use topsoil_system::pallet_prelude::BlockNumberFor;
+pub use topsoil_core::dispatch::RawOrigin;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 pub use self::pallet::*;
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use crate::{self as topsoil_system, pallet_prelude::*};
-	use topsoil_support::pallet_prelude::*;
+	use crate::{self as topsoil_core::system, pallet_prelude::*};
+	use topsoil_core::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
@@ -33,7 +33,7 @@ pub mod pallet {
 		/// The account type.
 		type AccountId: Parameter + Member + MaxEncodedLen;
 		/// The basic call filter to use in Origin.
-		type BaseCallFilter: topsoil_support::traits::Contains<Self::RuntimeCall>;
+		type BaseCallFilter: topsoil_core::traits::Contains<Self::RuntimeCall>;
 		/// The runtime origin type.
 		type RuntimeOrigin: Into<Result<RawOrigin<Self::AccountId>, Self::RuntimeOrigin>>
 			+ From<RawOrigin<Self::AccountId>>;
@@ -44,12 +44,12 @@ pub mod pallet {
 		/// The runtime event type.
 		type RuntimeEvent: Parameter
 			+ Member
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>
 			+ From<Event<Self>>;
 		/// The information about the pallet setup in the runtime.
-		type PalletInfo: topsoil_support::traits::PalletInfo;
+		type PalletInfo: topsoil_core::traits::PalletInfo;
 		/// The db weights.
-		type DbWeight: Get<topsoil_support::weights::RuntimeDbWeight>;
+		type DbWeight: Get<topsoil_core::weights::RuntimeDbWeight>;
 	}
 
 	#[pallet::call]
@@ -103,7 +103,7 @@ where
 
 /// Same semantic as [`topsoil_system`].
 // Note: we cannot use [`topsoil_system`] here since the pallet does not depend on
-// [`topsoil_system::Config`].
+// [`topsoil_core::system::Config`].
 pub mod pallet_prelude {
 	pub use crate::ensure_root;
 
@@ -114,21 +114,21 @@ pub mod pallet_prelude {
 	pub type BlockNumberFor<T> = <T as super::Config>::BlockNumber;
 }
 
-/// Provides an implementation of [`topsoil_support::traits::Randomness`] that should only be used in
+/// Provides an implementation of [`topsoil_core::traits::Randomness`] that should only be used in
 /// tests!
 pub struct TestRandomness<T>(core::marker::PhantomData<T>);
 
 impl<Output: codec::Decode + Default, T>
-	topsoil_support::traits::Randomness<Output, BlockNumberFor<T>> for TestRandomness<T>
+	topsoil_core::traits::Randomness<Output, BlockNumberFor<T>> for TestRandomness<T>
 where
-	T: topsoil_system::Config,
+	T: topsoil_core::system::Config,
 {
 	fn random(subject: &[u8]) -> (Output, BlockNumberFor<T>) {
 		use subsoil::runtime::traits::TrailingZeroInput;
 
 		(
 			Output::decode(&mut TrailingZeroInput::new(subject)).unwrap_or_default(),
-			topsoil_system::Pallet::<T>::block_number(),
+			topsoil_core::system::Pallet::<T>::block_number(),
 		)
 	}
 }

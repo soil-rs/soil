@@ -22,7 +22,7 @@
 
 use subsoil::staking::{StakingAccount, StakingInterface};
 use subsoil::runtime::DispatchResult;
-use topsoil_support::{defensive, ensure, traits::Defensive};
+use topsoil_core::{defensive, ensure, traits::Defensive};
 
 use crate::{
 	asset, BalanceOf, Bonded, Config, Error, Ledger, Pallet, Payee, RewardDestination,
@@ -273,16 +273,16 @@ use {
 // This structs makes it easy to write tests to compare staking ledgers fetched from storage. This
 // is required because the controller field is not stored in storage and it is private.
 #[cfg(test)]
-#[derive(topsoil_support::DebugNoBound, Clone, Encode, Decode, TypeInfo, MaxEncodedLen)]
+#[derive(topsoil_core::DebugNoBound, Clone, Encode, Decode, TypeInfo, MaxEncodedLen)]
 pub struct StakingLedgerInspect<T: Config> {
 	pub stash: T::AccountId,
 	#[codec(compact)]
 	pub total: BalanceOf<T>,
 	#[codec(compact)]
 	pub active: BalanceOf<T>,
-	pub unlocking: topsoil_support::BoundedVec<UnlockChunk<BalanceOf<T>>, T::MaxUnlockingChunks>,
+	pub unlocking: topsoil_core::BoundedVec<UnlockChunk<BalanceOf<T>>, T::MaxUnlockingChunks>,
 	pub legacy_claimed_rewards:
-		topsoil_support::BoundedVec<subsoil::staking::EraIndex, T::HistoryDepth>,
+		topsoil_core::BoundedVec<subsoil::staking::EraIndex, T::HistoryDepth>,
 }
 
 #[cfg(test)]

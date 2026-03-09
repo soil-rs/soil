@@ -6,22 +6,22 @@
 
 use pallet::*;
 use subsoil::io::TestExternalities;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok, derive_impl, dispatch::DispatchResult, ensure,
 	pallet_prelude::ConstU32, storage::with_storage_layer,
 };
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::pallet]
 	pub struct Pallet<T>(_);
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {}
+	pub trait Config: topsoil_core::system::Config {}
 
 	#[pallet::storage]
 	pub type Value<T> = StorageValue<_, u32, ValueQuery>;
@@ -55,9 +55,9 @@ pub type UncheckedExtrinsic =
 	subsoil::runtime::generic::UncheckedExtrinsic<u32, RuntimeCall, (), ()>;
 pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
-	type BaseCallFilter = topsoil_support::traits::Everything;
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type BlockWeights = ();
 	type BlockLength = ();
 	type RuntimeOrigin = RuntimeOrigin;
@@ -83,9 +83,9 @@ impl topsoil_system::Config for Runtime {
 
 impl Config for Runtime {}
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		MyPallet: pallet,
 	}
 );

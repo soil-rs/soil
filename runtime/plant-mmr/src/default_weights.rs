@@ -7,7 +7,7 @@
 //! Default weights for the MMR Pallet
 //! This file was not auto-generated.
 
-use topsoil::{deps::topsoil_support::weights::constants::*, weights_prelude::*};
+use topsoil::{deps::topsoil_core::weights::constants::*, weights_prelude::*};
 
 impl crate::WeightInfo for () {
 	fn on_initialize(peaks: u32) -> Weight {

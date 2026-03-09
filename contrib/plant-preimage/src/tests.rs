@@ -12,7 +12,7 @@ use super::*;
 use crate::mock::*;
 
 use subsoil::runtime::{bounded_vec, TokenError};
-use topsoil_support::{
+use topsoil_core::{
 	assert_err, assert_noop, assert_ok, assert_storage_noop,
 	traits::{fungible::InspectHold, Bounded, BoundedInline},
 	StorageNoopGuard,
@@ -20,22 +20,22 @@ use topsoil_support::{
 
 /// Returns one `Inline`, `Lookup` and `Legacy` item each with different data and hash.
 pub fn make_bounded_values() -> (
-	Bounded<Vec<u8>, <Test as topsoil_system::Config>::Hashing>,
-	Bounded<Vec<u8>, <Test as topsoil_system::Config>::Hashing>,
-	Bounded<Vec<u8>, <Test as topsoil_system::Config>::Hashing>,
+	Bounded<Vec<u8>, <Test as topsoil_core::system::Config>::Hashing>,
+	Bounded<Vec<u8>, <Test as topsoil_core::system::Config>::Hashing>,
+	Bounded<Vec<u8>, <Test as topsoil_core::system::Config>::Hashing>,
 ) {
 	let data: BoundedInline = bounded_vec![1];
-	let inline = Bounded::<Vec<u8>, <Test as topsoil_system::Config>::Hashing>::Inline(data);
+	let inline = Bounded::<Vec<u8>, <Test as topsoil_core::system::Config>::Hashing>::Inline(data);
 
 	let data = vec![1, 2];
-	let hash = <Test as topsoil_system::Config>::Hashing::hash(&data[..]).into();
+	let hash = <Test as topsoil_core::system::Config>::Hashing::hash(&data[..]).into();
 	let len = data.len() as u32;
 	let lookup =
-		Bounded::<Vec<u8>, <Test as topsoil_system::Config>::Hashing>::unrequested(hash, len);
+		Bounded::<Vec<u8>, <Test as topsoil_core::system::Config>::Hashing>::unrequested(hash, len);
 
 	let data = vec![1, 2, 3];
-	let hash = <Test as topsoil_system::Config>::Hashing::hash(&data[..]).into();
-	let legacy = Bounded::<Vec<u8>, <Test as topsoil_system::Config>::Hashing>::Legacy {
+	let hash = <Test as topsoil_core::system::Config>::Hashing::hash(&data[..]).into();
+	let legacy = Bounded::<Vec<u8>, <Test as topsoil_core::system::Config>::Hashing>::Legacy {
 		hash,
 		dummy: Default::default(),
 	};
@@ -299,7 +299,7 @@ fn query_and_store_preimage_workflow() {
 		let bound = Preimage::bound(data.clone()).unwrap();
 		let (len, hash) = (bound.len().unwrap(), bound.hash());
 
-		assert_eq!(hash, <Test as topsoil_system::Config>::Hashing::hash(&encoded).into());
+		assert_eq!(hash, <Test as topsoil_core::system::Config>::Hashing::hash(&encoded).into());
 		assert_eq!(bound.len(), Some(len));
 		assert!(bound.lookup_needed(), "Should not be Inlined");
 		assert_eq!(bound.lookup_len(), Some(len));
@@ -360,7 +360,7 @@ fn query_preimage_request_works() {
 	new_test_ext().execute_with(|| {
 		let _guard = StorageNoopGuard::default();
 		let data: Vec<u8> = vec![1; 10];
-		let hash = <Test as topsoil_system::Config>::Hashing::hash(&data[..]).into();
+		let hash = <Test as topsoil_core::system::Config>::Hashing::hash(&data[..]).into();
 
 		// Request the preimage.
 		<Preimage as QueryPreimage>::request(&hash);
@@ -450,7 +450,7 @@ fn store_preimage_basic_works() {
 
 		// Cleanup.
 		<Preimage as StorePreimage>::unnote(&bound.hash());
-		let data_hash = <Test as topsoil_system::Config>::Hashing::hash(&data);
+		let data_hash = <Test as topsoil_core::system::Config>::Hashing::hash(&data);
 		<Preimage as StorePreimage>::unnote(&data_hash.into());
 
 		// No storage changes remain. Checked by `StorageNoopGuard`.

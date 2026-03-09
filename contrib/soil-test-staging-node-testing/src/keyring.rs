@@ -63,17 +63,17 @@ pub fn session_keys_from_seed(seed: &str) -> SessionKeys {
 /// Returns transaction extra.
 pub fn tx_ext(nonce: Nonce, extra_fee: Balance) -> TxExtension {
 	(
-		topsoil_system::AuthorizeCall::new(),
-		topsoil_system::CheckNonZeroSender::new(),
-		topsoil_system::CheckSpecVersion::new(),
-		topsoil_system::CheckTxVersion::new(),
-		topsoil_system::CheckGenesis::new(),
-		topsoil_system::CheckEra::from(Era::mortal(256, 0)),
-		topsoil_system::CheckNonce::from(nonce),
-		topsoil_system::CheckWeight::new(),
+		topsoil_core::system::AuthorizeCall::new(),
+		topsoil_core::system::CheckNonZeroSender::new(),
+		topsoil_core::system::CheckSpecVersion::new(),
+		topsoil_core::system::CheckTxVersion::new(),
+		topsoil_core::system::CheckGenesis::new(),
+		topsoil_core::system::CheckEra::from(Era::mortal(256, 0)),
+		topsoil_core::system::CheckNonce::from(nonce),
+		topsoil_core::system::CheckWeight::new(),
 		plant_asset_conversion_tx_payment::ChargeAssetTxPayment::from(extra_fee, None),
 		plant_metadata_hash_extension::CheckMetadataHash::new(false),
-		topsoil_system::WeightReclaim::new(),
+		topsoil_core::system::WeightReclaim::new(),
 	)
 }
 

@@ -20,12 +20,12 @@ pub mod try_state;
 ///
 /// For example, this can be the `Runtime` type of the Polkadot runtime.
 pub trait RuntimeT<I: 'static>:
-	plant_staking::Config + plant_bags_list::Config<I> + topsoil_system::Config
+	plant_staking::Config + plant_bags_list::Config<I> + topsoil_core::system::Config
 {
 }
 impl<
 		I: 'static,
-		T: plant_staking::Config + plant_bags_list::Config<I> + topsoil_system::Config,
+		T: plant_staking::Config + plant_bags_list::Config<I> + topsoil_core::system::Config,
 	> RuntimeT<I> for T
 {
 }
@@ -40,7 +40,7 @@ pub fn display_and_check_bags<Runtime: RuntimeT<Instance1>>(
 	currency_name: &'static str,
 ) {
 	use plant_election_provider::SortedListProvider;
-	use topsoil_support::traits::Get;
+	use topsoil_core::traits::Get;
 
 	let min_nominator_bond = <plant_staking::MinNominatorBond<Runtime>>::get();
 	log::info!(target: LOG_TARGET, "min nominator bond is {:?}", min_nominator_bond);

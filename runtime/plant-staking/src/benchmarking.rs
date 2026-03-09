@@ -17,7 +17,7 @@ use subsoil::runtime::{
 	Perbill, Percent, Saturating,
 };
 use plant_election_provider::{bounds::DataProviderBounds, SortedListProvider};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	storage::bounded_vec::BoundedVec,
 	traits::{Get, Imbalance, UnfilteredDispatchable},
@@ -26,7 +26,7 @@ use topsoil_support::{
 pub use topsoil_benchmarking::{
 	impl_benchmark_test_suite, v2::*, whitelist_account, whitelisted_caller, BenchmarkError,
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 const SEED: u32 = 0;
 const MAX_SPANS: u32 = 100;
@@ -1179,7 +1179,7 @@ mod benchmarks {
 mod tests {
 	use super::*;
 	use crate::mock::{ExtBuilder, RuntimeOrigin, Staking, Test};
-	use topsoil_support::assert_ok;
+	use topsoil_core::assert_ok;
 
 	#[test]
 	fn create_validators_with_nominators_for_era_works() {

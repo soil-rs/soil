@@ -10,12 +10,12 @@ use subsoil::staking::{
 	Agent, DelegationInterface, DelegationMigrator, Delegator, OnStakingUpdate, Stake,
 };
 use subsoil::runtime::{BuildStorage, DispatchResult, FixedU128};
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl, ord_parameter_types, parameter_types,
 	traits::{fungible::Mutate, VariantCountOf},
 	PalletId,
 };
-use topsoil_system::{EnsureSignedBy, RawOrigin};
+use topsoil_core::system::{EnsureSignedBy, RawOrigin};
 
 pub type BlockNumber = u64;
 pub type AccountId = u128;
@@ -404,8 +404,8 @@ impl DelegationMigrator for DelegateMock {
 	}
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Nonce = u64;
 	type AccountId = AccountId;
 	type Lookup = subsoil::runtime::traits::IdentityLookup<Self::AccountId>;
@@ -472,16 +472,16 @@ impl pools::Config for Runtime {
 	type PalletId = PoolsPalletId;
 	type MaxMetadataLen = MaxMetadataLen;
 	type MaxUnbonding = MaxUnbonding;
-	type MaxPointsToBalance = topsoil_support::traits::ConstU8<10>;
+	type MaxPointsToBalance = topsoil_core::traits::ConstU8<10>;
 	type AdminOrigin = EnsureSignedBy<Admin, AccountId>;
 	type BlockNumberProvider = System;
 	type Filter = RestrictMock;
 }
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
-topsoil_support::construct_runtime!(
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		Pools: pools,
 	}
@@ -551,7 +551,7 @@ impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
-			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let _ = crate::GenesisConfig::<Runtime> {
 			min_join_bond: MinJoinBondConfig::get(),
@@ -567,7 +567,7 @@ impl ExtBuilder {
 
 		ext.execute_with(|| {
 			// for events to be deposited.
-			topsoil_system::Pallet::<Runtime>::set_block_number(1);
+			topsoil_core::system::Pallet::<Runtime>::set_block_number(1);
 
 			// make a pool
 			let amount_to_bond = Pools::depositor_min_bond();

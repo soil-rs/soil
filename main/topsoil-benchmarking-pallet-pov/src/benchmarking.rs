@@ -12,8 +12,8 @@ use super::*;
 
 use subsoil::runtime::traits::Hash;
 use topsoil_benchmarking::v2::*;
-use topsoil_support::traits::UnfilteredDispatchable;
-use topsoil_system::{Pallet as System, RawOrigin};
+use topsoil_core::traits::UnfilteredDispatchable;
+use topsoil_core::system::{Pallet as System, RawOrigin};
 
 #[benchmarks]
 mod benchmarks {
@@ -97,7 +97,7 @@ mod benchmarks {
 		// Assume there are 16-256 other storage items.
 		(0..(1u32 << 4)).for_each(|i| {
 			let k = T::Hashing::hash(&i.to_be_bytes());
-			topsoil_support::storage::unhashed::put(k.as_ref(), &i);
+			topsoil_core::storage::unhashed::put(k.as_ref(), &i);
 		});
 
 		#[block]
@@ -112,7 +112,7 @@ mod benchmarks {
 		// Assume there are 256-4096 other storage items.
 		(0..(1u32 << 8)).for_each(|i| {
 			let k = T::Hashing::hash(&i.to_be_bytes());
-			topsoil_support::storage::unhashed::put(k.as_ref(), &i);
+			topsoil_core::storage::unhashed::put(k.as_ref(), &i);
 		});
 
 		#[block]
@@ -127,7 +127,7 @@ mod benchmarks {
 		// Assume there are 4096-65536 other storage items.
 		(0..(1u32 << 12)).for_each(|i| {
 			let k = T::Hashing::hash(&i.to_be_bytes());
-			topsoil_support::storage::unhashed::put(k.as_ref(), &i);
+			topsoil_core::storage::unhashed::put(k.as_ref(), &i);
 		});
 
 		#[block]
@@ -393,24 +393,24 @@ mod benchmarks {
 #[cfg(test)]
 mod mock {
 	use subsoil::runtime::{testing::H256, BuildStorage};
-	use topsoil_support::derive_impl;
+	use topsoil_core::derive_impl;
 
 	type AccountId = u64;
 	type Nonce = u32;
 
-	type Block = topsoil_system::mocking::MockBlock<Test>;
+	type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Test
 		{
-			System: topsoil_system,
+			System: topsoil_core::system,
 			Baseline: crate,
 		}
 	);
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Test {
-		type BaseCallFilter = topsoil_support::traits::Everything;
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Test {
+		type BaseCallFilter = topsoil_core::traits::Everything;
 		type BlockWeights = ();
 		type BlockLength = ();
 		type DbWeight = ();
@@ -432,7 +432,7 @@ mod mock {
 		type SystemWeightInfo = ();
 		type SS58Prefix = ();
 		type OnSetCode = ();
-		type MaxConsumers = topsoil_support::traits::ConstU32<16>;
+		type MaxConsumers = topsoil_core::traits::ConstU32<16>;
 	}
 
 	impl crate::Config for Test {
@@ -440,6 +440,6 @@ mod mock {
 	}
 
 	pub fn new_test_ext() -> subsoil::io::TestExternalities {
-		topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
+		topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap().into()
 	}
 }

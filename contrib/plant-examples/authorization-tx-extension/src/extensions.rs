@@ -15,7 +15,7 @@ use subsoil::runtime::{
 	},
 	transaction_validity::{InvalidTransaction, ValidTransaction},
 };
-use topsoil_support::{pallet_prelude::TransactionSource, traits::OriginTrait, Parameter};
+use topsoil_core::{pallet_prelude::TransactionSource, traits::OriginTrait, Parameter};
 
 use crate::pallet_coownership::{Config, Origin};
 

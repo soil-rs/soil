@@ -22,8 +22,7 @@ log = { workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 
 topsoil-benchmarking = { optional = true, workspace = true }
-topsoil-support = { features = ["experimental"], workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { features = ["experimental"], workspace = true }
 subsoil = { workspace = true }
 
 [dev-dependencies]
@@ -35,8 +34,7 @@ default = ["std"]
 std = [
 	"codec/std",
 	"topsoil-benchmarking?/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"log/std",
 	"plant-verify-signature/std",
 	"scale-info/std",
@@ -44,14 +42,12 @@ std = [
 ]
 runtime-benchmarks = [
 	"topsoil-benchmarking/runtime-benchmarks",
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-verify-signature/runtime-benchmarks",
 	"subsoil/runtime-benchmarks",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-verify-signature/try-runtime",
 	"subsoil/try-runtime",
 ]

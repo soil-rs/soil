@@ -14,7 +14,7 @@ use subsoil::staking::{
 };
 use subsoil::runtime::{testing::UintAuthorityId, traits::ConvertInto, BuildStorage, Permill};
 use plant_session::historical as pallet_session_historical;
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::{ConstU32, ConstU64},
 	weights::Weight,
@@ -23,11 +23,11 @@ use topsoil_support::{
 use crate as imonline;
 use crate::Config;
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Session: plant_session,
 		Balances: plant_balances,
 		ImOnline: imonline,
@@ -85,7 +85,7 @@ impl ReportOffence<u64, IdentificationTuple, Offence> for OffenceHandler {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let mut result: subsoil::io::TestExternalities = t.into();
 	// Set the default keys, otherwise session will discard the validator.
 	result.execute_with(|| {
@@ -97,8 +97,8 @@ pub fn new_test_ext() -> subsoil::io::TestExternalities {
 	result
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type AccountData = plant_balances::AccountData<u64>;
 	type Block = Block;
 }
@@ -150,7 +150,7 @@ parameter_types! {
 
 pub struct TestNextSessionRotation;
 
-impl topsoil_support::traits::EstimateNextSessionRotation<u64> for TestNextSessionRotation {
+impl topsoil_core::traits::EstimateNextSessionRotation<u64> for TestNextSessionRotation {
 	fn average_session_length() -> u64 {
 		// take the mock result if any and return it
 		let mock = MockAverageSessionLength::mutate(|p| p.take());
@@ -187,7 +187,7 @@ impl Config for Runtime {
 	type MaxPeerInHeartbeats = ConstU32<10_000>;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateTransactionBase<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -195,7 +195,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {

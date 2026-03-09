@@ -13,22 +13,22 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use topsoil_support::{dispatch::DispatchResult, subsoil::runtime::Perbill};
+use topsoil_core::{dispatch::DispatchResult, subsoil::runtime::Perbill};
 
 pub use pallet::*;
 
-#[topsoil_support::pallet(dev_mode)]
+#[topsoil_core::pallet(dev_mode)]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::pallet]
@@ -55,7 +55,7 @@ pub mod pallet {
 		#[pallet::weight(0)]
 		pub fn trigger_defensive(origin: OriginFor<T>) -> DispatchResult {
 			ensure_root(origin)?;
-			topsoil_support::defensive!("root_testing::trigger_defensive was called.");
+			topsoil_core::defensive!("root_testing::trigger_defensive was called.");
 			Self::deposit_event(Event::DefensiveTestCall);
 			Ok(())
 		}

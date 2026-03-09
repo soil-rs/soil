@@ -15,7 +15,7 @@ use crate::{
 use subsoil::npos_elections::ElectionScore;
 use subsoil::runtime::{traits::Zero, Perbill};
 use plant_election_provider::PageIndex;
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, dispatch::PostDispatchInfo, parameter_types, traits::EstimateCallFee,
 };
 

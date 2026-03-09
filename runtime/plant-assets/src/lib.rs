@@ -7,10 +7,10 @@
 //! # Assets Pallet
 //!
 //! A simple, secure module for dealing with sets of assets implementing
-//! [`fungible`](topsoil_support::traits::fungible) traits, via [`fungibles`] traits.
+//! [`fungible`](topsoil_core::traits::fungible) traits, via [`fungibles`] traits.
 //!
 //! The pallet makes heavy use of concepts such as Holds and Freezes from the
-//! [`topsoil_support::traits::fungible`] traits, therefore you should read and understand those docs
+//! [`topsoil_core::traits::fungible`] traits, therefore you should read and understand those docs
 //! as a prerequisite to understanding this pallet.
 //!
 //! See the [`frame_tokens`] reference docs for more information about the place of the
@@ -130,7 +130,7 @@
 //! ## Related Modules
 //!
 //! * [`System`](../topsoil_system/index.html)
-//! * [`Support`](../topsoil_support/index.html)
+//! * [`Support`](../topsoil_core/index.html)
 //!
 //! [`frame_tokens`]: ../polkadot_sdk_docs/reference_docs/frame_tokens/index.html
 
@@ -168,7 +168,7 @@ use subsoil::runtime::{
 
 use alloc::vec::Vec;
 use core::{fmt::Debug, marker::PhantomData};
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::DispatchResult,
 	ensure,
 	pallet_prelude::DispatchResultWithPostInfo,
@@ -183,12 +183,12 @@ use topsoil_support::{
 		Currency, EnsureOriginWithArg, Incrementable, ReservableCurrency, StoredMap,
 	},
 };
-use topsoil_system::Config as SystemConfig;
+use topsoil_core::system::Config as SystemConfig;
 
 pub use pallet::*;
 pub use weights::WeightInfo;
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 const LOG_TARGET: &str = "runtime::assets";
 
 /// Trait with callbacks that are executed after successful asset creation or destruction.
@@ -236,15 +236,15 @@ where
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use codec::HasCompact;
-	use topsoil_support::{
+	use topsoil_core::{
 		pallet_prelude::*,
 		traits::{tokens::ProvideAssetReserves, AccountTouch, ContainsPair},
 	};
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	/// The in-code storage version.
 	const STORAGE_VERSION: StorageVersion = StorageVersion::new(1);
@@ -274,13 +274,13 @@ pub mod pallet {
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use topsoil_support::derive_impl;
+		use topsoil_core::derive_impl;
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for TestDefaultConfig {}
 
-		#[topsoil_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_core::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
@@ -307,12 +307,12 @@ pub mod pallet {
 
 	#[pallet::config(with_default)]
 	/// The module configuration trait.
-	pub trait Config<I: 'static = ()>: topsoil_system::Config {
+	pub trait Config<I: 'static = ()>: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// The units in which we record balances.
 		type Balance: Member
@@ -489,7 +489,7 @@ pub mod pallet {
 	pub type NextAssetId<T: Config<I>, I: 'static = ()> = StorageValue<_, T::AssetId, OptionQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config<I>, I: 'static = ()> {
 		/// Genesis assets: id, owner, is_sufficient, min_balance
 		pub assets: Vec<(T::AssetId, T::AccountId, bool, T::Balance)>,
@@ -1931,7 +1931,7 @@ pub mod pallet {
 			match Asset::<T, I>::get(&asset) {
 				// refer to the [`Self::new_account`] function for more details.
 				Some(info) if info.is_sufficient => false,
-				Some(_) if topsoil_system::Pallet::<T>::can_accrue_consumers(who, 2) => false,
+				Some(_) if topsoil_core::system::Pallet::<T>::can_accrue_consumers(who, 2) => false,
 				Some(_) => !Account::<T, I>::contains_key(asset, who),
 				_ => true,
 			}

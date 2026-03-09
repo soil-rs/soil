@@ -4,7 +4,7 @@
 // Copyright (C) Parity Technologies (UK) Ltd.
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
-#[topsoil_support::runtime]
+#[topsoil_core::runtime]
 mod runtime {
     #[runtime::runtime]
     pub enum Runtime {}

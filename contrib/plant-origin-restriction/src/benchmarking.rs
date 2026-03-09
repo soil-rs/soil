@@ -11,7 +11,7 @@ use subsoil::runtime::traits::DispatchTransaction;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 #[benchmarks]
@@ -26,10 +26,10 @@ mod benches {
 
 		Usages::<T>::insert(&entity, Usage { used: 1u32.into(), at_block: 0u32.into() });
 
-		topsoil_system::Pallet::<T>::set_block_number(1_000u32.into());
+		topsoil_core::system::Pallet::<T>::set_block_number(1_000u32.into());
 
 		#[extrinsic_call]
-		_(topsoil_system::RawOrigin::Root, entity.clone());
+		_(topsoil_core::system::RawOrigin::Root, entity.clone());
 
 		assert_last_event::<T>(Event::UsageCleaned { entity }.into());
 
@@ -41,7 +41,7 @@ mod benches {
 	fn restrict_origin_tx_ext() -> Result<(), BenchmarkError> {
 		let tx_ext = RestrictOrigin::<T>::new(true);
 		let origin = T::RestrictedEntity::benchmarked_restricted_origin();
-		let call = topsoil_system::Call::remark { remark: alloc::vec![] }.into();
+		let call = topsoil_core::system::Call::remark { remark: alloc::vec![] }.into();
 
 		#[block]
 		{

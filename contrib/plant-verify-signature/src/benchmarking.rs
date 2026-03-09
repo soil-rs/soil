@@ -25,11 +25,11 @@ use subsoil::runtime::{
 	AccountId32, MultiSignature, MultiSigner,
 };
 use topsoil_benchmarking::{v2::*, BenchmarkError};
-use topsoil_support::{
+use topsoil_core::{
 	dispatch::{DispatchInfo, GetDispatchInfo},
 	pallet_prelude::TransactionSource,
 };
-use topsoil_system::{Call as SystemCall, RawOrigin};
+use topsoil_core::system::{Call as SystemCall, RawOrigin};
 
 pub trait BenchmarkHelper<Signature, Signer> {
 	fn create_signature(entropy: &[u8], msg: &[u8]) -> (Signature, Signer);

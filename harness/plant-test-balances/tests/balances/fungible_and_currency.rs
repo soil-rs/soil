@@ -40,7 +40,7 @@
 //! * What `can_hold` returns and where is the boundary.
 
 use super::*;
-use topsoil_support::traits::{
+use topsoil_core::traits::{
 	fungible::{InspectHold, MutateFreeze, MutateHold},
 	Currency, LockIdentifier, LockableCurrency, ReservableCurrency, WithdrawReasons,
 };

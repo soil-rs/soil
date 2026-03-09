@@ -22,12 +22,12 @@ use subsoil::std::{collections::btree_map::BTreeMap, prelude::*};
 use plant_election_provider::{
 	ExtendedBalance, NposSolution, PageIndex, TryFromOtherBounds,
 };
-use topsoil_support::{
+use topsoil_core::{
 	ensure,
 	pallet_prelude::{ValueQuery, *},
 	traits::{defensive_prelude::*, DefensiveSaturating, Get},
 };
-use topsoil_system::pallet_prelude::*;
+use topsoil_core::system::pallet_prelude::*;
 
 pub(crate) type SupportsOfVerifier<V> = plant_election_provider::BoundedSupports<
 	<V as Verifier>::AccountId,
@@ -96,7 +96,7 @@ impl subsoil::npos_elections::Backings for PartialBackings {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub(crate) mod pallet {
 	use super::*;
 
@@ -265,7 +265,7 @@ pub(crate) mod pallet {
 		/// verified, a call to [`finalize_correct`] will seal the correct pages and flip the
 		/// invalid/valid variants.
 		pub(crate) fn set_invalid_page(page: PageIndex, supports: SupportsOfVerifier<Pallet<T>>) {
-			use topsoil_support::traits::TryCollect;
+			use topsoil_core::traits::TryCollect;
 			Self::mutate_checked(|| {
 				let backings: BoundedVec<_, _> = supports
 					.iter()
@@ -447,7 +447,7 @@ pub(crate) mod pallet {
 		/// Ensure that all the storage items managed by this struct are in `kill` state, meaning
 		/// that in the expect state after an election is OVER.
 		pub(crate) fn assert_killed() {
-			use topsoil_support::assert_storage_noop;
+			use topsoil_core::assert_storage_noop;
 			assert_storage_noop!(Self::kill());
 		}
 
@@ -567,7 +567,7 @@ pub(crate) mod pallet {
 	pub struct Pallet<T>(PhantomData<T>);
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		/// Initial value for [`MinimumScore`]
 		pub(crate) minimum_score: ElectionScore,

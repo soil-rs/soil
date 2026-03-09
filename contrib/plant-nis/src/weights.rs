@@ -58,7 +58,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_nis` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `Nis::Queues` (r:1 w:1)
 	/// Proof: `Nis::Queues` (`max_values`: None, `max_size`: Some(48022), added: 50497, mode: `MaxEncodedLen`)
 	/// Storage: `Balances::Holds` (r:1 w:1)

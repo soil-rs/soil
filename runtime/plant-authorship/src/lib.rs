@@ -10,7 +10,7 @@
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use topsoil_support::traits::FindAuthor;
+use topsoil_core::traits::FindAuthor;
 
 pub use pallet::*;
 
@@ -22,14 +22,14 @@ pub trait EventHandler<Author, BlockNumber> {
 	fn note_author(author: Author);
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// Find the author of a block.
 		type FindAuthor: FindAuthor<Self::AccountId>;
 		/// An event handler for authored blocks.
@@ -72,7 +72,7 @@ impl<T: Config> Pallet<T> {
 			return Some(author);
 		}
 
-		let digest = <topsoil_system::Pallet<T>>::digest();
+		let digest = <topsoil_core::system::Pallet<T>>::digest();
 		let pre_runtime_digests = digest.logs.iter().filter_map(|d| d.as_pre_runtime());
 		T::FindAuthor::find_author(pre_runtime_digests).inspect(|a| {
 			<Author<T>>::put(&a);
@@ -89,20 +89,20 @@ mod tests {
 	use subsoil::runtime::{
 		generic::DigestItem, testing::Header, traits::Header as HeaderT, BuildStorage,
 	};
-	use topsoil_support::{derive_impl, ConsensusEngineId};
+	use topsoil_core::{derive_impl, ConsensusEngineId};
 
-	type Block = topsoil_system::mocking::MockBlock<Test>;
+	type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
-	topsoil_support::construct_runtime!(
+	topsoil_core::construct_runtime!(
 		pub enum Test
 		{
-			System: topsoil_system,
+			System: topsoil_core::system,
 			Authorship: plant_authorship,
 		}
 	);
 
-	#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-	impl topsoil_system::Config for Test {
+	#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+	impl topsoil_core::system::Config for Test {
 		type Block = Block;
 	}
 
@@ -145,7 +145,7 @@ mod tests {
 	}
 
 	fn new_test_ext() -> subsoil::io::TestExternalities {
-		let t = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+		let t = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 		t.into()
 	}
 

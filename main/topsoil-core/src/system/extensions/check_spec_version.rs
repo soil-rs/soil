@@ -1,0 +1,57 @@
+// This file is part of Soil.
+
+// Copyright (C) Soil contributors.
+// Copyright (C) Parity Technologies (UK) Ltd.
+// SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
+
+use crate::system::{Config, Pallet};
+use codec::{Decode, DecodeWithMemTracking, Encode};
+use scale_info::TypeInfo;
+use subsoil::runtime::{
+	traits::TransactionExtension, transaction_validity::TransactionValidityError,
+};
+
+/// Ensure the runtime version registered in the transaction is the same as at present.
+///
+/// # Transaction Validity
+///
+/// The transaction with incorrect `spec_version` are considered invalid. The validity
+/// is not affected in any other way.
+#[derive(Encode, Decode, DecodeWithMemTracking, Clone, Eq, PartialEq, TypeInfo)]
+#[scale_info(skip_type_params(T))]
+pub struct CheckSpecVersion<T: Config + Send + Sync>(core::marker::PhantomData<T>);
+
+impl<T: Config + Send + Sync> core::fmt::Debug for CheckSpecVersion<T> {
+	#[cfg(feature = "std")]
+	fn fmt(&self, f: &mut core::fmt::Formatter) -> core::fmt::Result {
+		write!(f, "CheckSpecVersion")
+	}
+
+	#[cfg(not(feature = "std"))]
+	fn fmt(&self, _: &mut core::fmt::Formatter) -> core::fmt::Result {
+		Ok(())
+	}
+}
+
+impl<T: Config + Send + Sync> CheckSpecVersion<T> {
+	/// Create new `TransactionExtension` to check runtime version.
+	pub fn new() -> Self {
+		Self(core::marker::PhantomData)
+	}
+}
+
+impl<T: Config + Send + Sync> TransactionExtension<<T as Config>::RuntimeCall>
+	for CheckSpecVersion<T>
+{
+	const IDENTIFIER: &'static str = "CheckSpecVersion";
+	type Implicit = u32;
+	fn implicit(&self) -> Result<Self::Implicit, TransactionValidityError> {
+		Ok(<Pallet<T>>::runtime_version().spec_version)
+	}
+	type Val = ();
+	type Pre = ();
+	fn weight(&self, _: &<T as Config>::RuntimeCall) -> subsoil::weights::Weight {
+		<T::ExtensionsWeightInfo as super::WeightInfo>::check_spec_version()
+	}
+	subsoil::impl_tx_ext_default!(<T as Config>::RuntimeCall; validate prepare);
+}

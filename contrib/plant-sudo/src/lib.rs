@@ -32,17 +32,17 @@
 //! Here's an example of a privileged function in another pallet:
 //!
 //! ```
-//! #[topsoil_support::pallet]
+//! #[topsoil_core::pallet]
 //! pub mod pallet {
 //! 	use super::*;
-//! 	use topsoil_support::pallet_prelude::*;
-//! 	use topsoil_system::pallet_prelude::*;
+//! 	use topsoil_core::pallet_prelude::*;
+//! 	use topsoil_core::system::pallet_prelude::*;
 //!
 //! 	#[pallet::pallet]
 //! 	pub struct Pallet<T>(_);
 //!
 //! 	#[pallet::config]
-//! 	pub trait Config: topsoil_system::Config {}
+//! 	pub trait Config: topsoil_core::system::Config {}
 //!
 //! 	#[pallet::call]
 //! 	impl<T: Config> Pallet<T> {
@@ -80,7 +80,7 @@
 //! accounts from spamming the transaction pool for the initial phase of a chain, during which
 //! developers may only want a sudo account to be able to make transactions.
 //!
-//! Learn more about the `Root` origin in the [`RawOrigin`](topsoil_system::RawOrigin) type
+//! Learn more about the `Root` origin in the [`RawOrigin`](topsoil_core::system::RawOrigin) type
 //! documentation.
 //!
 //! ### Examples
@@ -101,7 +101,7 @@
 //! error.
 //!
 //! Once an origin is verified, sudo calls use `dispatch_bypass_filter` from the
-//! [`UnfilteredDispatchable`](topsoil_support::traits::UnfilteredDispatchable) trait to allow call
+//! [`UnfilteredDispatchable`](topsoil_core::traits::UnfilteredDispatchable) trait to allow call
 //! execution without enforcing any further origin checks.
 
 #![deny(missing_docs)]
@@ -113,7 +113,7 @@ use alloc::boxed::Box;
 
 use subsoil::runtime::{traits::StaticLookup, DispatchResult};
 
-use topsoil_support::{dispatch::GetDispatchInfo, traits::UnfilteredDispatchable};
+use topsoil_core::{dispatch::GetDispatchInfo, traits::UnfilteredDispatchable};
 
 mod extension;
 #[cfg(test)]
@@ -129,26 +129,26 @@ pub use weights::WeightInfo;
 pub use extension::CheckOnlySudoAccount;
 pub use pallet::*;
 
-type AccountIdLookupOf<T> = <<T as topsoil_system::Config>::Lookup as StaticLookup>::Source;
+type AccountIdLookupOf<T> = <<T as topsoil_core::system::Config>::Lookup as StaticLookup>::Source;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::{DispatchResult, *};
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::{pallet_prelude::*, RawOrigin};
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::{pallet_prelude::*, RawOrigin};
 
 	/// Default preludes for [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use topsoil_support::derive_impl;
+		use topsoil_core::derive_impl;
 
 		/// Default prelude sensible to be used in a testing environment.
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for TestDefaultConfig {}
 
-		#[topsoil_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_core::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			type WeightInfo = ();
 			#[inject_runtime_type]
@@ -158,12 +158,12 @@ pub mod pallet {
 		}
 	}
 	#[pallet::config(with_default)]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// A sudo-able call.
 		#[pallet::no_default_bounds]
@@ -323,7 +323,7 @@ pub mod pallet {
 	pub type Key<T: Config> = StorageValue<_, T::AccountId, OptionQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		/// The `AccountId` of the sudo key.
 		pub key: Option<T::AccountId>,

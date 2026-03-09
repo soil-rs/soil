@@ -7,11 +7,11 @@
 //! # Assets Holder Pallet
 //!
 //! A pallet capable of holding fungibles from `topsoil-assets`. This is an extension of
-//! `topsoil-assets`, wrapping [`fungibles::Inspect`](`topsoil_support::traits::fungibles::Inspect`).
+//! `topsoil-assets`, wrapping [`fungibles::Inspect`](`topsoil_core::traits::fungibles::Inspect`).
 //! It implements both
-//! [`fungibles::hold::Inspect`](topsoil_support::traits::fungibles::hold::Inspect),
-//! [`fungibles::hold::Mutate`](topsoil_support::traits::fungibles::hold::Mutate), and especially
-//! [`fungibles::hold::Unbalanced`](topsoil_support::traits::fungibles::hold::Unbalanced). The
+//! [`fungibles::hold::Inspect`](topsoil_core::traits::fungibles::hold::Inspect),
+//! [`fungibles::hold::Mutate`](topsoil_core::traits::fungibles::hold::Mutate), and especially
+//! [`fungibles::hold::Unbalanced`](topsoil_core::traits::fungibles::hold::Unbalanced). The
 //! complexity of the operations is `O(1)`.
 //!
 //! ## Pallet API
@@ -26,19 +26,19 @@
 //! - Pallet hooks allowing `topsoil-assets` to know the balance on hold for an account on a given
 //!   asset (see [`plant_assets::BalanceOnHold`]).
 //! - An implementation of
-//!   [`fungibles::hold::Inspect`](topsoil_support::traits::fungibles::hold::Inspect),
-//!   [`fungibles::hold::Mutate`](topsoil_support::traits::fungibles::hold::Mutate) and
-//!   [`fungibles::hold::Unbalanced`](topsoil_support::traits::fungibles::hold::Unbalanced), allowing
+//!   [`fungibles::hold::Inspect`](topsoil_core::traits::fungibles::hold::Inspect),
+//!   [`fungibles::hold::Mutate`](topsoil_core::traits::fungibles::hold::Mutate) and
+//!   [`fungibles::hold::Unbalanced`](topsoil_core::traits::fungibles::hold::Unbalanced), allowing
 //!   other pallets to manage holds for the `topsoil-assets` assets.
 
 #![cfg_attr(not(feature = "std"), no_std)]
 
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{tokens::IdAmount, VariantCount, VariantCountOf},
 	BoundedVec,
 };
-use topsoil_system::pallet_prelude::BlockNumberFor;
+use topsoil_core::system::pallet_prelude::BlockNumberFor;
 
 pub use pallet::*;
 
@@ -49,13 +49,13 @@ mod tests;
 
 mod impl_fungibles;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 
 	#[pallet::config(with_default)]
 	pub trait Config<I: 'static = ()>:
-		topsoil_system::Config + plant_assets::Config<I, Holder = Pallet<Self, I>>
+		topsoil_core::system::Config + plant_assets::Config<I, Holder = Pallet<Self, I>>
 	{
 		/// The overarching freeze reason.
 		#[pallet::no_default_bounds]
@@ -65,7 +65,7 @@ pub mod pallet {
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self, I>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 	}
 
 	#[pallet::error]
@@ -156,7 +156,7 @@ impl<T: Config<I>, I: 'static> Pallet<T, I> {
 					amount_from_holds.checked_add(&l.amount).ok_or(ArithmeticError::Overflow)?;
 			}
 
-			topsoil_support::ensure!(
+			topsoil_core::ensure!(
 				balance_on_hold == amount_from_holds,
 				"The `BalancesOnHold` amount is not equal to the sum of `Holds` for (`asset`, `who`)"
 			);

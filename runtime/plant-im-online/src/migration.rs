@@ -8,12 +8,12 @@
 
 use super::*;
 use alloc::vec::Vec;
-use topsoil_support::{storage_alias, traits::OnRuntimeUpgrade};
+use topsoil_core::{storage_alias, traits::OnRuntimeUpgrade};
 
 #[cfg(feature = "try-runtime")]
 use subsoil::runtime::TryRuntimeError;
 #[cfg(feature = "try-runtime")]
-use topsoil_support::ensure;
+use topsoil_core::ensure;
 
 /// The log target.
 const TARGET: &str = "runtime::im-online::migration::v1";
@@ -21,7 +21,7 @@ const TARGET: &str = "runtime::im-online::migration::v1";
 /// The original data layout of the im-online pallet (`ReceivedHeartbeats` storage item).
 mod v0 {
 	use super::*;
-	use topsoil_support::traits::WrapperOpaque;
+	use topsoil_core::traits::WrapperOpaque;
 
 	#[derive(Encode, Decode, Default)]
 	pub(super) struct BoundedOpaqueNetworkState {
@@ -125,7 +125,7 @@ pub fn clear_offchain_storage(validator_set_size: u32) {
 mod test {
 	use super::*;
 	use crate::mock::{new_test_ext, Runtime as T};
-	use topsoil_support::traits::WrapperOpaque;
+	use topsoil_core::traits::WrapperOpaque;
 
 	#[test]
 	fn migration_works() {

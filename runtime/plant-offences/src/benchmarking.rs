@@ -12,7 +12,7 @@ use alloc::vec::Vec;
 use crate::Pallet as Offences;
 use subsoil::staking::offence::{Offence, ReportOffence};
 use topsoil_benchmarking::v2::*;
-use topsoil_support::traits::Get;
+use topsoil_core::traits::Get;
 
 const MAX_NOMINATORS: u32 = 100;
 

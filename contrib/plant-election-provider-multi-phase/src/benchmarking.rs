@@ -12,12 +12,12 @@ use subsoil::arithmetic::{per_things::Percent, traits::One};
 use subsoil::runtime::InnerOf;
 use topsoil_benchmarking::{v2::*, BenchmarkError};
 use plant_election_provider::{bounds::DataProviderBounds, IndexAssignment};
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok,
 	traits::{Hooks, TryCollect},
 	BoundedVec,
 };
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 use crate::{unsigned::IndexAssignmentOf, *};
 
@@ -217,7 +217,7 @@ mod benchmarks {
 
 		#[block]
 		{
-			let now = topsoil_system::Pallet::<T>::block_number();
+			let now = topsoil_core::system::Pallet::<T>::block_number();
 			Pallet::<T>::phase_transition(Phase::Unsigned((true, now)));
 		}
 
@@ -344,7 +344,7 @@ mod benchmarks {
 		assert!(SnapshotMetadata::<T>::get().is_none());
 		assert_eq!(
 			CurrentPhase::<T>::get(),
-			<Phase<topsoil_system::pallet_prelude::BlockNumberFor::<T>>>::Off
+			<Phase<topsoil_core::system::pallet_prelude::BlockNumberFor::<T>>>::Off
 		);
 
 		Ok(())
@@ -489,7 +489,7 @@ mod benchmarks {
 		let t = T::BenchmarkingConfig::MAXIMUM_TARGETS;
 
 		set_up_data_provider::<T>(v, t);
-		let now = topsoil_system::Pallet::<T>::block_number();
+		let now = topsoil_core::system::Pallet::<T>::block_number();
 		CurrentPhase::<T>::put(Phase::Unsigned((true, now)));
 		Pallet::<T>::create_snapshot().unwrap();
 

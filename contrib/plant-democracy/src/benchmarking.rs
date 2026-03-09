@@ -12,11 +12,11 @@ use super::*;
 
 use subsoil::runtime::{traits::Bounded, BoundedVec};
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok,
 	traits::{Currency, EnsureOrigin, Get, OnInitialize, UnfilteredDispatchable},
 };
-use topsoil_system::{pallet_prelude::BlockNumberFor, RawOrigin};
+use topsoil_core::system::{pallet_prelude::BlockNumberFor, RawOrigin};
 
 use crate::Pallet as Democracy;
 
@@ -32,7 +32,7 @@ fn funded_account<T: Config>(name: &'static str, index: u32) -> T::AccountId {
 }
 
 fn make_proposal<T: Config>(n: u32) -> BoundedCallOf<T> {
-	let call: CallOf<T> = topsoil_system::Call::remark { remark: n.encode() }.into();
+	let call: CallOf<T> = topsoil_core::system::Call::remark { remark: n.encode() }.into();
 	<T as Config>::Preimages::bound(call).unwrap()
 }
 
@@ -67,11 +67,11 @@ fn account_vote<T: Config>(b: BalanceOf<T>) -> AccountVote<BalanceOf<T>> {
 }
 
 fn assert_last_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_last_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_last_event(generic_event.into());
 }
 
 fn assert_has_event<T: Config>(generic_event: <T as Config>::RuntimeEvent) {
-	topsoil_system::Pallet::<T>::assert_has_event(generic_event.into());
+	topsoil_core::system::Pallet::<T>::assert_has_event(generic_event.into());
 }
 
 // note a new preimage.

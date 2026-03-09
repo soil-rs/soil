@@ -14,7 +14,7 @@ use subsoil::runtime::{
 	transaction_validity::InvalidTransaction::{self, BadSigner},
 	DispatchResult, Weight,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok,
 	dispatch::Pays,
 	traits::{Get, OnIdle, OnPoll},
@@ -462,14 +462,14 @@ fn test_unset_personal_id_account() {
 fn test_as_personal_identity_with_account_check_and_nonce() {
 	// Use our test externalities.
 	new_test_ext().execute_with(|| {
-		let dummy_call = topsoil_system::Call::<Test>::remark { remark: vec![] };
+		let dummy_call = topsoil_core::system::Call::<Test>::remark { remark: vec![] };
 		let account: u64 = 42;
 
 		// 0: transaction fails because there signer is wrong, no associated personal id.
 		let nonce: u64 = 0;
 		let tx_ext = (
 			AsPerson::<Test>::new(Some(AsPersonInfo::AsPersonalIdentityWithAccount(nonce))),
-			topsoil_system::CheckNonce::<Test>::from(nonce),
+			topsoil_core::system::CheckNonce::<Test>::from(nonce),
 		);
 		assert_noop!(
 			exec_tx(Some(account), tx_ext, dummy_call.clone()),
@@ -485,34 +485,34 @@ fn test_as_personal_identity_with_account_check_and_nonce() {
 		let nonce: u64 = 0;
 		let tx_ext = (
 			AsPerson::<Test>::new(Some(AsPersonInfo::AsPersonalIdentityWithAccount(nonce))),
-			topsoil_system::CheckNonce::<Test>::from(nonce),
+			topsoil_core::system::CheckNonce::<Test>::from(nonce),
 		);
 		assert_ok!(exec_tx(Some(account), tx_ext, dummy_call.clone()));
-		assert_eq!(topsoil_system::Pallet::<Test>::account_nonce(account), 1);
+		assert_eq!(topsoil_core::system::Pallet::<Test>::account_nonce(account), 1);
 
 		// 2: another successful transaction
 		let nonce: u64 = 1;
 		let tx_ext = (
 			AsPerson::<Test>::new(Some(AsPersonInfo::AsPersonalIdentityWithAccount(nonce))),
-			topsoil_system::CheckNonce::<Test>::from(nonce),
+			topsoil_core::system::CheckNonce::<Test>::from(nonce),
 		);
 		assert_ok!(exec_tx(Some(account), tx_ext, dummy_call.clone()));
-		assert_eq!(topsoil_system::Pallet::<Test>::account_nonce(account), 2);
+		assert_eq!(topsoil_core::system::Pallet::<Test>::account_nonce(account), 2);
 
 		// 3: transaction fails because the nonce is wrong
 		let nonce: u64 = 1;
 		let tx_ext = (
 			AsPerson::<Test>::new(Some(AsPersonInfo::AsPersonalIdentityWithAccount(nonce))),
-			topsoil_system::CheckNonce::<Test>::from(nonce),
+			topsoil_core::system::CheckNonce::<Test>::from(nonce),
 		);
 		assert_noop!(exec_tx(Some(account), tx_ext, dummy_call), InvalidTransaction::Stale);
-		assert_eq!(topsoil_system::Pallet::<Test>::account_nonce(account), 2);
+		assert_eq!(topsoil_core::system::Pallet::<Test>::account_nonce(account), 2);
 	});
 }
 
 mod on_idle {
 	use super::*;
-	use topsoil_support::assert_storage_noop;
+	use topsoil_core::assert_storage_noop;
 
 	#[test]
 	fn one_ring_and_no_suspensions() {
@@ -699,7 +699,7 @@ mod on_idle {
 
 mod manual_tasks {
 	use super::*;
-	use topsoil_support::BoundedVec;
+	use topsoil_core::BoundedVec;
 
 	#[test]
 	fn works_for_build_ring() {
@@ -754,7 +754,7 @@ mod manual_tasks {
 mod chunks {
 	use super::*;
 	use subsoil::runtime::BoundedVec;
-	use topsoil_support::traits::Get;
+	use topsoil_core::traits::Get;
 
 	#[test]
 	#[cfg(debug_assertions)]
@@ -1252,7 +1252,7 @@ mod suspensions {
 			let nonce = 0;
 			let tx_ext = (
 				AsPerson::<Test>::new(Some(AsPersonInfo::AsPersonalIdentityWithAccount(nonce))),
-				topsoil_system::CheckNonce::<Test>::from(nonce),
+				topsoil_core::system::CheckNonce::<Test>::from(nonce),
 			);
 			let dummy_call = Call::<Test>::unset_alias_account {};
 			assert_noop!(
@@ -1798,7 +1798,7 @@ mod onboard_people {
 			assert_ok!(PeoplePallet::suspend_personhood(suspensions));
 			assert_ok!(PeoplePallet::end_people_set_mutation_session());
 			PeoplePallet::migrate_keys(&mut meter);
-			let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+			let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 			let end_migrate_db_weight = db_weight.reads_writes(2, 1);
 			let mut expected_consumed = end_migrate_db_weight;
 			assert_eq!(meter.consumed(), expected_consumed);
@@ -2217,7 +2217,7 @@ mod onboard_people {
 			assert_ok!(PeoplePallet::suspend_personhood(&suspensions));
 			assert_ok!(PeoplePallet::end_people_set_mutation_session());
 			PeoplePallet::migrate_keys(&mut meter);
-			let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+			let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 			let end_migrate_db_weight = db_weight.reads_writes(2, 1);
 			assert_eq!(meter.consumed(), end_migrate_db_weight);
 
@@ -2254,7 +2254,7 @@ mod onboard_people {
 
 mod merge_queue_pages {
 	use super::*;
-	use topsoil_support::pallet_prelude::Get;
+	use topsoil_core::pallet_prelude::Get;
 
 	#[test]
 	fn fails_if_queue_empty() {
@@ -2286,7 +2286,7 @@ mod merge_queue_pages {
 			assert_ok!(PeoplePallet::end_people_set_mutation_session());
 			PeoplePallet::migrate_keys(&mut meter);
 
-			let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+			let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 			let end_migrate_db_weight = db_weight.reads_writes(2, 1);
 			assert_eq!(meter.consumed(), end_migrate_db_weight);
 
@@ -2320,7 +2320,7 @@ mod merge_queue_pages {
 			assert_ok!(PeoplePallet::suspend_personhood(&first_page_suspensions));
 			assert_ok!(PeoplePallet::end_people_set_mutation_session());
 			PeoplePallet::migrate_keys(&mut meter);
-			let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+			let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 			let end_migrate_db_weight = db_weight.reads_writes(2, 1);
 			let mut expected_consumed = end_migrate_db_weight;
 			assert_eq!(meter.consumed(), expected_consumed);
@@ -2392,7 +2392,7 @@ mod merge_queue_pages {
 			assert_ok!(PeoplePallet::suspend_personhood(&first_page_suspensions));
 			assert_ok!(PeoplePallet::end_people_set_mutation_session());
 			PeoplePallet::migrate_keys(&mut meter);
-			let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+			let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 			let end_migrate_db_weight = db_weight.reads_writes(2, 1);
 			let mut expected_consumed = end_migrate_db_weight;
 			assert_eq!(meter.consumed(), expected_consumed);
@@ -2458,7 +2458,7 @@ fn test_revision_in_tx_ext_as_alias_account() {
 		setup_alias_account(&pk, &sk, MOCK_CONTEXT, alias_account);
 
 		// Use alias account successfully
-		let call = topsoil_system::Call::remark { remark: vec![] };
+		let call = topsoil_core::system::Call::remark { remark: vec![] };
 		assert_ok!(exec_as_alias_tx(alias_account, call));
 
 		// Revise the ring
@@ -2467,7 +2467,7 @@ fn test_revision_in_tx_ext_as_alias_account() {
 		});
 
 		// Fail to alias account with outdated revision
-		let call = topsoil_system::Call::remark { remark: vec![] };
+		let call = topsoil_core::system::Call::remark { remark: vec![] };
 		assert_noop!(exec_as_alias_tx(alias_account, call), BadSigner);
 	});
 }
@@ -2490,7 +2490,7 @@ mod poll {
 				assert_ok!(PeoplePallet::migrate_included_key(origin, new_public));
 				assert_eq!(KeyMigrationQueue::<Test>::get(i as PersonalId).unwrap(), new_public);
 			}
-			let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+			let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 			let db_weight = db_weight.reads_writes(1, 1);
 			let base_weight = <<Test as Config>::WeightInfo as crate::WeightInfo>::on_poll_base();
 			let step_migration_weight =
@@ -2520,7 +2520,7 @@ mod poll {
 			PeoplePallet::on_poll(0, &mut meter);
 			assert_eq!(KeyMigrationQueue::<Test>::iter().count(), 0);
 			assert!(RingsState::<Test>::get().append_only());
-			let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+			let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 			// 1R + 1W on `RingsState` for the state transition, 1R for `KeyMigrationQueue`.
 			let db_weight = db_weight.reads_writes(2, 1);
 			assert_eq!(meter.consumed(), base_weight + db_weight);
@@ -2682,7 +2682,7 @@ fn on_poll_works() {
 		let page = OnboardingQueue::<Test>::get(1);
 		assert!(page.is_full());
 
-		let db_weight: RuntimeDbWeight = <Test as topsoil_system::Config>::DbWeight::get();
+		let db_weight: RuntimeDbWeight = <Test as topsoil_core::system::Config>::DbWeight::get();
 		let migrate_db_weight = db_weight.reads_writes(1, 1);
 		let end_migrate_db_weight = db_weight.reads_writes(2, 1);
 		let base_weight = <<Test as Config>::WeightInfo as crate::WeightInfo>::on_poll_base();
@@ -2783,7 +2783,7 @@ fn test_under_alias_revision_check() {
 
 		// The account can now use `under_alias` successfully
 		let dummy_call =
-			Box::new(RuntimeCall::from(topsoil_system::Call::remark { remark: vec![] }));
+			Box::new(RuntimeCall::from(topsoil_core::system::Call::remark { remark: vec![] }));
 		assert_ok!(PeoplePallet::under_alias(
 			RuntimeOrigin::signed(alias_account),
 			dummy_call.clone()
@@ -2824,7 +2824,7 @@ fn resetting_alias_account_for_new_revision_is_refunded() {
 		let rev_ca = RevisedContextualAlias { revision: 0, ring: 0, ca: ca.clone() };
 		let origin = RuntimeOrigin::from(PeopleOrigin::PersonalAlias(rev_ca.clone()));
 		let result = PeoplePallet::set_alias_account(origin, account, 0);
-		assert_eq!(result.unwrap(), topsoil_support::pallet_prelude::Pays::No.into());
+		assert_eq!(result.unwrap(), topsoil_core::pallet_prelude::Pays::No.into());
 
 		// Fail attempt to set the same alias again with the *same* revision=0 for the same account.
 		let origin = RuntimeOrigin::from(PeopleOrigin::PersonalAlias(rev_ca.clone()));
@@ -2837,7 +2837,7 @@ fn resetting_alias_account_for_new_revision_is_refunded() {
 		let origin = RuntimeOrigin::from(PeopleOrigin::PersonalAlias(rev_ca.clone()));
 		let account2: u64 = 43;
 		let result = PeoplePallet::set_alias_account(origin, account2, 0);
-		assert_eq!(result.unwrap(), topsoil_support::pallet_prelude::Pays::Yes.into());
+		assert_eq!(result.unwrap(), topsoil_core::pallet_prelude::Pays::Yes.into());
 
 		// Set the ring revision to 1.
 		let ring_info = Root::<Test>::get(0).unwrap();
@@ -2848,7 +2848,7 @@ fn resetting_alias_account_for_new_revision_is_refunded() {
 		let rev_ca_new = RevisedContextualAlias { revision: 1, ring: 0, ca: ca.clone() };
 		let origin = RuntimeOrigin::from(PeopleOrigin::PersonalAlias(rev_ca_new.clone()));
 		let result = PeoplePallet::set_alias_account(origin, account, 0);
-		assert_eq!(result.unwrap(), topsoil_support::pallet_prelude::Pays::No.into());
+		assert_eq!(result.unwrap(), topsoil_core::pallet_prelude::Pays::No.into());
 
 		// Move to a different ring.
 		let ring_info = Root::<Test>::get(0).unwrap();
@@ -2859,7 +2859,7 @@ fn resetting_alias_account_for_new_revision_is_refunded() {
 		let rev_ca_new = RevisedContextualAlias { revision: 1, ring: 1, ca };
 		let origin = RuntimeOrigin::from(PeopleOrigin::PersonalAlias(rev_ca_new.clone()));
 		let result = PeoplePallet::set_alias_account(origin, account, 0);
-		assert_eq!(result.unwrap(), topsoil_support::pallet_prelude::Pays::No.into());
+		assert_eq!(result.unwrap(), topsoil_core::pallet_prelude::Pays::No.into());
 	});
 }
 
@@ -2873,7 +2873,7 @@ fn replay_protection_for_identity() {
 		let alice_index = PeoplePallet::reserve_new_id();
 		PeoplePallet::recognize_personhood(alice_index, Some(alice_pub)).unwrap();
 		let generate_setup_account_tx_ext_for_call = |call: RuntimeCall| {
-			let other_tx_ext = (topsoil_system::CheckNonce::<Test>::from(0),);
+			let other_tx_ext = (topsoil_core::system::CheckNonce::<Test>::from(0),);
 			// Here we simply ignore implicit as they are null.
 			let msg = (&EXTENSION_VERSION, &call, &other_tx_ext)
 				.using_encoded(subsoil::io::hashing::blake2_256);
@@ -2948,7 +2948,7 @@ fn replay_protection_for_alias() {
 		assert_ok!(PeoplePallet::onboard_people());
 		assert_ok!(build_ring(RI_ZERO, None));
 		let generate_alias_tx_ext_for_call = |call: RuntimeCall| {
-			let other_tx_ext = (topsoil_system::CheckNonce::<Test>::from(0),);
+			let other_tx_ext = (topsoil_core::system::CheckNonce::<Test>::from(0),);
 			// The message is the hash over the extension version, call, and other extensions.
 			let msg = (&EXTENSION_VERSION, &call, &other_tx_ext)
 				.using_encoded(subsoil::io::hashing::blake2_256);

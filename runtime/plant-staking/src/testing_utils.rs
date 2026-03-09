@@ -14,11 +14,11 @@ use rand_chacha::{
 };
 use subsoil::io::hashing::blake2_256;
 use topsoil_benchmarking::account;
-use topsoil_system::RawOrigin;
+use topsoil_core::system::RawOrigin;
 
 use subsoil::runtime::{traits::StaticLookup, Perbill};
 use plant_election_provider::SortedListProvider;
-use topsoil_support::pallet_prelude::*;
+use topsoil_core::pallet_prelude::*;
 
 const SEED: u32 = 0;
 
@@ -229,7 +229,7 @@ pub fn current_era<T: Config>() -> EraIndex {
 }
 
 pub fn migrate_to_old_currency<T: Config>(who: T::AccountId) {
-	use topsoil_support::traits::LockableCurrency;
+	use topsoil_core::traits::LockableCurrency;
 	let staked = asset::staked::<T>(&who);
 
 	// apply locks (this also adds a consumer).
@@ -237,11 +237,11 @@ pub fn migrate_to_old_currency<T: Config>(who: T::AccountId) {
 		STAKING_ID,
 		&who,
 		staked,
-		topsoil_support::traits::WithdrawReasons::all(),
+		topsoil_core::traits::WithdrawReasons::all(),
 	);
 	// remove holds.
 	asset::kill_stake::<T>(&who).expect("remove hold failed");
 
 	// replicate old behaviour of explicit increment of consumer.
-	topsoil_system::Pallet::<T>::inc_consumers(&who).expect("increment consumer failed");
+	topsoil_core::system::Pallet::<T>::inc_consumers(&who).expect("increment consumer failed");
 }

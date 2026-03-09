@@ -13,8 +13,8 @@ use subsoil::runtime::{
 	transaction_validity::TransactionSource,
 };
 use topsoil_benchmarking::v2::*;
-use topsoil_support::{traits::UnfilteredDispatchable, WeakBoundedVec};
-use topsoil_system::RawOrigin;
+use topsoil_core::{traits::UnfilteredDispatchable, WeakBoundedVec};
+use topsoil_core::system::RawOrigin;
 
 use crate::*;
 
@@ -22,7 +22,7 @@ pub fn create_heartbeat<T: Config>(
 	k: u32,
 ) -> Result<
 	(
-		crate::Heartbeat<topsoil_system::pallet_prelude::BlockNumberFor<T>>,
+		crate::Heartbeat<topsoil_core::system::pallet_prelude::BlockNumberFor<T>>,
 		<T::AuthorityId as RuntimeAppPublic>::Signature,
 	),
 	&'static str,
@@ -36,7 +36,7 @@ pub fn create_heartbeat<T: Config>(
 	Keys::<T>::put(bounded_keys);
 
 	let input_heartbeat = Heartbeat {
-		block_number: topsoil_system::pallet_prelude::BlockNumberFor::<T>::zero(),
+		block_number: topsoil_core::system::pallet_prelude::BlockNumberFor::<T>::zero(),
 		session_index: 0,
 		authority_index: k - 1,
 		validators_len: keys.len() as u32,

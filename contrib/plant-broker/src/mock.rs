@@ -14,7 +14,7 @@ use subsoil::runtime::{
 	traits::{BlockNumberProvider, Identity, MaybeConvert},
 	BuildStorage, Saturating,
 };
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl, ensure, ord_parameter_types, parameter_types,
 	traits::{
 		fungible::{Balanced, Credit, Inspect, ItemOf, Mutate},
@@ -24,21 +24,21 @@ use topsoil_support::{
 	},
 	PalletId,
 };
-use topsoil_system::{EnsureRoot, EnsureSignedBy};
+use topsoil_core::system::{EnsureRoot, EnsureSignedBy};
 
-type Block = topsoil_system::mocking::MockBlock<Test>;
+type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Broker: crate,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 }
 
@@ -339,6 +339,6 @@ impl TestExt {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let c = topsoil_system::GenesisConfig::<Test>::default().build_storage().unwrap();
+	let c = topsoil_core::system::GenesisConfig::<Test>::default().build_storage().unwrap();
 	subsoil::io::TestExternalities::from(c)
 }

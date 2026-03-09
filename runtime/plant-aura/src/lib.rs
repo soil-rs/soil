@@ -38,7 +38,7 @@ use subsoil::runtime::{
 	traits::{IsMember, Member, SaturatedConversion, Saturating, Zero},
 	RuntimeAppPublic,
 };
-use topsoil_support::{
+use topsoil_core::{
 	traits::{DisabledValidators, FindAuthor, Get, OnTimestampSet, OneSessionHandler},
 	BoundedSlice, BoundedVec, ConsensusEngineId, Parameter,
 };
@@ -65,14 +65,14 @@ impl<T: plant_timestamp::Config> Get<T::Moment> for MinimumPeriodTimesTwo<T> {
 	}
 }
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
-	use topsoil_support::pallet_prelude::*;
-	use topsoil_system::pallet_prelude::*;
+	use topsoil_core::pallet_prelude::*;
+	use topsoil_core::system::pallet_prelude::*;
 
 	#[pallet::config]
-	pub trait Config: plant_timestamp::Config + topsoil_system::Config {
+	pub trait Config: plant_timestamp::Config + topsoil_core::system::Config {
 		/// The identifier type for an authority.
 		type AuthorityId: Member
 			+ Parameter
@@ -201,7 +201,7 @@ pub mod pallet {
 	pub type CurrentSlot<T: Config> = StorageValue<_, Slot, ValueQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub authorities: Vec<T::AuthorityId>,
 	}
@@ -234,7 +234,7 @@ impl<T: Config> Pallet<T> {
 			AURA_ENGINE_ID,
 			ConsensusLog::AuthoritiesChange(new.into_inner()).encode(),
 		);
-		<topsoil_system::Pallet<T>>::deposit_log(log);
+		<topsoil_core::system::Pallet<T>>::deposit_log(log);
 	}
 
 	/// Initial authorities.
@@ -258,7 +258,7 @@ impl<T: Config> Pallet<T> {
 
 	/// Get the current slot from the pre-runtime digests.
 	fn current_slot_from_digests() -> Option<Slot> {
-		let digest = topsoil_system::Pallet::<T>::digest();
+		let digest = topsoil_core::system::Pallet::<T>::digest();
 		let pre_runtime_digests = digest.logs.iter().filter_map(|d| d.as_pre_runtime());
 		for (id, mut data) in pre_runtime_digests {
 			if id == AURA_ENGINE_ID {
@@ -305,7 +305,7 @@ impl<T: Config> Pallet<T> {
 		// Check that the current slot is less than the maximal slot number, unless we allow for
 		// multiple blocks per slot.
 		if !T::AllowMultipleBlocksPerSlot::get() {
-			topsoil_support::ensure!(
+			topsoil_core::ensure!(
 				current_slot < u64::MAX,
 				"Current slot has reached maximum value and cannot be incremented further.",
 			);
@@ -315,11 +315,11 @@ impl<T: Config> Pallet<T> {
 			<Authorities<T>>::decode_len().ok_or("Failed to decode authorities length")?;
 
 		// Check that the authorities are non-empty.
-		topsoil_support::ensure!(!authorities_len.is_zero(), "Authorities must be non-empty.");
+		topsoil_core::ensure!(!authorities_len.is_zero(), "Authorities must be non-empty.");
 
 		// Check that the current authority is not disabled.
 		let authority_index = *current_slot % authorities_len as u64;
-		topsoil_support::ensure!(
+		topsoil_core::ensure!(
 			!T::DisabledValidators::is_disabled(authority_index as u32),
 			"Current validator is disabled and should not be attempting to author blocks.",
 		);
@@ -331,7 +331,7 @@ impl<T: Config> Pallet<T> {
 			let slot_duration = Self::slot_duration();
 
 			let timestamp_slot = Slot::from((timestamp / slot_duration).saturated_into::<u64>());
-			topsoil_support::ensure!(
+			topsoil_core::ensure!(
 				current_slot == timestamp_slot,
 				"Timestamp slot must match CurrentSlot.",
 			);
@@ -384,7 +384,7 @@ impl<T: Config> OneSessionHandler<T::AccountId> for Pallet<T> {
 			ConsensusLog::<T::AuthorityId>::OnDisabled(i as AuthorityIndex).encode(),
 		);
 
-		<topsoil_system::Pallet<T>>::deposit_log(log);
+		<topsoil_core::system::Pallet<T>>::deposit_log(log);
 	}
 }
 

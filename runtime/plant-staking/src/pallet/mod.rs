@@ -13,7 +13,7 @@ use subsoil::runtime::{
 	ArithmeticError, Perbill, Percent,
 };
 use plant_election_provider::{ElectionProvider, SortedListProvider, VoteWeight};
-use topsoil_support::{
+use topsoil_core::{
 	pallet_prelude::*,
 	traits::{
 		fungible::{
@@ -26,7 +26,7 @@ use topsoil_support::{
 	weights::Weight,
 	BoundedVec,
 };
-use topsoil_system::{ensure_root, ensure_signed, pallet_prelude::*};
+use topsoil_core::system::{ensure_root, ensure_signed, pallet_prelude::*};
 
 use subsoil::staking::{
 	EraIndex, Page, SessionIndex,
@@ -50,7 +50,7 @@ use crate::{
 // account which is not provided as an input. The value set should be conservative but sensible.
 pub(crate) const SPECULATIVE_NUM_SPANS: u32 = 32;
 
-#[topsoil_support::pallet]
+#[topsoil_core::pallet]
 pub mod pallet {
 	use super::*;
 	use codec::HasCompact;
@@ -77,7 +77,7 @@ pub mod pallet {
 	}
 
 	#[pallet::config(with_default)]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The old trait for staking balance. Deprecated and only used for migrating old ledgers.
 		#[pallet::no_default]
 		type OldCurrency: InspectLockableCurrency<
@@ -182,7 +182,7 @@ pub mod pallet {
 		#[pallet::no_default_bounds]
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 
 		/// Handler for the unbalanced reduction when slashing a staker.
 		#[pallet::no_default_bounds]
@@ -336,18 +336,18 @@ pub mod pallet {
 	/// Default implementations of [`DefaultConfig`], which can be used to implement [`Config`].
 	pub mod config_preludes {
 		use super::*;
-		use topsoil_support::{derive_impl, parameter_types, traits::ConstU32};
+		use topsoil_core::{derive_impl, parameter_types, traits::ConstU32};
 		pub struct TestDefaultConfig;
 
-		#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig, no_aggregated_types)]
-		impl topsoil_system::DefaultConfig for TestDefaultConfig {}
+		#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig, no_aggregated_types)]
+		impl topsoil_core::system::DefaultConfig for TestDefaultConfig {}
 
 		parameter_types! {
 			pub const SessionsPerEra: SessionIndex = 3;
 			pub const BondingDuration: EraIndex = 3;
 		}
 
-		#[topsoil_support::register_default_impl(TestDefaultConfig)]
+		#[topsoil_core::register_default_impl(TestDefaultConfig)]
 		impl DefaultConfig for TestDefaultConfig {
 			#[inject_runtime_type]
 			type RuntimeEvent = ();
@@ -733,7 +733,7 @@ pub mod pallet {
 	pub type ChillThreshold<T: Config> = StorageValue<_, Percent, OptionQuery>;
 
 	#[pallet::genesis_config]
-	#[derive(topsoil_support::DefaultNoBound)]
+	#[derive(topsoil_core::DefaultNoBound)]
 	pub struct GenesisConfig<T: Config> {
 		pub validator_count: u32,
 		pub minimum_validator_count: u32,
@@ -779,12 +779,12 @@ pub mod pallet {
 					asset::free_to_stake::<T>(stash) >= balance,
 					"Stash does not have enough balance to bond."
 				);
-				topsoil_support::assert_ok!(<Pallet<T>>::bond(
+				topsoil_core::assert_ok!(<Pallet<T>>::bond(
 					T::RuntimeOrigin::from(Some(stash.clone()).into()),
 					balance,
 					RewardDestination::Staked,
 				));
-				topsoil_support::assert_ok!(match status {
+				topsoil_core::assert_ok!(match status {
 					crate::StakerStatus::Validator => <Pallet<T>>::validate(
 						T::RuntimeOrigin::from(Some(stash.clone()).into()),
 						Default::default(),

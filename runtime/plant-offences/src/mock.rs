@@ -16,7 +16,7 @@ use subsoil::staking::{
 	SessionIndex,
 };
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage, Perbill};
-use topsoil_support::{
+use topsoil_core::{
 	derive_impl, parameter_types,
 	traits::ConstU32,
 	weights::{constants::RocksDbWeight, Weight},
@@ -49,17 +49,17 @@ pub fn with_on_offence_fractions<R, F: FnOnce(&mut Vec<Perbill>) -> R>(f: F) -> 
 	OnOffencePerbill::mutate(|fractions| f(fractions))
 }
 
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Offences: offences,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Nonce = u64;
 	type Lookup = IdentityLookup<Self::AccountId>;
 	type Block = Block;
@@ -75,7 +75,7 @@ impl Config for Runtime {
 }
 
 pub fn new_test_ext() -> subsoil::io::TestExternalities {
-	let t = topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+	let t = topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 	let mut ext = subsoil::io::TestExternalities::new(t);
 	ext.execute_with(|| System::set_block_number(1));
 	ext

@@ -38,7 +38,7 @@
 #![allow(missing_docs)]
 #![allow(dead_code)]
 
-use topsoil_support::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
+use topsoil_core::{traits::Get, weights::{Weight, constants::RocksDbWeight}};
 use core::marker::PhantomData;
 
 /// Weight functions needed for `plant_bags_list`.
@@ -51,7 +51,7 @@ pub trait WeightInfo {
 
 /// Weights for `plant_bags_list` using the Substrate node and recommended hardware.
 pub struct SubstrateWeight<T>(PhantomData<T>);
-impl<T: topsoil_system::Config> WeightInfo for SubstrateWeight<T> {
+impl<T: topsoil_core::system::Config> WeightInfo for SubstrateWeight<T> {
 	/// Storage: `VoterList::Lock` (r:1 w:0)
 	/// Proof: `VoterList::Lock` (`max_values`: Some(1), `max_size`: Some(0), added: 495, mode: `MaxEncodedLen`)
 	/// Storage: `VoterList::PendingRebag` (r:1 w:0)

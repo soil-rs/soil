@@ -14,7 +14,7 @@ use scale_info::TypeInfo;
 
 use subsoil::runtime::traits::{AtLeast32BitUnsigned, Zero};
 
-use topsoil_support::dispatch::DispatchClass;
+use topsoil_core::dispatch::DispatchClass;
 
 /// The base fee and adjusted weight and length fees constitute the _inclusion fee_.
 #[derive(Encode, Decode, Clone, Eq, PartialEq, TypeInfo)]
@@ -91,7 +91,7 @@ impl<Balance: AtLeast32BitUnsigned + Copy> FeeDetails<Balance> {
 	feature = "std",
 	serde(bound(deserialize = "Balance: std::str::FromStr, Weight: Deserialize<'de>"))
 )]
-pub struct RuntimeDispatchInfo<Balance, Weight = topsoil_support::weights::Weight> {
+pub struct RuntimeDispatchInfo<Balance, Weight = topsoil_core::weights::Weight> {
 	/// Weight of this dispatch.
 	pub weight: Weight,
 	/// Class of this dispatch.
@@ -126,7 +126,7 @@ mod serde_balance {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use topsoil_support::weights::Weight;
+	use topsoil_core::weights::Weight;
 
 	#[test]
 	fn should_serialize_and_deserialize_properly_with_string() {

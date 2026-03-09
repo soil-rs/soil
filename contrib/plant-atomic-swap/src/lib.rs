@@ -160,11 +160,11 @@ pub mod pallet {
 
 	/// Atomic swap's pallet configuration trait.
 	#[pallet::config]
-	pub trait Config: topsoil_system::Config {
+	pub trait Config: topsoil_core::system::Config {
 		/// The overarching event type.
 		#[allow(deprecated)]
 		type RuntimeEvent: From<Event<Self>>
-			+ IsType<<Self as topsoil_system::Config>::RuntimeEvent>;
+			+ IsType<<Self as topsoil_core::system::Config>::RuntimeEvent>;
 		/// Swap action.
 		type SwapAction: SwapAction<Self::AccountId, Self> + Parameter + MaxEncodedLen;
 		/// Limit of proof size.
@@ -260,7 +260,7 @@ pub mod pallet {
 			let swap = PendingSwap {
 				source,
 				action,
-				end_block: topsoil_system::Pallet::<T>::block_number() + duration,
+				end_block: topsoil_core::system::Pallet::<T>::block_number() + duration,
 			};
 			PendingSwaps::<T>::insert(target.clone(), hashed_proof, swap.clone());
 
@@ -329,7 +329,7 @@ pub mod pallet {
 			let swap = PendingSwaps::<T>::get(&target, hashed_proof).ok_or(Error::<T>::NotExist)?;
 			ensure!(swap.source == source, Error::<T>::SourceMismatch);
 			ensure!(
-				topsoil_system::Pallet::<T>::block_number() >= swap.end_block,
+				topsoil_core::system::Pallet::<T>::block_number() >= swap.end_block,
 				Error::<T>::DurationNotPassed,
 			);
 

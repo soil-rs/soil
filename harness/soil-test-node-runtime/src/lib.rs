@@ -22,7 +22,7 @@ use codec::{Decode, DecodeWithMemTracking, Encode};
 use scale_info::TypeInfo;
 use subsoil::application_crypto::{ecdsa, ed25519, sr25519, RuntimeAppPublic, Ss58Codec};
 use subsoil::keyring::Sr25519Keyring;
-use topsoil_support::{
+use topsoil_core::{
 	construct_runtime, derive_impl,
 	dispatch::DispatchClass,
 	genesis_builder_helper::{build_state, get_preset},
@@ -33,7 +33,7 @@ use topsoil_support::{
 		Weight,
 	},
 };
-use topsoil_system::{
+use topsoil_core::system::{
 	limits::{BlockLength, BlockWeights},
 	CheckNonce, CheckWeight,
 };
@@ -146,7 +146,7 @@ pub type TxExtension = (
 	(CheckNonce<Runtime>, CheckWeight<Runtime>),
 	CheckSubstrateCall,
 	plant_metadata_hash_extension::CheckMetadataHash<Runtime>,
-	topsoil_system::WeightReclaim<Runtime>,
+	topsoil_core::system::WeightReclaim<Runtime>,
 );
 /// The payload being signed in transactions.
 pub type SignedPayload = subsoil::runtime::generic::SignedPayload<RuntimeCall, TxExtension>;
@@ -256,7 +256,7 @@ decl_runtime_apis! {
 pub type Executive = topsoil_executive::Executive<
 	Runtime,
 	Block,
-	topsoil_system::ChainContext<Runtime>,
+	topsoil_core::system::ChainContext<Runtime>,
 	Runtime,
 	AllPalletsWithSystem,
 >;
@@ -271,7 +271,7 @@ impl subsoil::runtime::traits::Printable for CheckSubstrateCall {
 }
 
 impl subsoil::runtime::traits::RefundWeight for CheckSubstrateCall {
-	fn refund(&mut self, _weight: topsoil_support::weights::Weight) {}
+	fn refund(&mut self, _weight: topsoil_core::weights::Weight) {}
 }
 impl subsoil::runtime::traits::ExtensionPostDispatchWeightHandler<CheckSubstrateCall>
 	for CheckSubstrateCall
@@ -327,7 +327,7 @@ impl subsoil::runtime::traits::TransactionExtension<RuntimeCall> for CheckSubstr
 construct_runtime!(
 	pub enum Runtime
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Babe: plant_babe,
 		SubstrateTest: substrate_test_pallet::pallet,
 		Utility: plant_utility,
@@ -376,8 +376,8 @@ parameter_types! {
 		.build_or_panic();
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::pallet::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::pallet::Config for Runtime {
 	type BlockWeights = RuntimeBlockWeights;
 	type Nonce = Nonce;
 	type AccountId = AccountId;
@@ -558,7 +558,7 @@ impl_runtime_apis! {
 		}
 	}
 
-	impl topsoil_system_rpc_runtime_api::AccountNonceApi<Block, AccountId, Nonce> for Runtime {
+	impl topsoil_core_rpc_runtime_api::AccountNonceApi<Block, AccountId, Nonce> for Runtime {
 		fn account_nonce(account: AccountId) -> Nonce {
 			System::account_nonce(account)
 		}
@@ -1149,7 +1149,7 @@ mod tests {
 	use soil_test_node_runtime_client::{
 		prelude::*, runtime::TestAPI, DefaultTestClientBuilderExt, TestClientBuilder,
 	};
-	use topsoil_support::dispatch::DispatchInfo;
+	use topsoil_core::dispatch::DispatchInfo;
 
 	#[test]
 	fn expected_keys_vec_are_matching() {

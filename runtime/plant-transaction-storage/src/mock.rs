@@ -11,22 +11,22 @@ use crate::{
 	DEFAULT_MAX_TRANSACTION_SIZE,
 };
 use subsoil::runtime::{traits::IdentityLookup, BuildStorage};
-use topsoil_support::{derive_impl, traits::ConstU32};
+use topsoil_core::{derive_impl, traits::ConstU32};
 
-pub type Block = topsoil_system::mocking::MockBlock<Test>;
+pub type Block = topsoil_core::system::mocking::MockBlock<Test>;
 
 // Configure a mock runtime to test the pallet.
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Test
 	{
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		TransactionStorage: plant_transaction_storage,
 	}
 );
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Test {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Test {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<u64>;
 	type AccountId = u64;
@@ -70,7 +70,7 @@ pub fn new_test_ext() -> subsoil::io::TestExternalities {
 pub fn run_to_block(n: u64, f: impl Fn() -> Option<TransactionStorageProof> + 'static) {
 	System::run_to_block_with::<AllPalletsWithSystem>(
 		n,
-		topsoil_system::RunToBlockHooks::default().before_finalize(|_| {
+		topsoil_core::system::RunToBlockHooks::default().before_finalize(|_| {
 			if let Some(proof) = f() {
 				TransactionStorage::check_proof(RuntimeOrigin::none(), proof).unwrap();
 			}

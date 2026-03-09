@@ -7,10 +7,10 @@
 #[cfg(test)]
 use super::{
 	assert_ok,
-	topsoil_system::{Numbers, Total},
+	topsoil_core::system::{Numbers, Total},
 	Runtime, RuntimeOrigin, RuntimeTask, System,
 };
-use topsoil_support::pallet_macros::pallet_section;
+use topsoil_core::pallet_macros::pallet_section;
 
 #[pallet_section]
 mod tasks_example {
@@ -40,7 +40,7 @@ fn tasks_work() {
 		Numbers::<Runtime>::insert(0, 1);
 
 		let task =
-			RuntimeTask::System(super::topsoil_system::Task::<Runtime>::AddNumberIntoTotal {
+			RuntimeTask::System(super::topsoil_core::system::Task::<Runtime>::AddNumberIntoTotal {
 				i: 0u32,
 			});
 

@@ -9,7 +9,7 @@
 use crate::{mock::*, Event, *};
 use subsoil::runtime::{traits::Dispatchable, DispatchError};
 use plant_balances::Error as BalancesError;
-use topsoil_support::{assert_noop, assert_ok, traits::Currency};
+use topsoil_core::{assert_noop, assert_ok, traits::Currency};
 
 fn items() -> Vec<(u64, u32, u32)> {
 	let mut r: Vec<_> = Account::<Test>::iter().map(|x| x.0).collect();
@@ -1092,7 +1092,7 @@ fn clear_collection_metadata_works() {
 mod asset_ops_tests {
 	use super::*;
 	use crate::asset_strategies::*;
-	use topsoil_support::traits::tokens::asset_ops::{common_strategies::*, *};
+	use topsoil_core::traits::tokens::asset_ops::{common_strategies::*, *};
 
 	type Collection = asset_ops::Collection<Uniques>;
 	type Item = asset_ops::Item<Uniques>;

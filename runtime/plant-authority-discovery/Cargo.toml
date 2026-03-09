@@ -20,8 +20,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 codec = { features = ["derive"], workspace = true }
 scale-info = { features = ["derive"], workspace = true }
 subsoil = { workspace = true }
-topsoil-support = { workspace = true }
-topsoil-system = { workspace = true }
+topsoil-core = { workspace = true }
 plant-session = { features = ["historical"], workspace = true }
 
 # std-only client service deps (optional, activated by std feature)
@@ -59,8 +58,7 @@ std = [
 	"codec/std",
 	"scale-info/std",
 	"subsoil/std",
-	"topsoil-support/std",
-	"topsoil-system/std",
+	"topsoil-core/std",
 	"plant-session/std",
 	# client service deps
 	"dep:async-trait",
@@ -86,13 +84,11 @@ serde = [
 	"subsoil/serde",
 ]
 try-runtime = [
-	"topsoil-support/try-runtime",
-	"topsoil-system/try-runtime",
+	"topsoil-core/try-runtime",
 	"plant-session/try-runtime",
 	"subsoil/try-runtime",
 ]
 runtime-benchmarks = [
-	"topsoil-support/runtime-benchmarks",
-	"topsoil-system/runtime-benchmarks",
+	"topsoil-core/runtime-benchmarks",
 	"plant-session/runtime-benchmarks",
 ]

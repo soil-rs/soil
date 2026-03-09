@@ -5,7 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0 OR GPL-3.0-or-later WITH Classpath-exception-2.0
 
 use crate::{self as delegated_staking, types::AgentLedgerOuter};
-use topsoil_support::{
+use topsoil_core::{
 	assert_ok, derive_impl,
 	pallet_prelude::*,
 	parameter_types,
@@ -23,18 +23,18 @@ use plant_election_provider::{
 	onchain, SequentialPhragmen,
 };
 use plant_staking::{ActiveEra, ActiveEraInfo, CurrentEra};
-use topsoil_support::dispatch::RawOrigin;
+use topsoil_core::dispatch::RawOrigin;
 
 pub type T = Runtime;
-type Block = topsoil_system::mocking::MockBlock<Runtime>;
+type Block = topsoil_core::system::mocking::MockBlock<Runtime>;
 pub type AccountId = u128;
 
 pub const GENESIS_VALIDATOR: AccountId = 1;
 pub const GENESIS_NOMINATOR_ONE: AccountId = 101;
 pub const GENESIS_NOMINATOR_TWO: AccountId = 102;
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type Block = Block;
 	type AccountData = plant_balances::AccountData<Balance>;
 	type AccountId = AccountId;
@@ -96,7 +96,7 @@ impl plant_staking::Config for Runtime {
 	type OldCurrency = Balances;
 	type Currency = Balances;
 	type UnixTime = plant_timestamp::Pallet<Self>;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type EraPayout = plant_staking::ConvertCurve<RewardCurve>;
 	type ElectionProvider = onchain::OnChainExecution<OnChainSeqPhragmen>;
 	type GenesisElectionProvider = Self::ElectionProvider;
@@ -149,17 +149,17 @@ impl plant_nomination_pools::Config for Runtime {
 	type PalletId = PoolsPalletId;
 	type MaxMetadataLen = ConstU32<256>;
 	type MaxUnbonding = MaxUnbonding;
-	type MaxPointsToBalance = topsoil_support::traits::ConstU8<10>;
+	type MaxPointsToBalance = topsoil_core::traits::ConstU8<10>;
 	type StakeAdapter =
 		plant_nomination_pools::adapter::DelegateStake<Self, Staking, DelegatedStaking>;
-	type AdminOrigin = topsoil_system::EnsureRoot<Self::AccountId>;
+	type AdminOrigin = topsoil_core::system::EnsureRoot<Self::AccountId>;
 	type BlockNumberProvider = System;
 	type Filter = plant_staking::AllStakers<Runtime>;
 }
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Timestamp: plant_timestamp,
 		Balances: plant_balances,
 		Staking: plant_staking,
@@ -175,7 +175,7 @@ impl ExtBuilder {
 	fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
-			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let _ = plant_balances::GenesisConfig::<T> {
 			balances: vec![
@@ -225,7 +225,7 @@ impl ExtBuilder {
 
 		ext.execute_with(|| {
 			// for events to be deposited.
-			topsoil_system::Pallet::<Runtime>::set_block_number(1);
+			topsoil_core::system::Pallet::<Runtime>::set_block_number(1);
 			// set era for staking.
 			start_era(0);
 		});
@@ -238,9 +238,9 @@ impl ExtBuilder {
 		ext.execute_with(test);
 		ext.execute_with(|| {
 			#[cfg(feature = "try-runtime")]
-			<AllPalletsWithSystem as topsoil_support::traits::TryState<u64>>::try_state(
-				topsoil_system::Pallet::<Runtime>::block_number(),
-				topsoil_support::traits::TryStateSelect::All,
+			<AllPalletsWithSystem as topsoil_core::traits::TryState<u64>>::try_state(
+				topsoil_core::system::Pallet::<Runtime>::block_number(),
+				topsoil_core::traits::TryStateSelect::All,
 			)
 			.unwrap();
 			#[cfg(not(feature = "try-runtime"))]

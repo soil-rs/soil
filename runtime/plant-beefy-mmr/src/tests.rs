@@ -17,7 +17,7 @@ use subsoil::core::H256;
 use subsoil::io::TestExternalities;
 use subsoil::runtime::{traits::Keccak256, DigestItem};
 
-use topsoil_support::traits::OnInitialize;
+use topsoil_core::traits::OnInitialize;
 
 use crate::mock::*;
 
@@ -90,7 +90,7 @@ fn should_contain_valid_leaf_data() {
 	let mut ext = new_test_ext(vec![1, 2, 3, 4]);
 	let parent_hash = ext.execute_with(|| {
 		init_block(1, None);
-		topsoil_system::Pallet::<Test>::parent_hash()
+		topsoil_core::system::Pallet::<Test>::parent_hash()
 	});
 
 	let mmr_leaf = read_mmr_leaf(&mut ext, node_offchain_key(0, parent_hash));
@@ -115,7 +115,7 @@ fn should_contain_valid_leaf_data() {
 	// build second block on top
 	let parent_hash = ext.execute_with(|| {
 		init_block(2, None);
-		topsoil_system::Pallet::<Test>::parent_hash()
+		topsoil_core::system::Pallet::<Test>::parent_hash()
 	});
 
 	let mmr_leaf = read_mmr_leaf(&mut ext, node_offchain_key(1, parent_hash));

@@ -15,7 +15,7 @@ use crate::mock::{
 };
 use subsoil::core::H256;
 use subsoil::runtime::Perbill;
-use topsoil_system::{EventRecord, Phase};
+use topsoil_core::system::{EventRecord, Phase};
 
 #[test]
 fn should_get_reports_with_storagemap_getter_and_function_getter() {

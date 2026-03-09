@@ -30,8 +30,8 @@ use plant_election_provider::{
 	bounds::{DataProviderBounds, ElectionBounds, ElectionBoundsBuilder},
 	data_provider, onchain, ElectionDataProvider, NposSolution, SequentialPhragmen,
 };
-pub use topsoil_support::derive_impl;
-use topsoil_support::{
+pub use topsoil_core::derive_impl;
+use topsoil_core::{
 	parameter_types,
 	traits::{ConstU32, Hooks},
 	weights::{constants, Weight},
@@ -42,9 +42,9 @@ pub type Block = subsoil::runtime::generic::Block<Header, UncheckedExtrinsic>;
 pub type UncheckedExtrinsic =
 	subsoil::runtime::generic::UncheckedExtrinsic<AccountId, RuntimeCall, (), ()>;
 
-topsoil_support::construct_runtime!(
+topsoil_core::construct_runtime!(
 	pub enum Runtime {
-		System: topsoil_system,
+		System: topsoil_core::system,
 		Balances: plant_balances,
 		MultiPhase: multi_phase,
 	}
@@ -105,7 +105,7 @@ pub fn roll_to_round(n: u32) {
 
 	while Round::<Runtime>::get() != n {
 		roll_to_signed();
-		topsoil_support::assert_ok!(MultiPhase::elect(Zero::zero()));
+		topsoil_core::assert_ok!(MultiPhase::elect(Zero::zero()));
 	}
 }
 
@@ -116,7 +116,7 @@ pub struct TrimHelpers {
 		Box<dyn Fn(&[IndexAssignmentOf<Runtime>]) -> Result<usize, subsoil::npos_elections::Error>>,
 	pub voter_index: Box<
 		dyn Fn(
-			&<Runtime as topsoil_system::Config>::AccountId,
+			&<Runtime as topsoil_core::system::Config>::AccountId,
 		) -> Option<SolutionVoterIndexOf<Runtime>>,
 	>,
 }
@@ -197,10 +197,10 @@ pub fn witness() -> SolutionOrSnapshotSize {
 		.unwrap_or_default()
 }
 
-#[derive_impl(topsoil_system::config_preludes::TestDefaultConfig)]
-impl topsoil_system::Config for Runtime {
+#[derive_impl(topsoil_core::system::config_preludes::TestDefaultConfig)]
+impl topsoil_core::system::Config for Runtime {
 	type SS58Prefix = ();
-	type BaseCallFilter = topsoil_support::traits::Everything;
+	type BaseCallFilter = topsoil_core::traits::Everything;
 	type RuntimeOrigin = RuntimeOrigin;
 	type Nonce = u64;
 	type RuntimeCall = RuntimeCall;
@@ -226,7 +226,7 @@ impl topsoil_system::Config for Runtime {
 
 const NORMAL_DISPATCH_RATIO: Perbill = Perbill::from_percent(75);
 parameter_types! {
-	pub BlockWeights: topsoil_system::limits::BlockWeights = topsoil_system::limits::BlockWeights
+	pub BlockWeights: topsoil_core::system::limits::BlockWeights = topsoil_core::system::limits::BlockWeights
 		::with_sensible_defaults(
 			Weight::from_parts(2u64 * constants::WEIGHT_REF_TIME_PER_SECOND, u64::MAX),
 			NORMAL_DISPATCH_RATIO,
@@ -402,7 +402,7 @@ impl MinerConfig for Runtime {
 impl crate::Config for Runtime {
 	type RuntimeEvent = RuntimeEvent;
 	type Currency = Balances;
-	type EstimateCallFee = topsoil_support::traits::ConstU64<8>;
+	type EstimateCallFee = topsoil_core::traits::ConstU64<8>;
 	type SignedPhase = SignedPhase;
 	type UnsignedPhase = UnsignedPhase;
 	type BetterSignedThreshold = BetterSignedThreshold;
@@ -423,7 +423,7 @@ impl crate::Config for Runtime {
 	type Fallback = MockFallback;
 	type GovernanceFallback =
 		plant_election_provider::onchain::OnChainExecution<OnChainSeqPhragmen>;
-	type ForceOrigin = topsoil_system::EnsureRoot<AccountId>;
+	type ForceOrigin = topsoil_core::system::EnsureRoot<AccountId>;
 	type MaxWinners = MaxWinners;
 	type MaxBackersPerWinner = MaxBackersPerWinner;
 	type MinerConfig = Self;
@@ -443,7 +443,7 @@ impl Convert<usize, BalanceOf<Runtime>> for Runtime {
 	}
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateTransactionBase<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateTransactionBase<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -451,7 +451,7 @@ where
 	type Extrinsic = Extrinsic;
 }
 
-impl<LocalCall> topsoil_system::offchain::CreateBare<LocalCall> for Runtime
+impl<LocalCall> topsoil_core::system::offchain::CreateBare<LocalCall> for Runtime
 where
 	RuntimeCall: From<LocalCall>,
 {
@@ -539,7 +539,7 @@ impl ElectionDataProvider for StakingMock {
 	fn add_voter(
 		voter: AccountId,
 		weight: VoteWeight,
-		targets: topsoil_support::BoundedVec<AccountId, Self::MaxVotesPerVoter>,
+		targets: topsoil_core::BoundedVec<AccountId, Self::MaxVotesPerVoter>,
 	) {
 		let mut current = Voters::get();
 		current.push((voter, weight, targets));
@@ -621,7 +621,7 @@ impl ExtBuilder {
 	pub fn build(self) -> subsoil::io::TestExternalities {
 		subsoil::tracing::try_init_simple();
 		let mut storage =
-			topsoil_system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
+			topsoil_core::system::GenesisConfig::<Runtime>::default().build_storage().unwrap();
 
 		let _ = plant_balances::GenesisConfig::<Runtime> {
 			balances: vec![
@@ -670,8 +670,8 @@ impl ExtBuilder {
 
 		#[cfg(feature = "try-runtime")]
 		ext.execute_with(|| {
-			topsoil_support::assert_ok!(
-				<MultiPhase as topsoil_support::traits::Hooks<u64>>::try_state(
+			topsoil_core::assert_ok!(
+				<MultiPhase as topsoil_core::traits::Hooks<u64>>::try_state(
 					System::block_number()
 				)
 			);

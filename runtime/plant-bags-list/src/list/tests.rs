@@ -11,7 +11,7 @@ use crate::{
 };
 use subsoil::runtime::TryRuntimeError;
 use plant_election_provider::{SortedListProvider, VoteWeight};
-use topsoil_support::{assert_ok, assert_storage_noop};
+use topsoil_core::{assert_ok, assert_storage_noop};
 
 fn node(
 	id: AccountId,
@@ -145,7 +145,7 @@ fn migrate_works() {
 }
 
 mod list {
-	use topsoil_support::assert_noop;
+	use topsoil_core::assert_noop;
 
 	use super::*;
 
@@ -360,9 +360,9 @@ mod list {
 			assert_eq!(crate::ListNodes::<Runtime>::count(), 4);
 			// we do some wacky stuff here to get access to the counter, since it is (reasonably)
 			// not exposed as mutable in any sense.
-			#[topsoil_support::storage_alias]
+			#[topsoil_core::storage_alias]
 			type CounterForListNodes<T: Config> =
-				StorageValue<crate::Pallet<T>, u32, topsoil_support::pallet_prelude::ValueQuery>;
+				StorageValue<crate::Pallet<T>, u32, topsoil_core::pallet_prelude::ValueQuery>;
 			CounterForListNodes::<Runtime>::mutate(|counter| *counter += 1);
 			assert_eq!(crate::ListNodes::<Runtime>::count(), 5);
 

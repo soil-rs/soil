@@ -166,7 +166,7 @@ where
 
 		// Use parent hash of block adding new nodes (this block) as extra identifier
 		// in offchain DB to avoid DB collisions and overwrites in case of forks.
-		let parent_hash = <topsoil_system::Pallet<T>>::parent_hash();
+		let parent_hash = <topsoil_core::system::Pallet<T>>::parent_hash();
 		for elem in elems {
 			// On-chain we are going to only store new peaks.
 			if peaks_to_store.next_if_eq(&node_index).is_some() {
@@ -202,7 +202,7 @@ where
 {
 	fn store_to_offchain(
 		pos: NodeIndex,
-		parent_hash: <T as topsoil_system::Config>::Hash,
+		parent_hash: <T as topsoil_core::system::Config>::Hash,
 		node: &NodeOf<T, I, L>,
 	) {
 		let encoded_node = node.encode();

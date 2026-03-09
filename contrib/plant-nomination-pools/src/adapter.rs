@@ -6,7 +6,7 @@
 
 use crate::*;
 use subsoil::staking::{Agent, DelegationInterface, DelegationMigrator, Delegator};
-use topsoil_support::traits::tokens::{Fortitude::Polite, Preservation::Expendable};
+use topsoil_core::traits::tokens::{Fortitude::Polite, Preservation::Expendable};
 
 /// Types of stake strategies.
 ///
@@ -72,7 +72,7 @@ impl<T> Member<T> {
 /// different. Refer the two possible strategies currently: [`TransferStake`] and
 /// [`DelegateStake`] for more detail.
 pub trait StakeStrategy {
-	type Balance: topsoil_support::traits::tokens::Balance;
+	type Balance: topsoil_core::traits::tokens::Balance;
 	type AccountId: Clone + core::fmt::Debug;
 	type CoreStaking: StakingInterface<Balance = Self::Balance, AccountId = Self::AccountId>;
 

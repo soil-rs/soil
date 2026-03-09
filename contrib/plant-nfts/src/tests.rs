@@ -14,7 +14,7 @@ use subsoil::runtime::{
 	MultiSignature, MultiSigner,
 };
 use plant_balances::Error as BalancesError;
-use topsoil_support::{
+use topsoil_core::{
 	assert_noop, assert_ok,
 	traits::{
 		tokens::nonfungibles_v2::{Create, Destroy, Inspect, Mutate},
@@ -22,7 +22,7 @@ use topsoil_support::{
 	},
 };
 
-type AccountIdOf<Test> = <Test as topsoil_system::Config>::AccountId;
+type AccountIdOf<Test> = <Test as topsoil_core::system::Config>::AccountId;
 
 fn account(id: u8) -> AccountIdOf<Test> {
 	[id; 32].into()
