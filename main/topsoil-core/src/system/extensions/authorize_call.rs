@@ -103,7 +103,7 @@ where
 
 #[cfg(test)]
 mod tests {
-	use crate as topsoil_system;
+	use crate::system as topsoil_system;
 	use codec::Encode;
 	use subsoil::runtime::{
 		testing::UintAuthorityId,
@@ -120,7 +120,7 @@ mod tests {
 
 	#[topsoil_core::pallet]
 	pub mod pallet1 {
-		use crate as topsoil_system;
+		use crate::system as topsoil_system;
 		use topsoil_core::pallet_prelude::*;
 		use topsoil_system::pallet_prelude::*;
 
@@ -141,7 +141,7 @@ mod tests {
 		pub struct Pallet<T>(_);
 
 		#[pallet::config]
-		pub trait Config: topsoil_system::Config {}
+		pub trait Config: topsoil_core::system::Config {}
 
 		#[pallet::call]
 		impl<T: Config> Pallet<T> {

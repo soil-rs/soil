@@ -14,14 +14,14 @@ use subsoil::metadata_ir::{
 };
 use subsoil::runtime::{generic, traits::BlakeTwo256, BuildStorage};
 
-pub use self::topsoil_core::system::{pallet_prelude::*, Config, Pallet};
+pub use topsoil_system::{pallet_prelude::*, Config, Pallet};
 
 mod storage_alias;
 
 #[pallet]
 pub mod topsoil_system {
 	#[allow(unused)]
-	use super::{topsoil_core::system, topsoil_core::system::pallet_prelude::*};
+	use super::{topsoil_system, topsoil_system::pallet_prelude::*};
 	pub use crate::dispatch::RawOrigin;
 	use crate::{pallet_prelude::*, traits::tasks::Task as TaskTrait};
 
@@ -239,10 +239,10 @@ mod runtime {
 	pub struct Runtime;
 
 	#[runtime::pallet_index(0)]
-	pub type System = self::topsoil_core::system;
+	pub type System = topsoil_system;
 }
 
-#[crate::derive_impl(self::topsoil_core::system::config_preludes::TestDefaultConfig as self::topsoil_core::system::DefaultConfig)]
+#[crate::derive_impl(topsoil_system::config_preludes::TestDefaultConfig as topsoil_system::DefaultConfig)]
 impl Config for Runtime {
 	type Block = Block;
 	type AccountId = AccountId;
@@ -268,7 +268,7 @@ impl<T: Ord> Sorted for Vec<T> {
 fn map_issue_3318() {
 	new_test_ext().execute_with(|| {
 		#[allow(deprecated)]
-		type OptionLinkedMap = self::topsoil_core::system::OptionLinkedMap<Runtime>;
+		type OptionLinkedMap = topsoil_system::OptionLinkedMap<Runtime>;
 
 		OptionLinkedMap::insert(1, 1);
 		assert_eq!(OptionLinkedMap::get(1), Some(1));
@@ -281,7 +281,7 @@ fn map_issue_3318() {
 fn map_swap_works() {
 	new_test_ext().execute_with(|| {
 		#[allow(deprecated)]
-		type OptionLinkedMap = self::topsoil_core::system::OptionLinkedMap<Runtime>;
+		type OptionLinkedMap = topsoil_system::OptionLinkedMap<Runtime>;
 
 		OptionLinkedMap::insert(0, 0);
 		OptionLinkedMap::insert(1, 1);
@@ -313,7 +313,7 @@ fn map_swap_works() {
 fn double_map_swap_works() {
 	new_test_ext().execute_with(|| {
 		#[allow(deprecated)]
-		type DataDM = self::topsoil_core::system::DataDM<Runtime>;
+		type DataDM = topsoil_system::DataDM<Runtime>;
 
 		DataDM::insert(0, 1, 1);
 		DataDM::insert(1, 0, 2);
@@ -348,7 +348,7 @@ fn double_map_swap_works() {
 fn map_basic_insert_remove_should_work() {
 	new_test_ext().execute_with(|| {
 		#[allow(deprecated)]
-		type Map = self::topsoil_core::system::Data<Runtime>;
+		type Map = topsoil_system::Data<Runtime>;
 
 		// initialized during genesis
 		assert_eq!(Map::get(&15u32), 42u64);
@@ -377,7 +377,7 @@ fn map_basic_insert_remove_should_work() {
 fn map_iteration_should_work() {
 	new_test_ext().execute_with(|| {
 		#[allow(deprecated)]
-		type Map = self::topsoil_core::system::Data<Runtime>;
+		type Map = topsoil_system::Data<Runtime>;
 
 		assert_eq!(Map::iter().collect::<Vec<_>>().sorted(), vec![(15, 42)]);
 		// insert / remove
@@ -429,7 +429,7 @@ fn map_iteration_should_work() {
 fn double_map_basic_insert_remove_remove_prefix_with_commit_should_work() {
 	let key1 = 17u32;
 	let key2 = 18u32;
-	type DoubleMap = self::topsoil_core::system::DataDM<Runtime>;
+	type DoubleMap = topsoil_system::DataDM<Runtime>;
 	let mut e = new_test_ext();
 	e.execute_with(|| {
 		// initialized during genesis
@@ -474,7 +474,7 @@ fn double_map_basic_insert_remove_remove_prefix_should_work() {
 	new_test_ext().execute_with(|| {
 		let key1 = 17u32;
 		let key2 = 18u32;
-		type DoubleMap = self::topsoil_core::system::DataDM<Runtime>;
+		type DoubleMap = topsoil_system::DataDM<Runtime>;
 
 		// initialized during genesis
 		assert_eq!(DoubleMap::get(&15u32, &16u32), 42u64);
@@ -522,7 +522,7 @@ fn double_map_basic_insert_remove_remove_prefix_should_work() {
 #[test]
 fn double_map_append_should_work() {
 	new_test_ext().execute_with(|| {
-		type DoubleMap = self::topsoil_core::system::AppendableDM<Runtime>;
+		type DoubleMap = topsoil_system::AppendableDM<Runtime>;
 
 		let key1 = 17u32;
 		let key2 = 18u32;
@@ -536,7 +536,7 @@ fn double_map_append_should_work() {
 #[test]
 fn double_map_mutate_exists_should_work() {
 	new_test_ext().execute_with(|| {
-		type DoubleMap = self::topsoil_core::system::DataDM<Runtime>;
+		type DoubleMap = topsoil_system::DataDM<Runtime>;
 
 		let (key1, key2) = (11, 13);
 
@@ -553,7 +553,7 @@ fn double_map_mutate_exists_should_work() {
 #[test]
 fn double_map_try_mutate_exists_should_work() {
 	new_test_ext().execute_with(|| {
-		type DoubleMap = self::topsoil_core::system::DataDM<Runtime>;
+		type DoubleMap = topsoil_system::DataDM<Runtime>;
 		type TestResult = Result<(), &'static str>;
 
 		let (key1, key2) = (11, 13);

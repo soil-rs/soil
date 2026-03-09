@@ -703,7 +703,7 @@ mod weight_tests {
 	use subsoil::runtime::{generic, traits::BlakeTwo256};
 	use subsoil::weights::RuntimeDbWeight;
 
-	pub use self::topsoil_core::system::{Call, Config};
+	pub use topsoil_system::{Call, Config};
 
 	fn from_actual_ref_time(ref_time: Option<u64>) -> PostDispatchInfo {
 		PostDispatchInfo {
@@ -718,14 +718,14 @@ mod weight_tests {
 
 	#[crate::pallet(dev_mode)]
 	pub mod topsoil_system {
-		use super::{topsoil_core::system, topsoil_core::system::pallet_prelude::*};
+		use super::topsoil_system::pallet_prelude::*;
 		pub use crate::dispatch::RawOrigin;
 		use crate::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
-		#[pallet::config]
+		#[pallet::config(frame_system_config)]
 		#[pallet::disable_frame_system_supertrait_check]
 		pub trait Config: 'static {
 			type Block: Parameter + subsoil::runtime::traits::Block;
@@ -826,7 +826,7 @@ mod weight_tests {
 	crate::construct_runtime!(
 		pub enum Runtime
 		{
-			System: self::topsoil_core::system,
+			System: topsoil_system,
 		}
 	);
 
@@ -1349,7 +1349,7 @@ mod extension_weight_tests {
 	use subsoil::weights::RuntimeDbWeight;
 	use test_extensions::{ActualWeightIs, FreeIfUnder, HalfCostIf};
 
-	use super::weight_tests::topsoil_core::system;
+	use super::weight_tests::topsoil_system;
 	use topsoil_core::construct_runtime;
 
 	pub type TxExtension = (HalfCostIf, FreeIfUnder, ActualWeightIs);
@@ -1362,11 +1362,11 @@ mod extension_weight_tests {
 
 	construct_runtime!(
 		pub enum ExtRuntime {
-			System: topsoil_core::system,
+			System: topsoil_system,
 		}
 	);
 
-	impl topsoil_core::system::Config for ExtRuntime {
+	impl topsoil_system::Config for ExtRuntime {
 		type Block = Block;
 		type AccountId = AccountId;
 		type Balance = Balance;
@@ -1410,7 +1410,7 @@ mod extension_weight_tests {
 	#[test]
 	fn no_post_dispatch_with_no_refund() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(topsoil_core::system::Call::<ExtRuntime>::f99 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f99 {});
 			let ext: TxExtension = (HalfCostIf(false), FreeIfUnder(1500), ActualWeightIs(0));
 			let uxt = UncheckedExtrinsic::new_signed(call.clone(), 0, (), ext.clone());
 			assert_eq!(uxt.extension_weight(), Weight::from_parts(600, 0));
@@ -1436,7 +1436,7 @@ mod extension_weight_tests {
 	#[test]
 	fn no_post_dispatch_refunds_when_dispatched() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(topsoil_core::system::Call::<ExtRuntime>::f99 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f99 {});
 			let ext: TxExtension = (HalfCostIf(true), FreeIfUnder(100), ActualWeightIs(0));
 			let uxt = UncheckedExtrinsic::new_signed(call.clone(), 0, (), ext.clone());
 			assert_eq!(uxt.extension_weight(), Weight::from_parts(600, 0));
@@ -1454,7 +1454,7 @@ mod extension_weight_tests {
 	#[test]
 	fn post_dispatch_with_refunds() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(topsoil_core::system::Call::<ExtRuntime>::f100 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f100 {});
 			// First testcase
 			let ext: TxExtension = (HalfCostIf(false), FreeIfUnder(2000), ActualWeightIs(0));
 			let uxt = UncheckedExtrinsic::new_signed(call.clone(), 0, (), ext.clone());
@@ -1547,7 +1547,7 @@ mod extension_weight_tests {
 	#[test]
 	fn checked_extrinsic_apply() {
 		ExtBuilder::default().build_and_execute(|| {
-			let call = RuntimeCall::System(topsoil_core::system::Call::<ExtRuntime>::f100 {});
+			let call = RuntimeCall::System(topsoil_system::Call::<ExtRuntime>::f100 {});
 			// First testcase
 			let ext: TxExtension = (HalfCostIf(false), FreeIfUnder(2000), ActualWeightIs(0));
 			let xt = CheckedExtrinsic {

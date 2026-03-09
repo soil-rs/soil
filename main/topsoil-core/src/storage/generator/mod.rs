@@ -38,14 +38,14 @@ mod tests {
 	#[crate::pallet]
 	pub mod topsoil_system {
 		#[allow(unused)]
-		use super::{topsoil_core::system, topsoil_core::system::pallet_prelude::*};
+		use super::{topsoil_system, topsoil_system::pallet_prelude::*};
 		pub use crate::dispatch::RawOrigin;
 		use crate::pallet_prelude::*;
 
 		#[pallet::pallet]
 		pub struct Pallet<T>(_);
 
-		#[pallet::config]
+		#[pallet::config(frame_system_config)]
 		#[pallet::disable_frame_system_supertrait_check]
 		pub trait Config: 'static {
 			type Block: subsoil::runtime::traits::Block;
@@ -110,11 +110,11 @@ mod tests {
 	crate::construct_runtime!(
 		pub enum Runtime
 		{
-			System: self::topsoil_core::system,
+			System: topsoil_system,
 		}
 	);
 
-	impl self::topsoil_core::system::Config for Runtime {
+	impl topsoil_system::Config for Runtime {
 		type AccountId = AccountId;
 		type Block = Block;
 		type BaseCallFilter = crate::traits::Everything;
@@ -143,7 +143,7 @@ mod tests {
 	fn value_translate_works() {
 		let t = RuntimeGenesisConfig::default().build_storage().unwrap();
 		TestExternalities::new(t).execute_with(|| {
-			type Value = self::topsoil_core::system::Value<Runtime>;
+			type Value = topsoil_system::Value<Runtime>;
 
 			// put the old value `1111u32` in the storage.
 			let key = Value::storage_value_final_key();
@@ -165,7 +165,7 @@ mod tests {
 	fn map_translate_works() {
 		let t = RuntimeGenesisConfig::default().build_storage().unwrap();
 		TestExternalities::new(t).execute_with(|| {
-			type NumberMap = self::topsoil_core::system::NumberMap<Runtime>;
+			type NumberMap = topsoil_system::NumberMap<Runtime>;
 
 			// start with a map of u32 -> u64.
 			for i in 0u32..100u32 {
@@ -200,9 +200,9 @@ mod tests {
 	fn try_mutate_works() {
 		let t = RuntimeGenesisConfig::default().build_storage().unwrap();
 		TestExternalities::new(t).execute_with(|| {
-			type Value = self::topsoil_core::system::Value<Runtime>;
-			type NumberMap = self::topsoil_core::system::NumberMap<Runtime>;
-			type DoubleMap = self::topsoil_core::system::DoubleMap<Runtime>;
+			type Value = topsoil_system::Value<Runtime>;
+			type NumberMap = topsoil_system::NumberMap<Runtime>;
+			type DoubleMap = topsoil_system::DoubleMap<Runtime>;
 
 			assert_eq!(Value::get(), (0, 0));
 			assert_eq!(NumberMap::get(0), 0);
