@@ -51,7 +51,7 @@ pub(crate) fn syn_err(message: &'static str) -> syn::Error {
 /// For example, the following generates a public struct with name `TestSolution` with `u16` voter
 /// type, `u8` target type and `Perbill` accuracy with maximum of 4 edges per voter.
 ///
-/// ```
+/// ```ignore
 /// # use plant_election_provider_macros::generate_solution_type;
 /// # use subsoil::arithmetic::per_things::Perbill;
 /// # use topsoil_support::traits::ConstU32;
