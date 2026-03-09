@@ -114,7 +114,7 @@ fn pallet_parsing_works() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_core :: system");
 	assert_eq!(pallet.instance, None);
 }
 
@@ -137,7 +137,7 @@ fn pallet_parsing_works_with_instance() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_core :: system");
 	assert_eq!(pallet.instance, Some(parse_quote! { Instance1 }));
 }
 
@@ -160,7 +160,7 @@ fn pallet_parsing_works_with_pallet() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_core :: system");
 	assert_eq!(pallet.instance, None);
 }
 
@@ -183,6 +183,6 @@ fn pallet_parsing_works_with_instance_and_pallet() {
 
 	assert_eq!(pallet.name.to_string(), "System");
 	assert_eq!(pallet.index, index);
-	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_system");
+	assert_eq!(pallet.path.to_token_stream().to_string(), "topsoil_core :: system");
 	assert_eq!(pallet.instance, Some(parse_quote! { Instance1 }));
 }

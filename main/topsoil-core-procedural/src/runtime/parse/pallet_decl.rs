@@ -130,7 +130,7 @@ fn declaration_works_with_pallet() {
 	.expect("Failed to parse pallet declaration");
 
 	assert_eq!(decl.name, "System");
-	assert_eq!(decl.path, parse_quote! { topsoil_system });
+	assert_eq!(decl.path, parse_quote! { topsoil_core::system });
 
 	let segment: syn::PathSegment =
 		syn::PathSegment { ident: parse_quote! { Pallet }, arguments: PathArguments::None };
@@ -151,7 +151,7 @@ fn declaration_works_with_pallet_and_instance() {
 	.expect("Failed to parse pallet declaration");
 
 	assert_eq!(decl.name, "System");
-	assert_eq!(decl.path, parse_quote! { topsoil_system });
+	assert_eq!(decl.path, parse_quote! { topsoil_core::system });
 
 	let segment: syn::PathSegment =
 		syn::PathSegment { ident: parse_quote! { Pallet }, arguments: PathArguments::None };
