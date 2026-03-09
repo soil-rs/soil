@@ -286,31 +286,28 @@ fn check_event_type(
 
 /// Check that the path to `topsoil_core::system::Config` is valid.
 fn has_expected_system_config(path: syn::Path, topsoil_system: &syn::Path) -> bool {
-	// Check that the path contains the expected system segments (e.g. "system" from
-	// "topsoil_core::system" or "topsoil_system" for legacy).
-	let last_non_config_segment = topsoil_system
-		.segments
-		.last()
-		.map(|s| s.ident.to_string())
-		.unwrap_or_default();
-	if path.segments.iter().all(|s| s.ident != last_non_config_segment) {
-		return false;
-	}
-
 	let mut expected_system_config =
 		match (is_using_frame_crate(&path), is_using_frame_crate(&topsoil_system)) {
 			(true, false) => {
 				return false
 			},
 			(false, true) => {
-				topsoil_system
-					.segments
-					.last()
-					.map(|s| {
-						syn::parse2::<syn::Path>(quote::quote!(#s))
-							.expect("is a valid path; qed")
-					})
-					.unwrap_or_else(|| topsoil_system.clone())
+				// Strip the umbrella prefix (e.g. `topsoil::deps::`) and keep the
+				// crate-local path (e.g. `topsoil_core::system`). The umbrella
+				// re-exports crates under `topsoil::deps::<crate>`, so we skip
+				// the first two segments ("topsoil", "deps").
+				let segments: syn::punctuated::Punctuated<_, syn::Token![::]> =
+					topsoil_system
+						.segments
+						.iter()
+						.skip(2)
+						.cloned()
+						.collect();
+				if segments.is_empty() {
+					topsoil_system.clone()
+				} else {
+					syn::Path { leading_colon: None, segments }
+				}
 			},
 			(_, _) => {
 				topsoil_system.clone()
@@ -715,7 +712,8 @@ mod tests {
 
 	#[test]
 	fn has_expected_system_config_not_frame_system() {
-		let topsoil_system = syn::parse2::<syn::Path>(quote::quote!(something)).unwrap();
+		let topsoil_system =
+			syn::parse2::<syn::Path>(quote::quote!(topsoil_core::system)).unwrap();
 		let path = syn::parse2::<syn::Path>(quote::quote!(something::Config)).unwrap();
 		assert!(!has_expected_system_config(path, &topsoil_system));
 	}

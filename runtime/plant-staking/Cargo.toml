@@ -18,7 +18,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { features = ["derive"], workspace = true }
 plant-election-provider = { workspace = true }
-topsoil-core = { features = ["experimental"], workspace = true, default-features = true }
+topsoil-core = { features = ["experimental"], workspace = true }
 log = { workspace = true }
 plant-authorship = { workspace = true }
 plant-session = { features = ["historical"], workspace = true }
@@ -31,6 +31,7 @@ topsoil-benchmarking = { optional = true, workspace = true }
 rand_chacha = { optional = true, workspace = true }
 
 [dev-dependencies]
+topsoil-core = { workspace = true, default-features = true }
 topsoil-benchmarking = { workspace = true, default-features = true }
 plant-election-provider = { workspace = true, default-features = true }
 plant-bags-list = { workspace = true, default-features = true }

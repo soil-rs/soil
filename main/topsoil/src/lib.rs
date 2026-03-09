@@ -143,12 +143,13 @@ pub mod pallet_macros {
 /// mod pallet {}
 /// ```
 pub mod prelude {
-	/// `topsoil_system`'s parent crate, which is mandatory in all pallets build with this crate.
-	///
-	/// Conveniently, the keyword `topsoil_system` is in scope as one uses `use
-	/// topsoil::prelude::*`.
+	/// The core frame crate, re-exported so that `topsoil_core::system::Config` etc. resolve
+	/// when using `use topsoil::prelude::*`.
+	pub use topsoil_core;
+
+	/// Legacy alias: the system module re-exported as `topsoil_system`.
 	#[doc(inline)]
-	pub use topsoil_core::system;
+	pub use topsoil_core::system as topsoil_system;
 
 	/// Pallet prelude of `topsoil-core`.
 	///
@@ -267,6 +268,7 @@ pub mod benchmarking {
 /// ```
 pub mod weights_prelude {
 	pub use core::marker::PhantomData;
+	pub use topsoil_core;
 	pub use topsoil_core::{
 		traits::Get,
 		weights::{
@@ -274,7 +276,6 @@ pub mod weights_prelude {
 			Weight,
 		},
 	};
-	pub use topsoil_core::system;
 }
 
 /// The main testing prelude of FRAME.
