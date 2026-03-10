@@ -34,7 +34,7 @@ use soil_consensus::slots::{
 	SlotInfo, StorageChanges,
 };
 use soil_telemetry::TelemetryHandle;
-use subsoil::api::{Core, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, Core, ProvideRuntimeApi};
 use subsoil::application_crypto::AppPublic;
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::Pair;
@@ -510,7 +510,7 @@ where
 	C: ProvideRuntimeApi<B>,
 	C::Api: AuraApi<B, A>,
 {
-	let runtime_api = client.runtime_api();
+	let mut runtime_api = client.runtime_api();
 
 	match compatibility_mode {
 		CompatibilityMode::None => {},
@@ -533,6 +533,7 @@ where
 		},
 	}
 
+	runtime_api.set_call_context(subsoil::core::traits::CallContext::Onchain);
 	runtime_api
 		.authorities(parent_hash)
 		.ok()
