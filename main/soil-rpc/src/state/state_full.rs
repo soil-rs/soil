@@ -35,7 +35,6 @@ use subsoil::core::{
 	storage::{
 		ChildInfo, ChildType, PrefixedStorageKey, StorageChangeSet, StorageData, StorageKey,
 	},
-	traits::CallContext,
 	Bytes,
 };
 use subsoil::runtime::traits::Block as BlockT;
