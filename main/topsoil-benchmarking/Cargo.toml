@@ -17,7 +17,7 @@ targets = ["x86_64-unknown-linux-gnu"]
 [dependencies]
 codec = { workspace = true }
 topsoil-core = { workspace = true }
-topsoil-core-procedural = { workspace = true }
+topsoil-core-macros = { workspace = true }
 linregress = { optional = true, workspace = true }
 log = { workspace = true }
 paste = { workspace = true, default-features = true }
@@ -35,7 +35,7 @@ soil-client = { workspace = true }
 default = ["std"]
 std = [
 	"codec/std",
-	"topsoil-core-procedural/std",
+	"topsoil-core-macros/std",
 	"topsoil-core/std",
 	"linregress",
 	"log/std",

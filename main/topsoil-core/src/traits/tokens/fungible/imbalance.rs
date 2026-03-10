@@ -27,7 +27,7 @@ use alloc::boxed::Box;
 use core::marker::PhantomData;
 use subsoil::arithmetic::traits::SaturatedConversion;
 use subsoil::runtime::traits::Zero;
-use topsoil_core_procedural::{DebugNoBound, EqNoBound, PartialEqNoBound};
+use topsoil_core_macros::{DebugNoBound, EqNoBound, PartialEqNoBound};
 
 /// Handler for when an imbalance gets dropped. This could handle either a credit (negative) or
 /// debt (positive) imbalance.

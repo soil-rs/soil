@@ -142,9 +142,8 @@ members = [
 	"contrib/plant-statement",
 	"contrib/plant-sudo",
 	"main/topsoil-core",
-	"main/topsoil-core-procedural",
-	"main/topsoil-core-procedural-tools",
-	"main/topsoil-core-procedural-tools-macros",
+	"main/topsoil-core-macros",
+	"main/topsoil-core-macros-derive",
 	"harness/topsoil-test-support",
 	"harness/topsoil-test-support-compile-pass",
 	"harness/topsoil-test-support-pallet",
@@ -270,9 +269,8 @@ topsoil-benchmarking = { path = "main/topsoil-benchmarking", version = "0.2.0", 
 topsoil-benchmarking-pallet-pov = { default-features = false, path = "main/topsoil-benchmarking-pallet-pov", version = "0.2.0" }
 topsoil-executive = { path = "main/topsoil-executive", version = "0.2.0", default-features = false }
 topsoil-core = { path = "main/topsoil-core", version = "0.2.0", default-features = false }
-topsoil-core-procedural = { path = "main/topsoil-core-procedural", version = "0.2.0", default-features = false }
-topsoil-core-procedural-tools = { path = "main/topsoil-core-procedural-tools", version = "0.2.0", default-features = false }
-topsoil-core-procedural-tools-macros = { path = "main/topsoil-core-procedural-tools-macros", version = "0.2.0", default-features = false }
+topsoil-core-macros = { path = "main/topsoil-core-macros", version = "0.2.0", default-features = false }
+topsoil-core-macros-derive = { path = "main/topsoil-core-macros-derive", version = "0.2.0", default-features = false }
 topsoil-core-system-benchmarking = { path = "main/topsoil-core-system-benchmarking", version = "0.2.0", default-features = false }
 topsoil-core-rpc-runtime-api = { path = "main/topsoil-core-rpc-runtime-api", version = "0.2.0", default-features = false }
 topsoil-try-runtime = { path = "main/topsoil-try-runtime", version = "0.2.0", default-features = false }

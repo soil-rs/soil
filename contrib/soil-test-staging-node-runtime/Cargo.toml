@@ -39,8 +39,7 @@ plant-election-provider = { workspace = true }
 topsoil-executive = { workspace = true }
 plant-metadata-hash-extension = { workspace = true }
 topsoil-core = { features = ["tuples-96"], workspace = true }
-topsoil-core-procedural = { workspace = true }
-topsoil-core-procedural-tools-macros = { workspace = true }
+topsoil-core-macros = { workspace = true }
 topsoil-core-system-benchmarking = { workspace = true }
 topsoil-core-rpc-runtime-api = { workspace = true }
 topsoil-try-runtime = { workspace = true }
@@ -161,7 +160,7 @@ std = [
 	"topsoil-executive/std",
 	"plant-metadata-hash-extension/std",
 	"topsoil-core/std",
-	"topsoil-core-procedural/std",
+	"topsoil-core-macros/std",
 	"topsoil-core-system-benchmarking/std",
 	"topsoil-core-rpc-runtime-api/std",
 	"topsoil-try-runtime/std",

@@ -155,7 +155,7 @@ use core::marker::PhantomData;
 use scale_info::TypeInfo;
 #[cfg(feature = "runtime-benchmarks")]
 use subsoil::runtime::Saturating;
-use topsoil_core_procedural::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
+use topsoil_core_macros::{CloneNoBound, DebugNoBound, EqNoBound, PartialEqNoBound};
 
 use super::{
 	Fortitude::{Force, Polite},

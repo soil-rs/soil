@@ -11021,7 +11021,6 @@ dependencies = [
  "tokio",
  "tokio-util",
  "topsoil-core",
- "topsoil-core-procedural-tools",
  "topsoil-core-rpc-runtime-api",
  "wat",
 ]
@@ -11210,8 +11209,7 @@ dependencies = [
  "topsoil-benchmarking",
  "topsoil-benchmarking-pallet-pov",
  "topsoil-core",
- "topsoil-core-procedural",
- "topsoil-core-procedural-tools-macros",
+ "topsoil-core-macros",
  "topsoil-core-rpc-runtime-api",
  "topsoil-core-system-benchmarking",
  "topsoil-executive",
@@ -12448,7 +12446,7 @@ dependencies = [
  "static_assertions",
  "subsoil",
  "topsoil-core",
- "topsoil-core-procedural",
+ "topsoil-core-macros",
 ]
 
 [[package]]
@@ -12489,12 +12487,12 @@ dependencies = [
  "subsoil",
  "subsoil-crypto-hashing",
  "subsoil-macros",
- "topsoil-core-procedural",
+ "topsoil-core-macros",
  "tt-call",
 ]
 
 [[package]]
-name = "topsoil-core-procedural"
+name = "topsoil-core-macros"
 version = "0.2.0"
 dependencies = [
  "Inflector",
@@ -12504,28 +12502,18 @@ dependencies = [
  "expander",
  "itertools 0.11.0",
  "macro_magic",
+ "proc-macro-crate 3.4.0",
  "proc-macro-warning",
  "proc-macro2",
  "quote",
  "regex",
  "subsoil-crypto-hashing",
  "syn 2.0.117",
- "topsoil-core-procedural-tools",
+ "topsoil-core-macros-derive",
 ]
 
 [[package]]
-name = "topsoil-core-procedural-tools"
-version = "0.2.0"
-dependencies = [
- "proc-macro-crate 3.4.0",
- "proc-macro2",
- "quote",
- "syn 2.0.117",
- "topsoil-core-procedural-tools-macros",
-]
-
-[[package]]
-name = "topsoil-core-procedural-tools-macros"
+name = "topsoil-core-macros-derive"
 version = "0.2.0"
 dependencies = [
  "proc-macro2",

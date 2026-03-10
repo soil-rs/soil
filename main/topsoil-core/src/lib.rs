@@ -185,27 +185,27 @@ impl TypeId for PalletId {
 ///    pallet name. The macro uses the presence of generic arguments to the prefix type as an
 ///    indication that it should use the pallet name as the `prefix`:
 #[doc = docify::embed!("src/tests/storage_alias.rs", storage_alias_guess)]
-pub use topsoil_core_procedural::storage_alias;
+pub use topsoil_core_macros::storage_alias;
 
-pub use topsoil_core_procedural::derive_impl;
+pub use topsoil_core_macros::derive_impl;
 
 /// Experimental macros for defining dynamic params that can be used in pallet configs.
 #[cfg(feature = "experimental")]
 pub mod dynamic_params {
-	pub use topsoil_core_procedural::{
+	pub use topsoil_core_macros::{
 		dynamic_aggregated_params_internal, dynamic_pallet_params, dynamic_params,
 	};
 }
 
 #[doc(inline)]
-pub use topsoil_core_procedural::{
+pub use topsoil_core_macros::{
 	construct_runtime, match_and_insert, transactional, PalletError,
 };
 
-pub use topsoil_core_procedural::runtime;
+pub use topsoil_core_macros::runtime;
 
 #[doc(hidden)]
-pub use topsoil_core_procedural::{__create_tt_macro, __generate_dummy_part_checker};
+pub use topsoil_core_macros::{__create_tt_macro, __generate_dummy_part_checker};
 
 /// Derive [`Clone`] but do not bound any generic.
 ///
@@ -223,7 +223,7 @@ pub use topsoil_core_procedural::{__create_tt_macro, __generate_dummy_part_check
 /// 		c: T::C,
 /// }
 /// ```
-pub use topsoil_core_procedural::CloneNoBound;
+pub use topsoil_core_macros::CloneNoBound;
 
 /// Derive [`Eq`] but do not bound any generic.
 ///
@@ -241,7 +241,7 @@ pub use topsoil_core_procedural::CloneNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use topsoil_core_procedural::EqNoBound;
+pub use topsoil_core_macros::EqNoBound;
 
 /// Derive [`PartialEq`] but do not bound any generic.
 ///
@@ -259,7 +259,7 @@ pub use topsoil_core_procedural::EqNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use topsoil_core_procedural::PartialEqNoBound;
+pub use topsoil_core_macros::PartialEqNoBound;
 
 /// Derive [`Ord`] but do not bound any generic.
 ///
@@ -277,7 +277,7 @@ pub use topsoil_core_procedural::PartialEqNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use topsoil_core_procedural::OrdNoBound;
+pub use topsoil_core_macros::OrdNoBound;
 
 /// Derive [`PartialOrd`] but do not bound any generic.
 ///
@@ -295,7 +295,7 @@ pub use topsoil_core_procedural::OrdNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use topsoil_core_procedural::PartialOrdNoBound;
+pub use topsoil_core_macros::PartialOrdNoBound;
 
 /// Derive [`Debug`] but do not bound any generic.
 ///
@@ -314,7 +314,7 @@ pub use topsoil_core_procedural::PartialOrdNoBound;
 /// 		c: T::C,
 /// }
 /// ```
-pub use topsoil_core_procedural::DebugNoBound;
+pub use topsoil_core_macros::DebugNoBound;
 
 /// Derive [`Default`] but do not bound any generic.
 ///
@@ -342,7 +342,7 @@ pub use topsoil_core_procedural::DebugNoBound;
 /// 	Quxx,
 /// }
 /// ```
-pub use topsoil_core_procedural::DefaultNoBound;
+pub use topsoil_core_macros::DefaultNoBound;
 
 /// Assert the annotated function is executed within a storage transaction.
 ///
@@ -373,7 +373,7 @@ pub use topsoil_core_procedural::DefaultNoBound;
 /// 	update_all(value)
 /// }
 /// ```
-pub use topsoil_core_procedural::require_transactional;
+pub use topsoil_core_macros::require_transactional;
 
 /// Convert the current crate version into a [`CrateVersion`](crate::traits::CrateVersion).
 ///
@@ -388,7 +388,7 @@ pub use topsoil_core_procedural::require_transactional;
 /// # use topsoil_core::{traits::CrateVersion, crate_to_crate_version};
 /// const Version: CrateVersion = crate_to_crate_version!();
 /// ```
-pub use topsoil_core_procedural::crate_to_crate_version;
+pub use topsoil_core_macros::crate_to_crate_version;
 
 #[doc(hidden)]
 pub use serde::{Deserialize, Serialize};
@@ -454,7 +454,7 @@ pub mod pallet_prelude {
 	};
 	pub use subsoil::weights::Weight;
 	pub use topsoil_core::pallet_macros::*;
-	pub use topsoil_core_procedural::{inject_runtime_type, register_default_impl};
+	pub use topsoil_core_macros::{inject_runtime_type, register_default_impl};
 }
 
 /// The pallet macro has 2 purposes:
@@ -592,7 +592,7 @@ pub mod pallet_prelude {
 ///   code.
 /// - If the item is annotated with `deprecated` attribute then the generated code will be
 ///   automatically annotated with `allow(deprecated)`
-pub use topsoil_core_procedural::pallet;
+pub use topsoil_core_macros::pallet;
 
 /// Contains macro stubs for all of the `pallet::` macros
 pub mod pallet_macros {
@@ -621,7 +621,7 @@ pub mod pallet_macros {
 	/// # 	pub trait Config: topsoil_core::system::Config {}
 	/// }
 	/// ```
-	pub use topsoil_core_procedural::whitelist_storage;
+	pub use topsoil_core_macros::whitelist_storage;
 
 	/// Allows specifying the weight of a call.
 	///
@@ -682,7 +682,7 @@ pub mod pallet_macros {
 	///     }
 	/// }
 	/// ```
-	pub use topsoil_core_procedural::weight;
+	pub use topsoil_core_macros::weight;
 
 	/// Allows whitelisting a storage item from decoding during try-runtime checks.
 	///
@@ -707,7 +707,7 @@ pub mod pallet_macros {
 	/// # 	pub trait Config: topsoil_core::system::Config {}
 	/// }
 	/// ```
-	pub use topsoil_core_procedural::disable_try_decode_storage;
+	pub use topsoil_core_macros::disable_try_decode_storage;
 
 	/// Declares a storage as unbounded in potential size.
 	///
@@ -734,7 +734,7 @@ pub mod pallet_macros {
 	/// # 	pub trait Config: topsoil_core::system::Config {}
 	/// }
 	/// ```
-	pub use topsoil_core_procedural::unbounded;
+	pub use topsoil_core_macros::unbounded;
 
 	/// Defines what storage prefix to use for a storage item when building the trie.
 	///
@@ -759,7 +759,7 @@ pub mod pallet_macros {
 	/// # 	pub trait Config: topsoil_core::system::Config {}
 	/// }
 	/// ```
-	pub use topsoil_core_procedural::storage_prefix;
+	pub use topsoil_core_macros::storage_prefix;
 
 	/// Ensures the generated `DefaultConfig` will not have any bounds for
 	/// that trait item.
@@ -770,7 +770,7 @@ pub mod pallet_macros {
 	/// As an example, if you have a trait item `type AccountId: SomeTrait;` in your `Config`
 	/// trait, the generated `DefaultConfig` will only have `type AccountId;` with no trait
 	/// bound.
-	pub use topsoil_core_procedural::no_default_bounds;
+	pub use topsoil_core_macros::no_default_bounds;
 
 	/// Ensures the trait item will not be used as a default with the
 	/// `#[derive_impl(..)]` attribute macro.
@@ -778,7 +778,7 @@ pub mod pallet_macros {
 	/// The optional attribute `#[pallet::no_default]` can be attached to trait items within a
 	/// `Config` trait impl that has [`#[pallet::config(with_default)]`](`config`)
 	/// attached.
-	pub use topsoil_core_procedural::no_default;
+	pub use topsoil_core_macros::no_default;
 
 	/// Declares a module as importable into a pallet via
 	/// [`#[import_section]`](`import_section`).
@@ -800,7 +800,7 @@ pub mod pallet_macros {
 	/// same crate with the same ident/name. The ident you specify can then be used instead of
 	/// the module's ident name when you go to import it via
 	/// [`#[import_section]`](`import_section`).
-	pub use topsoil_core_procedural::pallet_section;
+	pub use topsoil_core_macros::pallet_section;
 
 	/// The `#[pallet::inherent]` attribute allows the pallet to provide
 	/// [inherents](https://docs.substrate.io/fundamentals/transaction-types/#inherent-transactions).
@@ -863,7 +863,7 @@ pub mod pallet_macros {
 	///
 	/// The macro currently makes no use of this information, but it might use this information
 	/// in the future to give information directly to `construct_runtime`.
-	pub use topsoil_core_procedural::inherent;
+	pub use topsoil_core_macros::inherent;
 
 	/// Splits a pallet declaration into multiple parts.
 	///
@@ -916,7 +916,7 @@ pub mod pallet_macros {
 	///
 	/// Note that sections are imported by their module name/ident, and should be referred to
 	/// by their _full path_ from the perspective of the target pallet.
-	pub use topsoil_core_procedural::import_section;
+	pub use topsoil_core_macros::import_section;
 
 	/// Allows defining getter functions on `Pallet` storage.
 	///
@@ -940,7 +940,7 @@ pub mod pallet_macros {
 	/// ```
 	///
 	/// See [`pallet::storage`](`topsoil_core::pallet_macros::storage`) for more info.
-	pub use topsoil_core_procedural::getter;
+	pub use topsoil_core_macros::getter;
 
 	/// Defines constants that are added to the constant field of
 	/// [`PalletMetadata`](frame_metadata::v15::PalletMetadata) struct for this pallet.
@@ -972,7 +972,7 @@ pub mod pallet_macros {
 	///
 	/// I.e. a regular rust `impl` block with some optional where clause and functions with 0
 	/// args, 0 generics, and some return type.
-	pub use topsoil_core_procedural::extra_constants;
+	pub use topsoil_core_macros::extra_constants;
 
 	#[rustfmt::skip]
 	/// Allows bypassing the `topsoil_core::system::Config` supertrait check.
@@ -1007,7 +1007,7 @@ pub mod pallet_macros {
 	/// To learn more about supertraits, see the
 	/// [trait_based_programming](../../polkadot_sdk_docs/reference_docs/trait_based_programming/index.html)
 	/// reference doc.
-	pub use topsoil_core_procedural::disable_frame_system_supertrait_check;
+	pub use topsoil_core_macros::disable_frame_system_supertrait_check;
 
 	/// The mandatory attribute allowing definition of configurable types for the pallet.
 	///
@@ -1158,13 +1158,13 @@ pub mod pallet_macros {
 	/// 	}
 	/// }
 	/// ```
-	pub use topsoil_core_procedural::config;
+	pub use topsoil_core_macros::config;
 
 	/// Allows defining an enum that gets composed as an aggregate enum by `construct_runtime`.
 	///
 	/// The `#[pallet::composite_enum]` attribute allows you to define an enum that gets
 	/// composed as an aggregate enum by `construct_runtime`. This is similar in principle with
-	/// [topsoil_core_procedural::event] and [topsoil_core_procedural::error].
+	/// [topsoil_core_macros::event] and [topsoil_core_macros::error].
 	///
 	/// The attribute currently only supports enum definitions, and identifiers that are named
 	/// `FreezeReason`, `HoldReason`, `LockId` or `SlashReason`. Arbitrary identifiers for the
@@ -1208,7 +1208,7 @@ pub mod pallet_macros {
 	/// # 	#[pallet::config]
 	/// # 	pub trait Config: topsoil_core::system::Config {}
 	/// }
-	pub use topsoil_core_procedural::composite_enum;
+	pub use topsoil_core_macros::composite_enum;
 
 	/// Allows the pallet to validate unsigned transactions.
 	///
@@ -1248,7 +1248,7 @@ pub mod pallet_macros {
 	///
 	/// The macro currently makes no use of this information, but it might use this information
 	/// in the future to give information directly to [`topsoil_core::construct_runtime`].
-	pub use topsoil_core_procedural::validate_unsigned;
+	pub use topsoil_core_macros::validate_unsigned;
 
 	/// Allows defining	view functions on a pallet.
 	///
@@ -1303,7 +1303,7 @@ pub mod pallet_macros {
 	/// functions should expose a _stable_ interface and changes to the method signature are
 	/// strongly discouraged. For more details on the dispatching mechanism, see the
 	/// [`DispatchViewFunction`](topsoil_core::view_functions::DispatchViewFunction) trait.
-	pub use topsoil_core_procedural::view_functions;
+	pub use topsoil_core_macros::view_functions;
 
 	/// Allows defining a struct implementing the [`Get`](topsoil_core::traits::Get) trait to
 	/// ease the use of storage types.
@@ -1342,7 +1342,7 @@ pub mod pallet_macros {
 	/// The macro renames the function to some internal name, generates a struct with the
 	/// original name of the function and its generic, and implements `Get<$ReturnType>` by
 	/// calling the user defined function.
-	pub use topsoil_core_procedural::type_value;
+	pub use topsoil_core_macros::type_value;
 
 	/// Allows defining a storage version for the pallet.
 	///
@@ -1369,7 +1369,7 @@ pub mod pallet_macros {
 	/// ```
 	///
 	/// If not present, the current storage version is set to the default value.
-	pub use topsoil_core_procedural::storage_version;
+	pub use topsoil_core_macros::storage_version;
 
 	/// The `#[pallet::hooks]` attribute allows you to specify a
 	/// [`topsoil_core::traits::Hooks`] implementation for `Pallet` that specifies
@@ -1416,7 +1416,7 @@ pub mod pallet_macros {
 	///
 	/// NOTE: The macro also adds some tracing logic when implementing the above traits. The
 	/// following hooks emit traces: `on_initialize`, `on_finalize` and `on_runtime_upgrade`.
-	pub use topsoil_core_procedural::hooks;
+	pub use topsoil_core_macros::hooks;
 
 	/// Generates a helper function on `Pallet` that handles deposit events.
 	///
@@ -1438,7 +1438,7 @@ pub mod pallet_macros {
 	///
 	/// If `#[pallet::generate_deposit]` is present then the macro implements `fn
 	/// deposit_event` on `Pallet`.
-	pub use topsoil_core_procedural::generate_deposit;
+	pub use topsoil_core_macros::generate_deposit;
 
 	/// Allows defining logic to make an extrinsic call feeless.
 	///
@@ -1494,7 +1494,7 @@ pub mod pallet_macros {
 	///
 	/// The macro implements the `CheckIfFeeless` trait on the dispatchable and calls the
 	/// corresponding closure in the implementation.
-	pub use topsoil_core_procedural::feeless_if;
+	pub use topsoil_core_macros::feeless_if;
 
 	/// Allows defining an error enum that will be returned from the dispatchable when an error
 	/// occurs.
@@ -1563,7 +1563,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use topsoil_core_procedural::error;
+	pub use topsoil_core_macros::error;
 
 	/// Allows defining pallet events.
 	///
@@ -1619,7 +1619,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use topsoil_core_procedural::event;
+	pub use topsoil_core_macros::event;
 
 	/// Selectively includes associated types in the metadata.
 	///
@@ -1630,7 +1630,7 @@ pub mod pallet_macros {
 	///
 	/// This attribute can be used in combination with the
 	/// [`#[pallet::config(without_automatic_metadata)]`](`config`).
-	pub use topsoil_core_procedural::include_metadata;
+	pub use topsoil_core_macros::include_metadata;
 
 	/// Allows a pallet to declare a set of functions as a *dispatchable extrinsic*.
 	///
@@ -1825,7 +1825,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use topsoil_core_procedural::call;
+	pub use topsoil_core_macros::call;
 
 	/// Enforce the index of a variant in the generated `enum Call`.
 	///
@@ -1836,7 +1836,7 @@ pub mod pallet_macros {
 	/// a defined call index will have that call index, but incremented by 1, e.g. if there are
 	/// 3 dispatchable functions `fn foo`, `fn bar` and `fn qux` in that order, and only `fn
 	/// bar` has a call index of 10, then `fn qux` will have an index of 11, instead of 1.
-	pub use topsoil_core_procedural::call_index;
+	pub use topsoil_core_macros::call_index;
 
 	/// Declares the arguments of a [`call`] function to be encoded using
 	/// [`codec::Compact`].
@@ -1865,7 +1865,7 @@ pub mod pallet_macros {
 	///         }
 	///     }
 	/// }
-	pub use topsoil_core_procedural::compact;
+	pub use topsoil_core_macros::compact;
 
 	/// Allows you to define the genesis configuration for the pallet.
 	///
@@ -1873,7 +1873,7 @@ pub mod pallet_macros {
 	/// trait [`topsoil_core::traits::BuildGenesisConfig`].
 	///
 	/// See [`genesis_build`] for an example.
-	pub use topsoil_core_procedural::genesis_config;
+	pub use topsoil_core_macros::genesis_config;
 
 	/// Allows you to define how the state of your pallet at genesis is built. This
 	/// takes as input the `GenesisConfig` type (as `self`) and constructs the pallet's initial
@@ -1935,7 +1935,7 @@ pub mod pallet_macros {
 	///     }
 	/// }
 	/// ```
-	pub use topsoil_core_procedural::genesis_build;
+	pub use topsoil_core_macros::genesis_build;
 
 	/// Allows adding an associated type trait bounded by
 	/// [`Get`](topsoil_core::pallet_prelude::Get) from [`pallet::config`](`macro@config`)
@@ -1967,7 +1967,7 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use topsoil_core_procedural::constant;
+	pub use topsoil_core_macros::constant;
 
 	/// Declares a type alias as a storage item.
 	///
@@ -2195,9 +2195,9 @@ pub mod pallet_macros {
 	///   generated code.
 	/// - If the item is annotated with `deprecated` attribute then the generated code will be
 	///   automatically annotated with `allow(deprecated)`
-	pub use topsoil_core_procedural::storage;
+	pub use topsoil_core_macros::storage;
 
-	pub use topsoil_core_procedural::{
+	pub use topsoil_core_macros::{
 		authorize, task_condition, task_index, task_list, task_weight, tasks_experimental,
 		weight_of_authorize,
 	};
@@ -2258,7 +2258,7 @@ pub mod pallet_macros {
 	///
 	/// Read more about origins at the [Origin Reference
 	/// Docs](../../polkadot_sdk_docs/reference_docs/frame_origin/index.html).
-	pub use topsoil_core_procedural::origin;
+	pub use topsoil_core_macros::origin;
 }
 
 #[deprecated(
@@ -2270,7 +2270,7 @@ pub mod error {
 }
 
 #[doc(inline)]
-pub use topsoil_core_procedural::register_default_impl;
+pub use topsoil_core_macros::register_default_impl;
 
 // Generate a macro that will enable/disable code based on `std` feature being active.
 subsoil::generate_feature_enabled_macro!(std_enabled, feature = "std", $);

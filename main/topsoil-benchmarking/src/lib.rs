@@ -379,7 +379,7 @@ pub use v1::*;
 /// ```
 pub mod v2 {
 	pub use super::*;
-	pub use topsoil_core_procedural::{
+	pub use topsoil_core_macros::{
 		benchmark, benchmarks, block, extrinsic_call, instance_benchmarks,
 	};
 

@@ -22,7 +22,7 @@ codec = { features = ["derive", "max-encoded-len"], workspace = true }
 docify = { workspace = true }
 environmental = { workspace = true }
 frame-metadata = { features = ["current", "unstable"], workspace = true }
-topsoil-core-procedural = { workspace = true }
+topsoil-core-macros = { workspace = true }
 impl-trait-for-tuples = { workspace = true }
 k256 = { features = ["ecdsa"], workspace = true }
 log = { workspace = true }
@@ -54,7 +54,7 @@ std = [
 	"codec/std",
 	"environmental/std",
 	"frame-metadata/std",
-	"topsoil-core-procedural/std",
+	"topsoil-core-macros/std",
 	"k256/std",
 	"log/std",
 	"scale-info/std",
@@ -65,15 +65,15 @@ runtime-benchmarks = [
 	"subsoil/runtime-benchmarks"]
 try-runtime = [
 	"subsoil/try-runtime"]
-experimental = ["topsoil-core-procedural/experimental"]
+experimental = ["topsoil-core-macros/experimental"]
 # By default some types have documentation, `no-metadata-docs` allows to reduce the documentation
 # in the metadata.
 no-metadata-docs = [
-	"topsoil-core-procedural/no-metadata-docs"]
+	"topsoil-core-macros/no-metadata-docs"]
 # By default some types have documentation, `full-metadata-docs` allows to add documentation to
 # more types in the metadata.
 full-metadata-docs = ["scale-info/docs"]
 # Generate impl-trait for tuples with the given number of tuples. Will be needed as the number of
 # pallets in a runtime grows. Does increase the compile time!
-tuples-96 = ["topsoil-core-procedural/tuples-96"]
-tuples-128 = ["topsoil-core-procedural/tuples-128"]
+tuples-96 = ["topsoil-core-macros/tuples-96"]
+tuples-128 = ["topsoil-core-macros/tuples-128"]

@@ -67,7 +67,6 @@ topsoil-core = { workspace = true, default-features = true }
 topsoil-core-rpc-runtime-api = { workspace = true, default-features = true }
 soil-fork-tree = { workspace = true, default-features = true }
 remote-externalities = { workspace = true, default-features = true }
-topsoil-core-procedural-tools = { workspace = true, default-features = true }
 generate-bags = { workspace = true, default-features = true }
 soil-mmr-gadget = { workspace = true, default-features = true }
 plant-asset-conversion-tx-payment = { workspace = true, default-features = true }
