@@ -119,7 +119,7 @@ ark-ed-on-bls12-381-bandersnatch = { optional = true, workspace = true }
 ark-ed-on-bls12-381-bandersnatch-ext = { optional = true, workspace = true }
 ark-scale = { features = ["hazmat"], optional = true, workspace = true }
 
-[target.'cfg(all(any(target_arch = "riscv32", target_arch = "riscv64"), substrate_runtime))'.dependencies]
+[target.'cfg(all(target_arch = "riscv64", substrate_runtime))'.dependencies]
 polkavm-derive = { workspace = true }
 
 [target.'cfg(not(substrate_runtime))'.dependencies]

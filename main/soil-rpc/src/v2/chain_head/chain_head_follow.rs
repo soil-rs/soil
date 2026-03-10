@@ -237,10 +237,11 @@ where
 			return None;
 		}
 
-		let block_rt = match self.client.runtime_version_at(block) {
-			Ok(rt) => rt,
-			Err(err) => return Some(err.into()),
-		};
+		let block_rt =
+			match self.client.runtime_version_at(block, subsoil::api::CallContext::Offchain) {
+				Ok(rt) => rt,
+				Err(err) => return Some(err.into()),
+			};
 
 		let parent = match parent {
 			Some(parent) => parent,
@@ -250,7 +251,8 @@ where
 			},
 		};
 
-		let parent_rt = match self.client.runtime_version_at(parent) {
+		let parent_rt =
+			match self.client.runtime_version_at(parent, subsoil::api::CallContext::Offchain) {
 			Ok(rt) => rt,
 			Err(err) => return Some(err.into()),
 		};

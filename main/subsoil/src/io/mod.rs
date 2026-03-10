@@ -118,15 +118,8 @@ use crate::externalities::{Externalities, ExternalitiesExt};
 
 pub use crate::externalities::MultiRemovalResults;
 
-#[cfg(all(not(feature = "io-disable_allocator"), substrate_runtime, target_family = "wasm"))]
-mod global_alloc_wasm;
-
-#[cfg(all(
-	not(feature = "io-disable_allocator"),
-	substrate_runtime,
-	any(target_arch = "riscv32", target_arch = "riscv64")
-))]
-mod global_alloc_riscv;
+#[cfg(all(not(feature = "io-disable_allocator"), substrate_runtime))]
+mod global_alloc;
 
 #[cfg(not(substrate_runtime))]
 const LOG_TARGET: &str = "runtime::io";

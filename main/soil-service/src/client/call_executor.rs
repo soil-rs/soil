@@ -94,7 +94,8 @@ where
 			self.backend.blockchain().expect_block_number_from_id(&BlockId::Hash(at_hash))?;
 		let state = self.backend.state_at(at_hash, context.into())?;
 
-		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code =
+			subsoil::state_machine::backend::BackendRuntimeCode::new(&state, context.into());
 		let runtime_code = state_runtime_code
 			.runtime_code()
 			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
@@ -135,7 +136,8 @@ where
 		// It is important to extract the runtime code here before we create the proof
 		// recorder to not record it. We also need to fetch the runtime code from `state` to
 		// make sure we use the caching layers.
-		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code =
+			subsoil::state_machine::backend::BackendRuntimeCode::new(&state, call_context.into());
 
 		let runtime_code = state_runtime_code
 			.runtime_code()
@@ -185,9 +187,11 @@ where
 	fn runtime_version(
 		&self,
 		at_hash: Block::Hash,
+		call_context: CallContext,
 	) -> soil_client::blockchain::Result<RuntimeVersion> {
 		let state = self.backend.state_at(at_hash, backend::TrieCacheContext::Untrusted)?;
-		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code =
+			subsoil::state_machine::backend::BackendRuntimeCode::new(&state, call_context.into());
 
 		let runtime_code = state_runtime_code
 			.runtime_code()
@@ -209,8 +213,10 @@ where
 
 		let trie_backend = state.as_trie_backend();
 
-		let state_runtime_code =
-			subsoil::state_machine::backend::BackendRuntimeCode::new(trie_backend);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(
+			trie_backend,
+			subsoil::state_machine::backend::TryPendingCode::No,
+		);
 		let runtime_code = state_runtime_code
 			.runtime_code()
 			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
@@ -249,8 +255,12 @@ where
 	E: CodeExecutor + RuntimeVersionOf + Clone + 'static,
 	Block: BlockT,
 {
-	fn runtime_version(&self, at: Block::Hash) -> Result<subsoil::version::RuntimeVersion, String> {
-		CallExecutor::runtime_version(self, at).map_err(|e| e.to_string())
+	fn runtime_version(
+		&self,
+		at: Block::Hash,
+		call_context: CallContext,
+	) -> Result<subsoil::version::RuntimeVersion, String> {
+		CallExecutor::runtime_version(self, at, call_context).map_err(|e| e.to_string())
 	}
 }
 

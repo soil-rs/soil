@@ -159,10 +159,6 @@ pub fn get_raw(key: &[u8]) -> Option<Vec<u8>> {
 }
 
 /// Put a raw byte slice into storage.
-///
-/// **WARNING**: If you set the storage of the Substrate Wasm (`well_known_keys::CODE`),
-/// you should also call `topsoil_core::system::RuntimeUpgraded::put(true)` to trigger the
-/// `on_runtime_upgrade` logic.
 pub fn put_raw(key: &[u8], value: &[u8]) {
 	subsoil::io::storage::set(key, value)
 }

@@ -441,8 +441,9 @@ where
 	pub fn runtime_version_at(
 		&self,
 		hash: Block::Hash,
+		call_context: CallContext,
 	) -> soil_client::blockchain::Result<RuntimeVersion> {
-		CallExecutor::runtime_version(&self.executor, hash)
+		CallExecutor::runtime_version(&self.executor, hash, call_context)
 	}
 
 	/// Apply a checked and validated block to an operation.
@@ -1709,8 +1710,9 @@ where
 	fn runtime_version_at(
 		&self,
 		hash: Block::Hash,
+		call_context: CallContext,
 	) -> Result<RuntimeVersion, subsoil::api::ApiError> {
-		CallExecutor::runtime_version(&self.executor, hash).map_err(Into::into)
+		CallExecutor::runtime_version(&self.executor, hash, call_context).map_err(Into::into)
 	}
 
 	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, subsoil::api::ApiError> {

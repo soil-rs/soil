@@ -15,7 +15,7 @@ use codec::Codec;
 use soil_client::blockchain::Result as CResult;
 use soil_client::client_api::UsageProvider;
 use soil_client::consensus::Error as ConsensusError;
-use subsoil::api::{Core, ProvideRuntimeApi};
+use subsoil::api::{ApiExt, Core, ProvideRuntimeApi};
 use subsoil::application_crypto::{AppCrypto, AppPublic};
 use subsoil::consensus::slots::Slot;
 use subsoil::core::crypto::{ByteArray, Pair};
@@ -50,7 +50,9 @@ where
 	C: ProvideRuntimeApi<B>,
 	C::Api: AuraApi<B, A>,
 {
-	client.runtime_api().slot_duration(block_hash).map_err(|err| err.into())
+	let mut runtime_api = client.runtime_api();
+	runtime_api.set_call_context(subsoil::core::traits::CallContext::Onchain);
+	runtime_api.slot_duration(block_hash).map_err(|err| err.into())
 }
 
 /// Get the slot author for given block along with authorities.
@@ -191,7 +193,7 @@ where
 	C: ProvideRuntimeApi<B>,
 	C::Api: AuraApi<B, A>,
 {
-	let runtime_api = client.runtime_api();
+	let mut runtime_api = client.runtime_api();
 
 	match compatibility_mode {
 		CompatibilityMode::None => {},
@@ -214,6 +216,7 @@ where
 		},
 	}
 
+	runtime_api.set_call_context(subsoil::core::traits::CallContext::Onchain);
 	runtime_api
 		.authorities(parent_hash)
 		.ok()
@@ -231,8 +234,9 @@ where
 	C: ProvideRuntimeApi<B>,
 	C::Api: AuraApi<B, A>,
 {
-	client
-		.runtime_api()
+	let mut runtime_api = client.runtime_api();
+	runtime_api.set_call_context(subsoil::core::traits::CallContext::Onchain);
+	runtime_api
 		.authorities(parent_hash)
 		.ok()
 		.ok_or(ConsensusError::InvalidAuthoritiesSet)
