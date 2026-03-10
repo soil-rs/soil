@@ -2136,12 +2136,15 @@ impl<T: Config> StakingInterface for Pallet<T> {
 			EraInfo::<T>::set_exposure(*current_era, stash, exposure);
 		}
 
-		fn set_current_era(era: EraIndex) {
-			CurrentEra::<T>::put(era);
-		}
-
 		fn max_exposure_page_size() -> Page {
 			T::MaxExposurePageSize::get()
+		}
+	}
+
+	subsoil::staking::std_or_benchmarks_enabled! {
+		fn set_era(era: EraIndex) {
+			ActiveEra::<T>::put(ActiveEraInfo { index: era, start: None });
+			CurrentEra::<T>::put(era);
 		}
 	}
 }
