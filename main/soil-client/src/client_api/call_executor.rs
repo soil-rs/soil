@@ -69,8 +69,11 @@ pub trait CallExecutor<B: BlockT>: RuntimeVersionOf {
 	/// Extract RuntimeVersion of given block
 	///
 	/// No changes are made.
-	fn runtime_version(&self, at_hash: B::Hash)
-		-> Result<RuntimeVersion, crate::blockchain::Error>;
+	fn runtime_version(
+		&self,
+		at_hash: B::Hash,
+		call_context: CallContext,
+	) -> Result<RuntimeVersion, crate::blockchain::Error>;
 
 	/// Prove the execution of the given `method`.
 	///

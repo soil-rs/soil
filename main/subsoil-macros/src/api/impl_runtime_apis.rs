@@ -288,7 +288,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					&self,
 					at: <Block as #crate_::BlockT>::Hash,
 				) -> std::result::Result<bool, #crate_::ApiError> where Self: Sized {
-					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at)
+					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at, self.call_context)
 						.map(|v| #crate_::RuntimeVersion::has_api_with(&v, &A::ID, |v| v == A::VERSION))
 				}
 
@@ -297,7 +297,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					at: <Block as #crate_::BlockT>::Hash,
 					pred: P,
 				) -> std::result::Result<bool, #crate_::ApiError> where Self: Sized {
-					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at)
+					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at, self.call_context)
 						.map(|v| #crate_::RuntimeVersion::has_api_with(&v, &A::ID, pred))
 				}
 
@@ -305,7 +305,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					&self,
 					at: <Block as #crate_::BlockT>::Hash,
 				) -> std::result::Result<Option<u32>, #crate_::ApiError> where Self: Sized {
-					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at)
+					#crate_::CallApiAt::<Block>::runtime_version_at(self.call, at, self.call_context)
 						.map(|v| #crate_::RuntimeVersion::api_version(&v, &A::ID))
 				}
 
@@ -339,6 +339,7 @@ fn generate_runtime_api_base_structures() -> Result<TokenStream> {
 					let state_version = #crate_::CallApiAt::<Block>::runtime_version_at(
 						self.call,
 						std::clone::Clone::clone(&parent_hash),
+						self.call_context,
 					)
 					.map(|v| #crate_::RuntimeVersion::state_version(&v))
 					.map_err(|e| format!("Failed to get state version: {}", e))?;
@@ -575,6 +576,7 @@ impl<'a> ApiRuntimeImplToApiRuntimeApiImpl<'a> {
 					let version = #crate_::CallApiAt::<__SrApiBlock__>::runtime_version_at(
 						self.call,
 						at,
+						self.call_context,
 					)?;
 
 					match &mut *std::cell::RefCell::borrow_mut(&self.extensions_generated_for) {

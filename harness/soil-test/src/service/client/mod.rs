@@ -62,7 +62,7 @@ fn construct_block(
 		digest: Digest { logs: vec![] },
 	};
 	let mut overlay = OverlayedChanges::default();
-	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(backend);
+	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(backend, subsoil::state_machine::backend::TryPendingCode::No);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	StateMachine::new(
@@ -158,7 +158,7 @@ fn construct_genesis_should_work_with_native() {
 
 	let backend = InMemoryBackend::from((storage, StateVersion::default()));
 	let b1data = block1(genesis_hash, &backend);
-	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&backend);
+	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&backend, subsoil::state_machine::backend::TryPendingCode::No);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	let mut overlay = OverlayedChanges::default();
@@ -189,7 +189,7 @@ fn construct_genesis_should_work_with_wasm() {
 
 	let backend = InMemoryBackend::from((storage, StateVersion::default()));
 	let b1data = block1(genesis_hash, &backend);
-	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&backend);
+	let backend_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&backend, subsoil::state_machine::backend::TryPendingCode::No);
 	let runtime_code = backend_runtime_code.runtime_code().expect("Code is part of the backend");
 
 	let mut overlay = OverlayedChanges::default();

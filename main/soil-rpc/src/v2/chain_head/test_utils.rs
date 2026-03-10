@@ -19,7 +19,7 @@ use soil_client::client_api::{
 use soil_client::consensus::BlockOrigin;
 use soil_client::utils::mpsc::{tracing_unbounded, TracingUnboundedSender};
 use std::sync::Arc;
-use subsoil::api::{CallApiAt, CallApiAtParams};
+use subsoil::api::{CallApiAt, CallApiAtParams, CallContext};
 use subsoil::runtime::{
 	generic::SignedBlock,
 	traits::{Block as BlockT, Header as HeaderT, NumberFor},
@@ -237,8 +237,9 @@ impl<Block: BlockT, Client: CallApiAt<Block>> CallApiAt<Block> for ChainHeadMock
 	fn runtime_version_at(
 		&self,
 		hash: Block::Hash,
+		call_context: CallContext,
 	) -> Result<RuntimeVersion, subsoil::api::ApiError> {
-		self.client.runtime_version_at(hash)
+		self.client.runtime_version_at(hash, call_context)
 	}
 
 	fn state_at(&self, at: Block::Hash) -> Result<Self::StateBackend, subsoil::api::ApiError> {

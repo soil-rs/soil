@@ -87,7 +87,7 @@ impl core::Benchmark for ImportBenchmark {
 
 		let _ = context
 			.client
-			.runtime_version_at(context.client.chain_info().genesis_hash)
+			.runtime_version_at(context.client.chain_info().genesis_hash, subsoil::api::CallContext::Offchain)
 			.expect("Failed to get runtime version")
 			.spec_version;
 

@@ -63,16 +63,19 @@ where
 		Ok(Self { backend, executor, wasm_override: Arc::new(wasm_override), wasm_substitutes })
 	}
 
-	/// Returns the `:code` for the given `block`.
+	/// Returns the `:code` (or `:pending_code`) for the given `block`.
 	///
-	/// This takes into account potential overrides/substitutes.
+	/// This takes into account potential substitutes, but ignores overrides.
 	pub fn code_at_ignoring_overrides(
 		&self,
 		block: Block::Hash,
 	) -> soil_client::blockchain::Result<Vec<u8>> {
 		let state = self.backend.state_at(block, TrieCacheContext::Untrusted)?;
 
-		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(&state);
+		let state_runtime_code = subsoil::state_machine::backend::BackendRuntimeCode::new(
+			&state,
+			subsoil::state_machine::backend::TryPendingCode::Yes,
+		);
 		let runtime_code = state_runtime_code
 			.runtime_code()
 			.map_err(soil_client::blockchain::Error::RuntimeCode)?;
@@ -339,7 +342,12 @@ mod tests {
 			)
 			.expect("Creates a client");
 
-		let version = client.runtime_version_at(client.chain_info().genesis_hash).unwrap();
+		let version = client
+			.runtime_version_at(
+				client.chain_info().genesis_hash,
+				subsoil::api::CallContext::Offchain,
+			)
+			.unwrap();
 
 		assert_eq!(SUBSTITUTE_SPEC_NAME, &*version.spec_name);
 	}
