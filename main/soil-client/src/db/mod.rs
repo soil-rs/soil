@@ -1378,6 +1378,31 @@ impl<Block: BlockT> Backend<Block> {
 			});
 		}
 
+		// Non archive nodes cannot fill the missing block gap with bodies.
+		// If the gap is present, it means that every restart will try to fill the gap:
+		// - a block request is made for each and every block in the gap
+		// - the request is fulfilled putting pressure on the network and other nodes
+		// - upon receiving the block, the block cannot be executed since the state
+		//  of the parent block might have been discarded
+		// - then the sync engine closes the gap in memory, but never in DB.
+		//
+		// This leads to inefficient syncing and high CPU usage on every restart. To mitigate
+		// this, remove the gap from the DB if we detect it and the current node is not an
+		// archive.
+		match (backend.is_archive, info.block_gap) {
+			(false, Some(gap)) if matches!(gap.gap_type, BlockGapType::MissingBody) => {
+				warn!(
+					"Detected a missing body gap for non-archive nodes. Removing the gap={:?}",
+					gap
+				);
+
+				db_init_transaction.remove(columns::META, meta_keys::BLOCK_GAP);
+				db_init_transaction.remove(columns::META, meta_keys::BLOCK_GAP_VERSION);
+				backend.blockchain.update_block_gap(None);
+			},
+			_ => {},
+		}
+
 		db.commit(db_init_transaction)?;
 
 		Ok(backend)
@@ -5511,5 +5536,148 @@ pub(crate) mod tests {
 		// Blocks 3 and 4 are within the pruning window
 		assert!(bc.body(blocks[3]).unwrap().is_some());
 		assert!(bc.body(blocks[4]).unwrap().is_some());
+	}
+
+	/// Insert a header without a body, marking it as best.
+	fn insert_header_no_body_as_best(
+		backend: &Backend<Block>,
+		number: u64,
+		parent_hash: H256,
+		extrinsics_root: H256,
+	) -> H256 {
+		use subsoil::runtime::testing::Digest;
+
+		let digest = Digest::default();
+		let header =
+			Header { number, parent_hash, state_root: Default::default(), digest, extrinsics_root };
+
+		let mut op = backend.begin_operation().unwrap();
+		op.set_block_data(header.clone(), None, None, None, NewBlockState::Best, true)
+			.unwrap();
+		backend.commit_operation(op).unwrap();
+
+		header.hash()
+	}
+
+	/// Reopen a backend using the same underlying database.
+	fn reopen_backend(
+		backend: Backend<Block>,
+		blocks_pruning: BlocksPruning,
+	) -> Backend<Block> {
+		let db = backend.storage.db.clone();
+		drop(backend);
+
+		let state_pruning = match blocks_pruning {
+			BlocksPruning::KeepAll => PruningMode::ArchiveAll,
+			BlocksPruning::KeepFinalized => PruningMode::ArchiveCanonical,
+			BlocksPruning::Some(n) => PruningMode::blocks_pruning(n),
+		};
+
+		Backend::<Block>::new(
+			DatabaseSettings {
+				trie_cache_maximum_size: Some(16 * 1024 * 1024),
+				state_pruning: Some(state_pruning),
+				source: DatabaseSource::Custom { db, require_create_flag: false },
+				blocks_pruning,
+				pruning_filters: Default::default(),
+				metrics_registry: None,
+			},
+			0,
+		)
+		.expect("failed to reopen test-db")
+	}
+
+	/// Helper to write a gap directly to the DB.
+	fn write_block_gap(backend: &Backend<Block>, gap: BlockGap<u64>) {
+		let mut transaction = Transaction::new();
+		transaction.set(columns::META, meta_keys::BLOCK_GAP, &gap.encode());
+		transaction.set(
+			columns::META,
+			meta_keys::BLOCK_GAP_VERSION,
+			&utils::BLOCK_GAP_CURRENT_VERSION.encode(),
+		);
+		backend.storage.db.commit(transaction).unwrap();
+		backend.blockchain.update_block_gap(Some(gap));
+	}
+
+	#[test]
+	fn missing_body_gap_is_removed_for_non_archive_node() {
+		let backend = Backend::<Block>::new_test(2, 0);
+
+		// Insert genesis block (block 0) so the DB has a genesis hash for reopen.
+		let hash_0 = insert_header(&backend, 0, Default::default(), None, Default::default());
+
+		// Insert block 1 with body.
+		let hash_1 = insert_header(&backend, 1, hash_0, None, Default::default());
+
+		// Insert block 2 without body (creates a MissingBody gap).
+		let _ = insert_header_no_body_as_best(&backend, 2, hash_1, Default::default());
+
+		// Verify that a MissingBody gap exists.
+		let info = backend.blockchain().info();
+		assert!(info.block_gap.is_some());
+		let gap = info.block_gap.unwrap();
+		assert!(matches!(gap.gap_type, BlockGapType::MissingBody));
+
+		// Reopen as non-archive: the gap should be removed.
+		let backend = reopen_backend(backend, BlocksPruning::Some(2));
+		let info = backend.blockchain().info();
+		assert!(info.block_gap.is_none());
+	}
+
+	#[test]
+	fn missing_body_gap_is_preserved_for_archive_node() {
+		let backend = Backend::<Block>::new_test_with_tx_storage(BlocksPruning::KeepAll, 0);
+
+		// Insert genesis block (block 0) so the DB has a genesis hash for reopen.
+		let hash_0 = insert_header(&backend, 0, Default::default(), None, Default::default());
+
+		// Insert block 1 with body.
+		let hash_1 = insert_header(&backend, 1, hash_0, None, Default::default());
+
+		// Insert block 2 without body (creates a MissingBody gap).
+		let _ = insert_header_no_body_as_best(&backend, 2, hash_1, Default::default());
+
+		// Verify that a MissingBody gap exists.
+		let info = backend.blockchain().info();
+		assert!(info.block_gap.is_some(), "Gap should exist after insert");
+		let gap = info.block_gap.unwrap();
+		assert!(matches!(gap.gap_type, BlockGapType::MissingBody));
+
+		// Reopen as archive: the gap should be preserved.
+		let backend = reopen_backend(backend, BlocksPruning::KeepAll);
+		let info = backend.blockchain().info();
+		assert!(info.block_gap.is_some(), "Gap should exist in info after reopen");
+		let gap = info.block_gap.unwrap();
+		assert!(matches!(gap.gap_type, BlockGapType::MissingBody));
+	}
+
+	#[test]
+	fn missing_header_and_body_gap_is_preserved_for_non_archive_node() {
+		let backend = Backend::<Block>::new_test(2, 0);
+
+		// Insert genesis block (block 0) so the DB has a genesis hash for reopen.
+		let _ = insert_header(&backend, 0, Default::default(), None, Default::default());
+
+		// Manually set a MissingHeaderAndBody gap.
+		let gap = BlockGap {
+			start: 2u64,
+			end: 3u64,
+			gap_type: BlockGapType::MissingHeaderAndBody,
+		};
+		write_block_gap(&backend, gap);
+
+		// Verify that a MissingHeaderAndBody gap exists.
+		let info = backend.blockchain().info();
+		assert!(info.block_gap.is_some());
+		let gap = info.block_gap.unwrap();
+		assert!(matches!(gap.gap_type, BlockGapType::MissingHeaderAndBody));
+
+		// Reopen as non-archive: the MissingHeaderAndBody gap should be preserved.
+		let backend = reopen_backend(backend, BlocksPruning::Some(2));
+		let info = backend.blockchain().info();
+		assert!(info.block_gap.is_some());
+		let gap = info.block_gap.unwrap();
+		assert!(matches!(gap.gap_type, BlockGapType::MissingHeaderAndBody));
 	}
 }

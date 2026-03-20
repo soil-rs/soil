@@ -38,12 +38,12 @@ fn empty_randomness_is_correct() {
 
 #[test]
 fn initial_values() {
-	new_test_ext(4).execute_with(|| assert_eq!(Authorities::<Test>::get().len(), 4))
+	build_and_execute(4, || assert_eq!(Authorities::<Test>::get().len(), 4))
 }
 
 #[test]
 fn check_module() {
-	new_test_ext(4).execute_with(|| {
+	build_and_execute(4, || {
 		assert!(!Babe::should_end_session(0), "Genesis does not change sessions");
 		assert!(
 			!Babe::should_end_session(200000),
@@ -54,9 +54,7 @@ fn check_module() {
 
 #[test]
 fn first_block_epoch_zero_start() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(4);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(4, |pairs| {
 		let genesis_slot = Slot::from(100);
 		let (vrf_signature, vrf_randomness) =
 			make_vrf_signature_and_randomness(genesis_slot, &pairs[0]);
@@ -103,9 +101,7 @@ fn first_block_epoch_zero_start() {
 
 #[test]
 fn current_slot_is_processed_on_initialization() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(1);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(1, |pairs| {
 		let genesis_slot = Slot::from(10);
 		let (vrf_signature, vrf_randomness) =
 			make_vrf_signature_and_randomness(genesis_slot, &pairs[0]);
@@ -133,9 +129,7 @@ fn test_author_vrf_output<F>(make_pre_digest: F)
 where
 	F: Fn(subsoil::consensus::babe::AuthorityIndex, Slot, VrfSignature) -> subsoil::runtime::Digest,
 {
-	let (pairs, mut ext) = new_test_ext_with_pairs(1);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(1, |pairs| {
 		let genesis_slot = Slot::from(10);
 		let (vrf_signature, vrf_randomness) =
 			make_vrf_signature_and_randomness(genesis_slot, &pairs[0]);
@@ -171,7 +165,7 @@ fn author_vrf_output_for_secondary_vrf() {
 
 #[test]
 fn no_author_vrf_output_for_secondary_plain() {
-	new_test_ext(1).execute_with(|| {
+	build_and_execute(1, || {
 		let genesis_slot = Slot::from(10);
 		let secondary_plain_pre_digest = make_secondary_plain_pre_digest(0, genesis_slot);
 
@@ -190,7 +184,7 @@ fn no_author_vrf_output_for_secondary_plain() {
 
 #[test]
 fn authority_index() {
-	new_test_ext(4).execute_with(|| {
+	build_and_execute(4, || {
 		assert_eq!(
 			Babe::find_author((&[(BABE_ENGINE_ID, &[][..])]).into_iter().cloned()),
 			None,
@@ -201,7 +195,7 @@ fn authority_index() {
 
 #[test]
 fn can_predict_next_epoch_change() {
-	new_test_ext(1).execute_with(|| {
+	build_and_execute(1, || {
 		assert_eq!(<Test as Config>::EpochDuration::get(), 3);
 		// this sets the genesis slot to 6;
 		go_to_block(1, 6);
@@ -222,7 +216,7 @@ fn can_predict_next_epoch_change() {
 
 #[test]
 fn can_estimate_current_epoch_progress() {
-	new_test_ext(1).execute_with(|| {
+	build_and_execute(1, || {
 		assert_eq!(<Test as Config>::EpochDuration::get(), 3);
 
 		// with BABE the genesis block is not part of any epoch, the first epoch starts at block #1,
@@ -257,7 +251,7 @@ fn can_estimate_current_epoch_progress() {
 
 #[test]
 fn can_enact_next_config() {
-	new_test_ext(1).execute_with(|| {
+	build_and_execute(1, || {
 		assert_eq!(<Test as Config>::EpochDuration::get(), 3);
 		// this sets the genesis slot to 6;
 		go_to_block(1, 6);
@@ -317,7 +311,7 @@ fn can_enact_next_config() {
 fn only_root_can_enact_config_change() {
 	use subsoil::runtime::DispatchError;
 
-	new_test_ext(1).execute_with(|| {
+	build_and_execute(1, || {
 		let next_config =
 			NextConfigDescriptor::V1 { c: (1, 4), allowed_slots: AllowedSlots::PrimarySlots };
 
@@ -337,7 +331,7 @@ fn only_root_can_enact_config_change() {
 
 #[test]
 fn can_fetch_current_and_next_epoch_data() {
-	new_test_ext(5).execute_with(|| {
+	build_and_execute(5, || {
 		EpochConfig::<Test>::put(BabeEpochConfiguration {
 			c: (1, 4),
 			allowed_slots: subsoil::consensus::babe::AllowedSlots::PrimarySlots,
@@ -371,7 +365,7 @@ fn can_fetch_current_and_next_epoch_data() {
 
 #[test]
 fn tracks_block_numbers_when_current_and_previous_epoch_started() {
-	new_test_ext(5).execute_with(|| {
+	build_and_execute(5, || {
 		// an epoch is 3 slots therefore at block 8 we should be in epoch #3
 		// with the previous epochs having the following blocks:
 		// epoch 1 - [1, 2, 3]
@@ -399,7 +393,7 @@ fn tracks_block_numbers_when_current_and_previous_epoch_started() {
 	expected = "Validator with index 0 is disabled and should not be attempting to author blocks."
 )]
 fn disabled_validators_cannot_author_blocks() {
-	new_test_ext(4).execute_with(|| {
+	build_and_execute(4, || {
 		start_era(1);
 
 		// let's disable the validator at index 1
@@ -421,9 +415,7 @@ fn disabled_validators_cannot_author_blocks() {
 
 #[test]
 fn report_equivocation_current_session_works() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
 		start_era(1);
 
 		let authorities = Authorities::<Test>::get();
@@ -498,9 +490,7 @@ fn report_equivocation_current_session_works() {
 
 #[test]
 fn report_equivocation_old_session_works() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
 		start_era(1);
 
 		let authorities = Authorities::<Test>::get();
@@ -556,9 +546,7 @@ fn report_equivocation_old_session_works() {
 
 #[test]
 fn report_equivocation_invalid_key_owner_proof() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
 		start_era(1);
 
 		let authorities = Authorities::<Test>::get();
@@ -619,9 +607,7 @@ fn report_equivocation_invalid_key_owner_proof() {
 fn report_equivocation_invalid_equivocation_proof() {
 	use subsoil::runtime::traits::Header;
 
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
 		start_era(1);
 
 		let authorities = Authorities::<Test>::get();
@@ -724,9 +710,7 @@ fn report_equivocation_validate_unsigned_prevents_duplicates() {
 		ValidTransaction,
 	};
 
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
 		start_era(1);
 
 		let authorities = Authorities::<Test>::get();
@@ -826,9 +810,7 @@ fn report_equivocation_has_valid_weight() {
 
 #[test]
 fn report_equivocation_after_skipped_epochs_works() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
 		let epoch_duration: u64 = <Test as Config>::EpochDuration::get();
 
 		// this sets the genesis slot to 100;
@@ -875,9 +857,7 @@ fn report_equivocation_after_skipped_epochs_works() {
 
 #[test]
 fn valid_equivocation_reports_dont_pay_fees() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
 		start_era(1);
 
 		let offending_authority_pair = &pairs[0];
@@ -939,7 +919,7 @@ fn valid_equivocation_reports_dont_pay_fees() {
 fn add_epoch_configurations_migration_works() {
 	use topsoil_core::storage::migration::{get_storage_value, put_storage_value};
 
-	new_test_ext(1).execute_with(|| {
+	build_and_execute(1, || {
 		let next_config_descriptor =
 			NextConfigDescriptor::V1 { c: (3, 4), allowed_slots: AllowedSlots::PrimarySlots };
 
@@ -973,12 +953,9 @@ fn add_epoch_configurations_migration_works() {
 
 #[test]
 fn generate_equivocation_report_blob() {
-	let (pairs, mut ext) = new_test_ext_with_pairs(3);
-
-	let offending_authority_index = 0;
-	let offending_authority_pair = &pairs[0];
-
-	ext.execute_with(|| {
+	build_and_execute_with_pairs(3, |pairs| {
+		let offending_authority_index = 0;
+		let offending_authority_pair = &pairs[0];
 		start_era(1);
 
 		let equivocation_proof = generate_equivocation_proof(
@@ -994,9 +971,7 @@ fn generate_equivocation_report_blob() {
 
 #[test]
 fn skipping_over_epochs_works() {
-	let mut ext = new_test_ext(3);
-
-	ext.execute_with(|| {
+	build_and_execute(3, || {
 		let epoch_duration: u64 = <Test as Config>::EpochDuration::get();
 
 		// this sets the genesis slot to 100;
