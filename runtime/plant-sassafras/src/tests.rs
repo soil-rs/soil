@@ -745,7 +745,11 @@ fn obsolete_tickets_are_removed_on_epoch_change() {
 
 const TICKETS_FILE: &str = "src/data/25_tickets_100_auths.bin";
 
-fn data_read<T: Decode>(filename: &str) -> T {
+fn tickets_file_path() -> std::path::PathBuf {
+	std::path::Path::new(env!("CARGO_MANIFEST_DIR")).join(TICKETS_FILE)
+}
+
+fn data_read<T: Decode>(filename: &std::path::Path) -> T {
 	use std::{fs::File, io::Read};
 	let mut file = File::open(filename).unwrap();
 	let mut buf = Vec::new();
@@ -753,7 +757,7 @@ fn data_read<T: Decode>(filename: &str) -> T {
 	T::decode(&mut &buf[..]).unwrap()
 }
 
-fn data_write<T: Encode>(filename: &str, data: T) {
+fn data_write<T: Encode>(filename: &std::path::Path, data: T) {
 	use std::{fs::File, io::Write};
 	let mut file = File::create(filename).unwrap();
 	let buf = data.encode();
@@ -782,7 +786,7 @@ fn submit_tickets_with_ring_proof_check_works() {
 	use subsoil::core::Pair as _;
 
 	let (authorities, mut tickets): (Vec<AuthorityId>, Vec<TicketEnvelope>) =
-		data_read(TICKETS_FILE);
+		data_read(&tickets_file_path());
 
 	// Also checks that duplicates are discarded
 	tickets.extend(tickets.clone());
@@ -860,6 +864,6 @@ fn make_tickets_data() {
 			println!("{:.2}%", 100f32 * ((i + 1) as f32 / tickets_authors_count as f32));
 		});
 
-		data_write(TICKETS_FILE, (authorities, tickets));
+		data_write(&tickets_file_path(), (authorities, tickets));
 	});
 }
