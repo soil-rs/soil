@@ -117,7 +117,11 @@ ark-ed-on-bls12-377 = { optional = true, workspace = true }
 ark-ed-on-bls12-377-ext = { optional = true, workspace = true }
 ark-ed-on-bls12-381-bandersnatch = { optional = true, workspace = true }
 ark-ed-on-bls12-381-bandersnatch-ext = { optional = true, workspace = true }
+ark-pallas = { optional = true, workspace = true }
+ark-pallas-ext = { optional = true, workspace = true }
 ark-scale = { features = ["hazmat"], optional = true, workspace = true }
+ark-vesta = { optional = true, workspace = true }
+ark-vesta-ext = { optional = true, workspace = true }
 
 [target.'cfg(all(target_arch = "riscv64", substrate_runtime))'.dependencies]
 polkavm-derive = { workspace = true }
@@ -240,8 +244,12 @@ std = [
 	"ark-ed-on-bls12-381-bandersnatch-ext?/std",
 	"ark-ed-on-bls12-381-bandersnatch?/std",
 	"ark-ff/std",
+	"ark-pallas-ext?/std",
+	"ark-pallas?/std",
 	"ark-scale?/std",
 	"ark-std/std",
+	"ark-vesta-ext?/std",
+	"ark-vesta?/std",
 ]
 runtime-benchmarks = []
 # soil-npos-elections features
@@ -281,12 +289,16 @@ crypto-ec-utils-ed-on-bls12-381-bandersnatch = [
 	"ark-ed-on-bls12-381-bandersnatch-ext",
 	"crypto-ec-utils-common",
 ]
+crypto-ec-utils-pallas = ["ark-pallas", "ark-pallas-ext", "crypto-ec-utils-common"]
+crypto-ec-utils-vesta = ["ark-vesta", "ark-vesta-ext", "crypto-ec-utils-common"]
 crypto-ec-utils-all-curves = [
 	"crypto-ec-utils-bls12-377",
 	"crypto-ec-utils-bls12-381",
 	"crypto-ec-utils-bw6-761",
 	"crypto-ec-utils-ed-on-bls12-377",
 	"crypto-ec-utils-ed-on-bls12-381-bandersnatch",
+	"crypto-ec-utils-pallas",
+	"crypto-ec-utils-vesta",
 ]
 
 # ATTENTION

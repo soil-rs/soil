@@ -28,6 +28,10 @@ pub mod bw6_761;
 pub mod ed_on_bls12_377;
 #[cfg(feature = "crypto-ec-utils-ed-on-bls12-381-bandersnatch")]
 pub mod ed_on_bls12_381_bandersnatch;
+#[cfg(feature = "crypto-ec-utils-pallas")]
+pub mod pallas;
+#[cfg(feature = "crypto-ec-utils-vesta")]
+pub mod vesta;
 
 #[cfg(any(
 	feature = "crypto-ec-utils-bls12-377",
@@ -35,5 +39,7 @@ pub mod ed_on_bls12_381_bandersnatch;
 	feature = "crypto-ec-utils-bw6-761",
 	feature = "crypto-ec-utils-ed-on-bls12-377",
 	feature = "crypto-ec-utils-ed-on-bls12-381-bandersnatch",
+	feature = "crypto-ec-utils-pallas",
+	feature = "crypto-ec-utils-vesta",
 ))]
 pub(crate) mod utils;
