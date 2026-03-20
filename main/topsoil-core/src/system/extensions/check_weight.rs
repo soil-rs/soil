@@ -27,9 +27,15 @@ use topsoil_core::{
 ///
 /// This extension does not influence any fields of `TransactionValidity` in case the
 /// transaction is valid.
-#[derive(Encode, Decode, DecodeWithMemTracking, Clone, Eq, PartialEq, Default, TypeInfo)]
+#[derive(Encode, Decode, DecodeWithMemTracking, Clone, Eq, PartialEq, TypeInfo)]
 #[scale_info(skip_type_params(T))]
 pub struct CheckWeight<T: Config + Send + Sync>(core::marker::PhantomData<T>);
+
+impl<T: Config + Send + Sync> Default for CheckWeight<T> {
+	fn default() -> Self {
+		Self(core::marker::PhantomData)
+	}
+}
 
 impl<T: Config + Send + Sync> CheckWeight<T>
 where

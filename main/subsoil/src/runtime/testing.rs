@@ -10,7 +10,7 @@ use super::{
 	codec::{Codec, Decode, DecodeWithMemTracking, Encode, EncodeLike, MaxEncodedLen},
 	generic::{self, LazyBlock, UncheckedExtrinsic},
 	scale_info::TypeInfo,
-	traits::{self, BlakeTwo256, Dispatchable, LazyExtrinsic, OpaqueKeys},
+	traits::{self, BlakeTwo256, Dispatchable, LazyExtrinsic, Lookup, OpaqueKeys, StaticLookup},
 	DispatchResultWithInfo, KeyTypeId, OpaqueExtrinsic,
 };
 use crate::core::crypto::{key_types, ByteArray, CryptoType, Dummy};
@@ -164,6 +164,34 @@ impl traits::Verify for UintAuthorityId {
 		signer: &<Self::Signer as traits::IdentifyAccount>::AccountId,
 	) -> bool {
 		self.0 == *signer
+	}
+}
+
+impl ::std::fmt::Display for UintAuthorityId {
+	fn fmt(&self, f: &mut ::std::fmt::Formatter) -> ::std::fmt::Result {
+		write!(f, "UintAuthorityId({})", self.0)
+	}
+}
+
+impl StaticLookup for UintAuthorityId {
+	type Source = u64;
+	type Target = u64;
+
+	fn lookup(s: Self::Source) -> Result<Self::Target, traits::LookupError> {
+		Ok(s)
+	}
+
+	fn unlookup(t: Self::Target) -> Self::Source {
+		t
+	}
+}
+
+impl Lookup for UintAuthorityId {
+	type Source = u64;
+	type Target = u64;
+
+	fn lookup(&self, s: Self::Source) -> Result<Self::Target, traits::LookupError> {
+		Ok(s)
 	}
 }
 

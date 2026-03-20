@@ -1570,6 +1570,11 @@ impl<T: Config> Pallet<T> {
 		Account::<T>::contains_key(who)
 	}
 
+	/// Returns the current [`Phase`] of block execution.
+	pub fn execution_phase() -> Option<Phase> {
+		ExecutionPhase::<T>::get()
+	}
+
 	/// Write code to the storage and emit related events and digest items. Writes either directly
 	/// to the `:code` storage or to the `:pending_code` storage depending on the system version.
 	///
@@ -2214,7 +2219,7 @@ impl<T: Config> Pallet<T> {
 	}
 
 	/// Sets the index of extrinsic that is currently executing.
-	#[cfg(any(feature = "std", test))]
+	#[cfg(any(feature = "std", feature = "runtime-benchmarks", test))]
 	pub fn set_extrinsic_index(extrinsic_index: u32) {
 		storage::unhashed::put(well_known_keys::EXTRINSIC_INDEX, &extrinsic_index)
 	}
