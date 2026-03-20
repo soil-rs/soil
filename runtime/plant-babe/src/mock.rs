@@ -307,6 +307,21 @@ pub fn new_test_ext(authorities_len: usize) -> subsoil::io::TestExternalities {
 	new_test_ext_with_pairs(authorities_len).1
 }
 
+pub fn build_and_execute(authorities_len: usize, test: impl FnOnce()) {
+	new_test_ext(authorities_len).execute_with(|| {
+		test();
+		Babe::do_try_state().expect("All invariants must hold after a test");
+	})
+}
+
+pub fn build_and_execute_with_pairs(authorities_len: usize, test: impl FnOnce(Vec<AuthorityPair>)) {
+	let (pairs, mut ext) = new_test_ext_with_pairs(authorities_len);
+	ext.execute_with(|| {
+		test(pairs);
+		Babe::do_try_state().expect("All invariants must hold after a test");
+	})
+}
+
 pub fn new_test_ext_with_pairs(
 	authorities_len: usize,
 ) -> (Vec<AuthorityPair>, subsoil::io::TestExternalities) {
@@ -361,6 +376,16 @@ pub fn new_test_ext_raw_authorities(
 	};
 
 	staking_config.assimilate_storage(&mut t).unwrap();
+
+	plant_babe::GenesisConfig::<Test> {
+		epoch_config: subsoil::consensus::babe::BabeEpochConfiguration {
+			c: (1, 4),
+			allowed_slots: subsoil::consensus::babe::AllowedSlots::PrimaryAndSecondaryPlainSlots,
+		},
+		..Default::default()
+	}
+	.assimilate_storage(&mut t)
+	.unwrap();
 
 	t.into()
 }
