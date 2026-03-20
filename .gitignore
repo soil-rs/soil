@@ -10,6 +10,7 @@
 .wasm-binaries
 *.adoc
 *.bin
+!runtime/plant-sassafras/src/data/*.bin
 *.iml
 *.orig
 *.rej
