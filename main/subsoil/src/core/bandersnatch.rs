@@ -338,20 +338,7 @@ pub mod vrf {
 
 	impl VrfPublic for Public {
 		fn vrf_verify(&self, data: &VrfSignData, signature: &VrfSignature) -> bool {
-			use ark_vrf::ietf::Verifier;
-			let Ok(public) =
-				bandersnatch::Public::deserialize_compressed_unchecked(self.as_slice())
-			else {
-				return false;
-			};
-			let Ok(proof) =
-				ark_vrf::ietf::Proof::deserialize_compressed_unchecked(signature.proof.as_slice())
-			else {
-				return false;
-			};
-			public
-				.verify(data.vrf_input.0, signature.pre_output.0, &data.aux_data, &proof)
-				.is_ok()
+			vrf_verify_io(self, data.vrf_input.0, signature, &data.aux_data)
 		}
 	}
 
@@ -577,7 +564,7 @@ pub mod ring_vrf {
 		pub fn ring_vrf_verify(&self, data: &VrfSignData, verifier: &RingVerifier) -> bool {
 			use ark_vrf::ring::Verifier;
 			let Ok(proof) =
-				bandersnatch::RingProof::deserialize_compressed_unchecked(self.proof.as_slice())
+				bandersnatch::RingProof::deserialize_compressed(self.proof.as_slice())
 			else {
 				return false;
 			};
